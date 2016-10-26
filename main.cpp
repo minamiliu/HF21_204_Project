@@ -24,7 +24,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 // グローバル変数:
 //*****************************************************************************
 CRenderer *g_pRenderer = NULL;
-CScene *g_pScene = NULL;
 
 #ifdef _DEBUG
 int		g_nCountFPS;			// FPSカウンタ
@@ -82,9 +81,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	g_pRenderer->Init(hWnd, true);
 
 
-	//オブジェクトの生成
-	g_pScene = new CScene2D;
-	g_pScene->Init();
+	//オブジェクトの生成(2Dポリゴン)
+	CScene2D::Create();
 
 	// 分解能を設定
 	timeBeginPeriod(1);
@@ -143,12 +141,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	}
 
 	//オブジェクトの破棄
-	if(g_pScene != NULL)
-	{
-		g_pScene->Uninit();
-		delete g_pScene;
-		g_pScene = NULL;
-	}
+	CScene2D::ReleaseAll();
 
 	// レンダラーの破棄
 	if( g_pRenderer != NULL)
@@ -218,12 +211,4 @@ int GetFPS(void)
 CRenderer *GetRenderer(void)
 {
 	return g_pRenderer;
-}
-
-//=============================================================================
-// g_pSceneを渡す関数
-//=============================================================================
-CScene *GetScene(void)
-{
-	return g_pScene;
 }

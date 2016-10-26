@@ -32,7 +32,6 @@
 // 前方宣言
 //*****************************************************************************
 class CRenderer;
-class CScene;
 
 //*****************************************************************************
 // プロトタイプ宣言
@@ -41,8 +40,6 @@ class CScene;
 int GetFPS(void);
 #endif
 
-
 CRenderer *GetRenderer(void);
-CScene *GetScene(void);
 
 #endif

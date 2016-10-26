@@ -13,11 +13,12 @@
 //============================================
 //マクロ定義
 //============================================
+#define MAX_SCENE	(100)
 
 //============================================
 //構造体定義
 //============================================
-//敵クラス
+
 class CScene
 {
 public:
@@ -30,8 +31,19 @@ public:
 	virtual void Update(void) = 0;
 	virtual void Draw(void) = 0;
 
+	static void UpdateAll(void);
+	static void DrawAll(void);
+	static void ReleaseAll(void);
+
+protected:
+	
+	void Release(void);
+
 private:
 
+	static CScene *m_apScene[MAX_SCENE];
+	static int m_nNumScene;
+	int m_nID;
 };
 
 #endif

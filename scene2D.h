@@ -35,6 +35,8 @@ public:
 	void Update(void);
 	void Draw(void);
 
+	static CScene2D *Create(void);
+
 private:
 
 	LPDIRECT3DTEXTURE9		m_pTexture;		// テクスチャへのポインタ

@@ -167,9 +167,7 @@ void CRenderer::Uninit(void)
 void CRenderer::Update(void)
 {
 	// ƒ|ƒŠƒSƒ“‚ÌXVˆ—
-	CScene *pScene;
-	pScene = GetScene();
-	pScene->Update();
+	CScene::UpdateAll();
 }
 
 //=============================================================================
@@ -184,9 +182,7 @@ void CRenderer::Draw(void)
 	if(SUCCEEDED(m_pD3DDevice->BeginScene()))
 	{
 		// ƒ|ƒŠƒSƒ“‚Ì•`‰æˆ—
-		CScene *pScene;
-		pScene = GetScene();
-		pScene->Draw();
+		CScene::DrawAll();
 
 #ifdef _DEBUG
 		// FPS•\Ž¦
