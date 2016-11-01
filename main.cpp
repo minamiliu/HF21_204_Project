@@ -8,6 +8,7 @@
 #include "renderer.h"
 #include "scene.h"
 #include "scene2D.h"
+#include "manager.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -23,7 +24,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 //*****************************************************************************
 // グローバル変数:
 //*****************************************************************************
-CRenderer *g_pRenderer = NULL;
 
 #ifdef _DEBUG
 int		g_nCountFPS;			// FPSカウンタ
@@ -76,13 +76,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 						hInstance,
 						NULL);
 
-	// レンダラーの生成
-	g_pRenderer = new CRenderer;
-	g_pRenderer->Init(hWnd, true);
 
-
-	//オブジェクトの生成(2Dポリゴン)
-	CScene2D::Create();
+	//マネージャの生成
+	CManager *pManager;
+	pManager = new CManager;
+	pManager->Init(hInstance, hWnd, true);
 
 	// 分解能を設定
 	timeBeginPeriod(1);
@@ -129,30 +127,24 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 			{
 				dwExecLastTime = dwCurrentTime;
 
-				// レンダラーの更新処理
-				g_pRenderer->Update();
+				//マネージャの更新処理
+				pManager->Update();
 
-				// レンダラーの描画処理
-				g_pRenderer->Draw();
+				//マネージャの描画処理
+				pManager->Draw();
 
 				dwFrameCount++;
 			}
 		}
 	}
 
-	//オブジェクトの破棄
-	CScene2D::ReleaseAll();
-
-	// レンダラーの破棄
-	if( g_pRenderer != NULL)
+	//マネージャの破棄
+	if(pManager != NULL)
 	{
-		g_pRenderer->Uninit();
-		delete g_pRenderer;
-		g_pRenderer = NULL;
+		pManager->Uninit();
+		delete pManager;
+		pManager = NULL;
 	}
-	
-	
-
 
 	// ウィンドウクラスの登録を解除
 	UnregisterClass(CLASS_NAME, wcex.hInstance);
@@ -204,11 +196,3 @@ int GetFPS(void)
 }
 
 #endif
-
-//=============================================================================
-// g_pRendererを渡す関数
-//=============================================================================
-CRenderer *GetRenderer(void)
-{
-	return g_pRenderer;
-}

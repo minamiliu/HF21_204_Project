@@ -75,12 +75,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="manager.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="scene2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h" />
+    <ClInclude Include="manager.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="scene2D.h" />

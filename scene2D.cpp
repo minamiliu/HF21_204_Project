@@ -13,7 +13,7 @@
 #include "main.h"
 #include "scene2D.h"
 #include "renderer.h"
-
+#include "manager.h"
 
 //============================================
 // マクロ定義
@@ -66,8 +66,8 @@ CScene2D::~CScene2D()
 //=============================================================================
 HRESULT CScene2D::Init(void)
 {
-	LPDIRECT3DDEVICE9 pDevice;	
-	pDevice = GetRenderer()->GetDevice();
+	LPDIRECT3DDEVICE9 pDevice;
+	pDevice = CManager::GetRenderer()->GetDevice();
 
 	// ポリゴンの位置を設定
 	m_pos = D3DXVECTOR3( POLYGON_POS_X, POLYGON_POS_Y, 0.0f);
@@ -161,7 +161,7 @@ void CScene2D::Update(void)
 void CScene2D::Draw(void)
 {
 	LPDIRECT3DDEVICE9 pDevice;
-	pDevice = GetRenderer()->GetDevice();
+	pDevice = CManager::GetRenderer()->GetDevice();
 
 	// 頂点バッファをデータストリームに設定
 	pDevice->SetStreamSource(0, m_pVtxBuff, 0, sizeof(VERTEX_2D));
