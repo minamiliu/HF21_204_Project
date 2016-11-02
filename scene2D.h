@@ -31,16 +31,19 @@ public:
 	virtual ~CScene2D();
 
 	HRESULT Init(void);
+	HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR3 size);
 	void Uninit(void);
 	void Update(void);
 	void Draw(void);
 
-	static CScene2D *Create(void);
+	void SetPosition(D3DXVECTOR3 pos);
+
+	static CScene2D *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size);
 
 private:
 
 	LPDIRECT3DTEXTURE9		m_pTexture;		// テクスチャへのポインタ
-	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff;			// 頂点バッファへのポインタ
+	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff;		// 頂点バッファへのポインタ
 
 	D3DXVECTOR3			m_pos;			// ポリゴンの位置
 	D3DXVECTOR3			m_size;			// ポリゴンのサイズ

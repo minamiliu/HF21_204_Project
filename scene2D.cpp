@@ -14,6 +14,7 @@
 #include "scene2D.h"
 #include "renderer.h"
 #include "manager.h"
+#include "input.h"
 
 //============================================
 // マクロ定義
@@ -66,11 +67,17 @@ CScene2D::~CScene2D()
 //=============================================================================
 HRESULT CScene2D::Init(void)
 {
+	return S_OK;
+}
+
+HRESULT CScene2D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size)
+{
 	LPDIRECT3DDEVICE9 pDevice;
 	pDevice = CManager::GetRenderer()->GetDevice();
 
-	// ポリゴンの位置を設定
-	m_pos = D3DXVECTOR3( POLYGON_POS_X, POLYGON_POS_Y, 0.0f);
+	// ポリゴンの情報を設置
+	m_pos = pos;
+	m_size = size;
 
 	// テクスチャの生成
 	D3DXCreateTextureFromFile( pDevice, POLYGON_TEXTURENAME, &m_pTexture);
@@ -94,10 +101,10 @@ HRESULT CScene2D::Init(void)
 	m_pVtxBuff->Lock( 0, 0, (void**)&pVtx, 0);
 
 	// ポリゴンの位置を設定
-	pVtx[0].pos = D3DXVECTOR3(POLYGON_POS_X - (POLYGON_SIZE_X/2), POLYGON_POS_Y - (POLYGON_SIZE_Y/2), 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(POLYGON_POS_X + (POLYGON_SIZE_X/2), POLYGON_POS_Y - (POLYGON_SIZE_Y/2), 0.0f);
-	pVtx[2].pos = D3DXVECTOR3(POLYGON_POS_X - (POLYGON_SIZE_X/2), POLYGON_POS_Y + (POLYGON_SIZE_Y/2), 0.0f);
-	pVtx[3].pos = D3DXVECTOR3(POLYGON_POS_X + (POLYGON_SIZE_X/2), POLYGON_POS_Y + (POLYGON_SIZE_Y/2), 0.0f);
+	pVtx[0].pos = D3DXVECTOR3(m_pos.x - (m_size.x/2), m_pos.y - (m_size.y/2), 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(m_pos.x + (m_size.x/2), m_pos.y - (m_size.y/2), 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(m_pos.x - (m_size.x/2), m_pos.y + (m_size.y/2), 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(m_pos.x + (m_size.x/2), m_pos.y + (m_size.y/2), 0.0f);
 
 	//rhw
 	pVtx[0].rhw = 1.0f;
@@ -118,9 +125,8 @@ HRESULT CScene2D::Init(void)
 	pVtx[3].tex = D3DXVECTOR2(1.0F, 1.0F);
 
 	m_pVtxBuff->Unlock();
-
-	return S_OK;
 }
+
 
 
 
@@ -153,6 +159,26 @@ void CScene2D::Uninit(void)
 //=============================================================================
 void CScene2D::Update(void)
 {
+	if(CManager::GetInputKeyboard()->GetKeyPress(DIK_W))
+	{
+		m_pos.y -= 5.0f;
+		SetPosition(m_pos);
+	}
+	if(CManager::GetInputKeyboard()->GetKeyPress(DIK_S))
+	{
+		m_pos.y += 5.0f;
+		SetPosition(m_pos);
+	}
+	if(CManager::GetInputKeyboard()->GetKeyPress(DIK_A))
+	{
+		m_pos.x -= 5.0f;
+		SetPosition(m_pos);
+	}
+	if(CManager::GetInputKeyboard()->GetKeyPress(DIK_D))
+	{
+		m_pos.x += 5.0f;
+		SetPosition(m_pos);
+	}
 }
 
 //=============================================================================
@@ -183,11 +209,28 @@ void CScene2D::Draw(void)
 //=============================================================================
 // ポリゴンの生成処理
 //=============================================================================
-CScene2D *CScene2D::Create(void)
+CScene2D *CScene2D::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
 	CScene2D *pScene2D;
 	pScene2D = new CScene2D;
-	pScene2D->Init();
+	pScene2D->Init(pos, size);
 	
 	return pScene2D;
+}
+
+void CScene2D::SetPosition(D3DXVECTOR3 pos)
+{
+	// 頂点情報を設定
+	VERTEX_2D *pVtx;
+
+	//頂点データの範囲をロックし、頂点バッファへのポインタを取得
+	m_pVtxBuff->Lock( 0, 0, (void**)&pVtx, 0);
+
+	// ポリゴンの位置を設定
+	pVtx[0].pos = D3DXVECTOR3(m_pos.x - (m_size.x/2), m_pos.y - (m_size.y/2), 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(m_pos.x + (m_size.x/2), m_pos.y - (m_size.y/2), 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(m_pos.x - (m_size.x/2), m_pos.y + (m_size.y/2), 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(m_pos.x + (m_size.x/2), m_pos.y + (m_size.y/2), 0.0f);
+
+	m_pVtxBuff->Unlock();
 }
