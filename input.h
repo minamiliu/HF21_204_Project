@@ -24,7 +24,7 @@
 
 /* Joypad  */
 #define MAX_CONTROLER	(2)			//ƒRƒ“ƒgƒ[ƒ‰Å‘å”(Žg‚¤”‚É‰ž‚¶‚Ä•ÏX‚·‚é‚±‚Æ)
-#define STICK_RANGE		(65536/2)	//¶‚O`‚R‚Q‚V‚U‚VG‰E‚R‚Q‚V‚U‚W`‚U‚T‚T‚R‚T
+#define STICK_RANGE		(65536)		//¶‚O`‚R‚Q‚V‚U‚VG‰E‚R‚Q‚V‚U‚W`‚U‚T‚T‚R‚T
 #define STICK_DEADZONE	(3000)		//”½‰ž‚µ‚È‚¢”ÍˆÍ
 
 #define BUTTON_A		(0)

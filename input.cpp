@@ -545,10 +545,10 @@ void CInputJoypad::Update(void)
 			}
 		}
 
-		if(m_joyState[nLoop].lY - 32768 < -16384) m_joyStateTrigger[nLoop][LSTICK_UP] = 0x80;
-		if(m_joyState[nLoop].lY - 32768 > 16384) m_joyStateTrigger[nLoop][LSTICK_DOWN] = 0x80;
-		if(m_joyState[nLoop].lX - 32768 < -16384) m_joyStateTrigger[nLoop][LSTICK_LEFT] = 0x80;
-		if(m_joyState[nLoop].lX - 32768 > 16384) m_joyStateTrigger[nLoop][LSTICK_RIGHT] = 0x80;
+		if(m_joyState[nLoop].lY - STICK_RANGE/2 < -STICK_RANGE/4) m_joyStateTrigger[nLoop][LSTICK_UP] = 0x80;
+		if(m_joyState[nLoop].lY - STICK_RANGE/2 >  STICK_RANGE/4) m_joyStateTrigger[nLoop][LSTICK_DOWN] = 0x80;
+		if(m_joyState[nLoop].lX - STICK_RANGE/2 < -STICK_RANGE/4) m_joyStateTrigger[nLoop][LSTICK_LEFT] = 0x80;
+		if(m_joyState[nLoop].lX - STICK_RANGE/2 >  STICK_RANGE/4) m_joyStateTrigger[nLoop][LSTICK_RIGHT] = 0x80;
 
 	}
 }
@@ -575,9 +575,9 @@ long CInputJoypad::GetJoypadRightAxisX(int padNo)
 {
 	if(m_pDIDevJoypad[padNo] == NULL) return 0;
 
-	if( abs(m_joyState[padNo].lRx - STICK_RANGE) < STICK_DEADZONE) return 0;
+	if( abs(m_joyState[padNo].lRx - STICK_RANGE/2) < STICK_DEADZONE) return 0;
 
-	return (m_joyState[padNo].lRx - STICK_RANGE) * (long)0.01f;
+	return (m_joyState[padNo].lRx - STICK_RANGE/2) * (long)0.01f;
 }
 //=============================================================================
 // マウスデータ取得(Ｙ軸移動)
@@ -586,7 +586,7 @@ long CInputJoypad::GetJoypadRightAxisY(int padNo)
 {
 	if(m_pDIDevJoypad[padNo] == NULL) return 0;
 
-	if( abs(m_joyState[padNo].lRy - STICK_RANGE) < STICK_DEADZONE) return 0;
+	if( abs(m_joyState[padNo].lRy - STICK_RANGE/2) < STICK_DEADZONE) return 0;
 
-	return (m_joyState[padNo].lRy - STICK_RANGE) * (long)0.01f;
+	return (m_joyState[padNo].lRy - STICK_RANGE/2) * (long)0.01f;
 }
