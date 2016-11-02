@@ -233,3 +233,184 @@ void CInputKeyboard::FlushKeyTrigger(int nKey)
 	m_aKeyStateTrigger[nKey] = 0;
 }
 
+//=============================================================================
+// CInputMouseコンストラスタ
+//=============================================================================
+CInputMouse::CInputMouse()
+{
+
+}
+
+//=============================================================================
+// CInputMouseデストラスタ
+//=============================================================================
+CInputMouse::~CInputMouse()
+{
+}
+
+//=============================================================================
+// マウスの初期化
+//=============================================================================
+HRESULT CInputMouse::Init(HINSTANCE hInstance, HWND hWnd)
+{
+	HRESULT hr;
+
+	// 入力処理の初期化
+	CInput::Init(hInstance, hWnd);
+
+	// デバイスオブジェクトを作成
+	hr = m_pDInput->CreateDevice(GUID_SysMouse, &m_pDIDevice, NULL);
+	if(FAILED(hr))
+	{
+		MessageBox(hWnd, "マウスがねぇ！", "警告！", MB_ICONWARNING);
+		return hr;
+	}
+
+	// データフォーマットを設定
+	hr = m_pDIDevice->SetDataFormat(&c_dfDIMouse2);
+	if(FAILED(hr))
+	{
+		MessageBox(hWnd, "マウスのデータフォーマットを設定できませんでした。", "警告！", MB_ICONWARNING);
+		return hr;
+	}
+
+	// 協調モードを設定（フォアグラウンド＆非排他モード）
+	hr = m_pDIDevice->SetCooperativeLevel(hWnd, (DISCL_FOREGROUND | DISCL_NONEXCLUSIVE));
+	if(FAILED(hr))
+	{
+		MessageBox(hWnd, "マウスの協調モードを設定できませんでした。", "警告！", MB_ICONWARNING);
+		return hr;
+	}
+
+	// デバイスのプロパティを設定
+	{
+		DIPROPDWORD dipdw;
+
+		dipdw.diph.dwSize = sizeof(dipdw);
+		dipdw.diph.dwHeaderSize = sizeof(dipdw.diph);
+		dipdw.diph.dwObj = 0;
+		dipdw.diph.dwHow = DIPH_DEVICE;
+		dipdw.dwData = DIPROPAXISMODE_REL;
+
+		hr = m_pDIDevice->SetProperty(DIPROP_AXISMODE, &dipdw.diph);
+		if(FAILED(hr))
+		{
+			MessageBox(hWnd, "マウスのデバイスのプロパティを設定できませんでした。", "警告！", MB_ICONWARNING);
+			return hr;
+		}
+	}
+
+	// マウスへのアクセス権を獲得(入力制御開始)
+	m_pDIDevice->Acquire();
+
+	return S_OK;
+}
+
+//=============================================================================
+// マウスの終了処理
+//=============================================================================
+void CInputMouse::Uninit(void)
+{
+	// 入力処理の開放
+	CInput::Uninit();
+}
+
+//=============================================================================
+// マウスの更新処理
+//=============================================================================
+void CInputMouse::Update(void)
+{
+	DIMOUSESTATE2 mouseState;
+
+	// デバイスからデータを取得
+	if(SUCCEEDED(m_pDIDevice->GetDeviceState(sizeof(mouseState), &mouseState)))
+	{
+		m_mouseStateTrigger.lX = ((m_mouseState.lX ^ mouseState.lX) & mouseState.lX);
+		m_mouseStateTrigger.lY = ((m_mouseState.lY ^ mouseState.lY) & mouseState.lY);
+		m_mouseStateTrigger.lZ = ((m_mouseState.lZ ^ mouseState.lZ) & mouseState.lZ);
+
+		for(int nCntKey = 0; nCntKey < NUM_MOUSE_BUTTON_MAX; nCntKey++)
+		{
+			m_mouseStateTrigger.rgbButtons[nCntKey] = ((m_mouseState.rgbButtons[nCntKey] ^ mouseState.rgbButtons[nCntKey]) & mouseState.rgbButtons[nCntKey]);
+		}
+
+		m_mouseState = mouseState;
+	}
+	else
+	{
+		// マウスへのアクセス権を獲得(入力制御開始)
+		m_pDIDevice->Acquire();
+	}
+}
+
+//=============================================================================
+// マウスデータ取得(左プレス)
+//=============================================================================
+bool CInputMouse::GetMouseLeftPress(void)
+{
+	return (m_mouseState.rgbButtons[MOUSE_BUTTON_LEFT] & 0x80) ? true: false;
+}
+
+//=============================================================================
+// マウスデータ取得(左トリガー)
+//=============================================================================
+bool CInputMouse::GetMouseLeftTrigger(void)
+{
+	return (m_mouseStateTrigger.rgbButtons[MOUSE_BUTTON_LEFT] & 0x80) ? true: false;
+}
+
+//=============================================================================
+// マウスデータ取得(右プレス)
+//=============================================================================
+bool CInputMouse::GetMouseRightPress(void)
+{
+	return (m_mouseState.rgbButtons[MOUSE_BUTTON_RIGHT] & 0x80) ? true: false;
+}
+
+//=============================================================================
+// マウスデータ取得(右トリガー)
+//=============================================================================
+bool CInputMouse::GetMouseRightTrigger(void)
+{
+	return (m_mouseStateTrigger.rgbButtons[MOUSE_BUTTON_RIGHT] & 0x80) ? true: false;
+}
+
+//=============================================================================
+// マウスデータ取得(中央プレス)
+//=============================================================================
+bool CInputMouse::GetMouseCenterPress(void)
+{
+	return (m_mouseState.rgbButtons[MOUSE_BUTTON_CENTER] & 0x80) ? true: false;
+}
+
+//=============================================================================
+// マウスデータ取得(中央トリガー)
+//=============================================================================
+bool CInputMouse::GetMouseCenterTrigger(void)
+{
+	return (m_mouseState.rgbButtons[MOUSE_BUTTON_CENTER] & 0x80) ? true: false;
+}
+
+//=============================================================================
+// マウスデータ取得(Ｘ軸移動)
+//=============================================================================
+long CInputMouse::GetMouseAxisX(void)
+{
+	return m_mouseState.lX;
+}
+
+//=============================================================================
+// マウスデータ取得(Ｙ軸移動)
+//=============================================================================
+long CInputMouse::GetMouseAxisY(void)
+{
+	return m_mouseState.lY;
+}
+
+//=============================================================================
+// マウスデータ取得(Ｚ軸移動)
+//=============================================================================
+long CInputMouse::GetMouseAxisZ(void)
+{
+	return m_mouseState.lZ;
+}

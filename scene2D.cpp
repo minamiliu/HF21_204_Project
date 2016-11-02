@@ -125,6 +125,8 @@ HRESULT CScene2D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 	pVtx[3].tex = D3DXVECTOR2(1.0F, 1.0F);
 
 	m_pVtxBuff->Unlock();
+
+	return S_OK;
 }
 
 
@@ -177,6 +179,13 @@ void CScene2D::Update(void)
 	if(CManager::GetInputKeyboard()->GetKeyPress(DIK_D))
 	{
 		m_pos.x += 5.0f;
+		SetPosition(m_pos);
+	}
+
+	if(CManager::GetInputMouse()->GetMouseLeftPress())
+	{
+		m_pos.x += CManager::GetInputMouse()->GetMouseAxisX() % 100;
+		m_pos.y += CManager::GetInputMouse()->GetMouseAxisY() % 100;
 		SetPosition(m_pos);
 	}
 }
