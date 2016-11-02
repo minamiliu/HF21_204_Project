@@ -45,8 +45,8 @@ private:
 	LPDIRECT3DTEXTURE9		m_pTexture;		// テクスチャへのポインタ
 	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff;		// 頂点バッファへのポインタ
 
-	D3DXVECTOR3			m_pos;			// ポリゴンの位置
-	D3DXVECTOR3			m_size;			// ポリゴンのサイズ
+	D3DXVECTOR3			m_pos;				// ポリゴンの位置
+	D3DXVECTOR3			m_size;				// ポリゴンのサイズ
 };
 
 #endif

@@ -14,7 +14,9 @@
 //*****************************************************************************
 // 静的変数
 //*****************************************************************************
-LPDIRECTINPUT8	CInput::m_pDInput = NULL;	// DirectInputオブジェクト
+LPDIRECTINPUT8			CInput::m_pDInput = NULL;						// DirectInputオブジェクト
+int						CInputJoypad::m_nJoypadNum = 0;					// 見つかったジョイパッドの数
+LPDIRECTINPUTDEVICE8	CInputJoypad::m_pDIDevJoypad[MAX_CONTROLER] = {};
 
 //=============================================================================
 // CInputコンストラスタ
@@ -413,4 +415,178 @@ long CInputMouse::GetMouseAxisY(void)
 long CInputMouse::GetMouseAxisZ(void)
 {
 	return m_mouseState.lZ;
+}
+
+//=============================================================================
+// CInputMouseコンストラスタ
+//=============================================================================
+CInputJoypad::CInputJoypad()
+{
+	// 各ワークのクリア
+	ZeroMemory(m_joyState, sizeof m_joyState);
+	ZeroMemory(m_joyStatePrev, sizeof m_joyStatePrev);
+	ZeroMemory(m_joyStateTrigger, sizeof m_joyStateTrigger);
+}
+
+//=============================================================================
+// CInputMouseデストラスタ
+//=============================================================================
+CInputJoypad::~CInputJoypad()
+{
+}
+
+//=============================================================================
+// ジョイパッドの初期化
+//=============================================================================
+HRESULT CInputJoypad::Init(HINSTANCE hInstance, HWND hWnd)
+{
+	int nLoop;
+
+
+	// 初期化
+	for(nLoop = 0; nLoop < MAX_CONTROLER; nLoop++)
+		m_pDIDevJoypad[nLoop] = NULL;
+
+	// デバイスオブジェクトを作成(接続されているジョイパッドを列挙する)
+	if(FAILED(m_pDInput->EnumDevices(DI8DEVCLASS_GAMECTRL, EnumJoyCallback, NULL, DIEDFL_ATTACHEDONLY)))
+		return E_FAIL;
+
+	// ジョイパッドの数だけ処理
+	for(nLoop = 0; nLoop < MAX_CONTROLER; nLoop++)
+	{
+		// ジョイパッドがない場合はすっ飛ばす
+		if(m_pDIDevJoypad[nLoop] == NULL)
+			continue;
+
+		// データフォーマットの設定
+		if(FAILED(m_pDIDevJoypad[nLoop]->SetDataFormat(&c_dfDIJoystick)))
+			return E_FAIL;
+
+		// 協調レベルの設定
+		if(FAILED(m_pDIDevJoypad[nLoop]->SetCooperativeLevel(hWnd, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND)))
+			return E_FAIL;
+
+		// デバイスへの入力制御開始
+		m_pDIDevJoypad[nLoop]->Acquire();	
+	}
+
+	return S_OK;
+}
+
+//=============================================================================
+// ジョイパッド問い合わせ用コールバック関数
+//=============================================================================
+BOOL CALLBACK CInputJoypad::EnumJoyCallback(const DIDEVICEINSTANCE* lpddi, VOID* pvRef)
+{
+	DIDEVCAPS	diDevCaps;			// デバイス情報
+
+	// ジョイパッド用デバイスオブジェクトを作成
+	if(FAILED(m_pDInput->CreateDevice(lpddi->guidInstance, &m_pDIDevJoypad[m_nJoypadNum], NULL)))
+		return DIENUM_CONTINUE;		// 列挙を続ける
+
+	// ジョイパッドの能力を調べる
+	diDevCaps.dwSize = sizeof(DIDEVCAPS);
+	if(FAILED(m_pDIDevJoypad[m_nJoypadNum]->GetCapabilities(&diDevCaps)))
+	{
+		if(m_pDIDevJoypad[m_nJoypadNum])
+			m_pDIDevJoypad[m_nJoypadNum]->Release();
+		m_pDIDevJoypad[m_nJoypadNum] = NULL;
+		return DIENUM_CONTINUE;		// 列挙を続ける
+	}
+
+	// 規定数に達したら終了
+	m_nJoypadNum++;
+	if(m_nJoypadNum == MAX_CONTROLER)
+		return DIENUM_STOP;			// 列挙を終了する
+	else
+		return DIENUM_CONTINUE;		// 列挙を続ける
+}
+
+//=============================================================================
+// ジョイパッドの終了処理
+//=============================================================================
+void CInputJoypad::Uninit(void)
+{
+	for(int nLoop = 0; nLoop < MAX_CONTROLER; nLoop++)
+	{
+		SAFE_RELEASE(m_pDIDevJoypad[nLoop]);
+	}	
+}
+
+//=============================================================================
+// ジョイパッドの更新処理
+//=============================================================================
+void CInputJoypad::Update(void)
+{
+	int nLoop;
+	
+	for(nLoop = 0; nLoop < MAX_CONTROLER; nLoop++)
+	{
+		// 直前ジョイパッド情報のバックアップ
+		m_joyStatePrev[nLoop] = m_joyState[nLoop];
+
+		if(m_pDIDevJoypad[nLoop])
+		{
+			// デバイスからデータを取得
+			if(FAILED(m_pDIDevJoypad[nLoop]->GetDeviceState(sizeof(DIJOYSTATE), &m_joyState[nLoop])))
+				m_pDIDevJoypad[nLoop]->Acquire();
+		}
+		
+
+		// トリガー情報計算
+		for( int i = 0; i < 32; i++ )
+		{
+			if( m_joyState[nLoop].rgbButtons[i] & 0x80 && 
+				!(m_joyStatePrev[nLoop].rgbButtons[i] & 0x80) )
+			{
+				m_joyStateTrigger[nLoop][i] = 0x80;
+			} else {
+				m_joyStateTrigger[nLoop][i] = 0x00;
+			}
+		}
+
+		if(m_joyState[nLoop].lY - 32768 < -16384) m_joyStateTrigger[nLoop][LSTICK_UP] = 0x80;
+		if(m_joyState[nLoop].lY - 32768 > 16384) m_joyStateTrigger[nLoop][LSTICK_DOWN] = 0x80;
+		if(m_joyState[nLoop].lX - 32768 < -16384) m_joyStateTrigger[nLoop][LSTICK_LEFT] = 0x80;
+		if(m_joyState[nLoop].lX - 32768 > 16384) m_joyStateTrigger[nLoop][LSTICK_RIGHT] = 0x80;
+
+	}
+}
+//=============================================================================
+// ジョイパッドデータ取得(トリガー)
+//=============================================================================
+bool CInputJoypad::GetJoypadTrigger( int padNo, DWORD button )
+{
+	if(m_pDIDevJoypad[padNo] == NULL) return false;
+	return (m_joyStateTrigger[padNo][button] & 0x80) ? true: false;
+}
+//=============================================================================
+// ジョイパッドデータ取得(プレス)
+//=============================================================================
+bool CInputJoypad::GetJoypadPress( int padNo, DWORD button )
+{
+	if(m_pDIDevJoypad[padNo] == NULL) return false;
+	return (m_joyState[padNo].rgbButtons[button] & 0x80) ? true: false;
+}
+//=============================================================================
+// ジョイパッドデータ取得(Ｘ軸移動)
+//=============================================================================
+long CInputJoypad::GetJoypadRightAxisX(int padNo)
+{
+	if(m_pDIDevJoypad[padNo] == NULL) return 0;
+
+	if( abs(m_joyState[padNo].lRx - STICK_RANGE) < STICK_DEADZONE) return 0;
+
+	return (m_joyState[padNo].lRx - STICK_RANGE) * (long)0.01f;
+}
+//=============================================================================
+// マウスデータ取得(Ｙ軸移動)
+//=============================================================================
+long CInputJoypad::GetJoypadRightAxisY(int padNo)
+{
+	if(m_pDIDevJoypad[padNo] == NULL) return 0;
+
+	if( abs(m_joyState[padNo].lRy - STICK_RANGE) < STICK_DEADZONE) return 0;
+
+	return (m_joyState[padNo].lRy - STICK_RANGE) * (long)0.01f;
 }

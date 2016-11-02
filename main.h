@@ -30,6 +30,8 @@
 #define SCREEN_WIDTH	(1280)		// ウインドウの幅
 #define SCREEN_HEIGHT	(720)		// ウインドウの高さ
 
+#define SAFE_RELEASE(ptr)		{ if(ptr) { (ptr)->Release(); (ptr) = NULL; } }
+
 
 //*****************************************************************************
 // プロトタイプ宣言
