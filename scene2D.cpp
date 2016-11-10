@@ -161,33 +161,7 @@ void CScene2D::Uninit(void)
 //=============================================================================
 void CScene2D::Update(void)
 {
-	if(CManager::GetInputKeyboard()->GetKeyPress(DIK_W))
-	{
-		m_pos.y -= 5.0f;
-		SetPosition(m_pos);
-	}
-	if(CManager::GetInputKeyboard()->GetKeyPress(DIK_S))
-	{
-		m_pos.y += 5.0f;
-		SetPosition(m_pos);
-	}
-	if(CManager::GetInputKeyboard()->GetKeyPress(DIK_A))
-	{
-		m_pos.x -= 5.0f;
-		SetPosition(m_pos);
-	}
-	if(CManager::GetInputKeyboard()->GetKeyPress(DIK_D))
-	{
-		m_pos.x += 5.0f;
-		SetPosition(m_pos);
-	}
 
-	if(CManager::GetInputMouse()->GetMouseLeftPress())
-	{
-		m_pos.x += CManager::GetInputMouse()->GetMouseAxisX() % 100;
-		m_pos.y += CManager::GetInputMouse()->GetMouseAxisY() % 100;
-		SetPosition(m_pos);
-	}
 }
 
 //=============================================================================
@@ -229,6 +203,8 @@ CScene2D *CScene2D::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 
 void CScene2D::SetPosition(D3DXVECTOR3 pos)
 {
+	m_pos = pos;
+
 	// ’¸“_î•ñ‚ðÝ’è
 	VERTEX_2D *pVtx;
 
@@ -242,4 +218,9 @@ void CScene2D::SetPosition(D3DXVECTOR3 pos)
 	pVtx[3].pos = D3DXVECTOR3(m_pos.x + (m_size.x/2), m_pos.y + (m_size.y/2), 0.0f);
 
 	m_pVtxBuff->Unlock();
+}
+
+D3DXVECTOR3 CScene2D::GetPosition(void)
+{
+	return m_pos;
 }
