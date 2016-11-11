@@ -25,11 +25,8 @@
 
 #define NUM_VERTEX (4)
 #define NUM_POLYGON (2)
-#define POLYGON_POS_X	(SCREEN_WIDTH/2)//ポリゴンの左上X
-#define POLYGON_POS_Y	(SCREEN_HEIGHT/2)//ポリゴンの左上Y
-#define POLYGON_SIZE_X	(300)//ポリゴンのSIZE X
-#define POLYGON_SIZE_Y	(300)//ポリゴンのSIZE Y
-#define POLYGON_TEXTURENAME "data/TEXTURE/player000.png"
+
+#define TEXTURENAME "data/TEXTURE/player000.png"
 
 //=============================================================================
 // 構造体定義
@@ -80,7 +77,7 @@ HRESULT CScene2D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 	m_size = size;
 
 	// テクスチャの生成
-	D3DXCreateTextureFromFile( pDevice, POLYGON_TEXTURENAME, &m_pTexture);
+	D3DXCreateTextureFromFile( pDevice, TEXTURENAME, &m_pTexture);
 
 	// 頂点バッファの生成
 	if(FAILED(pDevice->CreateVertexBuffer(

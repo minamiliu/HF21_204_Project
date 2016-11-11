@@ -331,9 +331,14 @@ void CInputMouse::Update(void)
 		m_mouseStateTrigger.lY = ((m_mouseState.lY ^ mouseState.lY) & mouseState.lY);
 		m_mouseStateTrigger.lZ = ((m_mouseState.lZ ^ mouseState.lZ) & mouseState.lZ);
 
+		m_mouseStateRelease.lX = ((m_mouseState.lX ^ mouseState.lX) & ~mouseState.lX);
+		m_mouseStateRelease.lY = ((m_mouseState.lY ^ mouseState.lY) & ~mouseState.lY);
+		m_mouseStateRelease.lZ = ((m_mouseState.lZ ^ mouseState.lZ) & ~mouseState.lZ);
+
 		for(int nCntKey = 0; nCntKey < NUM_MOUSE_BUTTON_MAX; nCntKey++)
 		{
 			m_mouseStateTrigger.rgbButtons[nCntKey] = ((m_mouseState.rgbButtons[nCntKey] ^ mouseState.rgbButtons[nCntKey]) & mouseState.rgbButtons[nCntKey]);
+			m_mouseStateRelease.rgbButtons[nCntKey] = ((m_mouseState.rgbButtons[nCntKey] ^ mouseState.rgbButtons[nCntKey]) & ~mouseState.rgbButtons[nCntKey]);
 		}
 
 		m_mouseState = mouseState;
@@ -362,6 +367,14 @@ bool CInputMouse::GetMouseLeftTrigger(void)
 }
 
 //=============================================================================
+// マウスデータ取得(左リリース)
+//=============================================================================
+bool CInputMouse::GetMouseLeftRelease(void)
+{
+	return (m_mouseStateRelease.rgbButtons[MOUSE_BUTTON_LEFT] & 0x80) ? true: false;
+}
+
+//=============================================================================
 // マウスデータ取得(右プレス)
 //=============================================================================
 bool CInputMouse::GetMouseRightPress(void)
@@ -378,6 +391,14 @@ bool CInputMouse::GetMouseRightTrigger(void)
 }
 
 //=============================================================================
+// マウスデータ取得(右リリース)
+//=============================================================================
+bool CInputMouse::GetMouseRightRelease(void)
+{
+	return (m_mouseStateRelease.rgbButtons[MOUSE_BUTTON_RIGHT] & 0x80) ? true: false;
+}
+
+//=============================================================================
 // マウスデータ取得(中央プレス)
 //=============================================================================
 bool CInputMouse::GetMouseCenterPress(void)
@@ -390,7 +411,15 @@ bool CInputMouse::GetMouseCenterPress(void)
 //=============================================================================
 bool CInputMouse::GetMouseCenterTrigger(void)
 {
-	return (m_mouseState.rgbButtons[MOUSE_BUTTON_CENTER] & 0x80) ? true: false;
+	return (m_mouseStateTrigger.rgbButtons[MOUSE_BUTTON_CENTER] & 0x80) ? true: false;
+}
+
+//=============================================================================
+// マウスデータ取得(中央リリース)
+//=============================================================================
+bool CInputMouse::GetMouseCenterRelease(void)
+{
+	return (m_mouseStateRelease.rgbButtons[MOUSE_BUTTON_CENTER] & 0x80) ? true: false;
 }
 
 //=============================================================================

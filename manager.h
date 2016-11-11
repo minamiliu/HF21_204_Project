@@ -20,6 +20,8 @@
 class CRenderer;
 class CInputKeyboard;
 class CInputMouse;
+class CCamera;
+class CLight;
 
 //============================================
 //構造体定義
@@ -51,6 +53,13 @@ private:
 	//入力処理
 	static CInputKeyboard *m_pInputKeyboard;
 	static CInputMouse *m_pInputMouse;
+
+	//ライト
+	static CLight *m_pLight;
+
+	//カメラ
+	static CCamera *m_pCamera;
+
 
 };
 

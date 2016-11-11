@@ -94,8 +94,8 @@ void CPlayer2D::Update(void)
 
 	if(CManager::GetInputMouse()->GetMouseLeftPress())
 	{
-		pos.x += CManager::GetInputMouse()->GetMouseAxisX() % 100;
-		pos.y += CManager::GetInputMouse()->GetMouseAxisY() % 100;
+		pos.x += CManager::GetInputMouse()->GetMouseAxisX();
+		pos.y += CManager::GetInputMouse()->GetMouseAxisY();
 		SetPosition(pos);
 	}
 

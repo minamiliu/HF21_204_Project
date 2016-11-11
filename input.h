@@ -110,10 +110,16 @@ public:
 	// マウス関連
 	bool GetMouseLeftPress(void);
 	bool GetMouseLeftTrigger(void);
+	bool GetMouseLeftRelease(void);
+
 	bool GetMouseRightPress(void);
 	bool GetMouseRightTrigger(void);
+	bool GetMouseRightRelease(void);
+
 	bool GetMouseCenterPress(void);
 	bool GetMouseCenterTrigger(void);
+	bool GetMouseCenterRelease(void);
+
 	long GetMouseAxisX(void);
 	long GetMouseAxisY(void);
 	long GetMouseAxisZ(void);
@@ -121,6 +127,7 @@ public:
 private:
 	DIMOUSESTATE2	m_mouseState;			// マウスの入力情報ワーク
 	DIMOUSESTATE2	m_mouseStateTrigger;	// マウスのトリガー情報ワーク
+	DIMOUSESTATE2	m_mouseStateRelease;	// マウスのリリース情報ワーク
 };
 
 //*********************************************************
