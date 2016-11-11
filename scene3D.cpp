@@ -62,7 +62,7 @@ HRESULT CScene3D::Init(void)
 	return S_OK;
 }
 
-HRESULT CScene3D::Init(D3DXVECTOR3 pos, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ)
+HRESULT CScene3D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ)
 {
 	LPDIRECT3DDEVICE9 pDevice;
 	pDevice = CManager::GetRenderer()->GetDevice();
@@ -157,11 +157,11 @@ void CScene3D::Draw(void)
 	);
 }
 
-CScene3D *CScene3D::Create(D3DXVECTOR3 pos, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ)
+CScene3D *CScene3D::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ)
 {
 	CScene3D *pScene3D;
 	pScene3D = new CScene3D;
-	pScene3D->Init(pos, nNumBlockX, nNumBlockZ, fSizeBlockX, fSizeBlockZ);
+	pScene3D->Init(pos, rot, nNumBlockX, nNumBlockZ, fSizeBlockX, fSizeBlockZ);
 	
 	return pScene3D;
 }

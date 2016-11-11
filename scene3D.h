@@ -31,12 +31,12 @@ public:
 	virtual ~CScene3D();
 
 	HRESULT Init(void);
-	HRESULT Init(D3DXVECTOR3 pos, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ);
+	HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ);
 	void Uninit(void);
 	void Update(void);
 	void Draw(void);
 
-	static CScene3D *Create(D3DXVECTOR3 pos, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ);
+	static CScene3D *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ);
 
 private:
 	//ä÷êî

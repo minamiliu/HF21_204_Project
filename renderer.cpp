@@ -123,8 +123,6 @@ HRESULT CRenderer::Init(HWND hWnd, bool bWindow)
 					OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, "Terminal", &m_pFont);
 #endif
 
-	// ポリゴンの初期化処理
-	//InitPolygon();
 
 	return S_OK;
 }
@@ -134,8 +132,6 @@ HRESULT CRenderer::Init(HWND hWnd, bool bWindow)
 //=============================================================================
 void CRenderer::Uninit(void)
 {
-	// ポリゴンの終了処理
-	//UninitPolygon();
 
 #ifdef _DEBUG
 	// デバッグ情報表示用フォントの破棄

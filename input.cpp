@@ -240,7 +240,9 @@ void CInputKeyboard::FlushKeyTrigger(int nKey)
 //=============================================================================
 CInputMouse::CInputMouse()
 {
-
+	ZeroMemory(&m_mouseState, sizeof DIMOUSESTATE2);
+	ZeroMemory(&m_mouseStateTrigger, sizeof DIMOUSESTATE2);
+	ZeroMemory(&m_mouseStateRelease, sizeof DIMOUSESTATE2);
 }
 
 //=============================================================================
