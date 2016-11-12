@@ -15,6 +15,7 @@
 #include "input.h"
 #include "player2D.h"
 #include "bullet2D.h"
+#include "debugproc.h"
 
 //============================================
 // É}ÉNÉçíËã`
@@ -112,6 +113,9 @@ void CPlayer2D::Update(void)
 	{
 		CBullet2D::Create(pos, D3DXVECTOR3( 20.0f, 20.0f, 0.0f));
 	}
+
+	CDebugProc::Print("\nposX = %f\n", pos.x);
+	CDebugProc::Print("posY = %f\n", pos.y);
 
 	CScene2D::Update();
 }

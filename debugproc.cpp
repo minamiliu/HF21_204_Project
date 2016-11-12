@@ -25,26 +25,42 @@
 //*****************************************************************************
 
 //*****************************************************************************
-// グローバル変数
+// 静的メンバー変数の初期化
 //*****************************************************************************
-LPD3DXFONT	g_pD3DXFontDebug = NULL;			// フォントへのポインタ
-char		g_aStrDebug[1024] = {"\0"};	// デバッグ情報
+LPD3DXFONT	CDebugProc::m_pD3DXFontDebug = NULL;	// フォントへのポインタ
+char		CDebugProc::m_aStrDebug[1024] = {"\0"};		// デバッグ情報
 
+
+//=============================================================================
+// コンストラクタ
+//=============================================================================
+CDebugProc::CDebugProc()
+{
+
+}
+
+//=============================================================================
+// デストラクタ
+//=============================================================================
+CDebugProc::~CDebugProc()
+{
+
+}
 
 //=============================================================================
 // デバッグ表示処理の初期化
 //=============================================================================
-HRESULT InitDebugProc(void)
+HRESULT CDebugProc::Init(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = CManager :: GetRenderer()->GetDevice();
 	HRESULT hr;
 
 	// 情報表示用フォントを設定
 	hr = D3DXCreateFont(pDevice, 18, 0, 0, 0, FALSE, SHIFTJIS_CHARSET,
-					OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, "Terminal", &g_pD3DXFontDebug);
+					OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, "Terminal", &m_pD3DXFontDebug);
 
 	// 情報クリア
-	memset(g_aStrDebug, 0, sizeof g_aStrDebug);
+	memset(m_aStrDebug, 0, sizeof m_aStrDebug);
 
 	return hr;
 }
@@ -52,40 +68,40 @@ HRESULT InitDebugProc(void)
 //=============================================================================
 // デバッグ表示処理の終了処理
 //=============================================================================
-void UninitDebugProc(void)
+void CDebugProc::Uninit(void)
 {
-	if(g_pD3DXFontDebug != NULL)
+	if(m_pD3DXFontDebug != NULL)
 	{// 情報表示用フォントの開放
-		g_pD3DXFontDebug->Release();
-		g_pD3DXFontDebug = NULL;
+		m_pD3DXFontDebug->Release();
+		m_pD3DXFontDebug = NULL;
 	}
 }
 
 //=============================================================================
 // デバッグ表示処理の更新処理
 //=============================================================================
-void UpdateDebugProc(void)
+void CDebugProc::Update(void)
 {
 }
 
 //=============================================================================
 // デバッグ表示処理の描画処理
 //=============================================================================
-void DrawDebugProc(void)
+void CDebugProc::Draw(void)
 {
 	RECT rect = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
 
 	// 情報表示
-	g_pD3DXFontDebug->DrawText(NULL, g_aStrDebug, -1, &rect, DT_LEFT, D3DCOLOR_ARGB(0xff, 0xff, 0xff, 0xff));
+	m_pD3DXFontDebug->DrawText(NULL, m_aStrDebug, -1, &rect, DT_LEFT, D3DCOLOR_ARGB(0xff, 0xff, 0xff, 0xff));
 
 	// 情報クリア
-	memset(g_aStrDebug, 0, sizeof g_aStrDebug);
+	memset(m_aStrDebug, 0, sizeof m_aStrDebug);
 }
 
 //=============================================================================
 // デバッグ表示の登録
 //=============================================================================
-void PrintDebugProc(char *fmt,...)
+void CDebugProc::Print(char *fmt,...)
 {
 #if 0
 	long *pParam;
@@ -149,9 +165,9 @@ void PrintDebugProc(char *fmt,...)
 	va_end(list);
 
 	// 連結
-	if((strlen(g_aStrDebug) + strlen(aBuf)) < ((sizeof g_aStrDebug) - 1))
+	if((strlen(m_aStrDebug) + strlen(aBuf)) < ((sizeof m_aStrDebug) - 1))
 	{
-		strcat(g_aStrDebug, aBuf);
+		strcat(m_aStrDebug, aBuf);
 	}
 #endif
 }

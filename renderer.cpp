@@ -13,6 +13,7 @@
 #include "main.h"
 #include "renderer.h"
 #include "scene.h"
+#include "debugproc.h"
 
 
 //============================================
@@ -121,6 +122,10 @@ HRESULT CRenderer::Init(HWND hWnd, bool bWindow)
 	// デバッグ情報表示用フォントの生成
 	D3DXCreateFont(m_pD3DDevice, 18, 0, 0, 0, FALSE, SHIFTJIS_CHARSET,
 					OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, "Terminal", &m_pFont);
+
+	//デバッグ情報表示
+	new CDebugProc;
+	CDebugProc::Init();
 #endif
 
 
@@ -140,6 +145,10 @@ void CRenderer::Uninit(void)
 		m_pFont->Release();
 		m_pFont = NULL;
 	}
+
+	//デバッグ情報表示の破棄
+	CDebugProc::Uninit();
+
 #endif
 
 	// デバイスの破棄
@@ -164,6 +173,11 @@ void CRenderer::Update(void)
 {
 	// ポリゴンの更新処理
 	CScene::UpdateAll();
+
+#ifdef _DEBUG
+	//デバッグ情報表示の更新処理
+	CDebugProc::Update();
+#endif
 }
 
 //=============================================================================
@@ -183,6 +197,9 @@ void CRenderer::Draw(void)
 #ifdef _DEBUG
 		// FPS表示
 		DrawFPS();
+
+		//デバッグ情報表示
+		CDebugProc::Draw();
 #endif
 		// Direct3Dによる描画の終了
 		m_pD3DDevice->EndScene();
