@@ -72,7 +72,7 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 	CScene3D::Create( D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 10, 10, 100.0f, 100.0f);
 
 	//オブジェクトの生成(2Dポリゴン)
-	CPlayer2D::Create( D3DXVECTOR3( 200.0f, 300.0f, 0.0f), D3DXVECTOR3(300.0f, 300.0f, 0.0f));
+	CPlayer2D::Create( D3DXVECTOR3( SCREEN_WIDTH/2, 600.0f, 0.0f), D3DXVECTOR3(100.0f, 100.0f, 0.0f));
 
 	return S_OK;
 }
