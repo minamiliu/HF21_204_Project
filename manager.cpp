@@ -61,8 +61,10 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 	m_pInputMouse->Init(hInstance, hWnd);
 
 	//ÉâÉCÉgÇÃê∂ê¨
-	m_pLight = new CLight;
-	m_pLight->Init();
+	CLight::Create( D3DXVECTOR3( 0.2f, -0.6f, 0.8f), D3DXCOLOR( 1.0f, 1.0f, 1.0f, 1.0f));
+	CLight::Create( D3DXVECTOR3( -0.2f, -0.3f, -0.5f), D3DXCOLOR( 0.75f, 0.75f, 0.75f, 1.0f));
+	CLight::Create( D3DXVECTOR3( 0.8f, 0.1f, 0.5f), D3DXCOLOR( 0.15f, 0.15f, 0.15f, 1.0f));
+	CLight::SetAllLightOn();
 
 	//ÉJÉÅÉâÇÃê∂ê¨
 	m_pCamera = new CCamera;

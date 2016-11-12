@@ -18,7 +18,7 @@
 //============================================
 //マクロ定義
 //============================================
-#define NUM_LIGHT		(3)		// ライトの数
+#define MAX_LIGHT		(8)		// ライトの数
 
 //============================================
 //構造体定義
@@ -31,13 +31,17 @@ public:
 	CLight();
 	virtual ~CLight();
 
-	HRESULT Init(void);
+	HRESULT Init(D3DXVECTOR3 vecDir, D3DXCOLOR diffuse);
 	void Uninit(void);
 
+	static void SetAllLightOn(void);
+	static CLight *Create(D3DXVECTOR3 vecDir, D3DXCOLOR diffuse);
 
 private:
-	static D3DLIGHT9 m_aLight[NUM_LIGHT];		// ライト情報
-
+	static bool abUse[MAX_LIGHT];
+	D3DLIGHT9 *m_pLight;		// ライト情報
+	int m_nID;
 };
 
 #endif
+

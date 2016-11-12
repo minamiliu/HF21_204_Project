@@ -22,18 +22,24 @@
 //============================================
 // 静的メンバー変数の初期化
 //============================================
-D3DLIGHT9 CLight::m_aLight[NUM_LIGHT] = {};	
-
-//=============================================================================
-// 構造体定義
-//=============================================================================
+bool CLight::abUse[MAX_LIGHT] = {false};
 
 //=============================================================================
 //コンストラクタ
 //=============================================================================
 CLight::CLight()
 {
+	m_pLight = NULL;
 
+	for(int cntLight = 0; cntLight < MAX_LIGHT; cntLight++)
+	{
+		if(abUse[cntLight] == false)
+		{
+			abUse[cntLight] = true;
+			m_nID = cntLight;
+			break;
+		}
+	}
 }
 
 //=============================================================================
@@ -44,80 +50,68 @@ CLight::~CLight()
 	
 }
 
-HRESULT CLight::Init(void)
+//=============================================================================
+//ライト初期化
+//=============================================================================
+HRESULT CLight::Init(D3DXVECTOR3 vecDir, D3DXCOLOR diffuse)
 {
 	LPDIRECT3DDEVICE9 pDevice;
 	pDevice = CManager::GetRenderer()->GetDevice();
 
-	D3DXVECTOR3 vecDir;
+	m_pLight = new D3DLIGHT9;
 
 	// D3DLIGHT9構造体を0でクリアする
-	ZeroMemory( &m_aLight[0], sizeof(D3DLIGHT9));
-	
+	ZeroMemory( m_pLight, sizeof(D3DLIGHT9));
+
 	// ライト0のタイプの設定
-	m_aLight[0].Type = D3DLIGHT_DIRECTIONAL;
+	m_pLight->Type = D3DLIGHT_DIRECTIONAL;
 	
 	// ライト0の拡散光の設定
-	m_aLight[0].Diffuse = D3DXCOLOR( 1.0f, 1.0f, 1.0f, 1.0f);
-	m_aLight[0].Ambient = D3DXCOLOR( 0.2f, 0.2f, 0.2f, 0.2f);
+	m_pLight->Diffuse = diffuse;
+	m_pLight->Ambient = D3DXCOLOR( 0.2f, 0.2f, 0.2f, 0.2f);
 	
 	// ライト0の方向の設定
-	vecDir = D3DXVECTOR3( 0.2f, -0.6f, 0.8f);
-	D3DXVec3Normalize( (D3DXVECTOR3*)&m_aLight[0].Direction, &vecDir);
-	
+	D3DXVec3Normalize( (D3DXVECTOR3*)&m_pLight->Direction, &vecDir);
+
 	// ライト0をレンダリングパイプラインに設定
-	pDevice->SetLight( 0, &m_aLight[0]);
+	pDevice->SetLight( m_nID, m_pLight);
 
 	// ライト0を使用使用状態に
-	pDevice->LightEnable( 0, TRUE);
-
-	// D3DLIGHT9構造体を0でクリアする
-	ZeroMemory( &m_aLight[1], sizeof(D3DLIGHT9));
-
-	// ライト1のタイプの設定
-	m_aLight[1].Type = D3DLIGHT_DIRECTIONAL;
-
-	// ライト1の拡散光の設定
-	m_aLight[1].Diffuse = D3DXCOLOR( 0.75f, 0.75f, 0.75f, 1.0f);
-	m_aLight[1].Ambient = D3DXCOLOR( 0.2f, 0.2f, 0.2f, 1.0f);
-
-    // ライト1の方向の設定
-	vecDir = D3DXVECTOR3( -0.2f, -0.3f, -0.5f);
-	D3DXVec3Normalize( (D3DXVECTOR3*)&m_aLight[1].Direction, &vecDir);
-
-	// ライト1をレンダリングパイプラインに設定
-	pDevice->SetLight( 1, &m_aLight[1]);
-
-	// ライト1のを使用使用状態に
-	pDevice->LightEnable( 1, TRUE);
-
-	// D3DLIGHT9構造体を0でクリアする
-	ZeroMemory( &m_aLight[2], sizeof(D3DLIGHT9));
-	
-	// ライト2のタイプの設定
-	m_aLight[2].Type = D3DLIGHT_DIRECTIONAL;
-	
-	// ライト2の拡散光の設定
-	m_aLight[2].Diffuse = D3DXCOLOR( 0.15f, 0.15f, 0.15f, 1.0f);
-	m_aLight[2].Ambient = D3DXCOLOR( 0.2f, 0.2f, 0.2f, 1.0f);
-	
-	// ライト2の方向の設定
-	vecDir = D3DXVECTOR3( 0.8f, 0.1f, 0.5f);
-	D3DXVec3Normalize( (D3DXVECTOR3*)&m_aLight[2].Direction, &vecDir);
-	
-	// ライト2をレンダリングパイプラインに設定
-	pDevice->SetLight( 2, &m_aLight[2]);
-
-	// ライト2を使用使用状態に
-	pDevice->LightEnable( 2, TRUE);
-
-	// ライティングモードをON
-	pDevice->SetRenderState( D3DRS_LIGHTING, TRUE);
+	pDevice->LightEnable( m_nID, TRUE);
 
 	return S_OK;
 }
 
+//=============================================================================
+//ライト解放
+//=============================================================================
 void CLight::Uninit(void)
 {
+	// テクスチャの破棄
+	if(m_pLight != NULL)
+	{
+		delete m_pLight;
+		m_pLight = NULL;
+	}
+}
+//=============================================================================
+//ライトの生成
+//=============================================================================
+CLight *CLight::Create(D3DXVECTOR3 vecDir, D3DXCOLOR diffuse)
+{
+	CLight *pLight = new CLight;
+	pLight->Init( vecDir, diffuse);
 
+	return pLight;
+}
+//=============================================================================
+//総ライトを有効にする
+//=============================================================================
+void CLight::SetAllLightOn(void)
+{
+	LPDIRECT3DDEVICE9 pDevice;
+	pDevice = CManager::GetRenderer()->GetDevice();
+
+	// ライティングモードをON
+	pDevice->SetRenderState( D3DRS_LIGHTING, TRUE);
 }
