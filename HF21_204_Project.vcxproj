@@ -90,6 +90,7 @@
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="scene2D.cpp" />
     <ClCompile Include="scene3D.cpp" />
+    <ClCompile Include="sceneX.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bullet2D.h" />
@@ -104,6 +105,7 @@
     <ClInclude Include="scene.h" />
     <ClInclude Include="scene2D.h" />
     <ClInclude Include="scene3D.h" />
+    <ClInclude Include="sceneX.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

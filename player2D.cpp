@@ -73,28 +73,6 @@ void CPlayer2D::Update(void)
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
 	CInputMouse *pInputMouse = CManager::GetInputMouse();
 	D3DXVECTOR3 pos = CPlayer2D::GetPosition();
-
-	//ˆÚ“®
-	if(pInputKeyboard->GetKeyPress(DIK_W))
-	{
-		pos.y -= 5.0f;
-		CPlayer2D::SetPosition(pos);
-	}
-	if(pInputKeyboard->GetKeyPress(DIK_S))
-	{
-		pos.y += 5.0f;
-		SetPosition(pos);
-	}
-	if(pInputKeyboard->GetKeyPress(DIK_A))
-	{
-		pos.x -= 5.0f;
-		SetPosition(pos);
-	}
-	if(pInputKeyboard->GetKeyPress(DIK_D))
-	{
-		pos.x += 5.0f;
-		SetPosition(pos);
-	}
 	
 	int mouseMoveX = pInputMouse->GetMouseAxisX();
 	if( mouseMoveX != 0)
@@ -105,10 +83,6 @@ void CPlayer2D::Update(void)
 
 
 	//UŒ‚
-	if(pInputKeyboard->GetKeyTrigger(DIK_SPACE))
-	{
-		CBullet2D::Create(pos, D3DXVECTOR3( 20.0f, 20.0f, 0.0f));
-	}
 	if(pInputMouse->GetMouseLeftTrigger())
 	{
 		CBullet2D::Create(pos, D3DXVECTOR3( 20.0f, 20.0f, 0.0f));
