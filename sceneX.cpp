@@ -14,13 +14,15 @@
 #include "sceneX.h"
 #include "renderer.h"
 #include "manager.h"
+#include "camera.h"
 #include "input.h"
+#include "debugproc.h"
 
 //============================================
 // マクロ定義
 //============================================
 #define MODEL_FILENAME "data/MODEL/player.x"
-
+#define VALUE_ROTATE	(D3DX_PI * 0.1f) 	// 回転量
 
 //=============================================================================
 // 構造体定義
@@ -40,7 +42,10 @@ CSceneX::CSceneX()
 	m_pos = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);		// モデルの位置
 	m_rot = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);		// モデルの向き(回転)
 	m_scl = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);		// モデルの大きさ(スケール)
-	m_move = 0.0f;								// モデルの移動量
+	m_move = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);	// モデルの移動量
+
+	m_rotTarget = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
+	m_rotAngle = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
 
 	D3DXMatrixIdentity( &m_mtxWorld);
 }
@@ -65,7 +70,7 @@ HRESULT CSceneX::Init(void)
 //=============================================================================
 //
 //=============================================================================
-HRESULT CSceneX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float move)
+HRESULT CSceneX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float speed)
 {
 	LPDIRECT3DDEVICE9 pDevice;
 	pDevice = CManager::GetRenderer()->GetDevice();
@@ -74,7 +79,7 @@ HRESULT CSceneX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float m
 	m_pos = pos;
 	m_rot = rot;
 	m_scl = scl;
-	m_move = move;
+	m_speed = speed;
 
 	// モデルに関する変数の初期化							
 	m_pTexture = NULL;		// テクスチャへのポインタ
@@ -133,24 +138,154 @@ void CSceneX::Uninit(void)
 void CSceneX::Update(void)
 {
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
+	D3DXVECTOR3 rotCamera = CManager::GetCamera()->GetCameraRot();
 
+	////移動
+	//if(pInputKeyboard->GetKeyPress(DIK_W))
+	//{
+	//	m_pos.z -= m_move;
+	//}
+	//if(pInputKeyboard->GetKeyPress(DIK_S))
+	//{
+	//	m_pos.z += m_move;
+	//}
+	//if(pInputKeyboard->GetKeyPress(DIK_A))
+	//{
+	//	m_pos.x += m_move;
+	//}
+	//if(pInputKeyboard->GetKeyPress(DIK_D))
+	//{
+	//	m_pos.x -= m_move;
+	//}
+
+	//移動処理
+	bool isKeyPressed = false;
+	//斜め移動
+	if( (pInputKeyboard->GetKeyPress(DIK_D) && pInputKeyboard->GetKeyPress(DIK_W)) ) //右上
+	{
+		//m_rot.y = rotCamera.y + D3DXToRadian(45.0f);
+		m_rotTarget.y = rotCamera.y + D3DXToRadian(45.0f);
+		if( m_rotTarget.y > D3DX_PI)
+		{
+			m_rotTarget.y -= D3DX_PI * 2.0f;
+		}
+		isKeyPressed = true;
+	}
+	else if((pInputKeyboard->GetKeyPress(DIK_D) && pInputKeyboard->GetKeyPress(DIK_S)) ) //右下
+	{
+		//m_rot.y = rotCamera.y + D3DXToRadian(135.0f);
+		m_rotTarget.y = rotCamera.y + D3DXToRadian(135.0f);
+		if( m_rotTarget.y > D3DX_PI)
+		{
+			m_rotTarget.y -= D3DX_PI * 2.0f;
+		}
+		isKeyPressed = true;
+	}
+	else if((pInputKeyboard->GetKeyPress(DIK_A)  && pInputKeyboard->GetKeyPress(DIK_W))  ) //左上
+	{
+		//m_rot.y = rotCamera.y + D3DXToRadian(-45.0f);
+		m_rotTarget.y = rotCamera.y + D3DXToRadian(-45.0f);
+		if( m_rotTarget.y < -D3DX_PI)
+		{
+			m_rotTarget.y += D3DX_PI * 2.0f;
+		}
+		isKeyPressed = true;
+	}
+	else if((pInputKeyboard->GetKeyPress(DIK_A) && pInputKeyboard->GetKeyPress(DIK_S)) ) //左下
+	{
+		//m_rot.y = rotCamera.y + D3DXToRadian(-135.0f);
+		m_rotTarget.y = rotCamera.y + D3DXToRadian(-135.0f);
+		if( m_rotTarget.y < -D3DX_PI)
+		{
+			m_rotTarget.y += D3DX_PI * 2.0f;
+		}
+		isKeyPressed = true;
+	}
+	else if(pInputKeyboard->GetKeyPress(DIK_W) )
+	{
+		//m_rot.y = rotCamera.y;
+		m_rotTarget.y = rotCamera.y;
+		isKeyPressed = true;
+	}
+	else if(pInputKeyboard->GetKeyPress(DIK_S) )
+	{
+		//m_rot.y = rotCamera.y + D3DXToRadian(180.0f);
+		m_rotTarget.y = rotCamera.y + D3DXToRadian(180.0f);
+		if( m_rotTarget.y > D3DX_PI)
+		{
+			m_rotTarget.y -= D3DX_PI * 2.0f;
+		}
+		isKeyPressed = true;
+	}
+	else if(pInputKeyboard->GetKeyPress(DIK_A) )
+	{
+		//m_rot.y = rotCamera.y + D3DXToRadian(-90.0f);
+		m_rotTarget.y = rotCamera.y + D3DXToRadian(-90.0f);
+		if( m_rotTarget.y < -D3DX_PI)
+		{
+			m_rotTarget.y += D3DX_PI * 2.0f;
+		}
+		isKeyPressed = true;
+	}
+	else if(pInputKeyboard->GetKeyPress(DIK_D) )
+	{
+		//m_rot.y = rotCamera.y + D3DXToRadian(90.0f);
+		m_rotTarget.y = rotCamera.y + D3DXToRadian(90.0f);
+		if( m_rotTarget.y > D3DX_PI)
+		{
+			m_rotTarget.y -= D3DX_PI * 2.0f;
+		}
+		isKeyPressed = true;
+	}
+
+	if(isKeyPressed == true)
+	{
+		//移動慣性の初期化
+		m_move = D3DXVECTOR3( m_speed, 0.0f, m_speed);
+
+		//時計回り、または逆時計回りを決める
+		m_rotAngle =  Get2VecRotAngle( m_rot, m_rotTarget, 5, -1);
+	}
+
+	//回転慣性
+	m_rotAngle.y -= m_rotAngle.y * 0.001f;
+
+	//モデル角度修正
+	if( m_rot.y > D3DX_PI)
+	{
+		m_rot.y = m_rot.y - D3DX_PI*2;
+	}
+	else if(m_rot.y < 0.0f - D3DX_PI)
+	{
+		m_rot.y = m_rot.y + D3DX_PI*2;
+	}
+
+	//次の回転位置に到着したら
+	if(abs(m_rot.y - m_rotTarget.y) < VALUE_ROTATE)
+	{
+		m_rot.y = m_rotTarget.y;
+		m_rotAngle.y = 0;
+	}
+	//次の回転位置にまだ到着してない
+	else
+	{
+		m_rot.y += m_rotAngle.y;
+	}	
+
+
+	//回転していない時
+	if( m_rotAngle.y == 0)
+	{
 		//移動
-	if(pInputKeyboard->GetKeyPress(DIK_W))
-	{
-		m_pos.z -= m_move;
+		m_pos.x += m_move.x * sinf( m_rot.y);
+		m_pos.z += m_move.z * cosf( m_rot.y);
+
+		//慣性処理
+		m_move -= m_move * 0.25f;	
 	}
-	if(pInputKeyboard->GetKeyPress(DIK_S))
-	{
-		m_pos.z += m_move;
-	}
-	if(pInputKeyboard->GetKeyPress(DIK_A))
-	{
-		m_pos.x += m_move;
-	}
-	if(pInputKeyboard->GetKeyPress(DIK_D))
-	{
-		m_pos.x -= m_move;
-	}
+
+	CDebugProc::Print("\nposX = %f\n", m_pos.x);
+	CDebugProc::Print("posZ = %f\n", m_pos.z);
 }
 
 //=============================================================================
@@ -205,11 +340,90 @@ void CSceneX::Draw(void)
 //=============================================================================
 //
 //=============================================================================
-CSceneX *CSceneX::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float move)
+CSceneX *CSceneX::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float speed)
 {
 	CSceneX *pSceneX;
 	pSceneX = new CSceneX;
-	pSceneX->Init(pos, rot, scl, move);
+	pSceneX->Init(pos, rot, scl, speed);
 
 	return pSceneX;
+}
+
+//=============================================================================
+// 回転角度を取得
+//=============================================================================
+D3DXVECTOR3 CSceneX::Get2VecRotAngle( D3DXVECTOR3 rot, D3DXVECTOR3 rotTarget, float divide, float value_rot)
+{
+	float tAngle[3];
+	D3DXVECTOR3 re;
+
+	tAngle[0] = rotTarget.x - rot.x;
+	tAngle[1] = rotTarget.y - rot.y;
+	tAngle[2] = rotTarget.z - rot.z;
+
+	for(int cntXYZ = 0; cntXYZ < 3; cntXYZ++)
+	{
+		if(value_rot == -1)
+		{
+			if( tAngle[cntXYZ] > 0)
+			{
+				if(tAngle[cntXYZ] >= D3DX_PI)
+				{
+					//tAngle[cntXYZ] = -value_rot;
+					tAngle[cntXYZ] = -fabs(tAngle[cntXYZ]/divide);
+				}
+				else
+				{
+					//tAngle[cntXYZ] = value_rot;
+					tAngle[cntXYZ] = fabs(tAngle[cntXYZ]/divide);
+				}
+						
+			}
+			else
+			{
+				if(tAngle[cntXYZ] < -D3DX_PI)
+				{
+					//tAngle[cntXYZ] = value_rot;
+					tAngle[cntXYZ] = fabs(tAngle[cntXYZ]/divide);
+				}
+				else
+				{
+					//tAngle[cntXYZ] = -value_rot;
+					tAngle[cntXYZ] = -fabs(tAngle[cntXYZ]/divide);
+				}
+			}		
+		}
+		else
+		{
+			if( tAngle[cntXYZ] > 0)
+			{
+				if(tAngle[cntXYZ] >= D3DX_PI)
+				{
+					tAngle[cntXYZ] = -value_rot;
+				}
+				else
+				{
+					tAngle[cntXYZ] = value_rot;
+				}
+						
+			}
+			else
+			{
+				if(tAngle[cntXYZ] < -D3DX_PI)
+				{
+					tAngle[cntXYZ] = value_rot;
+				}
+				else
+				{
+					tAngle[cntXYZ] = -value_rot;
+				}
+			}		
+		}
+	}
+
+	re.x = tAngle[0];
+	re.y = tAngle[1];
+	re.z = tAngle[2];
+
+	return re;
 }

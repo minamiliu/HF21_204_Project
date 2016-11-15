@@ -35,7 +35,7 @@ public:
 	void Update(void);
 
 	void SetCamera(void);
-	//CCamera *GetCamera(void);
+	D3DXVECTOR3 GetCameraRot(void);
 
 private:
 

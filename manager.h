@@ -46,6 +46,9 @@ public:
 	static CInputKeyboard *GetInputKeyboard(void);
 	static CInputMouse *GetInputMouse(void);
 
+	//ƒJƒƒ‰
+	static CCamera *GetCamera(void);
+
 private:
 	//ƒŒƒ“ƒ_ƒ‰[
 	static CRenderer *m_pRenderer;

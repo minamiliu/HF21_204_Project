@@ -88,9 +88,6 @@ void CPlayer2D::Update(void)
 		CBullet2D::Create(pos, D3DXVECTOR3( 20.0f, 20.0f, 0.0f));
 	}
 
-	CDebugProc::Print("\nposX = %f\n", pos.x);
-	CDebugProc::Print("posY = %f\n", pos.y);
-
 	CScene2D::Update();
 }
 

@@ -166,3 +166,8 @@ CInputMouse *CManager::GetInputMouse(void)
 {
 	return m_pInputMouse;
 }
+
+CCamera *CManager::GetCamera(void)
+{
+	return m_pCamera;
+}

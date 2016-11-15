@@ -31,15 +31,18 @@ public:
 	virtual ~CSceneX();
 
 	HRESULT Init(void);
-	HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float move);
+	HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float speed);
 	void Uninit(void);
 	void Update(void);
 	void Draw(void);
 
-	static CSceneX *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float move);
+	static CSceneX *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float speed);
 
 private:
+	//関数
+	D3DXVECTOR3 Get2VecRotAngle( D3DXVECTOR3 rot, D3DXVECTOR3 rotTarget, float divide, float value_rot);
 
+	//変数
 	LPDIRECT3DTEXTURE9	m_pTexture;		// テクスチャへのポインタ
 	LPD3DXMESH  m_pD3DXMesh;			// メッシュ情報へのポインタ
 	LPD3DXBUFFER  m_pD3DXBuffMat;		// マテリアル情報へのポインタ
@@ -48,7 +51,11 @@ private:
 	D3DXVECTOR3 m_pos;					// モデルの位置
 	D3DXVECTOR3 m_rot;					// モデルの向き(回転)
 	D3DXVECTOR3 m_scl;					// モデルの大きさ(スケール)
-	float m_move;					// モデルの移動量
+	D3DXVECTOR3 m_move;					// モデルの移動量
+	float m_speed;						// モデルのスピード
+
+	D3DXVECTOR3 m_rotTarget;			// モデルの向き(回転)
+	D3DXVECTOR3 m_rotAngle;				// モデルの向き(回転)
 
 	//キーフレイム
 	//D3DXVECTOR3 posChild;				//子座標
