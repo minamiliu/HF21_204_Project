@@ -23,6 +23,7 @@
 //============================================
 #define MODEL_FILENAME "data/MODEL/player.x"
 #define VALUE_ROTATE	(D3DX_PI * 0.1f) 	// âÒì]ó 
+#define DIVIDE_ROTATE	(5.0f)
 
 //=============================================================================
 // ç\ë¢ëÃíËã`
@@ -140,30 +141,12 @@ void CSceneX::Update(void)
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
 	D3DXVECTOR3 rotCamera = CManager::GetCamera()->GetCameraRot();
 
-	////à⁄ìÆ
-	//if(pInputKeyboard->GetKeyPress(DIK_W))
-	//{
-	//	m_pos.z -= m_move;
-	//}
-	//if(pInputKeyboard->GetKeyPress(DIK_S))
-	//{
-	//	m_pos.z += m_move;
-	//}
-	//if(pInputKeyboard->GetKeyPress(DIK_A))
-	//{
-	//	m_pos.x += m_move;
-	//}
-	//if(pInputKeyboard->GetKeyPress(DIK_D))
-	//{
-	//	m_pos.x -= m_move;
-	//}
 
 	//à⁄ìÆèàóù
 	bool isKeyPressed = false;
 	//éŒÇﬂà⁄ìÆ
 	if( (pInputKeyboard->GetKeyPress(DIK_D) && pInputKeyboard->GetKeyPress(DIK_W)) ) //âEè„
 	{
-		//m_rot.y = rotCamera.y + D3DXToRadian(45.0f);
 		m_rotTarget.y = rotCamera.y + D3DXToRadian(45.0f);
 		if( m_rotTarget.y > D3DX_PI)
 		{
@@ -173,7 +156,6 @@ void CSceneX::Update(void)
 	}
 	else if((pInputKeyboard->GetKeyPress(DIK_D) && pInputKeyboard->GetKeyPress(DIK_S)) ) //âEâ∫
 	{
-		//m_rot.y = rotCamera.y + D3DXToRadian(135.0f);
 		m_rotTarget.y = rotCamera.y + D3DXToRadian(135.0f);
 		if( m_rotTarget.y > D3DX_PI)
 		{
@@ -183,7 +165,6 @@ void CSceneX::Update(void)
 	}
 	else if((pInputKeyboard->GetKeyPress(DIK_A)  && pInputKeyboard->GetKeyPress(DIK_W))  ) //ç∂è„
 	{
-		//m_rot.y = rotCamera.y + D3DXToRadian(-45.0f);
 		m_rotTarget.y = rotCamera.y + D3DXToRadian(-45.0f);
 		if( m_rotTarget.y < -D3DX_PI)
 		{
@@ -193,7 +174,6 @@ void CSceneX::Update(void)
 	}
 	else if((pInputKeyboard->GetKeyPress(DIK_A) && pInputKeyboard->GetKeyPress(DIK_S)) ) //ç∂â∫
 	{
-		//m_rot.y = rotCamera.y + D3DXToRadian(-135.0f);
 		m_rotTarget.y = rotCamera.y + D3DXToRadian(-135.0f);
 		if( m_rotTarget.y < -D3DX_PI)
 		{
@@ -203,13 +183,11 @@ void CSceneX::Update(void)
 	}
 	else if(pInputKeyboard->GetKeyPress(DIK_W) )
 	{
-		//m_rot.y = rotCamera.y;
 		m_rotTarget.y = rotCamera.y;
 		isKeyPressed = true;
 	}
 	else if(pInputKeyboard->GetKeyPress(DIK_S) )
 	{
-		//m_rot.y = rotCamera.y + D3DXToRadian(180.0f);
 		m_rotTarget.y = rotCamera.y + D3DXToRadian(180.0f);
 		if( m_rotTarget.y > D3DX_PI)
 		{
@@ -219,7 +197,6 @@ void CSceneX::Update(void)
 	}
 	else if(pInputKeyboard->GetKeyPress(DIK_A) )
 	{
-		//m_rot.y = rotCamera.y + D3DXToRadian(-90.0f);
 		m_rotTarget.y = rotCamera.y + D3DXToRadian(-90.0f);
 		if( m_rotTarget.y < -D3DX_PI)
 		{
@@ -229,7 +206,6 @@ void CSceneX::Update(void)
 	}
 	else if(pInputKeyboard->GetKeyPress(DIK_D) )
 	{
-		//m_rot.y = rotCamera.y + D3DXToRadian(90.0f);
 		m_rotTarget.y = rotCamera.y + D3DXToRadian(90.0f);
 		if( m_rotTarget.y > D3DX_PI)
 		{
@@ -244,32 +220,37 @@ void CSceneX::Update(void)
 		m_move = D3DXVECTOR3( m_speed, 0.0f, m_speed);
 
 		//éûåvâÒÇËÅAÇ‹ÇΩÇÕãtéûåvâÒÇËÇåàÇﬂÇÈ
-		m_rotAngle =  Get2VecRotAngle( m_rot, m_rotTarget, 5, -1);
+		m_rotAngle =  Get2VecRotAngle( m_rot, m_rotTarget);
 	}
 
 	//âÒì]äµê´
-	m_rotAngle.y -= m_rotAngle.y * 0.001f;
-
-	//ÉÇÉfÉãäpìxèCê≥
-	if( m_rot.y > D3DX_PI)
-	{
-		m_rot.y = m_rot.y - D3DX_PI*2;
-	}
-	else if(m_rot.y < 0.0f - D3DX_PI)
-	{
-		m_rot.y = m_rot.y + D3DX_PI*2;
-	}
+	m_rotAngle.y *= 0.999f;
 
 	//éüÇÃâÒì]à íuÇ…ìûíÖÇµÇΩÇÁ
-	if(abs(m_rot.y - m_rotTarget.y) < VALUE_ROTATE)
+	float diff = abs(m_rot.y - m_rotTarget.y);
+	if( diff > D3DX_PI)
+	{
+		diff -= D3DX_PI*2;
+	}
+
+	if(diff < VALUE_ROTATE)
 	{
 		m_rot.y = m_rotTarget.y;
 		m_rotAngle.y = 0;
 	}
-	//éüÇÃâÒì]à íuÇ…Ç‹ÇæìûíÖÇµÇƒÇ»Ç¢
-	else
+	else //éüÇÃâÒì]à íuÇ…Ç‹ÇæìûíÖÇµÇƒÇ»Ç¢
 	{
 		m_rot.y += m_rotAngle.y;
+
+		//ÉÇÉfÉãäpìxèCê≥
+		if( m_rot.y > D3DX_PI)
+		{
+			m_rot.y -= D3DX_PI*2;
+		}
+		else if(m_rot.y <= -D3DX_PI)
+		{
+			m_rot.y += D3DX_PI*2;
+		}
 	}	
 
 
@@ -286,6 +267,7 @@ void CSceneX::Update(void)
 
 	CDebugProc::Print("\nposX = %f\n", m_pos.x);
 	CDebugProc::Print("posZ = %f\n", m_pos.z);
+	CDebugProc::Print("rotY = %f\n", m_rot.y);
 }
 
 //=============================================================================
@@ -352,7 +334,7 @@ CSceneX *CSceneX::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, floa
 //=============================================================================
 // âÒì]äpìxÇéÊìæ
 //=============================================================================
-D3DXVECTOR3 CSceneX::Get2VecRotAngle( D3DXVECTOR3 rot, D3DXVECTOR3 rotTarget, float divide, float value_rot)
+D3DXVECTOR3 CSceneX::Get2VecRotAngle( D3DXVECTOR3 rot, D3DXVECTOR3 rotTarget)
 {
 	float tAngle[3];
 	D3DXVECTOR3 re;
@@ -363,62 +345,17 @@ D3DXVECTOR3 CSceneX::Get2VecRotAngle( D3DXVECTOR3 rot, D3DXVECTOR3 rotTarget, fl
 
 	for(int cntXYZ = 0; cntXYZ < 3; cntXYZ++)
 	{
-		if(value_rot == -1)
+		if(tAngle[cntXYZ] > D3DX_PI)
 		{
-			if( tAngle[cntXYZ] > 0)
-			{
-				if(tAngle[cntXYZ] >= D3DX_PI)
-				{
-					//tAngle[cntXYZ] = -value_rot;
-					tAngle[cntXYZ] = -fabs(tAngle[cntXYZ]/divide);
-				}
-				else
-				{
-					//tAngle[cntXYZ] = value_rot;
-					tAngle[cntXYZ] = fabs(tAngle[cntXYZ]/divide);
-				}
-						
-			}
-			else
-			{
-				if(tAngle[cntXYZ] < -D3DX_PI)
-				{
-					//tAngle[cntXYZ] = value_rot;
-					tAngle[cntXYZ] = fabs(tAngle[cntXYZ]/divide);
-				}
-				else
-				{
-					//tAngle[cntXYZ] = -value_rot;
-					tAngle[cntXYZ] = -fabs(tAngle[cntXYZ]/divide);
-				}
-			}		
+			tAngle[cntXYZ] -= 2 * D3DX_PI;
 		}
-		else
+		if(tAngle[cntXYZ] < -D3DX_PI)
 		{
-			if( tAngle[cntXYZ] > 0)
-			{
-				if(tAngle[cntXYZ] >= D3DX_PI)
-				{
-					tAngle[cntXYZ] = -value_rot;
-				}
-				else
-				{
-					tAngle[cntXYZ] = value_rot;
-				}
-						
-			}
-			else
-			{
-				if(tAngle[cntXYZ] < -D3DX_PI)
-				{
-					tAngle[cntXYZ] = value_rot;
-				}
-				else
-				{
-					tAngle[cntXYZ] = -value_rot;
-				}
-			}		
-		}
+			tAngle[cntXYZ] += 2 * D3DX_PI;
+		}		
+
+		tAngle[cntXYZ] = tAngle[cntXYZ] / DIVIDE_ROTATE;	
+
 	}
 
 	re.x = tAngle[0];

@@ -40,7 +40,7 @@ public:
 
 private:
 	//関数
-	D3DXVECTOR3 Get2VecRotAngle( D3DXVECTOR3 rot, D3DXVECTOR3 rotTarget, float divide, float value_rot);
+	D3DXVECTOR3 Get2VecRotAngle( D3DXVECTOR3 rot, D3DXVECTOR3 rotTarget);
 
 	//変数
 	LPDIRECT3DTEXTURE9	m_pTexture;		// テクスチャへのポインタ
