@@ -22,7 +22,7 @@
 //============================================
 //構造体定義
 //============================================
-//敵クラス
+
 class CSceneX : public CScene
 {
 public:
@@ -38,10 +38,12 @@ public:
 
 	static CSceneX *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float speed);
 
-private:
+protected:
 	//関数
 	D3DXVECTOR3 Get2VecRotAngle( D3DXVECTOR3 rot, D3DXVECTOR3 rotTarget);
+	void UpdateModelMove(int nUp, int nDown, int nLeft, int nRight);
 
+private:
 	//変数
 	LPDIRECT3DTEXTURE9	m_pTexture;		// テクスチャへのポインタ
 	LPD3DXMESH  m_pD3DXMesh;			// メッシュ情報へのポインタ

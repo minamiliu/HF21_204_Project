@@ -13,13 +13,12 @@
 #include "main.h"
 #include "manager.h"
 #include "renderer.h"
-#include "scene2D.h"
 #include "input.h"
 #include "player2D.h"
 #include "light.h"
 #include "camera.h"
 #include "scene3D.h"
-#include "sceneX.h"
+#include "playerX.h"
 
 //============================================
 // マクロ定義
@@ -78,7 +77,7 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 	CPlayer2D::Create( D3DXVECTOR3( SCREEN_WIDTH/2, 600.0f, 0.0f), D3DXVECTOR3(100.0f, 100.0f, 0.0f));
 
 	//オブジェクトの生成(Xfile)
-	CSceneX::Create( D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), 5.0f);
+	CPlayerX::Create( D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), 5.0f);
 
 	return S_OK;
 }
