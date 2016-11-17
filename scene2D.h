@@ -42,7 +42,7 @@ public:
 	void SetPosition(D3DXVECTOR3 pos);
 	D3DXVECTOR3 GetPosition(void);
 
-	static CScene2D *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size);
+	static CScene2D *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, LPCSTR strFileName);
 
 
 private:

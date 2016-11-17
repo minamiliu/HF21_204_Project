@@ -30,14 +30,30 @@ class CLight;
 class CManager
 {
 public:
+	typedef enum
+	{
+		TYPE_LOADING = 0, // ローディング
+		TYPE_LOGO, // ロゴ表示
+		TYPE_TITLE, // タイトル
+		TYPE_MANUAL, //マニュアル
+		TYPE_SELECT, // セレクト
+		TYPE_GAME, // ゲーム
+		TYPE_ENDING, // エンディング
+		TYPE_STAFFROLL, // スタッフロール
+		TYPE_RESULT, // リザルト
+		TYPE_QUIT, // 終了
+		TYPE_MAX,	//最大値
+	} TYPE;
 
 	CManager();
 	virtual ~CManager();
 	
-	HRESULT Init(HINSTANCE hInstance, HWND hWnd, bool bWindow);
-	void Uninit();
-	void Update();
-	void Draw();
+	virtual HRESULT InitProgram(HINSTANCE hInstance, HWND hWnd, bool bWindow);
+	virtual HRESULT Init(void);
+	virtual void UninitProgram(void);
+	virtual void Uninit(void);
+	virtual void Update(void);
+	virtual void Draw(void);
 
 	//レンダラー
 	static CRenderer *GetRenderer(void);
@@ -48,6 +64,9 @@ public:
 
 	//カメラ
 	static CCamera *GetCamera(void);
+
+	//画面遷移
+	static CManager *SetScene(TYPE type);
 
 private:
 	//レンダラー
@@ -63,7 +82,9 @@ private:
 	//カメラ
 	static CCamera *m_pCamera;
 
-
+	//画面遷移
+	static CManager *m_pSceneNow;
+	static TYPE m_type;
 };
 
 #endif

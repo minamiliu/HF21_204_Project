@@ -11,58 +11,35 @@
 #define _GAME_H_
 
 //============================================
+//インクルードファイル
+//============================================
+#include "manager.h"
+
+//============================================
 //マクロ定義
 //============================================
 
 //============================================
 //前方宣言
 //============================================
-class CRenderer;
-class CInputKeyboard;
-class CInputMouse;
-class CCamera;
-class CLight;
 
 //============================================
 //構造体定義
 //============================================
 
-class CManager
+class CGame : public CManager
 {
 public:
 
-	CManager();
-	virtual ~CManager();
+	CGame();
+	virtual ~CGame();
 	
-	HRESULT Init(HINSTANCE hInstance, HWND hWnd, bool bWindow);
-	void Uninit();
-	void Update();
-	void Draw();
-
-	//レンダラー
-	static CRenderer *GetRenderer(void);
-
-	//入力処理
-	static CInputKeyboard *GetInputKeyboard(void);
-	static CInputMouse *GetInputMouse(void);
-
-	//カメラ
-	static CCamera *GetCamera(void);
+	HRESULT Init(void);
+	void Uninit(void);
+	void Update(void);
+	void Draw(void);
 
 private:
-	//レンダラー
-	static CRenderer *m_pRenderer;
-
-	//入力処理
-	static CInputKeyboard *m_pInputKeyboard;
-	static CInputMouse *m_pInputMouse;
-
-	//ライト
-	static CLight *m_pLight;
-
-	//カメラ
-	static CCamera *m_pCamera;
-
 
 };
 

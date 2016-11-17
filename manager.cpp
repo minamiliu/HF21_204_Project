@@ -19,6 +19,11 @@
 #include "camera.h"
 #include "scene3D.h"
 #include "playerX.h"
+#include "game.h"
+
+#include "game.h"
+#include "title.h"
+#include "result.h"
 
 //============================================
 // マクロ定義
@@ -32,6 +37,8 @@ CInputKeyboard *CManager::m_pInputKeyboard = NULL;
 CInputMouse *CManager::m_pInputMouse = NULL;
 CLight *CManager::m_pLight = NULL;
 CCamera *CManager::m_pCamera = NULL;
+CManager *CManager::m_pSceneNow = NULL;
+CManager::TYPE CManager::m_type = TYPE_TITLE;
 
 //============================================
 //コンストラクタ
@@ -46,7 +53,7 @@ CManager::~CManager()
 	
 }
 
-HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
+HRESULT CManager::InitProgram(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 {
 	// レンダラーの生成
 	m_pRenderer = new CRenderer;
@@ -70,22 +77,18 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 	m_pCamera = new CCamera;
 	m_pCamera->Init();
 
-	//オブジェクトの生成(3Dポリゴン)
-	CScene3D::Create( D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 10, 10, 100.0f, 100.0f);
-
-	//オブジェクトの生成(2Dポリゴン)
-	CPlayer2D::Create( D3DXVECTOR3( SCREEN_WIDTH/2, 600.0f, 0.0f), D3DXVECTOR3(100.0f, 100.0f, 0.0f));
-
-	//オブジェクトの生成(Xfile)
-	CPlayerX::Create( D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), 5.0f);
-
 	return S_OK;
 }
 
-void CManager::Uninit()
+HRESULT CManager::Init(void)
+{
+	return S_OK;
+}
+
+void CManager::UninitProgram()
 {
 	//オブジェクトの破棄
-	CScene2D::ReleaseAll();
+	CScene::ReleaseAll();
 
 	//ライトの破棄
 	if( m_pLight != NULL)
@@ -127,6 +130,11 @@ void CManager::Uninit()
 		m_pRenderer = NULL;
 	}
 }
+void CManager::Uninit(void)
+{
+	//オブジェクトの破棄
+	CScene::ReleaseAll();	
+}
 
 void CManager::Update()
 {
@@ -141,6 +149,27 @@ void CManager::Update()
 
 	//カメラの更新処理
 	m_pCamera->Update();
+
+	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
+	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN))
+	{
+		switch( m_type)
+		{
+		case TYPE_TITLE:
+			m_pSceneNow = SetScene( TYPE_GAME);
+			break;
+
+		case TYPE_GAME:
+			m_pSceneNow = SetScene( TYPE_RESULT);
+			break;
+
+		case TYPE_RESULT:
+			m_pSceneNow = SetScene( TYPE_TITLE);
+			break;
+
+		}
+		m_pSceneNow->Init();
+	}
 }
 void CManager::Draw()
 {
@@ -169,4 +198,32 @@ CInputMouse *CManager::GetInputMouse(void)
 CCamera *CManager::GetCamera(void)
 {
 	return m_pCamera;
+}
+
+CManager *CManager::SetScene(TYPE type)
+{
+	m_type = type;
+
+	if(m_pSceneNow)
+	{
+		m_pSceneNow->Uninit();
+	}
+
+	switch(type)
+	{
+	case TYPE_TITLE:
+		m_pSceneNow = new CTitle;
+		break;
+
+	case TYPE_GAME:
+		m_pSceneNow = new CGame;
+		break;
+
+	case TYPE_RESULT:
+		m_pSceneNow = new CResult;
+		break;
+
+	}
+
+	return m_pSceneNow;
 }
