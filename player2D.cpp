@@ -87,6 +87,11 @@ void CPlayer2D::Update(void)
 	{
 		CBullet2D::Create(pos, D3DXVECTOR3( 20.0f, 20.0f, 0.0f));
 	}
+	if(pInputKeyboard->GetKeyTrigger(DIK_SPACE))
+	{
+		CBullet2D::Create(pos, D3DXVECTOR3( 20.0f, 20.0f, 0.0f));
+	}
+
 
 	CScene2D::Update();
 }

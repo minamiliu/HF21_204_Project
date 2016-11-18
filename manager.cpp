@@ -37,6 +37,7 @@ CInputKeyboard *CManager::m_pInputKeyboard = NULL;
 CInputMouse *CManager::m_pInputMouse = NULL;
 CLight *CManager::m_pLight = NULL;
 CCamera *CManager::m_pCamera = NULL;
+
 CManager *CManager::m_pSceneNow = NULL;
 CManager::TYPE CManager::m_type = TYPE_TITLE;
 
@@ -46,6 +47,11 @@ CManager::TYPE CManager::m_type = TYPE_TITLE;
 CManager::CManager()
 {
 
+}
+
+CManager::CManager(TYPE type)
+{
+	m_type = type;
 }
 
 CManager::~CManager()
@@ -132,8 +138,11 @@ void CManager::UninitProgram()
 }
 void CManager::Uninit(void)
 {
-	//オブジェクトの破棄
-	CScene::ReleaseAll();	
+	if( m_pSceneNow != NULL)
+	{
+		//オブジェクトの破棄
+		CScene::ReleaseAll();		
+	}
 }
 
 void CManager::Update()
@@ -150,34 +159,17 @@ void CManager::Update()
 	//カメラの更新処理
 	m_pCamera->Update();
 
-	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
-	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN))
-	{
-		switch( m_type)
-		{
-		case TYPE_TITLE:
-			m_pSceneNow = SetScene( TYPE_GAME);
-			break;
-
-		case TYPE_GAME:
-			m_pSceneNow = SetScene( TYPE_RESULT);
-			break;
-
-		case TYPE_RESULT:
-			m_pSceneNow = SetScene( TYPE_TITLE);
-			break;
-
-		}
-		m_pSceneNow->Init();
-	}
 }
 void CManager::Draw()
 {
-	//カメラ設置
-	m_pCamera->SetCamera();
+	if( m_pSceneNow != NULL)
+	{
+		//カメラ設置
+		m_pCamera->SetCamera();
 
-	//レンダラーの描画処理
-	m_pRenderer->Draw();
+		//レンダラーの描画処理
+		m_pRenderer->Draw();	
+	}
 }
 
 CRenderer *CManager::GetRenderer(void)
@@ -202,11 +194,10 @@ CCamera *CManager::GetCamera(void)
 
 CManager *CManager::SetScene(TYPE type)
 {
-	m_type = type;
-
-	if(m_pSceneNow)
+	if(m_pSceneNow != NULL)
 	{
 		m_pSceneNow->Uninit();
+		m_pSceneNow = NULL;
 	}
 
 	switch(type)
@@ -225,5 +216,15 @@ CManager *CManager::SetScene(TYPE type)
 
 	}
 
+	m_pSceneNow->Init();
+
 	return m_pSceneNow;
+}
+
+void CManager::CheckScene( CManager **pManager)
+{
+	if( *pManager != m_pSceneNow)
+	{
+		*pManager = m_pSceneNow;
+	}
 }

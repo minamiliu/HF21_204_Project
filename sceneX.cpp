@@ -130,6 +130,9 @@ void CSceneX::Uninit(void)
 		m_pD3DXBuffMat->Release();
 		m_pD3DXBuffMat = NULL;
 	}
+
+	//オブジェクトの破棄
+	Release();
 }
 
 //=============================================================================

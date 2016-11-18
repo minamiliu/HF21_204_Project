@@ -32,7 +32,7 @@
 //============================================
 //コンストラクタ
 //============================================
-CGame::CGame()
+CGame::CGame() : CManager(TYPE_GAME)
 {
 
 }
@@ -49,7 +49,10 @@ HRESULT CGame::Init(void)
 	CScene3D::Create( D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 10, 10, 100.0f, 100.0f);
 
 	//オブジェクトの生成(Xfile)
-	//CPlayerX::Create( D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), 5.0f);
+	CPlayerX::Create( D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), 5.0f);
+
+	//オブジェクトの生成(2Dポリゴン)
+	//CPlayer2D::Create( D3DXVECTOR3( 300.0f, 300.0f, 0.0f), D3DXVECTOR3( 100.0f, 100.0f, 0.0f));
 
 	return S_OK;
 }
@@ -62,6 +65,12 @@ void CGame::Uninit()
 void CGame::Update()
 {
 	CManager::Update();
+
+	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
+	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN))
+	{
+		SetScene( TYPE_RESULT);
+	}
 }
 void CGame::Draw()
 {

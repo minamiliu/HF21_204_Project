@@ -79,9 +79,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	//pManager->Init(hInstance, hWnd, true);
 
 	CManager *pManager;
-	pManager = CManager::SetScene( CManager::TYPE_TITLE);
+	pManager = new CManager;
 	pManager->InitProgram(hInstance, hWnd, true);
-	pManager->Init();
+	pManager = CManager::SetScene( CManager::TYPE_TITLE);
 
 	// 分解能を設定
 	timeBeginPeriod(1);
@@ -130,6 +130,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 				//マネージャの更新処理
 				pManager->Update();
+				CManager::CheckScene( &pManager);
 
 				//マネージャの描画処理
 				pManager->Draw();

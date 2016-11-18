@@ -106,6 +106,9 @@ void CScene3D::Uninit(void)
 		m_pVtxBuff->Release();
 		m_pVtxBuff = NULL;
 	}
+
+	//オブジェクトの破棄
+	Release();
 }
 
 void CScene3D::Update(void)

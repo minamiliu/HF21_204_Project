@@ -46,6 +46,7 @@ public:
 	} TYPE;
 
 	CManager();
+	CManager(TYPE type);
 	virtual ~CManager();
 	
 	virtual HRESULT InitProgram(HINSTANCE hInstance, HWND hWnd, bool bWindow);
@@ -67,6 +68,7 @@ public:
 
 	//‰æ–Ê‘JˆÚ
 	static CManager *SetScene(TYPE type);
+	static void CheckScene( CManager **pManager);
 
 private:
 	//ƒŒƒ“ƒ_ƒ‰[
