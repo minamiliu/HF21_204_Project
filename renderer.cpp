@@ -14,6 +14,7 @@
 #include "renderer.h"
 #include "scene.h"
 #include "debugproc.h"
+#include "fade.h"
 
 
 //============================================
@@ -128,6 +129,9 @@ HRESULT CRenderer::Init(HWND hWnd, bool bWindow)
 	CDebugProc::Init();
 #endif
 
+	//フェード
+	CFade::Init();
+
 
 	return S_OK;
 }
@@ -164,6 +168,9 @@ void CRenderer::Uninit(void)
 		m_pD3D->Release();
 		m_pD3D = NULL;
 	}
+
+	//フェード
+	CFade::Uninit();
 }
 
 //=============================================================================
@@ -173,6 +180,9 @@ void CRenderer::Update(void)
 {
 	// ポリゴンの更新処理
 	CScene::UpdateAll();
+
+	//フェード
+	CFade::Update();
 
 #ifdef _DEBUG
 	//デバッグ情報表示の更新処理
@@ -193,6 +203,9 @@ void CRenderer::Draw(void)
 	{
 		// ポリゴンの描画処理
 		CScene::DrawAll();
+
+		//フェード
+		CFade::Draw();
 
 #ifdef _DEBUG
 		// FPS表示

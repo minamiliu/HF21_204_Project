@@ -60,7 +60,7 @@ void CTitle::Update()
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
 	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN))
 	{
-		SetScene( TYPE_GAME);
+		SetNextScene( TYPE_GAME);
 	}
 }
 void CTitle::Draw()

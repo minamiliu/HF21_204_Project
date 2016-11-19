@@ -18,10 +18,23 @@
 //============================================
 //マクロ定義
 //============================================
+// 頂点フォーマット( 頂点座標[2D] / 頂点カラー / テクスチャ座標 )
+#define	FVF_VERTEX_2D	(D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1)
+
+#define NUM_VERTEX (4)
+#define NUM_POLYGON (2)
+
 
 //============================================
 //構造体定義
 //============================================
+typedef struct
+{
+	D3DXVECTOR3 pos;	// 頂点座標
+	float rhw;			// 座標変換用係数(1.0fで固定)
+	D3DCOLOR col;		// 頂点カラー
+	D3DXVECTOR2 tex;	// テクスチャ座標
+} VERTEX_2D;
 
 class CScene2D : public CScene
 {

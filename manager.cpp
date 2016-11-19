@@ -24,6 +24,7 @@
 #include "game.h"
 #include "title.h"
 #include "result.h"
+#include "fade.h"
 
 //============================================
 // マクロ定義
@@ -38,7 +39,8 @@ CInputMouse *CManager::m_pInputMouse = NULL;
 CCamera *CManager::m_pCamera = NULL;
 
 CManager *CManager::m_pSceneManager = NULL;
-CManager::TYPE CManager::m_type = TYPE_NONE;
+CManager::TYPE CManager::m_typeNow = TYPE_NONE;
+CManager::TYPE CManager::m_typeNext = TYPE_NONE;
 
 //============================================
 //コンストラクタ
@@ -50,7 +52,7 @@ CManager::CManager()
 
 CManager::CManager(TYPE type)
 {
-	m_type = type;
+	m_typeNow = type;
 	m_pSceneManager = this;
 }
 
@@ -183,7 +185,7 @@ CCamera *CManager::GetCamera(void)
 
 CManager *CManager::SetScene(TYPE type)
 {
-	if( m_type != type)
+	if( m_typeNow != type)
 	{
 		m_pSceneManager->Uninit();
 		m_pSceneManager = NULL;
@@ -216,4 +218,15 @@ void CManager::CheckScene( CManager **ppManager)
 	{
 		*ppManager = m_pSceneManager;
 	}
+}
+
+CManager::TYPE CManager::GetNextScene(void)
+{
+	return m_typeNext;
+}
+
+void CManager::SetNextScene(TYPE type)
+{
+	m_typeNext = type;
+	CFade::SetFade();
 }

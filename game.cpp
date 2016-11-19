@@ -70,7 +70,7 @@ void CGame::Update()
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
 	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN))
 	{
-		SetScene( TYPE_RESULT);
+		SetNextScene( TYPE_RESULT);
 	}
 }
 void CGame::Draw()

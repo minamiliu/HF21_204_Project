@@ -67,8 +67,10 @@ public:
 	static CCamera *GetCamera(void);
 
 	//画面遷移
-	static CManager *SetScene(TYPE type);
-	static void CheckScene( CManager **ppManager);
+	static CManager *SetScene(TYPE type); //フェードなし
+	static void CheckScene( CManager **ppManager); 
+	static TYPE GetNextScene(void); 
+	static void SetNextScene(TYPE type); //フェードあり
 
 protected:
 	//カメラ
@@ -84,7 +86,8 @@ private:
 
 	//画面遷移
 	static CManager *m_pSceneManager;
-	static TYPE m_type;
+	static TYPE m_typeNow;
+	static TYPE m_typeNext;
 };
 
 #endif
