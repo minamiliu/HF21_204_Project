@@ -32,7 +32,7 @@
 //============================================
 //コンストラクタ
 //============================================
-CGame::CGame() : CManager(TYPE_GAME)
+CGame::CGame() : CManager(MODE_GAME)
 {
 
 }
@@ -70,7 +70,7 @@ void CGame::Update()
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
 	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN))
 	{
-		SetNextScene( TYPE_RESULT);
+		SetNextScene( MODE_RESULT);
 	}
 }
 void CGame::Draw()

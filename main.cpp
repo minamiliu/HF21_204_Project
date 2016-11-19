@@ -74,11 +74,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 						NULL);
 
 	//マネージャの生成
-	CManager *pManager;
-	pManager = new CManager;
-	pManager->InitProgram(hInstance, hWnd, true);
-	pManager = CManager::SetScene( CManager::TYPE_TITLE);
-
+	CManager::Create( CManager::MODE_TITLE, hInstance, hWnd, true);
 
 	// 分解能を設定
 	timeBeginPeriod(1);
@@ -126,11 +122,10 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 				dwExecLastTime = dwCurrentTime;
 
 				//マネージャの更新処理
-				pManager->Update();
-				CManager::CheckScene( &pManager);
+				CManager::UpdateAll();
 
 				//マネージャの描画処理
-				pManager->Draw();
+				CManager::DrawAll();
 
 				dwFrameCount++;
 			}
@@ -138,12 +133,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	}
 
 	//マネージャの破棄
-	if(pManager != NULL)
-	{
-		pManager->UninitProgram();
-		delete pManager;
-		pManager = NULL;
-	}
+	CManager::Release();
 
 	// ウィンドウクラスの登録を解除
 	UnregisterClass(CLASS_NAME, wcex.hInstance);

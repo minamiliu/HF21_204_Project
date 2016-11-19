@@ -29,7 +29,7 @@
 //============================================
 //コンストラクタ
 //============================================
-CTitle::CTitle() : CManager(TYPE_TITLE)
+CTitle::CTitle() : CManager(MODE_TITLE)
 {
 	
 }
@@ -60,7 +60,7 @@ void CTitle::Update()
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
 	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN))
 	{
-		SetNextScene( TYPE_GAME);
+		SetNextScene( MODE_GAME);
 	}
 }
 void CTitle::Draw()

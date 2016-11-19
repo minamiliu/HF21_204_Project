@@ -31,30 +31,34 @@ class CManager
 public:
 	typedef enum
 	{
-		TYPE_NONE = -1,
-		TYPE_LOADING, // ローディング
-		TYPE_LOGO, // ロゴ表示
-		TYPE_TITLE, // タイトル
-		TYPE_MANUAL, //マニュアル
-		TYPE_SELECT, // セレクト
-		TYPE_GAME, // ゲーム
-		TYPE_ENDING, // エンディング
-		TYPE_STAFFROLL, // スタッフロール
-		TYPE_RESULT, // リザルト
-		TYPE_QUIT, // 終了
-		TYPE_MAX,	//最大値
-	} TYPE;
+		MODE_NONE = -1,
+		MODE_LOADING, // ローディング
+		MODE_LOGO, // ロゴ表示
+		MODE_TITLE, // タイトル
+		MODE_MANUAL, //マニュアル
+		MODE_SELECT, // セレクト
+		MODE_GAME, // ゲーム
+		MODE_ENDING, // エンディング
+		MODE_STAFFROLL, // スタッフロール
+		MODE_RESULT, // リザルト
+		MODE_QUIT, // 終了
+		MODE_MAX,	//最大値
+	} MODE;
 
 	CManager();
-	CManager(TYPE type);
+	CManager(MODE type);
 	virtual ~CManager();
 	
-	virtual HRESULT InitProgram(HINSTANCE hInstance, HWND hWnd, bool bWindow);
+	virtual HRESULT Init(HINSTANCE hInstance, HWND hWnd, bool bWindow);
 	virtual HRESULT Init(void);
-	virtual void UninitProgram(void);
 	virtual void Uninit(void);
 	virtual void Update(void);
 	virtual void Draw(void);
+
+	static CManager *Create( MODE type, HINSTANCE hInstance, HWND hWnd, bool bWindow);
+	static void UpdateAll(void);
+	static void DrawAll(void);
+	static void Release(void);
 
 	//レンダラー
 	static CRenderer *GetRenderer(void);
@@ -67,10 +71,9 @@ public:
 	static CCamera *GetCamera(void);
 
 	//画面遷移
-	static CManager *SetScene(TYPE type); //フェードなし
-	static void CheckScene( CManager **ppManager); 
-	static TYPE GetNextScene(void); 
-	static void SetNextScene(TYPE type); //フェードあり
+	static CManager *SetScene(MODE mode); //フェードなし
+	static MODE GetNextScene(void); 
+	static void SetNextScene(MODE mode); //フェードあり
 
 protected:
 	//カメラ
@@ -86,8 +89,8 @@ private:
 
 	//画面遷移
 	static CManager *m_pSceneManager;
-	static TYPE m_typeNow;
-	static TYPE m_typeNext;
+	static MODE m_modeNow;
+	static MODE m_modeNext;
 };
 
 #endif

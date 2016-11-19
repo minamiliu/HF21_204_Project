@@ -29,7 +29,7 @@
 //============================================
 //コンストラクタ
 //============================================
-CResult::CResult() : CManager(TYPE_RESULT)
+CResult::CResult() : CManager(MODE_RESULT)
 {
 
 }
@@ -59,7 +59,7 @@ void CResult::Update()
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
 	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN))
 	{
-		SetNextScene( TYPE_TITLE);
+		SetNextScene( MODE_TITLE);
 	}
 }
 void CResult::Draw()
