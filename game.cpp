@@ -44,6 +44,7 @@ CGame::~CGame()
 
 HRESULT CGame::Init(void)
 {
+	m_pCamera->Init();
 
 	//オブジェクトの生成(3Dポリゴン)
 	CScene3D::Create( D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 10, 10, 100.0f, 100.0f);

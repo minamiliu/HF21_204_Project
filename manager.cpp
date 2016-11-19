@@ -35,23 +35,23 @@
 CRenderer *CManager::m_pRenderer = NULL;
 CInputKeyboard *CManager::m_pInputKeyboard = NULL;
 CInputMouse *CManager::m_pInputMouse = NULL;
-CLight *CManager::m_pLight = NULL;
 CCamera *CManager::m_pCamera = NULL;
 
-CManager *CManager::m_pSceneNow = NULL;
-CManager::TYPE CManager::m_type = TYPE_TITLE;
+CManager *CManager::m_pSceneManager = NULL;
+CManager::TYPE CManager::m_type = TYPE_NONE;
 
 //============================================
 //コンストラクタ
 //============================================
 CManager::CManager()
 {
-
+	m_pSceneManager = this;
 }
 
 CManager::CManager(TYPE type)
 {
 	m_type = type;
+	m_pSceneManager = this;
 }
 
 CManager::~CManager()
@@ -97,12 +97,7 @@ void CManager::UninitProgram()
 	CScene::ReleaseAll();
 
 	//ライトの破棄
-	if( m_pLight != NULL)
-	{
-		m_pLight->Uninit();
-		delete m_pLight;
-		m_pLight = NULL;
-	}
+	CLight::ReleaseAll();
 
 	//カメラの破棄
 	if( m_pCamera != NULL)
@@ -138,11 +133,8 @@ void CManager::UninitProgram()
 }
 void CManager::Uninit(void)
 {
-	if( m_pSceneNow != NULL)
-	{
-		//オブジェクトの破棄
-		CScene::ReleaseAll();		
-	}
+	//オブジェクトの破棄
+	CScene::ReleaseAll();		
 }
 
 void CManager::Update()
@@ -162,14 +154,11 @@ void CManager::Update()
 }
 void CManager::Draw()
 {
-	if( m_pSceneNow != NULL)
-	{
-		//カメラ設置
-		m_pCamera->SetCamera();
+	//カメラ設置
+	m_pCamera->SetCamera();
 
-		//レンダラーの描画処理
-		m_pRenderer->Draw();	
-	}
+	//レンダラーの描画処理
+	m_pRenderer->Draw();	
 }
 
 CRenderer *CManager::GetRenderer(void)
@@ -194,37 +183,37 @@ CCamera *CManager::GetCamera(void)
 
 CManager *CManager::SetScene(TYPE type)
 {
-	if(m_pSceneNow != NULL)
+	if( m_type != type)
 	{
-		m_pSceneNow->Uninit();
-		m_pSceneNow = NULL;
+		m_pSceneManager->Uninit();
+		m_pSceneManager = NULL;
 	}
 
 	switch(type)
 	{
 	case TYPE_TITLE:
-		m_pSceneNow = new CTitle;
+		m_pSceneManager = new CTitle;
 		break;
 
 	case TYPE_GAME:
-		m_pSceneNow = new CGame;
+		m_pSceneManager = new CGame;
 		break;
 
 	case TYPE_RESULT:
-		m_pSceneNow = new CResult;
+		m_pSceneManager = new CResult;
 		break;
 
 	}
 
-	m_pSceneNow->Init();
+	m_pSceneManager->Init();
 
-	return m_pSceneNow;
+	return m_pSceneManager;
 }
 
 void CManager::CheckScene( CManager **pManager)
 {
-	if( *pManager != m_pSceneNow)
+	if( *pManager != m_pSceneManager)
 	{
-		*pManager = m_pSceneNow;
+		*pManager = m_pSceneManager;
 	}
 }

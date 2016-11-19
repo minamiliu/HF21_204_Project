@@ -36,11 +36,12 @@ public:
 
 	static void SetAllLightOn(void);
 	static CLight *Create(D3DXVECTOR3 vecDir, D3DXCOLOR diffuse);
+	static void ReleaseAll(void);
 
 private:
-	static bool abUse[MAX_LIGHT];
-	D3DLIGHT9 *m_pLight;		// ライト情報
-	int m_nID;
+	static CLight *m_apLight[MAX_LIGHT]; //生成したライト実体を管理する
+	D3DLIGHT9 *m_pD3DLight;		//ライト情報
+	int m_nID;					//ライト番号
 };
 
 #endif

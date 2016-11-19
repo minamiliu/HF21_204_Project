@@ -32,7 +32,8 @@ class CManager
 public:
 	typedef enum
 	{
-		TYPE_LOADING = 0, // ローディング
+		TYPE_NONE = 0,
+		TYPE_LOADING, // ローディング
 		TYPE_LOGO, // ロゴ表示
 		TYPE_TITLE, // タイトル
 		TYPE_MANUAL, //マニュアル
@@ -70,6 +71,10 @@ public:
 	static CManager *SetScene(TYPE type);
 	static void CheckScene( CManager **pManager);
 
+protected:
+	//カメラ
+	static CCamera *m_pCamera;
+
 private:
 	//レンダラー
 	static CRenderer *m_pRenderer;
@@ -78,14 +83,8 @@ private:
 	static CInputKeyboard *m_pInputKeyboard;
 	static CInputMouse *m_pInputMouse;
 
-	//ライト
-	static CLight *m_pLight;
-
-	//カメラ
-	static CCamera *m_pCamera;
-
 	//画面遷移
-	static CManager *m_pSceneNow;
+	static CManager *m_pSceneManager;
 	static TYPE m_type;
 };
 
