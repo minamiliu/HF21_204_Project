@@ -210,10 +210,10 @@ CManager *CManager::SetScene(TYPE type)
 	return m_pSceneManager;
 }
 
-void CManager::CheckScene( CManager **pManager)
+void CManager::CheckScene( CManager **ppManager)
 {
-	if( *pManager != m_pSceneManager)
+	if( *ppManager != m_pSceneManager)
 	{
-		*pManager = m_pSceneManager;
+		*ppManager = m_pSceneManager;
 	}
 }

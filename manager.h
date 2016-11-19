@@ -21,7 +21,6 @@ class CRenderer;
 class CInputKeyboard;
 class CInputMouse;
 class CCamera;
-class CLight;
 
 //============================================
 //構造体定義
@@ -32,7 +31,7 @@ class CManager
 public:
 	typedef enum
 	{
-		TYPE_NONE = 0,
+		TYPE_NONE = -1,
 		TYPE_LOADING, // ローディング
 		TYPE_LOGO, // ロゴ表示
 		TYPE_TITLE, // タイトル
@@ -69,7 +68,7 @@ public:
 
 	//画面遷移
 	static CManager *SetScene(TYPE type);
-	static void CheckScene( CManager **pManager);
+	static void CheckScene( CManager **ppManager);
 
 protected:
 	//カメラ
