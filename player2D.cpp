@@ -93,6 +93,12 @@ void CPlayer2D::Update(void)
 	}
 
 
+	if(CManager::GetInputMouse()->GetMouseLeftRelease())
+	{
+		pos.x += 100.0f;
+		SetPosition(pos);
+	}
+
 	CScene2D::Update();
 }
 
