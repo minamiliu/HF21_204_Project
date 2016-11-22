@@ -1,9 +1,9 @@
 //============================================
 //
 // タイトル:	 未来創造展チーム204
-// プログラム名: player2D.cpp
+// プログラム名: playerX.cpp
 // 作成者:		 HAL東京ゲーム学科　劉南宏
-// 作成日:       2016/10/19
+// 作成日:       2016/11/15
 //
 //============================================
 
@@ -11,25 +11,24 @@
 //インクルードファイル
 //============================================
 #include "main.h"
-#include "manager.h"
-#include "input.h"
-#include "player2D.h"
-#include "bullet2D.h"
+#include "playerX.h"
 #include "debugproc.h"
 
 //============================================
 // マクロ定義
 //============================================
-#define TEXTURENAME "data/TEXTURE/player000.png"
+#define MODEL_FILENAME "data/MODEL/player.x"
+#define VALUE_ROTATE	(D3DX_PI * 0.1f) 	// 回転量
 
 //=============================================================================
 // 構造体定義
 //=============================================================================
 
+
 //=============================================================================
 //コンストラクタ
 //=============================================================================
-CPlayer2D::CPlayer2D()
+CPlayerX::CPlayerX()
 {
 
 }
@@ -37,85 +36,54 @@ CPlayer2D::CPlayer2D()
 //=============================================================================
 //デストラクタ
 //=============================================================================
-CPlayer2D::~CPlayer2D()
+CPlayerX::~CPlayerX()
 {
 	
 }
 
 
 //=============================================================================
-// ポリゴンの初期化処理
+//
 //=============================================================================
-
-HRESULT CPlayer2D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size)
+HRESULT CPlayerX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float speed)
 {
-	CScene2D::Init(pos, size);
+	CSceneX::Init( pos, rot, scl, speed);
+
 	return S_OK;
 }
 
-
-
-
 //=============================================================================
-// ポリゴンの終了処理
+//
 //=============================================================================
-void CPlayer2D::Uninit(void)
+void CPlayerX::Uninit(void)
 {
-	CScene2D::Uninit();
-}
-
-
-//=============================================================================
-// ポリゴンの更新処理
-//=============================================================================
-void CPlayer2D::Update(void)
-{
-	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
-	CInputMouse *pInputMouse = CManager::GetInputMouse();
-	D3DXVECTOR3 pos = CPlayer2D::GetPosition();
-	
-	int mouseMoveX = pInputMouse->GetMouseAxisX();
-	if( mouseMoveX != 0)
-	{
-		pos.x += mouseMoveX;
-		SetPosition(pos);
-	}
-
-
-	//攻撃
-	if(pInputMouse->GetMouseLeftTrigger())
-	{
-		CBullet2D::Create(pos, D3DXVECTOR3( 20.0f, 20.0f, 0.0f));
-	}
-	if(pInputKeyboard->GetKeyTrigger(DIK_SPACE))
-	{
-		CBullet2D::Create(pos, D3DXVECTOR3( 20.0f, 20.0f, 0.0f));
-	}
-
-
-	CScene2D::Update();
+	CSceneX::Uninit();
 }
 
 //=============================================================================
-// ポリゴンの描画処理
+//
 //=============================================================================
-void CPlayer2D::Draw(void)
+void CPlayerX::Update(void)
 {
-	CScene2D::Draw();
+	CSceneX::UpdateModelMove(DIK_W, DIK_S, DIK_A, DIK_D);
 }
 
 //=============================================================================
-// ポリゴンの生成処理
+//
 //=============================================================================
-CPlayer2D *CPlayer2D::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
+void CPlayerX::Draw(void)
 {
-	CPlayer2D *pPlayer2D;
-	pPlayer2D = new CPlayer2D;
-	pPlayer2D->Init(pos, size);
-
-	//テクスチャの割り当て
-	pPlayer2D->Load( TEXTURENAME);
-	
-	return pPlayer2D;
+	CSceneX::Draw();
 }
 
+//=============================================================================
+//
+//=============================================================================
+CPlayerX *CPlayerX::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float speed)
+{
+	CPlayerX *pPlayerX;
+	pPlayerX = new CPlayerX;
+	pPlayerX->Init(pos, rot, scl, speed);
+
+	return pPlayerX;
+}

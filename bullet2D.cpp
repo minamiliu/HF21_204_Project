@@ -1,9 +1,9 @@
 //============================================
 //
 // タイトル:	 未来創造展チーム204
-// プログラム名: player2D.cpp
+// プログラム名: bullet2D.cpp
 // 作成者:		 HAL東京ゲーム学科　劉南宏
-// 作成日:       2016/10/19
+// 作成日:       2016/11/11
 //
 //============================================
 
@@ -12,15 +12,19 @@
 //============================================
 #include "main.h"
 #include "manager.h"
+#include "renderer.h"
 #include "input.h"
-#include "player2D.h"
 #include "bullet2D.h"
-#include "debugproc.h"
 
 //============================================
 // マクロ定義
 //============================================
-#define TEXTURENAME "data/TEXTURE/player000.png"
+#define TEXTURENAME "data/TEXTURE/bullet000.png"
+
+//============================================
+// 静的メンバー変数の初期化
+//============================================
+LPDIRECT3DTEXTURE9 CBullet2D::m_pTexture = NULL;
 
 //=============================================================================
 // 構造体定義
@@ -29,15 +33,15 @@
 //=============================================================================
 //コンストラクタ
 //=============================================================================
-CPlayer2D::CPlayer2D()
+CBullet2D::CBullet2D()
 {
-
+	m_move = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
 }
 
 //=============================================================================
 //デストラクタ
 //=============================================================================
-CPlayer2D::~CPlayer2D()
+CBullet2D::~CBullet2D()
 {
 	
 }
@@ -47,9 +51,12 @@ CPlayer2D::~CPlayer2D()
 // ポリゴンの初期化処理
 //=============================================================================
 
-HRESULT CPlayer2D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size)
+HRESULT CBullet2D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
 	CScene2D::Init(pos, size);
+
+	m_move = D3DXVECTOR3( 0.0f, -5.0f, 0.0f);
+
 	return S_OK;
 }
 
@@ -59,7 +66,7 @@ HRESULT CPlayer2D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 //=============================================================================
 // ポリゴンの終了処理
 //=============================================================================
-void CPlayer2D::Uninit(void)
+void CBullet2D::Uninit(void)
 {
 	CScene2D::Uninit();
 }
@@ -68,38 +75,25 @@ void CPlayer2D::Uninit(void)
 //=============================================================================
 // ポリゴンの更新処理
 //=============================================================================
-void CPlayer2D::Update(void)
+void CBullet2D::Update(void)
 {
-	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
-	CInputMouse *pInputMouse = CManager::GetInputMouse();
-	D3DXVECTOR3 pos = CPlayer2D::GetPosition();
-	
-	int mouseMoveX = pInputMouse->GetMouseAxisX();
-	if( mouseMoveX != 0)
-	{
-		pos.x += mouseMoveX;
-		SetPosition(pos);
-	}
-
-
-	//攻撃
-	if(pInputMouse->GetMouseLeftTrigger())
-	{
-		CBullet2D::Create(pos, D3DXVECTOR3( 20.0f, 20.0f, 0.0f));
-	}
-	if(pInputKeyboard->GetKeyTrigger(DIK_SPACE))
-	{
-		CBullet2D::Create(pos, D3DXVECTOR3( 20.0f, 20.0f, 0.0f));
-	}
-
-
 	CScene2D::Update();
+
+	//弾の移動更新
+	D3DXVECTOR3 pos = CScene2D::GetPosition();
+	pos += m_move;
+	CScene2D::SetPosition(pos);
+
+	if(pos.y < 0.0f)
+	{
+		this->Uninit();
+	}
 }
 
 //=============================================================================
 // ポリゴンの描画処理
 //=============================================================================
-void CPlayer2D::Draw(void)
+void CBullet2D::Draw(void)
 {
 	CScene2D::Draw();
 }
@@ -107,15 +101,49 @@ void CPlayer2D::Draw(void)
 //=============================================================================
 // ポリゴンの生成処理
 //=============================================================================
-CPlayer2D *CPlayer2D::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
+CBullet2D *CBullet2D::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
-	CPlayer2D *pPlayer2D;
-	pPlayer2D = new CPlayer2D;
-	pPlayer2D->Init(pos, size);
+	CBullet2D *pBullet2D;
+	pBullet2D = new CBullet2D;
+	pBullet2D->Init(pos, size);
+
+	//テクスチャの読み込み
+	pBullet2D->Load();
 
 	//テクスチャの割り当て
-	pPlayer2D->Load( TEXTURENAME);
+	pBullet2D->BindTexture(m_pTexture);
 	
-	return pPlayer2D;
+	return pBullet2D;
+}
+
+//=============================================================================
+//
+//=============================================================================
+HRESULT CBullet2D::Load(void)
+{
+	if( m_pTexture == NULL)
+	{
+		LPDIRECT3DDEVICE9 pDevice;
+		pDevice = CManager::GetRenderer()->GetDevice();
+
+		// テクスチャの読み込み
+		D3DXCreateTextureFromFile( pDevice, TEXTURENAME, &m_pTexture);
+	}
+
+	return S_OK;
+}
+
+//=============================================================================
+//
+//=============================================================================
+void CBullet2D::Unload(void)
+{
+	//テクスチャの破棄
+	if( m_pTexture != NULL)
+	{
+		m_pTexture->Release();
+		delete m_pTexture;
+		m_pTexture = NULL;
+	}
 }
 

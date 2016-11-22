@@ -1,19 +1,18 @@
 //============================================
 //
 // タイトル:	 未来創造展チーム204
-// プログラム名: player2D.h
+// プログラム名: fade.h
 // 作成者:		 HAL東京ゲーム学科　劉南宏
-// 作成日:       2016/10/21
+// 作成日:       2016/11/19
 //
 //============================================
 
-#ifndef _PLAYER2D_H_
-#define _PLAYER2D_H_
+#ifndef _FADE_H_
+#define _FADE_H_
 
 //============================================
 //インクルードファイル
 //============================================
-#include "scene2D.h"
 
 //============================================
 //マクロ定義
@@ -23,23 +22,36 @@
 //構造体定義
 //============================================
 
-class CPlayer2D : public CScene2D
+class CFade
 {
 public:
+	typedef enum
+	{
+		FADE_NONE = 0,
+		FADE_IN,
+		FADE_CHANGE,
+		FADE_OUT,
+		FADE_MAX
+	}FADE;
 
-	CPlayer2D();
-	virtual ~CPlayer2D();
+	CFade();
+	virtual ~CFade();
 
-	HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR3 size);
-	void Uninit(void);
-	void Update(void);
-	void Draw(void);
+	static HRESULT Init(void);
+	static void Uninit(void);
+	static void Update(void);
+	static void Draw(void);
 
-	static CPlayer2D *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size);
-
-
+	static void SetFade(void);
+	
 private:
+	//関数
+	static void SetAlpha(int alpha);
 
+	//変数
+	static LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff;		// 頂点バッファへのポインタ
+	static int m_nAlpha;
+	static FADE m_state;
 };
 
 #endif

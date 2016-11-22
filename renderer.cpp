@@ -1,6 +1,6 @@
 //============================================
 //
-// タイトル:	 CL25課題
+// タイトル:	 未来創造展チーム204
 // プログラム名: renderer.cpp
 // 作成者:		 HAL東京ゲーム学科　劉南宏
 // 作成日:       2016/09/27
@@ -13,6 +13,8 @@
 #include "main.h"
 #include "renderer.h"
 #include "scene.h"
+#include "debugproc.h"
+#include "fade.h"
 
 
 //============================================
@@ -121,10 +123,15 @@ HRESULT CRenderer::Init(HWND hWnd, bool bWindow)
 	// デバッグ情報表示用フォントの生成
 	D3DXCreateFont(m_pD3DDevice, 18, 0, 0, 0, FALSE, SHIFTJIS_CHARSET,
 					OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, "Terminal", &m_pFont);
+
+	//デバッグ情報表示
+	new CDebugProc;
+	CDebugProc::Init();
 #endif
 
-	// ポリゴンの初期化処理
-	//InitPolygon();
+	//フェード
+	CFade::Init();
+
 
 	return S_OK;
 }
@@ -134,8 +141,6 @@ HRESULT CRenderer::Init(HWND hWnd, bool bWindow)
 //=============================================================================
 void CRenderer::Uninit(void)
 {
-	// ポリゴンの終了処理
-	//UninitPolygon();
 
 #ifdef _DEBUG
 	// デバッグ情報表示用フォントの破棄
@@ -144,6 +149,10 @@ void CRenderer::Uninit(void)
 		m_pFont->Release();
 		m_pFont = NULL;
 	}
+
+	//デバッグ情報表示の破棄
+	CDebugProc::Uninit();
+
 #endif
 
 	// デバイスの破棄
@@ -159,6 +168,9 @@ void CRenderer::Uninit(void)
 		m_pD3D->Release();
 		m_pD3D = NULL;
 	}
+
+	//フェード
+	CFade::Uninit();
 }
 
 //=============================================================================
@@ -168,6 +180,14 @@ void CRenderer::Update(void)
 {
 	// ポリゴンの更新処理
 	CScene::UpdateAll();
+
+	//フェード
+	CFade::Update();
+
+#ifdef _DEBUG
+	//デバッグ情報表示の更新処理
+	CDebugProc::Update();
+#endif
 }
 
 //=============================================================================
@@ -184,9 +204,15 @@ void CRenderer::Draw(void)
 		// ポリゴンの描画処理
 		CScene::DrawAll();
 
+		//フェード
+		CFade::Draw();
+
 #ifdef _DEBUG
 		// FPS表示
 		DrawFPS();
+
+		//デバッグ情報表示
+		CDebugProc::Draw();
 #endif
 		// Direct3Dによる描画の終了
 		m_pD3DDevice->EndScene();

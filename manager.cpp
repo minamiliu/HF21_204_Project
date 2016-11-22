@@ -1,6 +1,6 @@
 //============================================
 //
-// タイトル:	 CL25課題
+// タイトル:	 未来創造展チーム204
 // プログラム名: manager.cpp
 // 作成者:		 HAL東京ゲーム学科　劉南宏
 // 作成日:       2016/11/01
@@ -13,9 +13,18 @@
 #include "main.h"
 #include "manager.h"
 #include "renderer.h"
-#include "scene2D.h"
 #include "input.h"
 #include "player2D.h"
+#include "light.h"
+#include "camera.h"
+#include "scene3D.h"
+#include "playerX.h"
+#include "game.h"
+
+#include "game.h"
+#include "title.h"
+#include "result.h"
+#include "fade.h"
 
 //============================================
 // マクロ定義
@@ -27,18 +36,34 @@
 CRenderer *CManager::m_pRenderer = NULL;
 CInputKeyboard *CManager::m_pInputKeyboard = NULL;
 CInputMouse *CManager::m_pInputMouse = NULL;
+CCamera *CManager::m_pCamera = NULL;
+
+CManager *CManager::m_pSceneManager = NULL;
+CManager::MODE CManager::m_modeNow = MODE_NONE;
+CManager::MODE CManager::m_modeNext = MODE_NONE;
 
 //============================================
 //コンストラクタ
 //============================================
 CManager::CManager()
 {
+	m_pSceneManager = this;
+}
 
+CManager::CManager(MODE mode)
+{
+	m_modeNow = mode;
+	m_pSceneManager = this;
 }
 
 CManager::~CManager()
 {
 	
+}
+
+HRESULT CManager::Init(void)
+{
+	return S_OK;
 }
 
 HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
@@ -55,16 +80,88 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 	m_pInputMouse = new CInputMouse;
 	m_pInputMouse->Init(hInstance, hWnd);
 
-	//オブジェクトの生成(2Dポリゴン)
-	CPlayer2D::Create(D3DXVECTOR3(200.0f, 300.0f, 0.0f), D3DXVECTOR3(300.0f, 300.0f, 0.0f));
+	//ライトの生成
+	CLight::Create( D3DXVECTOR3( 0.2f, -0.6f, 0.8f), D3DXCOLOR( 1.0f, 1.0f, 1.0f, 1.0f));
+	CLight::Create( D3DXVECTOR3( -0.2f, -0.3f, -0.5f), D3DXCOLOR( 0.75f, 0.75f, 0.75f, 1.0f));
+	CLight::Create( D3DXVECTOR3( 0.8f, 0.1f, 0.5f), D3DXCOLOR( 0.15f, 0.15f, 0.15f, 1.0f));
+	CLight::SetAllLightOn();
+
+	//カメラの生成
+	m_pCamera = new CCamera;
+	m_pCamera->Init();
 
 	return S_OK;
 }
 
-void CManager::Uninit()
+void CManager::Uninit(void)
 {
 	//オブジェクトの破棄
-	CScene2D::ReleaseAll();
+	CScene::ReleaseAll();		
+}
+
+void CManager::Update()
+{
+	//レンダラーの更新処理
+	m_pRenderer->Update();
+
+	//キーボードの更新処理
+	m_pInputKeyboard->Update();
+
+	//マウスの更新処理
+	m_pInputMouse->Update();
+
+	//カメラの更新処理
+	m_pCamera->Update();
+
+}
+void CManager::Draw()
+{
+	//カメラ設置
+	m_pCamera->SetCamera();
+
+	//レンダラーの描画処理
+	m_pRenderer->Draw();	
+}
+
+
+CManager *CManager::Create( MODE mode, HINSTANCE hInstance, HWND hWnd, bool bWindow)
+{
+	if( m_pSceneManager == NULL)
+	{	
+		m_pSceneManager = new CManager;
+		m_pSceneManager->Init( hInstance, hWnd, bWindow);
+	}
+
+	m_pSceneManager = SetScene( mode);
+
+	return m_pSceneManager;
+}
+
+void CManager::UpdateAll(void)
+{
+	m_pSceneManager->Update();
+}
+
+void CManager::DrawAll(void)
+{
+	m_pSceneManager->Draw();
+}
+
+void CManager::Release(void)
+{
+	//オブジェクトの破棄
+	CScene::ReleaseAll();
+
+	//ライトの破棄
+	CLight::ReleaseAll();
+
+	//カメラの破棄
+	if( m_pCamera != NULL)
+	{
+		m_pCamera->Uninit();
+		delete m_pCamera;
+		m_pCamera = NULL;
+	}
 
 	//キーボードの破棄
 	if( m_pInputKeyboard != NULL)
@@ -89,24 +186,16 @@ void CManager::Uninit()
 		delete m_pRenderer;
 		m_pRenderer = NULL;
 	}
-}
 
-void CManager::Update()
-{
-	//レンダラーの更新処理
-	m_pRenderer->Update();
+	//自己解放
+	if(m_pSceneManager != NULL)
+	{
+		m_pSceneManager->Uninit();
+		delete m_pSceneManager;
+		m_pSceneManager = NULL;
+		return;
+	}
 
-	//キーボードの更新処理
-	m_pInputKeyboard->Update();
-
-	//マウスの更新処理
-	m_pInputMouse->Update();
-
-}
-void CManager::Draw()
-{
-	//レンダラーの描画処理
-	m_pRenderer->Draw();
 }
 
 CRenderer *CManager::GetRenderer(void)
@@ -122,4 +211,49 @@ CInputKeyboard *CManager::GetInputKeyboard(void)
 CInputMouse *CManager::GetInputMouse(void)
 {
 	return m_pInputMouse;
+}
+
+CCamera *CManager::GetCamera(void)
+{
+	return m_pCamera;
+}
+
+CManager *CManager::SetScene(MODE mode)
+{
+	if( m_modeNow != mode && m_modeNow != NULL)
+	{
+		m_pSceneManager->Uninit();
+		m_pSceneManager = NULL;
+	}
+
+	switch(mode)
+	{
+	case MODE_TITLE:
+		m_pSceneManager = new CTitle;
+		break;
+
+	case MODE_GAME:
+		m_pSceneManager = new CGame;
+		break;
+
+	case MODE_RESULT:
+		m_pSceneManager = new CResult;
+		break;
+
+	}
+
+	m_pSceneManager->Init();
+
+	return m_pSceneManager;
+}
+
+CManager::MODE CManager::GetNextScene(void)
+{
+	return m_modeNext;
+}
+
+void CManager::SetNextScene(MODE mode)
+{
+	m_modeNext = mode;
+	CFade::SetFade();
 }

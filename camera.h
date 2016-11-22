@@ -1,19 +1,19 @@
 //============================================
 //
 // タイトル:	 未来創造展チーム204
-// プログラム名: player2D.h
+// プログラム名: camera.h
 // 作成者:		 HAL東京ゲーム学科　劉南宏
-// 作成日:       2016/10/21
+// 作成日:       2016/11/10
 //
 //============================================
 
-#ifndef _PLAYER2D_H_
-#define _PLAYER2D_H_
+#ifndef _CAMERA_H_
+#define _CAMERA_H_
 
 //============================================
 //インクルードファイル
 //============================================
-#include "scene2D.h"
+#include "main.h"
 
 //============================================
 //マクロ定義
@@ -23,23 +23,29 @@
 //構造体定義
 //============================================
 
-class CPlayer2D : public CScene2D
+class CCamera
 {
 public:
 
-	CPlayer2D();
-	virtual ~CPlayer2D();
+	CCamera();
+	virtual ~CCamera();
 
-	HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR3 size);
+	HRESULT Init(void);
 	void Uninit(void);
 	void Update(void);
-	void Draw(void);
 
-	static CPlayer2D *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size);
-
+	void SetCamera(void);
+	D3DXVECTOR3 GetCameraRot(void);
 
 private:
 
+	D3DXVECTOR3 m_posV;			// 視点
+	D3DXVECTOR3 m_posR;			// 注視点
+	D3DXVECTOR3 m_vecU;			// 上方向ベクトル
+	D3DXVECTOR3 m_rot;			// 向き（回転角）
+	float m_fDistance;			// 視点と注視点の距離
+	D3DXMATRIX m_mtxProjection;	// プロジェクションマトリックス
+	D3DXMATRIX m_mtxView;		// ビューマトリックス
 };
 
 #endif

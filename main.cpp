@@ -5,16 +5,13 @@
 //
 //=============================================================================
 #include "main.h"
-#include "renderer.h"
-#include "scene.h"
-#include "scene2D.h"
 #include "manager.h"
 
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
 #define CLASS_NAME		"AppClass"			// ウインドウのクラス名
-#define WINDOW_NAME		"ポリゴンの描画"	// ウインドウのキャプション名
+#define WINDOW_NAME		"未来創造展チーム204"	// ウインドウのキャプション名
 
 //*****************************************************************************
 // プロトタイプ宣言
@@ -76,11 +73,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 						hInstance,
 						NULL);
 
-
 	//マネージャの生成
-	CManager *pManager;
-	pManager = new CManager;
-	pManager->Init(hInstance, hWnd, true);
+	CManager::Create( CManager::MODE_TITLE, hInstance, hWnd, true);
 
 	// 分解能を設定
 	timeBeginPeriod(1);
@@ -128,10 +122,10 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 				dwExecLastTime = dwCurrentTime;
 
 				//マネージャの更新処理
-				pManager->Update();
+				CManager::UpdateAll();
 
 				//マネージャの描画処理
-				pManager->Draw();
+				CManager::DrawAll();
 
 				dwFrameCount++;
 			}
@@ -139,12 +133,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	}
 
 	//マネージャの破棄
-	if(pManager != NULL)
-	{
-		pManager->Uninit();
-		delete pManager;
-		pManager = NULL;
-	}
+	CManager::Release();
 
 	// ウィンドウクラスの登録を解除
 	UnregisterClass(CLASS_NAME, wcex.hInstance);

@@ -1,6 +1,6 @@
 //============================================
 //
-// タイトル:	 CL25課題
+// タイトル:	 未来創造展チーム204
 // プログラム名: scene2D.h
 // 作成者:		 HAL東京ゲーム学科　劉南宏
 // 作成日:       2016/10/21
@@ -18,11 +18,24 @@
 //============================================
 //マクロ定義
 //============================================
+// 頂点フォーマット( 頂点座標[2D] / 頂点カラー / テクスチャ座標 )
+#define	FVF_VERTEX_2D	(D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1)
+
+#define NUM_VERTEX (4)
+#define NUM_POLYGON (2)
+
 
 //============================================
 //構造体定義
 //============================================
-//敵クラス
+typedef struct
+{
+	D3DXVECTOR3 pos;	// 頂点座標
+	float rhw;			// 座標変換用係数(1.0fで固定)
+	D3DCOLOR col;		// 頂点カラー
+	D3DXVECTOR2 tex;	// テクスチャ座標
+} VERTEX_2D;
+
 class CScene2D : public CScene
 {
 public:
@@ -35,16 +48,21 @@ public:
 	void Uninit(void);
 	void Update(void);
 	void Draw(void);
+	
+	HRESULT Load(LPCSTR strFileName);
+	void BindTexture( LPDIRECT3DTEXTURE9 pTexture);
 
 	void SetPosition(D3DXVECTOR3 pos);
 	D3DXVECTOR3 GetPosition(void);
 
-	static CScene2D *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size);
+	static CScene2D *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, LPCSTR strFileName);
+
 
 private:
 
 	LPDIRECT3DTEXTURE9		m_pTexture;		// テクスチャへのポインタ
 	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff;		// 頂点バッファへのポインタ
+	bool m_bLoadTexture;					// テクスチャを読み込んだかどうか
 
 	D3DXVECTOR3			m_pos;				// ポリゴンの位置
 	D3DXVECTOR3			m_size;				// ポリゴンのサイズ

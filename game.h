@@ -1,44 +1,46 @@
 //============================================
 //
 // タイトル:	 未来創造展チーム204
-// プログラム名: renderer.h
+// プログラム名: game.h
 // 作成者:		 HAL東京ゲーム学科　劉南宏
-// 作成日:       2016/10/19
+// 作成日:       2016/11/17
 //
 //============================================
 
-#ifndef _RENDERER_H_
-#define _RENDERER_H_
+#ifndef _GAME_H_
+#define _GAME_H_
+
+//============================================
+//インクルードファイル
+//============================================
+#include "manager.h"
 
 //============================================
 //マクロ定義
 //============================================
 
 //============================================
+//前方宣言
+//============================================
+
+//============================================
 //構造体定義
 //============================================
 
-class CRenderer
+class CGame : public CManager
 {
 public:
 
-	CRenderer();
-	virtual ~CRenderer();
-
-	LPDIRECT3DDEVICE9 GetDevice();
-
-	HRESULT Init(HWND hWnd, bool bWindow);
+	CGame();
+	virtual ~CGame();
+	
+	HRESULT Init(void);
 	void Uninit(void);
 	void Update(void);
 	void Draw(void);
 
 private:
 
-	void DrawFPS(void);
-
-	LPDIRECT3D9				m_pD3D;			// Direct3Dオブジェクト
-	LPDIRECT3DDEVICE9		m_pD3DDevice;	// Deviceオブジェクト(描画に必要)
-	LPD3DXFONT				m_pFont;		// フォントへのポインタ
 };
 
 #endif
