@@ -19,7 +19,7 @@
 #include "camera.h"
 #include "scene3D.h"
 #include "playerX.h"
-#include "game.h"
+#include "sound.h"
 
 #include "game.h"
 #include "title.h"
@@ -36,6 +36,7 @@
 CRenderer *CManager::m_pRenderer = NULL;
 CInputKeyboard *CManager::m_pInputKeyboard = NULL;
 CInputMouse *CManager::m_pInputMouse = NULL;
+CSound *CManager::m_pSound = NULL;
 CCamera *CManager::m_pCamera = NULL;
 
 CManager *CManager::m_pSceneManager = NULL;
@@ -90,13 +91,17 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 	m_pCamera = new CCamera;
 	m_pCamera->Init();
 
+	//サウンド
+	m_pSound = new CSound;
+	m_pSound->Init( hWnd);
+
 	return S_OK;
 }
 
 void CManager::Uninit(void)
 {
 	//オブジェクトの破棄
-	CScene::ReleaseAll();		
+	CScene::ReleaseAll();
 }
 
 void CManager::Update()
@@ -179,6 +184,14 @@ void CManager::Release(void)
 		m_pInputMouse = NULL;
 	}
 
+	//サウンドの破棄
+	if( m_pSound != NULL)
+	{
+		m_pSound->Uninit();
+		delete m_pSound;
+		m_pSound = NULL;
+	}
+
 	//レンダラーの破棄
 	if( m_pRenderer != NULL)
 	{
@@ -256,4 +269,12 @@ void CManager::SetNextScene(MODE mode)
 {
 	m_modeNext = mode;
 	CFade::SetFade();
+}
+
+//=============================================================================
+//
+//=============================================================================
+CSound *CManager::GetSound(void)
+{
+	return m_pSound;
 }

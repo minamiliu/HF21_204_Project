@@ -21,6 +21,7 @@ class CRenderer;
 class CInputKeyboard;
 class CInputMouse;
 class CCamera;
+class CSound;
 
 //============================================
 //構造体定義
@@ -67,6 +68,9 @@ public:
 	static CInputKeyboard *GetInputKeyboard(void);
 	static CInputMouse *GetInputMouse(void);
 
+	//サウンド
+	static CSound *GetSound(void);
+
 	//カメラ
 	static CCamera *GetCamera(void);
 
@@ -87,10 +91,14 @@ private:
 	static CInputKeyboard *m_pInputKeyboard;
 	static CInputMouse *m_pInputMouse;
 
+	//サウンド
+	static CSound *m_pSound;
+
 	//画面遷移
 	static CManager *m_pSceneManager;
 	static MODE m_modeNow;
 	static MODE m_modeNext;
+
 };
 
 #endif

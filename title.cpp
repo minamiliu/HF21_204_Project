@@ -14,6 +14,7 @@
 #include "title.h"
 #include "input.h"
 #include "scene2D.h"
+#include "sound.h"
 
 
 //============================================
@@ -44,6 +45,9 @@ HRESULT CTitle::Init(void)
 
 	//オブジェクトの生成(2Dポリゴン)
 	CScene2D::Create( D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f), D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f), TEXTURE_BG);
+
+	//CSound *pSound = CManager::GetSound();
+	//pSound->Play( CSound::SOUND_LABEL_BGM000);
 
 	return S_OK;
 }
