@@ -58,7 +58,7 @@ CNumber::~CNumber()
 // ポリゴンの初期化処理
 //=============================================================================
 
-HRESULT CNumber::Init(D3DXVECTOR3 numberPos, D3DXVECTOR3 numberSize, int maxKeta)
+HRESULT CNumber::Init(D3DXVECTOR3 numberPos, D3DXVECTOR3 numberSize, int maxKeta, const D3DXCOLOR &col)
 {
 	m_nMaxKeta = maxKeta;
 	D3DXVECTOR3 rightPos = numberPos;
@@ -78,9 +78,9 @@ HRESULT CNumber::Init(D3DXVECTOR3 numberPos, D3DXVECTOR3 numberSize, int maxKeta
 		tmpPos.x -= ketaSize.x;
 	}
 
-	//タイマーを初期化
-	m_nCntFrame = 0;
-	m_nCntTime = 0;
+	//色を設定
+	SetColor( col);
+
 	return S_OK;
 }
 
@@ -111,15 +111,6 @@ void CNumber::Uninit(void)
 //=============================================================================
 void CNumber::Update(void)
 {
-	m_nCntFrame++;
-
-	if( m_nCntFrame >= 60)
-	{
-		m_nCntFrame = 0;
-		m_nCntTime++;
-		this->SetNumber(m_nCntTime);
-	}
-
 	
 }
 
@@ -137,20 +128,17 @@ void CNumber::Draw(void)
 //=============================================================================
 // ポリゴンの生成処理
 //=============================================================================
-CNumber *CNumber::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
+CNumber *CNumber::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, int maxKeta, const D3DXCOLOR &col)
 {
 	CNumber *pNumber;
 	pNumber = new CNumber;
-	pNumber->Init(pos, size, 6);
+	pNumber->Init(pos, size, maxKeta, col);
 
 	//テクスチャの読み込み
 	pNumber->Load();
 
-	for(int cntKeta = 0; cntKeta < pNumber->m_nMaxKeta; cntKeta++)
-	{
-		//テクスチャの割り当て
-		pNumber->m_ppPolygon[cntKeta]->BindTexture( m_pTexture);
-	}
+	//桁分のテクスチャの割り当て
+	pNumber->BindAllTexture();
 	
 	return pNumber;
 }
@@ -186,11 +174,16 @@ void CNumber::Unload(void)
 }
 
 //=============================================================================
-//
+//数字をそのまま表示する
 //=============================================================================
-void CNumber::SetNumber(const int score)
+void CNumber::SetNumber(int score)
 {
 	int number;
+
+	//範囲チェック
+	int maxScore = powf( 10.0f, m_nMaxKeta) -1;
+	if(score >  maxScore) score = maxScore;
+	else if(score < 0) score = 0;
 
 	for(int nKeta = 0; nKeta < m_nMaxKeta; nKeta++)
 	{
@@ -202,3 +195,25 @@ void CNumber::SetNumber(const int score)
 	}
 }
 
+//=============================================================================
+//桁分のテクスチャの割り当て
+//=============================================================================
+void CNumber::BindAllTexture(void)
+{
+	for(int cntKeta = 0; cntKeta < m_nMaxKeta; cntKeta++)
+	{
+		//テクスチャの割り当て
+		m_ppPolygon[cntKeta]->BindTexture( m_pTexture);
+	}
+}
+
+//=============================================================================
+//全桁の色を一気に変更
+//=============================================================================
+void CNumber::SetColor(const D3DXCOLOR &col)
+{
+	for(int cntKeta = 0; cntKeta < m_nMaxKeta; cntKeta++)
+	{
+		m_ppPolygon[cntKeta]->SetColor( col);
+	}
+}

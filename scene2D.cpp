@@ -303,3 +303,23 @@ D3DXVECTOR3 CScene2D::GetSize(void)
 {
 	return m_size;
 }
+
+//=============================================================================
+//色を変更
+//=============================================================================
+void CScene2D::SetColor(const D3DXCOLOR &col)
+{
+	// 頂点情報を設定
+	VERTEX_2D *pVtx;
+
+	//頂点データの範囲をロックし、頂点バッファへのポインタを取得
+	m_pVtxBuff->Lock( 0, 0, (void**)&pVtx, 0);
+
+	//color
+	pVtx[0].col = col;
+	pVtx[1].col = col;
+	pVtx[2].col = col;
+	pVtx[3].col = col;
+
+	m_pVtxBuff->Unlock();
+}
