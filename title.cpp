@@ -15,6 +15,7 @@
 #include "input.h"
 #include "scene2D.h"
 #include "sound.h"
+#include "number.h"
 
 
 //============================================
@@ -48,6 +49,8 @@ HRESULT CTitle::Init(void)
 
 	//CSound *pSound = CManager::GetSound();
 	//pSound->Play( CSound::SOUND_LABEL_BGM000);
+
+	CNumber::Create( D3DXVECTOR3(SCREEN_WIDTH/2, 100.0f, 0.0f), D3DXVECTOR3(300.0f, 50.0f, 0.0f));
 
 	return S_OK;
 }

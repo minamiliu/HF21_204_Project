@@ -62,6 +62,8 @@ HRESULT CPlayer2D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 void CPlayer2D::Uninit(void)
 {
 	CScene2D::Uninit();
+
+	CBullet2D::Unload();
 }
 
 

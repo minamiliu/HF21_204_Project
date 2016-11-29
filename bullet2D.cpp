@@ -142,7 +142,6 @@ void CBullet2D::Unload(void)
 	if( m_pTexture != NULL)
 	{
 		m_pTexture->Release();
-		delete m_pTexture;
 		m_pTexture = NULL;
 	}
 }
