@@ -38,6 +38,9 @@ public:
 
 	static CScene3D *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ);
 
+	D3DXVECTOR3 GetPosition(void);
+	D3DXVECTOR3 GetSize(void);
+
 private:
 	//関数
 	HRESULT MakeVertex(LPDIRECT3DDEVICE9 pDevice);
@@ -57,6 +60,8 @@ private:
 	int m_nNumVertexIndex;					// 総インデックス数
 	int m_nNumPolygon;						// 総ポリゴン数
 	float m_fSizeBlockX, m_fSizeBlockZ;		// ブロックサイズ
+
+	D3DXVECTOR3 m_size;
 };
 
 #endif

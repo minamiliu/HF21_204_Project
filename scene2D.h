@@ -54,6 +54,7 @@ public:
 
 	void SetPosition(D3DXVECTOR3 pos);
 	D3DXVECTOR3 GetPosition(void);
+	D3DXVECTOR3 GetSize(void);
 
 	static CScene2D *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, LPCSTR strFileName);
 

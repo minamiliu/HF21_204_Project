@@ -109,3 +109,19 @@ void CScene::Release(void)
 		m_nNumScene--;
 	}	
 }
+
+void CScene::SetObjType(OBJTYPE type)
+{
+	m_objType = type;
+}
+
+CScene *CScene::GetScene(int nIdxScene)
+{
+	return m_apScene[nIdxScene];
+}
+
+CScene::OBJTYPE CScene::GetObjType(void)
+{
+	return m_objType;
+}
+

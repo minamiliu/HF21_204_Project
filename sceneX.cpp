@@ -370,3 +370,14 @@ void CSceneX::UpdateModelMove(int nUp, int nDown, int nLeft, int nRight)
 		m_move -= m_move * 0.25f;	
 	}
 }
+
+
+D3DXVECTOR3 CSceneX::GetPosition(void)
+{
+	return m_pos;
+}
+
+D3DXVECTOR3 CSceneX::GetSize(void)
+{
+	return m_size;
+}

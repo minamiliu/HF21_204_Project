@@ -1,0 +1,48 @@
+//============================================
+//
+// タイトル:	 HF
+// プログラム名: trash.h
+// 作成者:		 HAL東京ゲーム学科　yamaga keisuke
+// 作成日:       2016/11/10
+//
+//============================================
+
+#ifndef _TRASH_H_
+#define _TRASH_H_
+
+//============================================
+//インクルードファイル
+//============================================
+#include "scene2D.h"
+
+//============================================
+//マクロ定義
+//============================================
+#define MAX_TRASH (256)
+//============================================
+//構造体定義
+//============================================
+
+class CTrash : public CScene2D
+{
+public:
+
+	CTrash();
+	virtual ~CTrash();
+
+	HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR3 size);
+	void Uninit(void);
+	void Update(void);
+	void Draw(void);
+
+	static CTrash *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size);
+
+
+private:
+	D3DXVECTOR3 m_speed;
+	bool m_fallFlag;//落下フラグ
+	bool m_apFlag;//出現フラグ
+	static int m_cnt;//出現タイミングカウンター
+};
+
+#endif

@@ -254,3 +254,12 @@ HRESULT CScene3D::MakeVertex(LPDIRECT3DDEVICE9 pDevice)
 
 	return S_OK;
 }
+
+D3DXVECTOR3 CScene3D::GetPosition(void)
+{
+	return m_pos;
+}
+D3DXVECTOR3 CScene3D::GetSize(void)
+{
+	return m_size;
+}

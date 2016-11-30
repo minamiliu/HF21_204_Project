@@ -38,6 +38,9 @@ public:
 
 	static CSceneX *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float speed);
 
+	D3DXVECTOR3 GetPosition(void);
+	D3DXVECTOR3 GetSize(void);
+
 protected:
 	//関数
 	D3DXVECTOR3 Get2VecRotAngle( D3DXVECTOR3 rot, D3DXVECTOR3 rotTarget);
@@ -68,6 +71,8 @@ private:
 
 	D3DXMATRIX m_mtxWorld;				// ワールドマトリックス
 
+
+	D3DXVECTOR3 m_size;
 };
 
 #endif
