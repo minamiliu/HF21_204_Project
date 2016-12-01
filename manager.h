@@ -76,9 +76,9 @@ public:
 	static CCamera *GetCamera(void);
 
 	//画面遷移
-	static CManager *SetScene(MODE mode); //フェードなし
-	static MODE GetNextScene(void); 
+	static void NextModeChange(void); //フェードなし
 	static void SetNextScene(MODE mode); //フェードあり
+	static void SceneChange(void); //シーンの切り替え
 
 protected:
 	//カメラ
@@ -100,6 +100,7 @@ private:
 	static MODE m_modeNow;
 	static MODE m_modeNext;
 
+	static HWND m_hWnd;
 };
 
 #endif

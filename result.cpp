@@ -54,6 +54,7 @@ void CResult::Uninit()
 
 void CResult::Update()
 {
+	//入力などの更新、各シーンのUpdateの最初に呼び出す
 	CManager::Update();
 
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
@@ -61,6 +62,9 @@ void CResult::Update()
 	{
 		SetNextScene( MODE_TITLE);
 	}
+
+	//シーンが切り替えるところ、各シーンのUpdateの最後に置いとく
+	CManager::SceneChange();
 }
 void CResult::Draw()
 {

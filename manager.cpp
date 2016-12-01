@@ -43,31 +43,44 @@ CCamera *CManager::m_pCamera = NULL;
 CManager *CManager::m_pSceneManager = NULL;
 CManager::MODE CManager::m_modeNow = MODE_NONE;
 CManager::MODE CManager::m_modeNext = MODE_NONE;
+HWND CManager::m_hWnd = NULL;
 
-//============================================
+//=============================================================================
 //コンストラクタ
-//============================================
+//=============================================================================
 CManager::CManager()
 {
 	m_pSceneManager = this;
 }
 
+//=============================================================================
+//コンストラクタ
+//=============================================================================
 CManager::CManager(MODE mode)
 {
 	m_modeNow = mode;
 	m_pSceneManager = this;
 }
 
+//=============================================================================
+//デストラクタ
+//=============================================================================
 CManager::~CManager()
 {
 	
 }
 
+//=============================================================================
+//初期化
+//=============================================================================
 HRESULT CManager::Init(void)
 {
 	return S_OK;
 }
 
+//=============================================================================
+//初期化
+//=============================================================================
 HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 {
 	// レンダラーの生成
@@ -96,15 +109,23 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 	m_pSound = new CSound;
 	m_pSound->Init( hWnd);
 
+	m_hWnd = hWnd;
+
 	return S_OK;
 }
 
+//=============================================================================
+//終了処理
+//=============================================================================
 void CManager::Uninit(void)
 {
 	//オブジェクトの破棄
 	CScene::ReleaseAll();
 }
 
+//=============================================================================
+//更新処理
+//=============================================================================
 void CManager::Update()
 {
 	//レンダラーの更新処理
@@ -119,7 +140,21 @@ void CManager::Update()
 	//カメラの更新処理
 	m_pCamera->Update();
 
+	//マウス範囲の制約
+	//POINT curPos;
+	//GetCursorPos(&curPos);
+	//WINDOWINFO windowInfo;
+	//GetWindowInfo( m_hWnd, &windowInfo);
+	//if(curPos.x > windowInfo.rcClient.right || curPos.x < windowInfo.rcClient.left || curPos.y > windowInfo.rcClient.bottom || curPos.y < windowInfo.rcClient.top)
+	//{
+	//	SetCursorPos( (windowInfo.rcClient.right + windowInfo.rcClient.left)/2, (windowInfo.rcClient.top + windowInfo.rcClient.bottom)/2);
+	//}
+
 }
+
+//=============================================================================
+//描画処理
+//=============================================================================
 void CManager::Draw()
 {
 	//カメラ設置
@@ -129,7 +164,9 @@ void CManager::Draw()
 	m_pRenderer->Draw();	
 }
 
-
+//=============================================================================
+//シーンの基本部分を生成
+//=============================================================================
 CManager *CManager::Create( MODE mode, HINSTANCE hInstance, HWND hWnd, bool bWindow)
 {
 	if( m_pSceneManager == NULL)
@@ -137,22 +174,32 @@ CManager *CManager::Create( MODE mode, HINSTANCE hInstance, HWND hWnd, bool bWin
 		m_pSceneManager = new CManager;
 		m_pSceneManager->Init( hInstance, hWnd, bWindow);
 	}
-
-	m_pSceneManager = SetScene( mode);
+	m_modeNext = mode;
+	NextModeChange();
+	SceneChange();
 
 	return m_pSceneManager;
 }
 
+//=============================================================================
+//オブジェクトの全体更新処理
+//=============================================================================
 void CManager::UpdateAll(void)
 {
 	m_pSceneManager->Update();
 }
 
+//=============================================================================
+//オブジェクトの全体描画処理
+//=============================================================================
 void CManager::DrawAll(void)
 {
 	m_pSceneManager->Draw();
 }
 
+//=============================================================================
+//シーンの基本部分のリリース
+//=============================================================================
 void CManager::Release(void)
 {
 	//オブジェクトの破棄
@@ -212,6 +259,9 @@ void CManager::Release(void)
 
 }
 
+//=============================================================================
+//取得関数リスト
+//=============================================================================
 CRenderer *CManager::GetRenderer(void)
 {
 	return m_pRenderer;
@@ -232,42 +282,22 @@ CCamera *CManager::GetCamera(void)
 	return m_pCamera;
 }
 
-CManager *CManager::SetScene(MODE mode)
+CSound *CManager::GetSound(void)
 {
-	if( m_modeNow != mode && m_modeNow != NULL)
-	{
-		m_pSceneManager->Uninit();
-		m_pSceneManager = NULL;
-	}
-
-	switch(mode)
-	{
-	case MODE_TITLE:
-		//m_pSceneManager = new CTitle;
-		m_pSceneManager = new CTrashGame;
-		break;
-
-	case MODE_GAME:
-		m_pSceneManager = new CGame;
-		
-		break;
-
-	case MODE_RESULT:
-		m_pSceneManager = new CResult;
-		break;
-
-	}
-
-	m_pSceneManager->Init();
-
-	return m_pSceneManager;
+	return m_pSound;
 }
 
-CManager::MODE CManager::GetNextScene(void)
+//=============================================================================
+//シーンを設置
+//=============================================================================
+void CManager::NextModeChange(void)
 {
-	return m_modeNext;
+	m_modeNow = m_modeNext;
 }
 
+//=============================================================================
+//フェードのあるシーン設置
+//=============================================================================
 void CManager::SetNextScene(MODE mode)
 {
 	m_modeNext = mode;
@@ -275,9 +305,42 @@ void CManager::SetNextScene(MODE mode)
 }
 
 //=============================================================================
-//
+//シーンの切り替えるが発生する関数
 //=============================================================================
-CSound *CManager::GetSound(void)
+void CManager::SceneChange(void)
 {
-	return m_pSound;
+	if( m_modeNext != MODE_NONE && m_modeNow == m_modeNext)
+	{
+		m_pSceneManager->Uninit();
+		m_pSceneManager = NULL;
+	}
+	else
+	{
+		return;
+	}
+
+	switch(m_modeNext)
+	{
+	case MODE_TITLE:
+		m_pSceneManager = new CTitle;
+		break;
+
+	case MODE_TRASHGAME:
+		m_pSceneManager = new CTrashGame;
+		break;
+
+	case MODE_GAME:
+		m_pSceneManager = new CGame;
+		break;
+
+	case MODE_RESULT:
+		m_pSceneManager = new CResult;
+		break;
+	}
+	
+	//次のシーンはなしにする
+	m_modeNext = MODE_NONE;
+
+	//次のシーンの初期化
+	m_pSceneManager->Init();
 }

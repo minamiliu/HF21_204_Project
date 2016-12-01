@@ -66,6 +66,7 @@ void CTitle::Uninit()
 
 void CTitle::Update()
 {
+	//入力などの更新、各シーンのUpdateの最初に呼び出す
 	CManager::Update();
 
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
@@ -82,6 +83,9 @@ void CTitle::Update()
 	{
 		m_score->AddScore(-100);
 	}
+
+	//シーンが切り替えるところ、各シーンのUpdateの最後に置いとく
+	CManager::SceneChange();
 }
 void CTitle::Draw()
 {

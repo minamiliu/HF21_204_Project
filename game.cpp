@@ -65,13 +65,17 @@ void CGame::Uninit()
 
 void CGame::Update()
 {
+	//入力などの更新、各シーンのUpdateの最初に呼び出す
 	CManager::Update();
 
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
 	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN))
 	{
-		SetNextScene( MODE_RESULT);
+		SetNextScene( MODE_TRASHGAME);
 	}
+
+	//シーンが切り替えるところ、各シーンのUpdateの最後に置いとく
+	CManager::SceneChange();
 }
 void CGame::Draw()
 {

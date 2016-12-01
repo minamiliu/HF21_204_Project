@@ -137,7 +137,7 @@ void CFade::Update(void)
 			break;
 
 		case FADE_CHANGE:
-			CManager::SetScene( CManager::GetNextScene());
+			CManager::NextModeChange();
 			m_state = FADE_IN;
 			break;
 
