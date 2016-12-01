@@ -99,7 +99,8 @@
     <ClCompile Include="sceneX.cpp" />
     <ClCompile Include="score.cpp" />
     <ClCompile Include="sound.cpp" />
-    <ClCompile Include="time.cpp" />    <ClCompile Include="title.cpp" />
+    <ClCompile Include="time.cpp" />    
+	<ClCompile Include="title.cpp" />
     <ClCompile Include="trash.cpp" />
     <ClCompile Include="trashBox.cpp" />
     <ClCompile Include="trashGame.cpp" />
