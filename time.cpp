@@ -50,8 +50,8 @@ CTime::~CTime()
 
 HRESULT CTime::Init(D3DXVECTOR3 numberPos, D3DXVECTOR3 numberSize, int maxKeta, int startTime, bool bCountDown, const D3DXCOLOR &col)
 {
-	CNumber::Init( numberPos, numberSize, maxKeta, col);
-	CNumber::SetNumber(startTime);
+	CScore::Init( numberPos, numberSize, maxKeta, col);
+	CScore::SetScore(startTime);
 
 	m_nCntFrame = 0;
 	m_nTime = 0;
@@ -69,7 +69,7 @@ HRESULT CTime::Init(D3DXVECTOR3 numberPos, D3DXVECTOR3 numberSize, int maxKeta, 
 //=============================================================================
 void CTime::Uninit(void)
 {
-	CNumber::Uninit();
+	CScore::Uninit();
 }
 
 
@@ -92,7 +92,7 @@ void CTime::Update(void)
 		}
 
 		m_nCntFrame = 0;
-		this->SetNumber(m_nTime);
+		this->SetScore(m_nTime);
 	}
 
 }
@@ -102,7 +102,7 @@ void CTime::Update(void)
 //=============================================================================
 void CTime::Draw(void)
 {
-	CNumber::Draw();
+	CScore::Draw();
 }
 
 CTime *CTime::Create(D3DXVECTOR3 numberPos, D3DXVECTOR3 numberSize, int maxKeta, int startTime, bool bCountDown, const D3DXCOLOR &col)

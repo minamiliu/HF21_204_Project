@@ -96,6 +96,7 @@
     <ClCompile Include="scene2D.cpp" />
     <ClCompile Include="scene3D.cpp" />
     <ClCompile Include="sceneX.cpp" />
+    <ClCompile Include="score.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="time.cpp" />
     <ClCompile Include="title.cpp" />
@@ -119,6 +120,7 @@
     <ClInclude Include="scene2D.h" />
     <ClInclude Include="scene3D.h" />
     <ClInclude Include="sceneX.h" />
+    <ClInclude Include="score.h" />
     <ClInclude Include="sound.h" />
     <ClInclude Include="time.h" />
     <ClInclude Include="title.h" />

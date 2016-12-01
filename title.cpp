@@ -16,6 +16,7 @@
 #include "scene2D.h"
 #include "sound.h"
 #include "time.h"
+#include "score.h"
 
 
 //============================================
@@ -50,13 +51,16 @@ HRESULT CTitle::Init(void)
 	//CSound *pSound = CManager::GetSound();
 	//pSound->Play( CSound::SOUND_LABEL_BGM000);
 
-	CTime::Create( D3DXVECTOR3(SCREEN_WIDTH/2, 100.0f, 0.0f), D3DXVECTOR3(300.0f, 50.0f, 0.0f), 6, 999999, true, BLUE(1.0f));
+	CTime::Create( D3DXVECTOR3(SCREEN_WIDTH/2, 100.0f, 0.0f), D3DXVECTOR3(200.0f, 100.0f, 0.0f), 2, 99, true, BLUE(1.0f));
+	m_score = CScore::Create( D3DXVECTOR3(150, 100.0f, 0.0f), D3DXVECTOR3( 300, 50.0f, 0.0f), 6, RED(1.0f));
+	m_score->SetScore(1000);
 
 	return S_OK;
 }
 
 void CTitle::Uninit()
 {
+	//Scene‚Ì”jŠü
 	CManager::Uninit();
 }
 
@@ -68,6 +72,15 @@ void CTitle::Update()
 	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN))
 	{
 		SetNextScene( MODE_GAME);
+	}
+
+	if( pInputKeyboard->GetKeyTrigger(DIK_UP))
+	{
+		m_score->AddScore(100);
+	}
+	if( pInputKeyboard->GetKeyTrigger(DIK_DOWN))
+	{
+		m_score->AddScore(-100);
 	}
 }
 void CTitle::Draw()
