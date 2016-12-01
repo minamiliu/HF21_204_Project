@@ -68,6 +68,8 @@ HRESULT CScore::Init(D3DXVECTOR3 numberPos, D3DXVECTOR3 numberSize, int maxKeta,
 	//初期値を設定
 	m_nMaxKeta = maxKeta;
 	m_nValue = 0;
+	m_pos = numberPos;
+	m_size = numberSize;
 
 	//Numberポインター配列の生成
 	m_ppPolygon = new CNumber*[maxKeta];
@@ -239,4 +241,18 @@ void CScore::AddScore(int score)
 {
 	m_nValue += score;
 	SetScore( m_nValue);
+}
+//=============================================================================
+//座標を取得
+//=============================================================================
+D3DXVECTOR3 CScore::GetPosition(void)
+{
+	return m_pos;
+}
+//=============================================================================
+//サイズを取得
+//=============================================================================
+D3DXVECTOR3 CScore::GetSize(void)
+{
+	return m_size;
 }

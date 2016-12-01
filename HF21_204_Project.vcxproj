@@ -90,6 +90,7 @@
     <ClCompile Include="number.cpp" />
     <ClCompile Include="player2D.cpp" />
     <ClCompile Include="playerX.cpp" />
+    <ClCompile Include="Point2D.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="result.cpp" />
     <ClCompile Include="scene.cpp" />
@@ -98,8 +99,10 @@
     <ClCompile Include="sceneX.cpp" />
     <ClCompile Include="score.cpp" />
     <ClCompile Include="sound.cpp" />
-    <ClCompile Include="time.cpp" />
-    <ClCompile Include="title.cpp" />
+    <ClCompile Include="time.cpp" />    <ClCompile Include="title.cpp" />
+    <ClCompile Include="trash.cpp" />
+    <ClCompile Include="trashBox.cpp" />
+    <ClCompile Include="trashGame.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bullet2D.h" />
@@ -114,6 +117,7 @@
     <ClInclude Include="number.h" />
     <ClInclude Include="player2D.h" />
     <ClInclude Include="playerX.h" />
+    <ClInclude Include="point2D.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="result.h" />
     <ClInclude Include="scene.h" />
@@ -124,6 +128,9 @@
     <ClInclude Include="sound.h" />
     <ClInclude Include="time.h" />
     <ClInclude Include="title.h" />
+    <ClInclude Include="trash.h" />
+    <ClInclude Include="trashBox.h" />
+    <ClInclude Include="trashGame.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

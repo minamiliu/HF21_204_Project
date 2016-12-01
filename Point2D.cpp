@@ -1,9 +1,9 @@
 //============================================
 //
-// タイトル:	 未来創造展チーム204
-// プログラム名: player2D.cpp
-// 作成者:		 HAL東京ゲーム学科　劉南宏
-// 作成日:       2016/10/19
+// タイトル:	 HF
+// プログラム名: trash.cpp
+// 作成者:		 HAL東京ゲーム学科　yamaga keisuke
+// 作成日:       2016/11/10
 //
 //============================================
 
@@ -13,23 +13,22 @@
 #include "main.h"
 #include "manager.h"
 #include "input.h"
-#include "player2D.h"
-#include "bullet2D.h"
+#include "point2D.h"
 #include "debugproc.h"
-
 //============================================
 // マクロ定義
 //============================================
-#define TEXTURENAME "data/TEXTURE/player000.png"
+#define GRAVITY_POINT (0.98f)
 
 //=============================================================================
 // 構造体定義
 //=============================================================================
+bool PointFlag = false;
 
 //=============================================================================
 //コンストラクタ
 //=============================================================================
-CPlayer2D::CPlayer2D()
+CPoint2D::CPoint2D()
 {
 
 }
@@ -37,7 +36,7 @@ CPlayer2D::CPlayer2D()
 //=============================================================================
 //デストラクタ
 //=============================================================================
-CPlayer2D::~CPlayer2D()
+CPoint2D::~CPoint2D()
 {
 	
 }
@@ -47,9 +46,13 @@ CPlayer2D::~CPlayer2D()
 // ポリゴンの初期化処理
 //=============================================================================
 
-HRESULT CPlayer2D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size)
+HRESULT CPoint2D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size,HWND hwnd)
 {
+	m_hwnd=hwnd;
 	CScene2D::Init(pos, size);
+	m_startPos = D3DXVECTOR3(0.0f,0.0f,0.0f);
+	m_endPos = D3DXVECTOR3(0.0f,0.0f,0.0f);
+	m_speed = D3DXVECTOR3(0.0f,0.0f,0.0f);
 	return S_OK;
 }
 
@@ -59,56 +62,47 @@ HRESULT CPlayer2D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 //=============================================================================
 // ポリゴンの終了処理
 //=============================================================================
-void CPlayer2D::Uninit(void)
+void CPoint2D::Uninit(void)
 {
 	CScene2D::Uninit();
-
-	CBullet2D::Unload();
 }
 
 
 //=============================================================================
 // ポリゴンの更新処理
 //=============================================================================
-void CPlayer2D::Update(void)
+void CPoint2D::Update(void)
 {
-	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
-	CInputMouse *pInputMouse = CManager::GetInputMouse();
-	D3DXVECTOR3 pos = CPlayer2D::GetPosition();
-	
-	//int mouseMoveX = pInputMouse->GetMouseAxisX();
-	//if( mouseMoveX != 0)
-	//{
-	//	pos.x += mouseMoveX;
-	//	SetPosition(pos);
-	//}
+	//// マウス座標の取得
+	POINT po;
+	GetCursorPos(&po);
+	ScreenToClient(m_hwnd,&po);
+	ShowCursor(FALSE);
+	D3DXVECTOR3 pos ;
+	if(CManager::GetInputMouse()->GetMouseLeftPress())
+	{
+	}
 
-	////攻撃
-	//if(pInputMouse->GetMouseLeftTrigger())
-	//{
-	//	CBullet2D::Create(pos, D3DXVECTOR3( 20.0f, 20.0f, 0.0f));
-	//}
-	//if(pInputKeyboard->GetKeyTrigger(DIK_SPACE))
-	//{
-	//	CBullet2D::Create(pos, D3DXVECTOR3( 20.0f, 20.0f, 0.0f));
-	//}
-
-	//if(CManager::GetInputMouse()->GetMouseLeftRelease())
-	//{
-	//	pos.x += 100.0f;
-	//	SetPosition(pos);
-	//}
-
-
-
-
+	if(CManager::GetInputMouse()->GetMouseLeftRelease())
+	{
+	}
+	pos.x = po.x;
+	pos.y = po.y;
+	CPoint2D::SetPosition(D3DXVECTOR3(pos.x,pos.y,0.0f));
 	CScene2D::Update();
+	float print = CManager::GetInputMouse()->GetMouseAxisX();
+	CDebugProc::Print("\nカーソルの場所.x.y:%f,%f",pos.x,pos.y);
+	//PrintDebugProc("\nm_startPos.y:%f",m_startPos.y);
+	//PrintDebugProc("\nm_speed.x:%f",m_speed.x);
+	//PrintDebugProc("\nm_speed.y:%f",m_speed.y);
+	//PrintDebugProc("\nprint:%f",print);
+	
 }
 
 //=============================================================================
 // ポリゴンの描画処理
 //=============================================================================
-void CPlayer2D::Draw(void)
+void CPoint2D::Draw(void)
 {
 	CScene2D::Draw();
 }
@@ -116,15 +110,12 @@ void CPlayer2D::Draw(void)
 //=============================================================================
 // ポリゴンの生成処理
 //=============================================================================
-CPlayer2D *CPlayer2D::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
+CPoint2D *CPoint2D::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size,HWND hwnd)
 {
-	CPlayer2D *pPlayer2D;
-	pPlayer2D = new CPlayer2D;
-	pPlayer2D->Init(pos, size);
-
-	//テクスチャの割り当て
-	pPlayer2D->Load( TEXTURENAME);
+	CPoint2D *pPoint2D;
+	pPoint2D = new CPoint2D;
+	pPoint2D->Init(pos, size,hwnd);
 	
-	return pPlayer2D;
+	return pPoint2D;
 }
 

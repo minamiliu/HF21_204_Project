@@ -13,7 +13,7 @@
 #include "main.h"
 #include "manager.h"
 #include "input.h"
-#include "player2D.h"
+#include "trashBox.h"
 #include "bullet2D.h"
 #include "debugproc.h"
 
@@ -29,7 +29,7 @@
 //=============================================================================
 //コンストラクタ
 //=============================================================================
-CPlayer2D::CPlayer2D()
+CTrashBox2D::CTrashBox2D()
 {
 
 }
@@ -37,7 +37,7 @@ CPlayer2D::CPlayer2D()
 //=============================================================================
 //デストラクタ
 //=============================================================================
-CPlayer2D::~CPlayer2D()
+CTrashBox2D::~CTrashBox2D()
 {
 	
 }
@@ -47,7 +47,7 @@ CPlayer2D::~CPlayer2D()
 // ポリゴンの初期化処理
 //=============================================================================
 
-HRESULT CPlayer2D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size)
+HRESULT CTrashBox2D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
 	CScene2D::Init(pos, size);
 	return S_OK;
@@ -59,56 +59,25 @@ HRESULT CPlayer2D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 //=============================================================================
 // ポリゴンの終了処理
 //=============================================================================
-void CPlayer2D::Uninit(void)
+void CTrashBox2D::Uninit(void)
 {
 	CScene2D::Uninit();
-
-	CBullet2D::Unload();
 }
 
 
 //=============================================================================
 // ポリゴンの更新処理
 //=============================================================================
-void CPlayer2D::Update(void)
+void CTrashBox2D::Update(void)
 {
-	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
-	CInputMouse *pInputMouse = CManager::GetInputMouse();
-	D3DXVECTOR3 pos = CPlayer2D::GetPosition();
-	
-	//int mouseMoveX = pInputMouse->GetMouseAxisX();
-	//if( mouseMoveX != 0)
-	//{
-	//	pos.x += mouseMoveX;
-	//	SetPosition(pos);
-	//}
-
-	////攻撃
-	//if(pInputMouse->GetMouseLeftTrigger())
-	//{
-	//	CBullet2D::Create(pos, D3DXVECTOR3( 20.0f, 20.0f, 0.0f));
-	//}
-	//if(pInputKeyboard->GetKeyTrigger(DIK_SPACE))
-	//{
-	//	CBullet2D::Create(pos, D3DXVECTOR3( 20.0f, 20.0f, 0.0f));
-	//}
-
-	//if(CManager::GetInputMouse()->GetMouseLeftRelease())
-	//{
-	//	pos.x += 100.0f;
-	//	SetPosition(pos);
-	//}
-
-
-
-
+	//D3DXVECTOR3 pos = CTrashBox2D::GetPosition();
 	CScene2D::Update();
 }
 
 //=============================================================================
 // ポリゴンの描画処理
 //=============================================================================
-void CPlayer2D::Draw(void)
+void CTrashBox2D::Draw(void)
 {
 	CScene2D::Draw();
 }
@@ -116,15 +85,16 @@ void CPlayer2D::Draw(void)
 //=============================================================================
 // ポリゴンの生成処理
 //=============================================================================
-CPlayer2D *CPlayer2D::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
+CTrashBox2D *CTrashBox2D::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
-	CPlayer2D *pPlayer2D;
-	pPlayer2D = new CPlayer2D;
-	pPlayer2D->Init(pos, size);
+	CTrashBox2D *pTrashBox2D;
+	pTrashBox2D = new CTrashBox2D;
+	pTrashBox2D->Init(pos, size);
 
 	//テクスチャの割り当て
-	pPlayer2D->Load( TEXTURENAME);
+	pTrashBox2D->Load( TEXTURENAME);
 	
-	return pPlayer2D;
+	return pTrashBox2D;
 }
+
 

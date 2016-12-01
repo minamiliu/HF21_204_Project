@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ソース ファイル\TrashGame">
+      <UniqueIdentifier>{a30442ff-3bc2-4a3c-9ea2-24cd7dc24776}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\TashGame">
+      <UniqueIdentifier>{ee565c29-5a9c-4267-8eb9-bd2c5a5bff63}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -81,6 +87,18 @@
     <ClCompile Include="time.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="trash.cpp">
+      <Filter>ソース ファイル\TrashGame</Filter>
+    </ClCompile>
+    <ClCompile Include="trashBox.cpp">
+      <Filter>ソース ファイル\TrashGame</Filter>
+    </ClCompile>
+    <ClCompile Include="trashGame.cpp">
+      <Filter>ソース ファイル\TrashGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Point2D.cpp">
+      <Filter>ソース ファイル\TrashGame</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -148,6 +166,18 @@
     </ClInclude>
     <ClInclude Include="time.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="trash.h">
+      <Filter>ヘッダー ファイル\TashGame</Filter>
+    </ClInclude>
+    <ClInclude Include="trashBox.h">
+      <Filter>ヘッダー ファイル\TashGame</Filter>
+    </ClInclude>
+    <ClInclude Include="trashGame.h">
+      <Filter>ヘッダー ファイル\TashGame</Filter>
+    </ClInclude>
+    <ClInclude Include="point2D.h">
+      <Filter>ヘッダー ファイル\TashGame</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
