@@ -89,13 +89,13 @@ HRESULT CSceneX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float s
 
 	// Xファイルの読み込み
 	if(FAILED(D3DXLoadMeshFromX(
-		MODEL_FILENAME,				// 読み込むモデルファイル名(Xファイル)
-		D3DXMESH_SYSTEMMEM,			// メッシュの作成オプションを指定
-		pDevice,					// IDirect3DDevice9インターフェイスへのポインタ
-		NULL,						// 隣接性データを含むバッファへのポインタ
+		MODEL_FILENAME,			// 読み込むモデルファイル名(Xファイル)
+		D3DXMESH_SYSTEMMEM,		// メッシュの作成オプションを指定
+		pDevice,				// IDirect3DDevice9インターフェイスへのポインタ
+		NULL,					// 隣接性データを含むバッファへのポインタ
 		&m_pD3DXBuffMat,		// マテリアルデータを含むバッファへのポインタ
-		NULL,						// エフェクトインスタンスの配列を含むバッファへのポインタ
-		&m_nNumMat,			// D3DXMATERIAL構造体の数
+		NULL,					// エフェクトインスタンスの配列を含むバッファへのポインタ
+		&m_nNumMat,				// D3DXMATERIAL構造体の数
 		&m_pD3DXMesh			// ID3DXMeshインターフェイスへのポインタのアドレス
 		)))
 	{
@@ -244,7 +244,7 @@ D3DXVECTOR3 CSceneX::Get2VecRotAngle( D3DXVECTOR3 rot, D3DXVECTOR3 rotTarget)
 void CSceneX::UpdateModelMove(int nUp, int nDown, int nLeft, int nRight)
 {
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
-	D3DXVECTOR3 rotCamera = CManager::GetCamera()->GetCameraRot();
+	D3DXVECTOR3 rotCamera = CManager::GetCamera()->GetRot();
 
 
 	//移動処理
@@ -371,7 +371,6 @@ void CSceneX::UpdateModelMove(int nUp, int nDown, int nLeft, int nRight)
 	}
 }
 
-
 D3DXVECTOR3 CSceneX::GetPosition(void)
 {
 	return m_pos;
@@ -380,4 +379,144 @@ D3DXVECTOR3 CSceneX::GetPosition(void)
 D3DXVECTOR3 CSceneX::GetSize(void)
 {
 	return m_size;
+}
+
+D3DXVECTOR3 CSceneX::GetRot(void)
+{
+	return m_rot;
+}
+
+void CSceneX::UpdateModelMove2(int nUp, int nDown, int nLeft, int nRight)
+{
+	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
+	D3DXVECTOR3 rotCamera = CManager::GetCamera()->GetRot();
+
+	const float rotSpeed = 1.0f;
+
+	//移動処理
+	bool isGoAhead = true;
+	bool isGoBack = false;
+
+	//斜め移動
+	if( (pInputKeyboard->GetKeyPress(nRight) && pInputKeyboard->GetKeyPress(nUp)) ) //右上
+	{
+		m_rotTarget.y = m_rot.y + D3DXToRadian(rotSpeed);
+		if( m_rotTarget.y > D3DX_PI)
+		{
+			m_rotTarget.y -= D3DX_PI * 2.0f;
+		}
+		isGoAhead = true;
+	}
+	else if((pInputKeyboard->GetKeyPress(nRight) && pInputKeyboard->GetKeyPress(nDown)) ) //右下
+	{
+		m_rotTarget.y = m_rot.y + D3DXToRadian(rotSpeed);
+		if( m_rotTarget.y > D3DX_PI)
+		{
+			m_rotTarget.y -= D3DX_PI * 2.0f;
+		}
+		isGoBack = true;
+	}
+	else if((pInputKeyboard->GetKeyPress(nLeft)  && pInputKeyboard->GetKeyPress(nUp))  ) //左上
+	{
+		m_rotTarget.y = m_rot.y + D3DXToRadian(-rotSpeed);
+		if( m_rotTarget.y < -D3DX_PI)
+		{
+			m_rotTarget.y += D3DX_PI * 2.0f;
+		}
+		isGoAhead = true;
+	}
+	else if((pInputKeyboard->GetKeyPress(nLeft) && pInputKeyboard->GetKeyPress(nDown)) ) //左下
+	{
+		m_rotTarget.y = m_rot.y + D3DXToRadian(-rotSpeed);
+		if( m_rotTarget.y < -D3DX_PI)
+		{
+			m_rotTarget.y += D3DX_PI * 2.0f;
+		}
+		isGoBack = true;
+	}
+	else if(pInputKeyboard->GetKeyPress(nUp) )
+	{
+		isGoAhead = true;
+	}
+	else if(pInputKeyboard->GetKeyPress(nDown) )
+	{
+		isGoBack = true;
+	}
+	else if(pInputKeyboard->GetKeyPress(nLeft) )
+	{
+		m_rotTarget.y = m_rot.y + D3DXToRadian(-1.0f);
+		if( m_rotTarget.y < -D3DX_PI)
+		{
+			m_rotTarget.y += D3DX_PI * 2.0f;
+		}
+		
+	}
+	else if(pInputKeyboard->GetKeyPress(nRight) )
+	{
+		m_rotTarget.y = m_rot.y + D3DXToRadian(1.0f);
+		if( m_rotTarget.y > D3DX_PI)
+		{
+			m_rotTarget.y -= D3DX_PI * 2.0f;
+		}
+	}
+
+	if(isGoAhead == true)
+	{
+		//移動慣性の初期化
+		m_move = D3DXVECTOR3( m_speed, 0.0f, m_speed);
+
+		////時計回り、または逆時計回りを決める
+		//m_rotAngle =  Get2VecRotAngle( m_rot, m_rotTarget);
+	}
+
+	if(isGoBack == true)
+	{
+		//移動慣性の初期化
+		m_move = -D3DXVECTOR3( m_speed, 0.0f, m_speed);
+
+		////時計回り、または逆時計回りを決める
+		//m_rotAngle =  Get2VecRotAngle( m_rot, m_rotTarget);		
+	}
+
+	//回転慣性
+	m_rotAngle.y *= 0.999f;
+
+	//次の回転位置に到着したら
+	float diff = abs(m_rot.y - m_rotTarget.y);
+	if( diff > D3DX_PI)
+	{
+		diff -= D3DX_PI*2;
+	}
+
+	if(diff < VALUE_ROTATE)
+	{
+		m_rot.y = m_rotTarget.y;
+		m_rotAngle.y = 0;
+	}
+	else //次の回転位置にまだ到着してない
+	{
+		m_rot.y += m_rotAngle.y;
+
+		//モデル角度修正
+		if( m_rot.y > D3DX_PI)
+		{
+			m_rot.y -= D3DX_PI*2;
+		}
+		else if(m_rot.y <= -D3DX_PI)
+		{
+			m_rot.y += D3DX_PI*2;
+		}
+	}	
+
+
+	//回転していない時
+	if( m_rotAngle.y == 0)
+	{
+		//移動
+		m_pos.x += m_move.x * sinf( m_rot.y);
+		m_pos.z += m_move.z * cosf( m_rot.y);
+
+		//慣性処理
+		m_move -= m_move * 0.25f;	
+	}
 }

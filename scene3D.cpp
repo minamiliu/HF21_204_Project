@@ -68,8 +68,8 @@ HRESULT CScene3D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNu
 	pDevice = CManager::GetRenderer()->GetDevice();
 
 	// 位置・回転・スケールの初期設定
-	m_pos = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
-	m_rot = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
+	m_pos = pos;
+	m_rot = rot;
 
 	m_nNumBlockX = nNumBlockX;
 	m_nNumBlockZ = nNumBlockZ;

@@ -23,7 +23,7 @@
 //============================================
 // マクロ定義
 //============================================
-
+#define CAMERA_DISTANCE	(200.0f)
 //============================================
 // 静的メンバー変数の初期化
 //============================================
@@ -49,11 +49,16 @@ HRESULT CGame::Init(void)
 	//オブジェクトの生成(3Dポリゴン)
 	CScene3D::Create( D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 10, 10, 100.0f, 100.0f);
 
+	//ウォール
+	CScene3D::Create( D3DXVECTOR3( 0.0f, 0.0f, 500.0f), D3DXVECTOR3( D3DXToRadian(90.0f), 0.0f, 0.0f), 10, 1, 100.0f, 100.0f);
+	CScene3D::Create( D3DXVECTOR3( 500.0f, 0.0f, 0.0f), D3DXVECTOR3( D3DXToRadian(90.0f), D3DXToRadian(90.0f), 0.0f), 10, 1, 100.0f, 100.0f);
+	CScene3D::Create( D3DXVECTOR3( -500.0f, 0.0f, 0.0f), D3DXVECTOR3( D3DXToRadian(90.0f), D3DXToRadian(-90.0f), 0.0f), 10, 1, 100.0f, 100.0f);
+	CScene3D::Create( D3DXVECTOR3( 0.0f, 0.0f, -500.0f), D3DXVECTOR3( D3DXToRadian(90.0f), D3DXToRadian(180.0f), 0.0f), 10, 1, 100.0f, 100.0f);
+
 	//オブジェクトの生成(Xfile)
-	CPlayerX::Create( D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), 5.0f);
+	m_player = CPlayerX::Create( D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), 2.0f);
 
 	//オブジェクトの生成(2Dポリゴン)
-	CPlayer2D::Create( D3DXVECTOR3( 300.0f, 300.0f, 0.0f), D3DXVECTOR3( 100.0f, 100.0f, 0.0f));
 
 	return S_OK;
 }
@@ -68,6 +73,24 @@ void CGame::Update()
 	//入力などの更新、各シーンのUpdateの最初に呼び出す
 	CManager::Update();
 
+	{//カメラ追従
+		CCamera *pCamera = GetCamera();
+
+		//注視点
+		pCamera->SetPosR( m_player->GetPosition());
+
+		//視点
+		D3DXVECTOR3 posV = pCamera->GetPosV();
+		posV.x = pCamera->GetPosR().x - CAMERA_DISTANCE * sinf(pCamera->GetRot().y);
+		posV.z = pCamera->GetPosR().z - CAMERA_DISTANCE * cosf(pCamera->GetRot().y);
+		pCamera->SetPosV( posV);
+
+		//向き
+		pCamera->SetRot( m_player->GetRot());
+	}
+
+
+	//スキップシーン
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
 	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN))
 	{

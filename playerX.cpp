@@ -65,7 +65,7 @@ void CPlayerX::Uninit(void)
 //=============================================================================
 void CPlayerX::Update(void)
 {
-	CSceneX::UpdateModelMove(DIK_W, DIK_S, DIK_A, DIK_D);
+	CSceneX::UpdateModelMove2(DIK_W, DIK_S, DIK_A, DIK_D);
 }
 
 //=============================================================================

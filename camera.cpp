@@ -14,20 +14,21 @@
 #include "camera.h"
 #include "renderer.h"
 #include "manager.h"
+#include "playerX.h"
 
 //============================================
 // マクロ定義
 //============================================
 #define	CAM_POS_V_X				(0.0f)					// カメラの視点初期位置(X座標)
-#define	CAM_POS_V_Y				(300.0f)				// カメラの視点初期位置(Y座標)
-#define	CAM_POS_V_Z				(-300.0f)				// カメラの視点初期位置(Z座標)
+#define	CAM_POS_V_Y				(100.0f)				// カメラの視点初期位置(Y座標)
+#define	CAM_POS_V_Z				(-100.0f)				// カメラの視点初期位置(Z座標)
 #define	CAM_POS_R_X				(0.0f)					// カメラの注視点初期位置(X座標)
 #define	CAM_POS_R_Y				(0.0f)					// カメラの注視点初期位置(Y座標)
 #define	CAM_POS_R_Z				(0.0f)					// カメラの注視点初期位置(Z座標)
 #define	VIEW_ANGLE				(D3DXToRadian(60.0f))							// ビュー平面の視野角
 #define	VIEW_ASPECT				((float)SCREEN_WIDTH / (float)SCREEN_HEIGHT)	// ビュー平面のアスペクト比
 #define	VIEW_NEAR_Z				(1.f)											// ビュー平面のNearZ値
-#define	VIEW_FAR_Z				(1000.0f)										// ビュー平面のFarZ値
+#define	VIEW_FAR_Z				(2000.0f)										// ビュー平面のFarZ値
 #define	VALUE_MOVE_CAMERA		(2.0f)											// カメラの移動量
 #define	VALUE_ROTATE_CAMERA		(D3DX_PI * 0.01f)								// カメラの回転量
 #define	VALUE_ADJUST_DISTANCE	(2.0f)											// 視点と注視点の距離調整量
@@ -109,8 +110,29 @@ void CCamera::SetCamera(void)
 	pDevice->SetTransform( D3DTS_PROJECTION, &m_mtxProjection);
 }
 
-D3DXVECTOR3 CCamera::GetCameraRot(void)
+D3DXVECTOR3 CCamera::GetRot(void)
 {
 	return m_rot;
 }
+void CCamera::SetRot(D3DXVECTOR3 rot)
+{
+	m_rot = rot;
+}
 
+D3DXVECTOR3 CCamera::GetPosR(void)
+{
+	return m_posR;
+}
+void CCamera::SetPosR(D3DXVECTOR3 posR)
+{
+	m_posR = posR;
+}
+
+D3DXVECTOR3 CCamera::GetPosV(void)
+{
+	return m_posV;
+}
+void CCamera::SetPosV(D3DXVECTOR3 posV)
+{
+	m_posV = posV;
+}

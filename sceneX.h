@@ -40,11 +40,13 @@ public:
 
 	D3DXVECTOR3 GetPosition(void);
 	D3DXVECTOR3 GetSize(void);
+	D3DXVECTOR3 GetRot(void);
 
 protected:
 	//ä÷êî
 	D3DXVECTOR3 Get2VecRotAngle( D3DXVECTOR3 rot, D3DXVECTOR3 rotTarget);
 	void UpdateModelMove(int nUp, int nDown, int nLeft, int nRight);
+	void UpdateModelMove2(int nUp, int nDown, int nLeft, int nRight);
 
 private:
 	//ïœêî
