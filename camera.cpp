@@ -136,3 +136,12 @@ void CCamera::SetPosV(D3DXVECTOR3 posV)
 {
 	m_posV = posV;
 }
+
+D3DXMATRIX *CCamera::GetMtxView(void)
+{
+	return &m_mtxView;
+}
+D3DXMATRIX *CCamera::GetMtxProjection(void)
+{
+	return &m_mtxProjection;
+}

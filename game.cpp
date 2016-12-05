@@ -19,6 +19,7 @@
 #include "camera.h"
 #include "scene3D.h"
 #include "playerX.h"
+#include "mousePick.h"
 
 //============================================
 // マクロ定義
@@ -88,6 +89,15 @@ void CGame::Update()
 		//向き
 		pCamera->SetRot( m_player->GetRot());
 	}
+
+	if( CManager::GetInputMouse()->GetMouseLeftTrigger())
+	{
+		POINT pos;
+		GetCursorPos( &pos);
+		D3DXVECTOR3 tPos = CMousePick::GetWorldPos( pos);
+		CPlayerX::Create( tPos, D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), 2.0f);	
+	}
+
 
 
 	//スキップシーン

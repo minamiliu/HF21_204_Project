@@ -88,6 +88,7 @@
     <ClCompile Include="light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="manager.cpp" />
+    <ClCompile Include="mousePick.cpp" />
     <ClCompile Include="number.cpp" />
     <ClCompile Include="player2D.cpp" />
     <ClCompile Include="playerX.cpp" />
@@ -117,6 +118,7 @@
     <ClInclude Include="light.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="manager.h" />
+    <ClInclude Include="mousePick.h" />
     <ClInclude Include="number.h" />
     <ClInclude Include="player2D.h" />
     <ClInclude Include="playerX.h" />

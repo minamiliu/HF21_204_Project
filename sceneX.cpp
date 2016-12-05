@@ -394,7 +394,7 @@ void CSceneX::UpdateModelMove2(int nUp, int nDown, int nLeft, int nRight)
 	const float rotSpeed = 1.0f;
 
 	//ˆÚ“®ˆ—
-	bool isGoAhead = true;
+	bool isGoAhead = false;
 	bool isGoBack = false;
 
 	//Î‚ßˆÚ“®

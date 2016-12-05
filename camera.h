@@ -45,6 +45,8 @@ public:
 	D3DXVECTOR3 GetPosV(void);		//Ž‹“_
 	void SetPosV(D3DXVECTOR3 posV);	//Ž‹“_
 	
+	D3DXMATRIX *GetMtxView(void);
+	D3DXMATRIX *GetMtxProjection(void);
 
 
 private:
