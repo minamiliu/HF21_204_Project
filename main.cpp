@@ -64,8 +64,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	hWnd = CreateWindow(CLASS_NAME,
 						WINDOW_NAME,
 						WS_OVERLAPPEDWINDOW,
-						CW_USEDEFAULT,
-						CW_USEDEFAULT,
+						0, //CW_USEDEFAULT,
+						0, //CW_USEDEFAULT,
 						(rect.right - rect.left),
 						(rect.bottom - rect.top),
 						NULL,
@@ -74,7 +74,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 						NULL);
 
 	//マネージャの生成
-	CManager::Create( CManager::MODE_GAME, hInstance, hWnd, false);
+	CManager::Create( CManager::MODE_GAME, hInstance, hWnd, true);
 
 	// 分解能を設定
 	timeBeginPeriod(1);

@@ -251,7 +251,41 @@ bool CCollision::HitCheckViewArea( D3DXVECTOR3 myPos, D3DXVECTOR3 tarPos, D3DXVE
 //*****************************************************************************
 // ２点距離を取得
 //*****************************************************************************
-float CCollision::GetDistanceXZ( D3DXVECTOR3 pos1, D3DXVECTOR3 pos2)
+float CCollision::GetDistance( D3DXVECTOR3 pos1, D3DXVECTOR3 pos2)
 {
-	return sqrtf( (pos1.x - pos2.x)*(pos1.x - pos2.x)  + (pos1.z - pos2.z)*(pos1.z - pos2.z) );
+	float fx = pos1.x - pos2.x;
+	float fy = pos1.y - pos2.y;
+	float fz = pos1.z - pos2.z;
+	return sqrtf( fx*fx  + fy*fy + fz*fz );
+}
+
+//*****************************************************************************
+// 2Dバウンドボックスの当たり判定
+//*****************************************************************************
+bool CCollision::HitCheck2D( D3DXVECTOR3 pos1,  D3DXVECTOR3 size1, D3DXVECTOR3 pos2, D3DXVECTOR3 size2)
+{
+	if( (pos1.y + size1.y/2 > pos2.y - size2.y/2) &&
+		(pos1.y - size1.y/2 < pos2.y + size2.y/2) &&
+		(pos1.x + size1.x/2 > pos2.x - size2.x/2) &&
+		(pos1.x - size1.x/2 < pos2.x + size2.x/2))
+	{
+		return true;
+	}
+
+	return false;
+}
+
+//*****************************************************************************
+// 2Dスフィア の当たり判定
+//*****************************************************************************
+bool CCollision::HitCheck2D( D3DXVECTOR3 pos1,  float radius1, D3DXVECTOR3 pos2, float radius2)
+{
+	float fx = pos1.x - pos2.x;
+	float fy = pos1.y - pos2.y;
+	if( sqrt( fx * fx + fy * fy) < radius1 + radius2)
+	{
+		return true;
+	}
+
+	return false;
 }

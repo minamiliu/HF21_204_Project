@@ -31,9 +31,6 @@ public:
 	// 壁ずりベクトル
 	static D3DXVECTOR3* GetWallScratchVector(D3DXVECTOR3 *out, D3DXVECTOR3 &front, D3DXVECTOR3 &normal);
 
-	// 交点を取得
-	static D3DXVECTOR3 GetHitPos(void);
-
 	// 丸の当たり判定
 	static bool HitCheckBall( D3DXVECTOR3 pos1, float radius1, D3DXVECTOR3 pos2, float radius2);
 
@@ -47,7 +44,14 @@ public:
 	static bool HitCheckViewArea( D3DXVECTOR3 myPos, D3DXVECTOR3 tarPos, D3DXVECTOR3 myRot, float myView);
 
 	// ２点距離を取得
-	static float GetDistanceXZ( D3DXVECTOR3 pos1, D3DXVECTOR3 pos2);
+	static float GetDistance( D3DXVECTOR3 pos1, D3DXVECTOR3 pos2);
+
+	//2Dバウンドボックスの当たり判定
+	static bool HitCheck2D( D3DXVECTOR3 pos1,  D3DXVECTOR3 size1, D3DXVECTOR3 pos2, D3DXVECTOR3 size2);
+
+	//2Dスフィア の当たり判定
+	static bool HitCheck2D( D3DXVECTOR3 pos1,  float radius1, D3DXVECTOR3 pos2, float radius2);
+
 
 private:
 
