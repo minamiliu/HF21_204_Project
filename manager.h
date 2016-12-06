@@ -39,6 +39,7 @@ public:
 		MODE_MANUAL, //マニュアル
 		MODE_SELECT, // セレクト
 		MODE_GAME, // ゲーム
+		MODE_ZEBRAGAME,//シマウマゲーム
 		MODE_TRASHGAME,//ゴミ投げゲーム
 		MODE_ENDING, // エンディング
 		MODE_STAFFROLL, // スタッフロール

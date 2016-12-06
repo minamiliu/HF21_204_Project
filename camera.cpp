@@ -14,12 +14,12 @@
 #include "camera.h"
 #include "renderer.h"
 #include "manager.h"
-
+#include "debugproc.h"
 //============================================
 // マクロ定義
 //============================================
 #define	CAM_POS_V_X				(0.0f)					// カメラの視点初期位置(X座標)
-#define	CAM_POS_V_Y				(300.0f)				// カメラの視点初期位置(Y座標)
+#define	CAM_POS_V_Y				(200.0f)				// カメラの視点初期位置(Y座標)
 #define	CAM_POS_V_Z				(-300.0f)				// カメラの視点初期位置(Z座標)
 #define	CAM_POS_R_X				(0.0f)					// カメラの注視点初期位置(X座標)
 #define	CAM_POS_R_Y				(0.0f)					// カメラの注視点初期位置(Y座標)
@@ -82,7 +82,9 @@ void CCamera::Uninit(void)
 
 void CCamera::Update(void)
 {
+	D3DXVECTOR3 posV,posR,rot;
 
+	CDebugProc::Print("\nカメラの位置x %f,y %f,z %d\n",m_posV.x,m_posV.y,m_posV.z);
 }
 
 void CCamera::SetCamera(void)

@@ -21,7 +21,7 @@
 #include "playerX.h"
 #include "sound.h"
 
-#include "game.h"
+#include "zebragame.h"
 #include "trashGame.h"
 #include "title.h"
 #include "result.h"
@@ -243,12 +243,12 @@ CManager *CManager::SetScene(MODE mode)
 	switch(mode)
 	{
 	case MODE_TITLE:
-		//m_pSceneManager = new CTitle;
-		m_pSceneManager = new CTrashGame;
+		m_pSceneManager = new CTitle;
+		//m_pSceneManager = new CTrashGame;
 		break;
 
 	case MODE_GAME:
-		m_pSceneManager = new CGame;
+		m_pSceneManager = new CZebraGame;
 		
 		break;
 

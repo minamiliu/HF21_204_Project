@@ -99,11 +99,13 @@
     <ClCompile Include="sceneX.cpp" />
     <ClCompile Include="score.cpp" />
     <ClCompile Include="sound.cpp" />
-    <ClCompile Include="time.cpp" />    
-	<ClCompile Include="title.cpp" />
+    <ClCompile Include="time.cpp" />
+    <ClCompile Include="title.cpp" />
+    <ClCompile Include="toy.cpp" />
     <ClCompile Include="trash.cpp" />
     <ClCompile Include="trashBox.cpp" />
     <ClCompile Include="trashGame.cpp" />
+    <ClCompile Include="zebragame.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bullet2D.h" />
@@ -129,9 +131,11 @@
     <ClInclude Include="sound.h" />
     <ClInclude Include="time.h" />
     <ClInclude Include="title.h" />
+    <ClInclude Include="toy.h" />
     <ClInclude Include="trash.h" />
     <ClInclude Include="trashBox.h" />
     <ClInclude Include="trashGame.h" />
+    <ClInclude Include="zebragame.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

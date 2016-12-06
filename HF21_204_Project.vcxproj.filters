@@ -19,6 +19,12 @@
     <Filter Include="ヘッダー ファイル\TashGame">
       <UniqueIdentifier>{ee565c29-5a9c-4267-8eb9-bd2c5a5bff63}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\zebragame">
+      <UniqueIdentifier>{2f7d1dbb-6172-49df-b5e8-d0408d79cab8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\zebragame">
+      <UniqueIdentifier>{33a4daa0-1b31-4816-912b-28c37f3580df}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -99,6 +105,12 @@
     <ClCompile Include="Point2D.cpp">
       <Filter>ソース ファイル\TrashGame</Filter>
     </ClCompile>
+    <ClCompile Include="toy.cpp">
+      <Filter>ソース ファイル\zebragame</Filter>
+    </ClCompile>
+    <ClCompile Include="zebragame.cpp">
+      <Filter>ヘッダー ファイル\zebragame</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -178,6 +190,12 @@
     </ClInclude>
     <ClInclude Include="point2D.h">
       <Filter>ヘッダー ファイル\TashGame</Filter>
+    </ClInclude>
+    <ClInclude Include="toy.h">
+      <Filter>ソース ファイル\zebragame</Filter>
+    </ClInclude>
+    <ClInclude Include="zebragame.h">
+      <Filter>ヘッダー ファイル\zebragame</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

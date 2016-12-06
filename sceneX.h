@@ -37,7 +37,12 @@ public:
 	void Draw(void);
 
 	static CSceneX *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float speed);
-
+	HRESULT LoadXfile(LPCSTR strFileName);
+	HRESULT LoadXfile(LPCSTR strFileName, int nCnt);
+	void BindXfile( LPDIRECT3DTEXTURE9	pTexture,		// テクスチャへのポインタ
+					LPD3DXMESH			pD3DXMesh,		// メッシュ情報へのポインタ
+					LPD3DXBUFFER		pD3DXBuffMat,	// マテリアル情報へのポインタ
+					DWORD				nNumMat);		// マテリアル情報の数
 	D3DXVECTOR3 GetPosition(void);
 	D3DXVECTOR3 GetSize(void);
 
@@ -49,9 +54,9 @@ protected:
 private:
 	//変数
 	LPDIRECT3DTEXTURE9	m_pTexture;		// テクスチャへのポインタ
-	LPD3DXMESH  m_pD3DXMesh;			// メッシュ情報へのポインタ
-	LPD3DXBUFFER  m_pD3DXBuffMat;		// マテリアル情報へのポインタ
-	DWORD	m_nNumMat;					// マテリアル情報の数
+	LPD3DXMESH			m_pD3DXMesh;			// メッシュ情報へのポインタ
+	LPD3DXBUFFER		m_pD3DXBuffMat;		// マテリアル情報へのポインタ
+	DWORD				m_nNumMat;					// マテリアル情報の数
 
 	D3DXVECTOR3 m_pos;					// モデルの位置
 	D3DXVECTOR3 m_rot;					// モデルの向き(回転)
@@ -73,6 +78,7 @@ private:
 
 
 	D3DXVECTOR3 m_size;
+	bool m_bLoadXfile;
 };
 
 #endif

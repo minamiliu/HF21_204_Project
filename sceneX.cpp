@@ -80,13 +80,11 @@ HRESULT CSceneX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float s
 	m_rot = rot;
 	m_scl = scl;
 	m_speed = speed;
-
 	// モデルに関する変数の初期化							
 	m_pTexture = NULL;		// テクスチャへのポインタ
 	m_pD3DXMesh = NULL;		// メッシュ情報へのポインタ
 	m_pD3DXBuffMat = NULL;		// マテリアル情報へのポインタ
 	m_nNumMat = 0;			// マテリアル情報の数
-
 	// Xファイルの読み込み
 	if(FAILED(D3DXLoadMeshFromX(
 		MODEL_FILENAME,				// 読み込むモデルファイル名(Xファイル)
@@ -105,6 +103,40 @@ HRESULT CSceneX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float s
 
 	return S_OK;
 }
+
+//=============================================================================
+//
+//=============================================================================
+HRESULT CSceneX::LoadXfile(LPCSTR strFileName)
+{
+	LPDIRECT3DDEVICE9 pDevice;
+	pDevice = CManager::GetRenderer()->GetDevice();
+
+	
+	// モデルに関する変数の初期化							
+	m_pTexture = NULL;		// テクスチャへのポインタ
+	m_pD3DXMesh = NULL;		// メッシュ情報へのポインタ
+	m_pD3DXBuffMat = NULL;		// マテリアル情報へのポインタ
+	m_nNumMat = 0;			// マテリアル情報の数
+	// Xファイルの読み込み
+	if(FAILED(D3DXLoadMeshFromX(
+		MODEL_FILENAME,				// 読み込むモデルファイル名(Xファイル)
+		D3DXMESH_SYSTEMMEM,			// メッシュの作成オプションを指定
+		pDevice,					// IDirect3DDevice9インターフェイスへのポインタ
+		NULL,						// 隣接性データを含むバッファへのポインタ
+		&m_pD3DXBuffMat,		// マテリアルデータを含むバッファへのポインタ
+		NULL,						// エフェクトインスタンスの配列を含むバッファへのポインタ
+		&m_nNumMat,			// D3DXMATERIAL構造体の数
+		&m_pD3DXMesh			// ID3DXMeshインターフェイスへのポインタのアドレス
+		)))
+	{
+		return E_FAIL;
+	}	
+
+
+	return S_OK;
+}
+
 
 //=============================================================================
 //
@@ -134,7 +166,20 @@ void CSceneX::Uninit(void)
 	//オブジェクトの破棄
 	Release();
 }
-
+//=============================================================================
+// Xファイルを割り当てる
+//=============================================================================
+void CSceneX::BindXfile(LPDIRECT3DTEXTURE9	pTexture,		// テクスチャへのポインタ
+						LPD3DXMESH			pD3DXMesh,			// メッシュ情報へのポインタ
+						LPD3DXBUFFER		pD3DXBuffMat,		// マテリアル情報へのポインタ
+						DWORD				nNumMat
+						)					// マテリアル情報の数
+{
+	m_pTexture		= pTexture;				
+	m_pD3DXMesh		= pD3DXMesh;		
+	m_pD3DXBuffMat	= pD3DXBuffMat;		
+	m_nNumMat		= nNumMat	;		
+}
 //=============================================================================
 //
 //=============================================================================
@@ -217,7 +262,6 @@ D3DXVECTOR3 CSceneX::Get2VecRotAngle( D3DXVECTOR3 rot, D3DXVECTOR3 rotTarget)
 	tAngle[0] = rotTarget.x - rot.x;
 	tAngle[1] = rotTarget.y - rot.y;
 	tAngle[2] = rotTarget.z - rot.z;
-
 	for(int cntXYZ = 0; cntXYZ < 3; cntXYZ++)
 	{
 		if(tAngle[cntXYZ] > D3DX_PI)
@@ -233,11 +277,9 @@ D3DXVECTOR3 CSceneX::Get2VecRotAngle( D3DXVECTOR3 rot, D3DXVECTOR3 rotTarget)
 		tAngle[cntXYZ] = tAngle[cntXYZ] / abs(tAngle[cntXYZ]) * VALUE_ROTATE;
 
 	}
-
 	re.x = tAngle[0];
 	re.y = tAngle[1];
 	re.z = tAngle[2];
-
 	return re;
 }
 
@@ -328,8 +370,8 @@ void CSceneX::UpdateModelMove(int nUp, int nDown, int nLeft, int nRight)
 		m_rotAngle =  Get2VecRotAngle( m_rot, m_rotTarget);
 	}
 
-	//回転慣性
-	m_rotAngle.y *= 0.999f;
+		//回転慣性
+		m_rotAngle.y *= 0.999f;
 
 	//次の回転位置に到着したら
 	float diff = abs(m_rot.y - m_rotTarget.y);
@@ -358,14 +400,12 @@ void CSceneX::UpdateModelMove(int nUp, int nDown, int nLeft, int nRight)
 		}
 	}	
 
-
 	//回転していない時
 	if( m_rotAngle.y == 0)
 	{
 		//移動
 		m_pos.x += m_move.x * sinf( m_rot.y);
 		m_pos.z += m_move.z * cosf( m_rot.y);
-
 		//慣性処理
 		m_move -= m_move * 0.25f;	
 	}
