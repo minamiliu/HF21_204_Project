@@ -36,10 +36,11 @@ public:
 	void Draw(void);
 
 	static CPlayer2D *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size);
-
-
+	void SetGorillaMode(void);
+	bool GetGorillaMode(void);
 private:
-
+	bool m_bGorillaMode;
+	//int nGorillaModeCnt;
 };
 
 #endif

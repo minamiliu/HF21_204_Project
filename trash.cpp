@@ -18,10 +18,13 @@
 #include "score.h"
 #include "trashBox.h"
 #include "trashGame.h"
+#include "player2D.h"
 //============================================
 // マクロ定義
 //============================================
 #define TEXTURE_TRASH "data/TEXTURE/ペットボトル.png"
+#define TEXTURE_BANANA "data/TEXTURE/banana.png"
+#define TEXTURE_PAPER "data/TEXTURE/paper.png"
 #define GRAVITY_POINT (0.98f)
 #define WEIGHT_COEFFICIENT_LIGHT (0.5f)
 #define WEIGHT_COEFFICIENT_HEAVY (3.0f)
@@ -47,7 +50,7 @@ CTrash::CTrash()
 //=============================================================================
 CTrash::~CTrash()
 {
-	
+	m_gravityCoefficient = 1.0;
 }
 
 //=============================================================================
@@ -61,7 +64,7 @@ HRESULT CTrash::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 	m_fallFlag = false;
 	m_cnt = 0;
 	m_apFlag = false;
-	m_gravityCoefficient = 1.0;//1.0+rand()%4;//1.0~4.0のランダムな値
+	//m_gravityCoefficient = 1.0;//1.0+rand()%4;//1.0~4.0のランダムな値
 	return S_OK;
 }
 
@@ -79,13 +82,38 @@ void CTrash::Uninit(void)
 void CTrash::Update(void)
 {
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
-	//CTrash* pTrash;
-	//CTrashBox2D* pTrashBox;
 	D3DXVECTOR3 posTrash = GetPosition();
-		//pTrash->GetPosition();
-	//D3DXVECTOR3 sizeTrash = pTrash->GetSize();
-	//D3DXVECTOR3 posTrashBox = GetPosition();
-	//D3DXVECTOR3 sizeTrashBox = pTrashBox->GetSize();
+
+	//playerのポインタを取る
+	CPlayer2D* pPlayer;
+	for(int nCntScene = 0;nCntScene < MAX_SCENE;nCntScene++)
+	{
+		CScene *pScene;
+		pScene = CScene::GetScene(nCntScene);
+		if(pScene != NULL)
+		{
+			CScene::OBJTYPE type;
+			type = pScene->GetObjType();
+			if(type == CScene::OBJTYPE_PLAYER)
+			{
+				if( pInputKeyboard->GetKeyTrigger(DIK_G) && ((CPlayer2D*)pScene)->GetGorillaMode() == false)
+				{
+					((CPlayer2D*)pScene)->SetGorillaMode();
+					Create(D3DXVECTOR3(100.0f, 270.0f, 0.0f), D3DXVECTOR3(200.0f, 200.0f, 0.0f),TEXTURE_TRASH,OBJTYPE_LEFTTRASH);
+					Create(D3DXVECTOR3(300.0f, 270.0f, 0.0f), D3DXVECTOR3(200.0f, 200.0f, 0.0f),TEXTURE_TRASH,OBJTYPE_RIGHTTRASH);
+				}
+			
+
+
+				if(((CPlayer2D*)pScene)->GetGorillaMode() == true)
+				{
+					//ゴミの複数生成
+				}
+			}
+		}
+		break;
+	}
+
 
 	if(CManager::GetInputMouse()->GetMouseLeftPress() && m_fallFlag == false)
 	{
@@ -115,8 +143,53 @@ void CTrash::Update(void)
 		if(m_cnt > 20)
 		{
 			//新しいオブジェクトを生成
+			int nNum = rand()%3;//０～２のランダムな数
 			CScene2D* pTrash;
-			pTrash = CTrash::Create(D3DXVECTOR3(200.0f, 300.0f, 0.0f), D3DXVECTOR3(200.0f, 200.0f, 0.0f));
+			if(nNum == 0)
+			{
+				if(GetObjType() == OBJTYPE_TRASH)
+				{
+					pTrash = CTrash::Create(D3DXVECTOR3(200.0f, 300.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_BANANA,OBJTYPE_TRASH);
+				}
+				else if(GetObjType() == OBJTYPE_LEFTTRASH)
+				{
+					pTrash = CTrash::Create(D3DXVECTOR3(100.0f, 270.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_BANANA,OBJTYPE_LEFTTRASH);
+				}
+				else if(GetObjType() == OBJTYPE_RIGHTTRASH)
+				{
+					pTrash = CTrash::Create(D3DXVECTOR3(300.0f, 270.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_BANANA,OBJTYPE_RIGHTTRASH);
+				}
+			}
+			else if(nNum == 1)
+			{
+				if(GetObjType() == OBJTYPE_TRASH)
+				{
+					pTrash = CTrash::Create(D3DXVECTOR3(200.0f, 300.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_TRASH,OBJTYPE_TRASH);
+				}
+				else if(GetObjType() == OBJTYPE_LEFTTRASH)
+				{
+					pTrash = CTrash::Create(D3DXVECTOR3(100.0f, 270.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_TRASH,OBJTYPE_LEFTTRASH);
+				}
+				else if(GetObjType() == OBJTYPE_RIGHTTRASH)
+				{
+					pTrash = CTrash::Create(D3DXVECTOR3(300.0f, 270.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_TRASH,OBJTYPE_RIGHTTRASH);
+				}
+			}
+			else if(nNum == 2)
+			{
+				if(GetObjType() == OBJTYPE_TRASH)
+				{
+					pTrash = CTrash::Create(D3DXVECTOR3(200.0f, 300.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_PAPER,OBJTYPE_TRASH);
+				}
+				else if(GetObjType() == OBJTYPE_LEFTTRASH)
+				{
+					pTrash = CTrash::Create(D3DXVECTOR3(100.0f, 270.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_PAPER,OBJTYPE_LEFTTRASH);
+				}
+				else if(GetObjType() == OBJTYPE_RIGHTTRASH)
+				{
+					pTrash = CTrash::Create(D3DXVECTOR3(300.0f, 270.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_PAPER,OBJTYPE_RIGHTTRASH);
+				}
+			}
 			//カウントをリセット
 			m_cnt = 0;
 			//一度の投げで２回以上出現しないようにフラグを管理
@@ -129,9 +202,21 @@ void CTrash::Update(void)
 	{//画面外判定
 		if(m_apFlag == true)//その投げによって再出現していないなら
 		{
-			CTrash* pTrash;
 			//生成
-			pTrash = CTrash::Create(D3DXVECTOR3(200.0f, 300.0f, 0.0f), D3DXVECTOR3(200.0f, 200.0f, 0.0f));
+			CTrash* pTrash;
+			int nNum = rand()%3;//０～２のランダムな数
+			if(nNum == 0)
+			{
+				pTrash = CTrash::Create(D3DXVECTOR3(200.0f, 300.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_BANANA,OBJTYPE_TRASH);
+			}
+			else if(nNum == 1)
+			{
+				pTrash = CTrash::Create(D3DXVECTOR3(200.0f, 300.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_TRASH,OBJTYPE_TRASH);
+			}
+			else if(nNum == 2)
+			{
+				pTrash = CTrash::Create(D3DXVECTOR3(200.0f, 300.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_PAPER,OBJTYPE_TRASH);
+			}
 			CTrashGame::SetTrashPointer(pTrash);
 			//再出現しないようにリセット
 			m_cnt = 0;
@@ -156,14 +241,29 @@ void CTrash::Draw(void)
 //=============================================================================
 // ポリゴンの生成処理
 //=============================================================================
-CTrash *CTrash::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
+CTrash *CTrash::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size,LPCSTR strFileName,OBJTYPE type)
 {
 	CTrash *pTrash;
 	pTrash = new CTrash;
 	pTrash->Init(pos, size);
-
+	pTrash->SetObjType(type);
+	if(strFileName == TEXTURE_TRASH)
+	{
+		pTrash->m_gravityCoefficient = 2.0;
+		pTrash->m_TrashType = TRASHTYPE_HEAVY;
+	}
+	else if(strFileName == TEXTURE_BANANA)
+	{
+		pTrash->m_gravityCoefficient = 1.7;
+		pTrash->m_TrashType = TRASHTYPE_NORMAL;
+	}
+	else if(strFileName == TEXTURE_PAPER)
+	{
+		pTrash->m_gravityCoefficient = 0.7;
+		pTrash->m_TrashType = TRASHTYPE_LIGHT;
+	}
 	//テクスチャの割り当て
-	pTrash->Load(TEXTURE_TRASH);
+	pTrash->Load(strFileName);
 	
 	//pTrash->CScene2D::BindTexture(m_pTexture);
 
@@ -185,3 +285,7 @@ void CTrash::ReverseMove(void)
 	m_speed.x *= -1;
 }
 
+CTrash::TRASHTYPE CTrash::GetTrashType(void)
+{
+	return m_TrashType;
+}

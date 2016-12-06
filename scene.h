@@ -25,7 +25,10 @@ public:
 	typedef enum
 	{
 		OBJTYPE_TRASH = 0,
+		OBJTYPE_LEFTTRASH,
+		OBJTYPE_RIGHTTRASH,
 		OBJTYPE_POINT2D,//マウスの位置
+		OBJTYPE_PLAYER,
 		OBJTYPE_MAX
 	}OBJTYPE;
 	CScene();

@@ -50,6 +50,9 @@ CPlayer2D::~CPlayer2D()
 HRESULT CPlayer2D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
 	CScene2D::Init(pos, size);
+	m_bGorillaMode = false;
+	CScene2D::SetObjType(CScene::OBJTYPE_PLAYER);
+
 	return S_OK;
 }
 
@@ -76,12 +79,6 @@ void CPlayer2D::Update(void)
 	CInputMouse *pInputMouse = CManager::GetInputMouse();
 	D3DXVECTOR3 pos = CPlayer2D::GetPosition();
 	
-	//int mouseMoveX = pInputMouse->GetMouseAxisX();
-	//if( mouseMoveX != 0)
-	//{
-	//	pos.x += mouseMoveX;
-	//	SetPosition(pos);
-	//}
 
 	////UŒ‚
 	//if(pInputMouse->GetMouseLeftTrigger())
@@ -128,3 +125,13 @@ CPlayer2D *CPlayer2D::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 	return pPlayer2D;
 }
 
+void CPlayer2D::SetGorillaMode(void)
+{
+	m_bGorillaMode = true;
+}
+
+
+bool CPlayer2D::GetGorillaMode(void)
+{
+	return m_bGorillaMode;
+}

@@ -27,8 +27,10 @@
 //============================================
 // マクロ定義
 //============================================
-#define TEXTURENAME "data/TEXTURE/Aplayer000.png"
+#define TEXTURENAME "data/TEXTURE/player000.png"
 #define TEXTURE_POINT "data/TEXTURE/redPoint.png"
+#define TEXTURE_TRASH "data/TEXTURE/ペットボトル.png"
+
 //============================================
 // 静的メンバー変数の初期化
 //============================================
@@ -40,6 +42,7 @@ CScene2D *CTrashGame::m_pMouse = NULL;
 CScene2D *CTrashGame::m_pPoint2D = NULL;
 CScene2D *CTrashGame::m_pMidpoint = NULL;
 CTime *pTime = NULL;
+CPlayer2D *pPlayer2D = NULL;
 //============================================
 //コンストラクタ
 //============================================
@@ -66,11 +69,11 @@ HRESULT CTrashGame::Init(void)
 	//CPlayerX::Create( D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), 5.0f);
 
 	//オブジェクトの生成(2Dポリゴン)
-	CPlayer2D::Create( D3DXVECTOR3( 150.0f, 400.0f, 0.0f), D3DXVECTOR3( 200.0f, 200.0f, 0.0f));
+	pPlayer2D = CPlayer2D::Create( D3DXVECTOR3( 150.0f, 400.0f, 0.0f), D3DXVECTOR3( 200.0f, 200.0f, 0.0f));
 
 	//オブジェクトの生成（2Dポリゴン）
 	//ゴミ
-	m_pTrash = CTrash::Create(D3DXVECTOR3(200.0f, 300.0f, 0.0f), D3DXVECTOR3(200.0f, 200.0f, 0.0f));
+	m_pTrash = CTrash::Create(D3DXVECTOR3(200.0f, 300.0f, 0.0f), D3DXVECTOR3(200.0f, 200.0f, 0.0f),TEXTURE_TRASH,CScene::OBJTYPE_TRASH);
 	//スコア
 	m_pScore = CScore::Create(D3DXVECTOR3(150, 50.0f, 0.0f), D3DXVECTOR3(300.0f, 50.0f, 0.0f), 6, BLUE(1.0f));
 	//ゴミ箱
@@ -117,6 +120,7 @@ void CTrashGame::Update()
 		SetCursorPos(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
 	}
 
+
 	for(int nCntScene = 0;nCntScene < MAX_SCENE;nCntScene++)
 	{
 		CScene *pScene;
@@ -125,7 +129,7 @@ void CTrashGame::Update()
 		{
 			CScene::OBJTYPE type;
 			type = pScene->GetObjType();
-			if(type == CScene::OBJTYPE_TRASH)
+			if(type == CScene::OBJTYPE_TRASH || type == CScene::OBJTYPE_LEFTTRASH || type == CScene::OBJTYPE_RIGHTTRASH)
 			{
 				D3DXVECTOR3 posTrash;
 				D3DXVECTOR3 sizeTrash;
@@ -145,18 +149,26 @@ void CTrashGame::Update()
 					{//外側の右端ではじく
 						((CTrash*)pScene)->ReverseMove();
 					}
-					else if( speed.x > 0 &&
-						(posTrash.x + sizeTrash.x/2) > (posTrashBox.x + sizeTrashBox.x/2) )
-					{//内側の左側ではじく
-						((CTrash*)pScene)->ReverseMove();
-					}
-					else /*if(posTrash.y - sizeTrash.y/2 > posTrashBox.y - sizeTrashBox.y/2 &&
-					//	posTrash.x - sizeTrash.x/2 > posTrashBox.y - sizeTrashBox.x/2 &&
-					//	posTrash.x + sizeTrash.x/2 < posTrashBox.y + sizeTrashBox.x/2 )*/
-					//	//posTrash.x - sizeTrash.x/2 < posTrashBox.x - sizeTrash.x)
+					//else if( speed.x > 0 &&
+					//	(posTrash.x + sizeTrash.x/2) > (posTrashBox.x + sizeTrashBox.x/2) )
+					//{//内側の左側ではじく
+					//	((CTrash*)pScene)->ReverseMove();
+					//}
+					else
 					{//完全に入ってる
 						//スコア追加
-						m_pScore->AddScore(100);
+						if(((CTrash*)pScene)->GetTrashType() == CTrash::TRASHTYPE_NORMAL)
+						{
+							m_pScore->AddScore(100);
+						}
+						else if(((CTrash*)pScene)->GetTrashType() == CTrash::TRASHTYPE_LIGHT)
+						{
+							m_pScore->AddScore(180);
+						}
+						else if(((CTrash*)pScene)->GetTrashType() == CTrash::TRASHTYPE_HEAVY)
+						{
+							m_pScore->AddScore(150);
+						}
 						//オブジェクトの位置を画面外へ -> 画面外判定で消滅
 						pScene->SetPosition(D3DXVECTOR3(100.0f,1000.0f,0.0f));
 					}
@@ -167,6 +179,7 @@ void CTrashGame::Update()
 				D3DXVECTOR3 posMouse;
 				posMouse = pScene->GetPosition();
 				m_pMouse->SetPosition(posMouse);
+				
 				D3DXVECTOR3 posMidpoint;
 				posMidpoint= D3DXVECTOR3( (posMouse.x + SCREEN_WIDTH/2)/2,(posMouse.y + SCREEN_HEIGHT/2)/2,0.0f);
 				m_pMidpoint->SetPosition(posMidpoint);
