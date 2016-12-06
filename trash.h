@@ -36,13 +36,16 @@ public:
 	void Draw(void);
 
 	static CTrash *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size);
-
-
+	D3DXVECTOR3 GetSpeed(void);
+	void SetSpeed(D3DXVECTOR3 speed);
+	void ReverseMove(void);
 private:
 	D3DXVECTOR3 m_speed;
 	bool m_fallFlag;//落下フラグ
 	bool m_apFlag;//出現フラグ
 	static int m_cnt;//出現タイミングカウンター
+	float m_gravityCoefficient;//重力係数
+	static LPDIRECT3DTEXTURE9 m_pTexture;
 };
 
 #endif

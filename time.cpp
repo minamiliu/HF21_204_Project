@@ -120,3 +120,14 @@ CTime *CTime::Create(D3DXVECTOR3 numberPos, D3DXVECTOR3 numberSize, int maxKeta,
 	return pTime;
 }
 
+bool CTime::TimeUp(void)
+{
+	if(m_bCountDown == true && m_nTime == 0)
+	{
+		return true;
+	}
+	else 
+	{
+		return false;
+	}
+}

@@ -45,7 +45,7 @@ public:
 	void Unload(void);
 	D3DXVECTOR3 GetPosition(void);
 	D3DXVECTOR3 GetSize(void);
-
+	void SetPosition(D3DXVECTOR3 pos);
 	void SetScore(int score); //数字をそのまま表示する
 	void SetColor(const D3DXCOLOR &col); //全桁の色を一気に変更
 	void AddScore(int score); //得点を上げる

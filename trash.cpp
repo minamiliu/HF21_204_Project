@@ -21,7 +21,7 @@
 //============================================
 // マクロ定義
 //============================================
-#define TEXTURENAME "data/TEXTURE/player000.png"
+#define TEXTURE_TRASH "data/TEXTURE/ペットボトル.png"
 #define GRAVITY_POINT (0.98f)
 #define WEIGHT_COEFFICIENT_LIGHT (0.5f)
 #define WEIGHT_COEFFICIENT_HEAVY (3.0f)
@@ -32,7 +32,7 @@
 
 //静的メンバ変数
 int CTrash::m_cnt = 0;
-
+LPDIRECT3DTEXTURE9 CTrash::m_pTexture = NULL;
 
 //=============================================================================
 //コンストラクタ
@@ -61,6 +61,7 @@ HRESULT CTrash::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 	m_fallFlag = false;
 	m_cnt = 0;
 	m_apFlag = false;
+	m_gravityCoefficient = 1.0;//1.0+rand()%4;//1.0~4.0のランダムな値
 	return S_OK;
 }
 
@@ -104,18 +105,18 @@ void CTrash::Update(void)
 	{
 		//放物線移動
 		posTrash.x += m_speed.x / 10;
-		m_speed.y -= GRAVITY_POINT * WEIGHT_COEFFICIENT_HEAVY;
+		m_speed.y -= GRAVITY_POINT * m_gravityCoefficient;
 		posTrash.y += -m_speed.y / 10;
 	}
 	if(m_apFlag == true)
 	{
 		//出現タイミングをカウントで計る
 		m_cnt++;
-		if(m_cnt > 40)
+		if(m_cnt > 20)
 		{
 			//新しいオブジェクトを生成
 			CScene2D* pTrash;
-			pTrash = CTrash::Create(D3DXVECTOR3(200.0f, 300.0f, 0.0f), D3DXVECTOR3(100.0f, 100.0f, 0.0f));
+			pTrash = CTrash::Create(D3DXVECTOR3(200.0f, 300.0f, 0.0f), D3DXVECTOR3(200.0f, 200.0f, 0.0f));
 			//カウントをリセット
 			m_cnt = 0;
 			//一度の投げで２回以上出現しないようにフラグを管理
@@ -123,41 +124,24 @@ void CTrash::Update(void)
 		}
 	}
 	this->CTrash::SetPosition(posTrash);
-	//デバッグ用print
-	/*PrintDebugProc("\nm_speed.x:%f",m_speed.x);
-	PrintDebugProc("\nm_speed.y:%f",m_speed.y);
-	PrintDebugProc("\nflag:%d",m_fallFlag);
-	PrintDebugProc("\ncnt:%d",m_cnt);*/
 	
-	if(posTrash.y > SCREEN_HEIGHT)
+	if(posTrash.y > SCREEN_HEIGHT || posTrash.x > SCREEN_WIDTH || posTrash.x < 0)
 	{//画面外判定
 		if(m_apFlag == true)//その投げによって再出現していないなら
 		{
-			CScene2D* pTrash;
+			CTrash* pTrash;
 			//生成
-			pTrash = CTrash::Create(D3DXVECTOR3(200.0f, 300.0f, 0.0f), D3DXVECTOR3(100.0f, 100.0f, 0.0f));
+			pTrash = CTrash::Create(D3DXVECTOR3(200.0f, 300.0f, 0.0f), D3DXVECTOR3(200.0f, 200.0f, 0.0f));
 			CTrashGame::SetTrashPointer(pTrash);
 			//再出現しないようにリセット
 			m_cnt = 0;
 			m_apFlag = false;
 		}
 		m_fallFlag = false;
-		//CScore::ScoreUp(1);
 		//破棄
 		this->Uninit();
 	}
 	
-
-	//当たり判定
-	/*if( (posTrash.y + sizeTrash.y/2 > posTrashBox.y - sizeTrash.y/2) &&
-		(posTrash.y - sizeTrash.y/2 < posTrashBox.y + sizeTrash.y/2) &&
-		(posTrash.x + sizeTrash.x/2 > posTrashBox.x - sizeTrash.x/2) &&
-		(posTrash.x - sizeTrash.x/2 < posTrashBox.x + sizeTrash.x/2))
-	{
-		CScore::ScoreUp(1);
-	}*/
-
-
 	CScene2D::Update();
 }
 
@@ -179,7 +163,25 @@ CTrash *CTrash::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 	pTrash->Init(pos, size);
 
 	//テクスチャの割り当て
-	pTrash->Load( TEXTURENAME);
+	pTrash->Load(TEXTURE_TRASH);
+	
+	//pTrash->CScene2D::BindTexture(m_pTexture);
+
 	return pTrash;
+}
+
+D3DXVECTOR3 CTrash::GetSpeed(void)
+{
+	return m_speed;
+}
+
+void CTrash::SetSpeed(D3DXVECTOR3 speed)
+{
+	m_speed = speed;
+}
+	
+void CTrash::ReverseMove(void)
+{
+	m_speed.x *= -1;
 }
 

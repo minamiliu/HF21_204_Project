@@ -263,3 +263,7 @@ D3DXVECTOR3 CScene3D::GetSize(void)
 {
 	return m_size;
 }
+void CScene3D::SetPosition(D3DXVECTOR3 pos)
+{
+	m_pos = pos;
+}

@@ -40,7 +40,7 @@ public:
 
 	D3DXVECTOR3 GetPosition(void);
 	D3DXVECTOR3 GetSize(void);
-
+	void SetPosition(D3DXVECTOR3 pos);
 protected:
 	//ä÷êî
 	D3DXVECTOR3 Get2VecRotAngle( D3DXVECTOR3 rot, D3DXVECTOR3 rotTarget);

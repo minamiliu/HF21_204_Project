@@ -36,7 +36,7 @@ public:
 	void Draw(void);
 
 	static CTime *Create(D3DXVECTOR3 numberPos, D3DXVECTOR3 numberSize, int maxKeta, int startTime, bool bCountDown, const D3DXCOLOR &col);
-
+	bool TimeUp(void);
 private:
 	int m_nCntFrame;
 	int m_nTime;

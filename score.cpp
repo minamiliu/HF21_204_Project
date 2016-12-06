@@ -256,3 +256,8 @@ D3DXVECTOR3 CScore::GetSize(void)
 {
 	return m_size;
 }
+
+void CScore::SetPosition(D3DXVECTOR3 pos)
+{
+	m_pos = pos;
+}

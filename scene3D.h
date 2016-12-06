@@ -40,7 +40,7 @@ public:
 
 	D3DXVECTOR3 GetPosition(void);
 	D3DXVECTOR3 GetSize(void);
-
+	void SetPosition(D3DXVECTOR3 pos);
 private:
 	//ä÷êî
 	HRESULT MakeVertex(LPDIRECT3DDEVICE9 pDevice);

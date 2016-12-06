@@ -41,11 +41,14 @@ public:
 	void Uninit(void);
 	void Update(void);
 	void Draw(void);
-	static void SetTrashPointer(CScene2D *pTrash);
+	static void SetTrashPointer(CTrash *pTrash);
 private:
-	static CScene2D *m_pTrash;
-	CScene2D *m_pTrashBox;
-	CScore *m_score;
+	static CTrash *m_pTrash;
+	static CScene2D *m_pTrashBox;
+	static CScore *m_pScore;
+	static CScene2D *m_pPoint2D;
+	static CScene2D *m_pMouse;
+	static CScene2D *m_pMidpoint;
 };
 
 #endif
