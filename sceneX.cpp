@@ -286,7 +286,7 @@ D3DXVECTOR3 CSceneX::Get2VecRotAngle( D3DXVECTOR3 rot, D3DXVECTOR3 rotTarget)
 void CSceneX::UpdateModelMove(int nUp, int nDown, int nLeft, int nRight)
 {
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
-	D3DXVECTOR3 rotCamera = CManager::GetCamera()->GetCameraRot();
+	D3DXVECTOR3 rotCamera = CManager::GetCamera()->GetRot();
 
 
 	//ˆÚ“®ˆ—
@@ -420,4 +420,9 @@ D3DXVECTOR3 CSceneX::GetPosition(void)
 D3DXVECTOR3 CSceneX::GetSize(void)
 {
 	return m_size;
+}
+
+void CSceneX::SetPosition(D3DXVECTOR3 pos)
+{
+	m_pos = pos;
 }

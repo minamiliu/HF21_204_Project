@@ -35,7 +35,19 @@ public:
 	void Update(void);
 
 	void SetCamera(void);
-	D3DXVECTOR3 GetCameraRot(void);
+
+	D3DXVECTOR3 GetRot(void);		//向き
+	void SetRot(D3DXVECTOR3 rot);	//向き
+	
+	D3DXVECTOR3 GetPosR(void);		//注視点
+	void SetPosR(D3DXVECTOR3 posR);	//注視点
+	
+	D3DXVECTOR3 GetPosV(void);		//視点
+	void SetPosV(D3DXVECTOR3 posV);	//視点
+	
+	D3DXMATRIX *GetMtxView(void);
+	D3DXMATRIX *GetMtxProjection(void);
+
 
 private:
 

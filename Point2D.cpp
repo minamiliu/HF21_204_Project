@@ -19,7 +19,7 @@
 // マクロ定義
 //============================================
 #define GRAVITY_POINT (0.98f)
-
+#define TEXTURENAME "data/TEXTURE/player000.png"
 //=============================================================================
 // 構造体定義
 //=============================================================================
@@ -50,6 +50,7 @@ HRESULT CPoint2D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size,HWND hwnd)
 {
 	m_hwnd=hwnd;
 	CScene2D::Init(pos, size);
+	CScene2D::Load(TEXTURENAME);
 	m_startPos = D3DXVECTOR3(0.0f,0.0f,0.0f);
 	m_endPos = D3DXVECTOR3(0.0f,0.0f,0.0f);
 	m_speed = D3DXVECTOR3(0.0f,0.0f,0.0f);
@@ -82,8 +83,7 @@ void CPoint2D::Update(void)
 	if(CManager::GetInputMouse()->GetMouseLeftPress())
 	{
 	}
-
-	if(CManager::GetInputMouse()->GetMouseLeftRelease())
+		if(CManager::GetInputMouse()->GetMouseLeftRelease())
 	{
 	}
 	pos.x = po.x;

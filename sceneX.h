@@ -45,7 +45,7 @@ public:
 					DWORD				nNumMat);		// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ì”
 	D3DXVECTOR3 GetPosition(void);
 	D3DXVECTOR3 GetSize(void);
-
+	void SetPosition(D3DXVECTOR3 pos);
 protected:
 	//ŠÖ”
 	D3DXVECTOR3 Get2VecRotAngle( D3DXVECTOR3 rot, D3DXVECTOR3 rotTarget);

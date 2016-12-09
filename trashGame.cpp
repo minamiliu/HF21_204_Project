@@ -64,7 +64,7 @@ HRESULT CTrashGame::Init(void)
 	//CTrash::Create(D3DXVECTOR3(1000.0f, 300.0f, 0.0f), D3DXVECTOR3(100.0f, 100.0f, 0.0f));
 	m_score = CScore::Create(D3DXVECTOR3(150, 50.0f, 0.0f), D3DXVECTOR3(300.0f, 50.0f, 0.0f), 6, BLUE(1.0f));
 	m_pTrashBox = CScene2D::Create(D3DXVECTOR3(1000.0f, 500.0f, 0.0f), D3DXVECTOR3(300.0f, 300.0f, 0.0f),TEXTURENAME);
-	//CPoint2D::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), D3DXVECTOR3(0.0f,0.0f,0.0f),0);
+	CPoint2D::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), D3DXVECTOR3(0.0f,0.0f,0.0f),0);
 	return S_OK;
 }
 
