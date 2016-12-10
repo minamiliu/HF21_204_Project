@@ -18,10 +18,19 @@
 //============================================
 //マクロ定義
 //============================================
+#define FVF_VERTEX_3D	(D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_DIFFUSE | D3DFVF_TEX1)
 
 //============================================
 //構造体定義
 //============================================
+//３Ｄポリゴン
+typedef struct
+{
+	D3DXVECTOR3 vtx; //頂点座標
+	D3DXVECTOR3 nor; //法線ベクトル
+	D3DCOLOR	col; //頂点カラー
+	D3DXVECTOR2	tex; //テクスチャ座標
+}VERTEX_3D;
 
 class CScene3D : public CScene
 {
@@ -30,16 +39,18 @@ public:
 	CScene3D();
 	virtual ~CScene3D();
 
-	HRESULT Init(void);
-	HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ);
-	void Uninit(void);
-	void Update(void);
-	void Draw(void);
+	virtual HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ);
+	virtual void Uninit(void);
+	virtual void Update(void);
+	virtual void Draw(void);
 
 	static CScene3D *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ);
 
 	D3DXVECTOR3 GetPosition(void);
 	D3DXVECTOR3 GetSize(void);
+
+protected:
+	virtual bool HitCheck( D3DXVECTOR3 tNowPos, D3DXVECTOR3 tNextPos, D3DXVECTOR3 *wall_nor, D3DXVECTOR3 *HitPoint);
 
 private:
 	//関数

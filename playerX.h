@@ -36,9 +36,25 @@ public:
 	void Draw(void);
 
 	static CPlayerX *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float speed);
+	D3DXVECTOR3 GetFront(void);
+
+protected:
+	void UpdateRot(void);
+	void CalcNextPos(void);
+	bool isKeyUse(int nUp, int nDown, int nLeft, int nRight);
+	bool isMouseUse(void);
 
 private:
+	D3DXVECTOR3 m_move;					// モデルの移動量
+	float m_speed;						// モデルのスピード
+	D3DXVECTOR3 m_front;
 
+
+	D3DXVECTOR3 m_rotTarget;			// モデルの向き(回転)
+	D3DXVECTOR3 m_rotAngle;				// モデルの向き(回転)
+
+	bool m_isGoAhead;					//前進フラグ
+	bool m_isGoBack;					//後退フラグ
 };
 
 #endif

@@ -99,10 +99,13 @@
     <ClCompile Include="Point2D.cpp">
       <Filter>ソース ファイル\TrashGame</Filter>
     </ClCompile>
-    <ClCompile Include="collison.cpp">
+    <ClCompile Include="mousePick.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="mousePick.cpp">
+    <ClCompile Include="collision.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="meshWall.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -185,10 +188,13 @@
     <ClInclude Include="point2D.h">
       <Filter>ヘッダー ファイル\TashGame</Filter>
     </ClInclude>
-    <ClInclude Include="collison.h">
+    <ClInclude Include="mousePick.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="mousePick.h">
+    <ClInclude Include="collision.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="meshWall.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

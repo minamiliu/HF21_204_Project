@@ -142,6 +142,7 @@ void CManager::Update()
 
 	//É}ÉEÉXîÕàÕÇÃêßñÒ
 	//POINT curPos;
+	//ShowCursor(false);
 	//GetCursorPos(&curPos);
 	//WINDOWINFO windowInfo;
 	//GetWindowInfo( m_hWnd, &windowInfo);

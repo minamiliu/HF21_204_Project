@@ -30,23 +30,25 @@ public:
 	CSceneX();
 	virtual ~CSceneX();
 
-	HRESULT Init(void);
-	HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float speed);
+	HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl);
 	void Uninit(void);
 	void Update(void);
 	void Draw(void);
 
-	static CSceneX *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float speed);
+	static CSceneX *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl);
 
 	D3DXVECTOR3 GetPosition(void);
 	D3DXVECTOR3 GetSize(void);
 	D3DXVECTOR3 GetRot(void);
 
+	void SetPosition( D3DXVECTOR3 pos);
+	void SetSize( D3DXVECTOR3 size);
+	void SetRot( D3DXVECTOR3 rot);
+
 protected:
 	//関数
-	D3DXVECTOR3 Get2VecRotAngle( D3DXVECTOR3 rot, D3DXVECTOR3 rotTarget);
-	void UpdateModelMove(int nUp, int nDown, int nLeft, int nRight);
-	void UpdateModelMove2(int nUp, int nDown, int nLeft, int nRight);
+	D3DXVECTOR3 Get2RotDiffAngle( D3DXVECTOR3 rot, D3DXVECTOR3 rotTarget);
+	//virtual void UpdateModelMove(int nUp, int nDown, int nLeft, int nRight);
 
 private:
 	//変数
@@ -58,11 +60,6 @@ private:
 	D3DXVECTOR3 m_pos;					// モデルの位置
 	D3DXVECTOR3 m_rot;					// モデルの向き(回転)
 	D3DXVECTOR3 m_scl;					// モデルの大きさ(スケール)
-	D3DXVECTOR3 m_move;					// モデルの移動量
-	float m_speed;						// モデルのスピード
-
-	D3DXVECTOR3 m_rotTarget;			// モデルの向き(回転)
-	D3DXVECTOR3 m_rotAngle;				// モデルの向き(回転)
 
 	//キーフレイム
 	//D3DXVECTOR3 posChild;				//子座標

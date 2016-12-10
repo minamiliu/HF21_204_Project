@@ -52,14 +52,13 @@ public:
 	//2Dスフィア の当たり判定
 	static bool HitCheck2D( D3DXVECTOR3 pos1,  float radius1, D3DXVECTOR3 pos2, float radius2);
 
-
-private:
-
 	// 内積
 	static float DotProduct( D3DXVECTOR3 vl, D3DXVECTOR3 vr);
 
 	// 外積
 	static D3DXVECTOR3 CrossProduct( D3DXVECTOR3 vl, D3DXVECTOR3 vr );
+private:
+
 };
 
 #endif

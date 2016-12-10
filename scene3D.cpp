@@ -15,27 +15,17 @@
 #include "renderer.h"
 #include "manager.h"
 #include "input.h"
+#include "collision.h"
 
 //============================================
 // マクロ定義
 //============================================
-
-#define FVF_VERTEX_3D	(D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_DIFFUSE | D3DFVF_TEX1)
-
 #define TEXTURENAME "data/TEXTURE/field000.jpg"
 
 
 //=============================================================================
 // 構造体定義
 //=============================================================================
-//３Ｄポリゴン
-typedef struct
-{
-	D3DXVECTOR3 vtx; //頂点座標
-	D3DXVECTOR3 nor; //法線ベクトル
-	D3DCOLOR	col; //頂点カラー
-	D3DXVECTOR2	tex; //テクスチャ座標
-}VERTEX_3D;
 
 //=============================================================================
 //コンストラクタ
@@ -57,11 +47,6 @@ CScene3D::~CScene3D()
 //=============================================================================
 // ポリゴンの初期化処理
 //=============================================================================
-HRESULT CScene3D::Init(void)
-{
-	return S_OK;
-}
-
 HRESULT CScene3D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ)
 {
 	LPDIRECT3DDEVICE9 pDevice;
@@ -262,4 +247,90 @@ D3DXVECTOR3 CScene3D::GetPosition(void)
 D3DXVECTOR3 CScene3D::GetSize(void)
 {
 	return m_size;
+}
+
+bool CScene3D::HitCheck( D3DXVECTOR3 tNowPos, D3DXVECTOR3 tNextPos, D3DXVECTOR3 *wall_nor, D3DXVECTOR3 *HitPoint)
+{
+	bool bHit = false;
+	D3DXVECTOR3 tHitPosNear = D3DXVECTOR3(FLT_MAX, FLT_MAX, FLT_MAX);
+	D3DXMATRIX mtxRot, mtxTranslate;
+	D3DXVECTOR3 tPos[4];
+
+
+	// メッシュ壁構造体のポインタにメッシュ壁ワークの先頭アドレスを代入
+	CScene3D *pMesh = this;
+
+
+	// ワールドマトリックスの初期化
+	D3DXMatrixIdentity( &pMesh->m_mtxWorld);
+	
+	// 回転を反映
+	D3DXMatrixRotationYawPitchRoll( &mtxRot, pMesh->m_rot.y, pMesh->m_rot.x, pMesh->m_rot.z);
+	D3DXMatrixMultiply( &pMesh->m_mtxWorld, &pMesh->m_mtxWorld, &mtxRot);
+	
+	// 移動を反映
+	D3DXMatrixTranslation( &mtxTranslate, pMesh->m_pos.x, pMesh->m_pos.y, pMesh->m_pos.z);
+	D3DXMatrixMultiply( &pMesh->m_mtxWorld, &pMesh->m_mtxWorld, &mtxTranslate);
+
+	{//頂点バッファの取得
+
+		VERTEX_3D *pVtx;
+
+		// 頂点データの範囲をロックし、頂点バッファへのポインタを取得
+		pMesh->m_pVtxBuff->Lock( 0, 0, (void**)&pVtx, 0);
+
+		tPos[0] = pVtx[0].vtx;
+		tPos[1] = pVtx[pMesh->m_nNumBlockX].vtx;
+		tPos[2] = pVtx[(pMesh->m_nNumBlockX+1) * pMesh->m_nNumBlockZ].vtx;
+		tPos[3] = pVtx[(pMesh->m_nNumBlockX+1) * (pMesh->m_nNumBlockZ+1) - 1 ].vtx;
+
+
+		// 頂点データをアンロックする
+		pMesh->m_pVtxBuff->Unlock();	
+	}
+
+	//頂点バッファにワールドマトリックスを掛ける、頂点バッファが更新される
+	D3DXVec3TransformCoord( &tPos[0], &tPos[0], &pMesh->m_mtxWorld);
+	D3DXVec3TransformCoord( &tPos[1], &tPos[1], &pMesh->m_mtxWorld);
+	D3DXVec3TransformCoord( &tPos[2], &tPos[2], &pMesh->m_mtxWorld);
+	D3DXVec3TransformCoord( &tPos[3], &tPos[3], &pMesh->m_mtxWorld);
+
+
+	D3DXVECTOR3 tHitPos;
+	if( CCollision::HitCheck( tPos[0], tPos[1], tPos[2], tNowPos, tNextPos, &tHitPos) )
+	{
+		bHit = true;
+
+		//一番近い交点を求める
+		D3DXVECTOR3 v1 = tHitPosNear - tNowPos;
+		D3DXVECTOR3 v2 = tHitPos - tNowPos;
+		if( D3DXVec3Length(&v1) > D3DXVec3Length(&v2))
+		{
+			tHitPosNear = tHitPos;
+
+			//壁の法線を取得
+			if(wall_nor != NULL) *wall_nor = CCollision::CrossProduct( tPos[0] - tPos[1], tPos[2] - tPos[1]);
+		}
+			
+	}
+	else if( CCollision::HitCheck( tPos[1], tPos[2], tPos[3], tNowPos, tNextPos, &tHitPos) )
+	{
+		bHit = true;
+
+		//一番近い交点を求める
+		D3DXVECTOR3 v1 = tHitPosNear - tNowPos;
+		D3DXVECTOR3 v2 = tHitPos - tNowPos;
+		if( D3DXVec3Length(&v1) > D3DXVec3Length(&v2))
+		{
+			tHitPosNear = tHitPos;
+
+			//壁の法線を取得
+			if(wall_nor != NULL) *wall_nor = CCollision::CrossProduct( tPos[1] - tPos[2], tPos[3] - tPos[2]);
+		}
+	}
+
+	//一番近い交点を渡す
+	if(HitPoint != NULL) *HitPoint = tHitPosNear;
+
+	return bHit;
 }

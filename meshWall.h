@@ -1,49 +1,46 @@
 //============================================
 //
 // タイトル:	 未来創造展チーム204
-// プログラム名: game.h
+// プログラム名: meshWall.h
 // 作成者:		 HAL東京ゲーム学科　劉南宏
-// 作成日:       2016/11/17
+// 作成日:       2016/12/06
 //
 //============================================
 
-#ifndef _GAME_H_
-#define _GAME_H_
+#ifndef _MESHWALL_H_
+#define _MESHWALL_H_
 
 //============================================
 //インクルードファイル
 //============================================
-#include "manager.h"
+#include "scene3D.h"
 
 //============================================
 //マクロ定義
 //============================================
-#define MAX_WALL (5)
-//============================================
-//前方宣言
-//============================================
-class CPlayerX;
-class CMeshWall;
+
 //============================================
 //構造体定義
 //============================================
 
-class CGame : public CManager
+class CMeshWall : public CScene3D
 {
 public:
 
-	CGame();
-	virtual ~CGame();
-	
-	HRESULT Init(void);
+	CMeshWall();
+	virtual ~CMeshWall();
+
+	HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ);
 	void Uninit(void);
 	void Update(void);
 	void Draw(void);
 
+	static CMeshWall *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ);
+
+	bool HitCheck( D3DXVECTOR3 tNowPos, D3DXVECTOR3 tNextPos, D3DXVECTOR3 *wall_nor, D3DXVECTOR3 *HitPoint);
+
 private:
-	CPlayerX *m_player;
-	CMeshWall *m_pMeshWall[MAX_WALL];
-	int m_nNumWall;
+
 };
 
 #endif

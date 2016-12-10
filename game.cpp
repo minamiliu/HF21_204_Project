@@ -14,12 +14,12 @@
 #include "game.h"
 #include "renderer.h"
 #include "input.h"
-#include "player2D.h"
 #include "light.h"
 #include "camera.h"
 #include "scene3D.h"
+#include "meshWall.h"
 #include "playerX.h"
-#include "mousePick.h"
+#include "collision.h"
 
 //============================================
 // マクロ定義
@@ -51,15 +51,15 @@ HRESULT CGame::Init(void)
 	CScene3D::Create( D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 10, 10, 100.0f, 100.0f);
 
 	//ウォール
-	CScene3D::Create( D3DXVECTOR3( 0.0f, 0.0f, 500.0f), D3DXVECTOR3( D3DXToRadian(90.0f), 0.0f, 0.0f), 10, 1, 100.0f, 100.0f);
-	CScene3D::Create( D3DXVECTOR3( 500.0f, 0.0f, 0.0f), D3DXVECTOR3( D3DXToRadian(90.0f), D3DXToRadian(90.0f), 0.0f), 10, 1, 100.0f, 100.0f);
-	CScene3D::Create( D3DXVECTOR3( -500.0f, 0.0f, 0.0f), D3DXVECTOR3( D3DXToRadian(90.0f), D3DXToRadian(-90.0f), 0.0f), 10, 1, 100.0f, 100.0f);
-	CScene3D::Create( D3DXVECTOR3( 0.0f, 0.0f, -500.0f), D3DXVECTOR3( D3DXToRadian(90.0f), D3DXToRadian(180.0f), 0.0f), 10, 1, 100.0f, 100.0f);
+	m_nNumWall = 0;
+	m_pMeshWall[m_nNumWall++] = CMeshWall::Create( D3DXVECTOR3( 0.0f, 0.0f, 500.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 11, 1, 100.0f, 100.0f);
+	m_pMeshWall[m_nNumWall++] = CMeshWall::Create( D3DXVECTOR3( 500.0f, 0.0f, 0.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(90.0f), 0.0f), 11, 1, 100.0f, 100.0f);
+	m_pMeshWall[m_nNumWall++] = CMeshWall::Create( D3DXVECTOR3( -500.0f, 0.0f, 0.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(-90.0f), 0.0f), 11, 1, 100.0f, 100.0f);
+	m_pMeshWall[m_nNumWall++] = CMeshWall::Create( D3DXVECTOR3( 0.0f, 0.0f, -500.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(180.0f), 0.0f), 11, 1, 100.0f, 100.0f);
+
 
 	//オブジェクトの生成(Xfile)
-	m_player = CPlayerX::Create( D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), 2.0f);
-
-	//オブジェクトの生成(2Dポリゴン)
+	m_player = CPlayerX::Create( D3DXVECTOR3( 0.0f, 0.0f, -10.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), 5.0f);
 
 	return S_OK;
 }
@@ -90,12 +90,42 @@ void CGame::Update()
 		pCamera->SetRot( m_player->GetRot());
 	}
 
-	if( CManager::GetInputMouse()->GetMouseLeftTrigger())
+	//壁との当たり判定
+	bool bHit = false;
+	D3DXVECTOR3 front = m_player->GetFront();
+	D3DXVECTOR3 posP = m_player->GetPosition();
+	D3DXVECTOR3 wall_nor;
+	for(int cntWall = 0; cntWall < m_nNumWall; cntWall++)
 	{
-		POINT pos;
-		GetCursorPos( &pos);
-		D3DXVECTOR3 tPos = CMousePick::GetWorldPos( pos);
-		CPlayerX::Create( tPos, D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), 2.0f);	
+		if( m_pMeshWall[cntWall]->HitCheck( posP,  posP + front, &wall_nor, NULL))
+		{
+			bHit = true;
+		}
+	}
+	if( bHit == false)
+	{
+		m_player->SetPosition( posP + front);
+	}
+	else
+	{
+		bHit = false;
+
+		//前進方向の修正
+		CCollision::GetWallScratchVector( &front, front, wall_nor);
+
+		//壁との当たり判定
+		for(int cntWall = 0; cntWall < m_nNumWall; cntWall++)
+		{
+			if( m_pMeshWall[cntWall]->HitCheck( posP,  posP + front, &wall_nor, NULL))
+			{
+				bHit = true;
+			}
+		}
+		//移動
+		if( bHit == false)
+		{
+			m_player->SetPosition( posP + front);
+		}
 	}
 
 
