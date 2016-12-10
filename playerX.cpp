@@ -20,7 +20,7 @@
 //============================================
 // ƒ}ƒNƒ’è‹`
 //============================================
-#define MODEL_FILENAME "data/MODEL/player.x"
+#define MODEL_FILENAME "data/MODEL/plain.x"
 #define VALUE_ROTATE	(D3DX_PI * 0.1f) 	// ‰ñ“]—Ê
 
 //=============================================================================
@@ -50,7 +50,7 @@ CPlayerX::~CPlayerX()
 //=============================================================================
 HRESULT CPlayerX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float speed)
 {
-	CSceneX::Init( pos, rot, scl);
+	CSceneX::Init( pos, rot, scl, MODEL_FILENAME);
 
 	m_isGoAhead = false;
 	m_isGoBack = false;
@@ -85,10 +85,8 @@ void CPlayerX::Update(void)
 	}
 	CalcNextPos();
 
-	D3DXVECTOR3 pos = this->GetPosition();
-	CDebugProc::Print("\npos %f %f %f", pos.x, pos.y, pos.z);
-	CDebugProc::Print("\nfront %f %f %f", m_front.x, m_front.y, m_front.z);
-
+	D3DXVECTOR3 pos = GetPosition();
+	CDebugProc::Print("\nplayer x:%f, y:%f, z%f",pos.x, pos.y, pos.z);
 }
 
 //=============================================================================
@@ -365,4 +363,39 @@ void CPlayerX::CalcNextPos(void)
 D3DXVECTOR3 CPlayerX::GetFront(void)
 {
 	return m_front;
+}
+
+//=============================================================================
+// ‰ñ“]Šp“x‚ðŽæ“¾
+//=============================================================================
+D3DXVECTOR3 CPlayerX::Get2RotDiffAngle( D3DXVECTOR3 rot, D3DXVECTOR3 rotTarget)
+{
+	float tAngle[3];
+	D3DXVECTOR3 re;
+
+	tAngle[0] = rotTarget.x - rot.x;
+	tAngle[1] = rotTarget.y - rot.y;
+	tAngle[2] = rotTarget.z - rot.z;
+
+	for(int cntXYZ = 0; cntXYZ < 3; cntXYZ++)
+	{
+		if(tAngle[cntXYZ] > D3DX_PI)
+		{
+			tAngle[cntXYZ] -= 2 * D3DX_PI;
+		}
+		if(tAngle[cntXYZ] < -D3DX_PI)
+		{
+			tAngle[cntXYZ] += 2 * D3DX_PI;
+		}		
+
+//		tAngle[cntXYZ] = tAngle[cntXYZ] / DIVIDE_ROTATE;
+		tAngle[cntXYZ] = tAngle[cntXYZ] / abs(tAngle[cntXYZ]) * VALUE_ROTATE;
+
+	}
+
+	re.x = tAngle[0];
+	re.y = tAngle[1];
+	re.z = tAngle[2];
+
+	return re;
 }

@@ -39,6 +39,7 @@ public:
 	D3DXVECTOR3 GetFront(void);
 
 protected:
+	D3DXVECTOR3 Get2RotDiffAngle( D3DXVECTOR3 rot, D3DXVECTOR3 rotTarget);
 	void UpdateRot(void);
 	void CalcNextPos(void);
 	bool isKeyUse(int nUp, int nDown, int nLeft, int nRight);

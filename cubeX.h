@@ -1,54 +1,49 @@
 //============================================
 //
 // タイトル:	 未来創造展チーム204
-// プログラム名: game.h
+// プログラム名: cubeX.h
 // 作成者:		 HAL東京ゲーム学科　劉南宏
-// 作成日:       2016/11/17
+// 作成日:       2016/11/15
 //
 //============================================
 
-#ifndef _GAME_H_
-#define _GAME_H_
+#ifndef _CUBEX_H_
+#define _CUBEX_H_
 
 //============================================
 //インクルードファイル
 //============================================
-#include "manager.h"
+#include "sceneX.h"
 
 //============================================
 //マクロ定義
 //============================================
-#define MAX_WALL (5)
-#define MAX_CUBE (10)
-//============================================
-//前方宣言
-//============================================
-class CPlayerX;
-class CMeshWall;
-class CCubeX;
+
 //============================================
 //構造体定義
 //============================================
 
-class CGame : public CManager
+class CCubeX : public CSceneX
 {
 public:
+	CCubeX();
+	virtual ~CCubeX();
 
-	CGame();
-	virtual ~CGame();
-	
-	HRESULT Init(void);
+	HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, D3DXVECTOR3 sideLen);
 	void Uninit(void);
 	void Update(void);
 	void Draw(void);
 
-private:
-	CPlayerX *m_player;
-	CMeshWall *m_pMeshWall[MAX_WALL];
-	int m_nNumWall;
+	float GetDistanceBoxPoint(D3DXVECTOR3 point);
 
-	CCubeX *m_cube[MAX_CUBE];
-	int m_nNumCube;
+	static CCubeX *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, D3DXVECTOR3 sideLen);
+
+protected:
+	D3DXVECTOR3 GetSideMin(void);
+	D3DXVECTOR3 GetSideMax(void);
+
+private:
+	D3DXVECTOR3 m_sideLen;
 };
 
 #endif

@@ -37,10 +37,13 @@ public:
 
 	static CMeshWall *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ);
 
+	static HRESULT Load(void);
+	static void Unload(void);
+	
 	bool HitCheck( D3DXVECTOR3 tNowPos, D3DXVECTOR3 tNextPos, D3DXVECTOR3 *wall_nor, D3DXVECTOR3 *HitPoint);
 
 private:
-
+	static LPDIRECT3DTEXTURE9 m_pTexture;
 };
 
 #endif

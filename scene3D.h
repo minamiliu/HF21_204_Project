@@ -46,6 +46,9 @@ public:
 
 	static CScene3D *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ);
 
+	HRESULT Load(LPCSTR strFileName);
+	void BindTexture( LPDIRECT3DTEXTURE9 pTexture);
+
 	D3DXVECTOR3 GetPosition(void);
 	D3DXVECTOR3 GetSize(void);
 
@@ -57,10 +60,10 @@ private:
 	HRESULT MakeVertex(LPDIRECT3DDEVICE9 pDevice);
 
 	//変数
-
 	LPDIRECT3DTEXTURE9		m_pTexture;		// テクスチャへのポインタ
 	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff;		// 頂点バッファへのポインタ
-	LPDIRECT3DINDEXBUFFER9  m_pIdxBuff;	// インデックスバッファへのポインタ
+	LPDIRECT3DINDEXBUFFER9  m_pIdxBuff;		// インデックスバッファへのポインタ
+	bool m_bLoadTexture;					// テクスチャを読み込んだかどうか
 
 	D3DXVECTOR3		m_pos;					// 位置
 	D3DXVECTOR3		m_rot;					// 向き

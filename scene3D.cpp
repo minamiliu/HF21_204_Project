@@ -68,19 +68,16 @@ HRESULT CScene3D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNu
 	m_pTexture = NULL;	
 	m_pVtxBuff = NULL;
 	m_pIdxBuff = NULL;
+	m_bLoadTexture = false;
 	
 	// 頂点情報の作成
 	MakeVertex(pDevice);
-
-	// テクスチャの読み込み
-	D3DXCreateTextureFromFile( pDevice, TEXTURENAME, &m_pTexture);
-
 
 	return S_OK;
 }
 void CScene3D::Uninit(void)
 {
-	if(m_pTexture != NULL)
+	if(m_pTexture != NULL && m_bLoadTexture == true)
 	{// テクスチャの開放
 		m_pTexture->Release();
 		m_pTexture = NULL;
@@ -150,7 +147,10 @@ CScene3D *CScene3D::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int
 	CScene3D *pScene3D;
 	pScene3D = new CScene3D;
 	pScene3D->Init(pos, rot, nNumBlockX, nNumBlockZ, fSizeBlockX, fSizeBlockZ);
-	
+
+	//テクスチャの読み込み
+	pScene3D->Load(TEXTURENAME);
+
 	return pScene3D;
 }
 
@@ -333,4 +333,32 @@ bool CScene3D::HitCheck( D3DXVECTOR3 tNowPos, D3DXVECTOR3 tNextPos, D3DXVECTOR3 
 	if(HitPoint != NULL) *HitPoint = tHitPosNear;
 
 	return bHit;
+}
+
+//=============================================================================
+// ポリゴンのテクスチャを読み込む
+//=============================================================================
+HRESULT CScene3D::Load(LPCSTR strFileName)
+{
+	if( m_pTexture == NULL)
+	{
+		LPDIRECT3DDEVICE9 pDevice;
+		pDevice = CManager::GetRenderer()->GetDevice();
+
+		// テクスチャの読み込み
+		D3DXCreateTextureFromFile( pDevice, strFileName, &m_pTexture);
+
+		// テクスチャの読み込みフラグ
+		m_bLoadTexture = true;
+	}
+
+	return S_OK;
+}
+
+//=============================================================================
+// ポリゴンのテクスチャを割り当てる
+//=============================================================================
+void CScene3D::BindTexture( LPDIRECT3DTEXTURE9 pTexture)
+{
+	m_pTexture = pTexture;
 }

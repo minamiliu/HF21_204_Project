@@ -20,6 +20,8 @@
 #include "meshWall.h"
 #include "playerX.h"
 #include "collision.h"
+#include "cubeX.h"
+#include "debugproc.h"
 
 //============================================
 // マクロ定義
@@ -51,15 +53,23 @@ HRESULT CGame::Init(void)
 	CScene3D::Create( D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 10, 10, 100.0f, 100.0f);
 
 	//ウォール
+	CMeshWall::Load();
 	m_nNumWall = 0;
-	m_pMeshWall[m_nNumWall++] = CMeshWall::Create( D3DXVECTOR3( 0.0f, 0.0f, 500.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 11, 1, 100.0f, 100.0f);
-	m_pMeshWall[m_nNumWall++] = CMeshWall::Create( D3DXVECTOR3( 500.0f, 0.0f, 0.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(90.0f), 0.0f), 11, 1, 100.0f, 100.0f);
-	m_pMeshWall[m_nNumWall++] = CMeshWall::Create( D3DXVECTOR3( -500.0f, 0.0f, 0.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(-90.0f), 0.0f), 11, 1, 100.0f, 100.0f);
-	m_pMeshWall[m_nNumWall++] = CMeshWall::Create( D3DXVECTOR3( 0.0f, 0.0f, -500.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(180.0f), 0.0f), 11, 1, 100.0f, 100.0f);
+	m_pMeshWall[m_nNumWall++] = CMeshWall::Create( D3DXVECTOR3( 0.0f, 100.0f, 500.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 11, 4, 100.0f, 100.0f);
+	m_pMeshWall[m_nNumWall++] = CMeshWall::Create( D3DXVECTOR3( 500.0f, 100.0f, 0.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(90.0f), 0.0f), 11, 4, 100.0f, 100.0f);
+	m_pMeshWall[m_nNumWall++] = CMeshWall::Create( D3DXVECTOR3( -500.0f, 100.0f, 0.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(-90.0f), 0.0f), 11, 4, 100.0f, 100.0f);
+	m_pMeshWall[m_nNumWall++] = CMeshWall::Create( D3DXVECTOR3( 0.0f, 100.0f, -500.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(180.0f), 0.0f), 11, 4, 100.0f, 100.0f);
 
 
 	//オブジェクトの生成(Xfile)
-	m_player = CPlayerX::Create( D3DXVECTOR3( 0.0f, 0.0f, -10.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), 5.0f);
+	m_player = CPlayerX::Create( D3DXVECTOR3( -100.0f, 0.0f, -100.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), 5.0f);
+	
+	m_nNumCube = 0;
+	m_cube[m_nNumCube++] = CCubeX::Create( D3DXVECTOR3( 0.0f, 50.0f, 0.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), D3DXVECTOR3( 100.0f, 100.0f, 300.0f));
+	m_cube[m_nNumCube++] = CCubeX::Create( D3DXVECTOR3( 300.0f, 50.0f, 0.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), D3DXVECTOR3( 100.0f, 100.0f, 300.0f));
+	m_cube[m_nNumCube++] = CCubeX::Create( D3DXVECTOR3( -300.0f, 50.0f, 0.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), D3DXVECTOR3( 100.0f, 100.0f, 300.0f));
+	m_cube[m_nNumCube++] = CCubeX::Create( D3DXVECTOR3( 0.0f, 50.0f, 300.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(90.0f), 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), D3DXVECTOR3( 300.0f, 100.0f, 100.0f));
+	m_cube[m_nNumCube++] = CCubeX::Create( D3DXVECTOR3( 0.0f, 50.0f, -300.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(90.0f), 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), D3DXVECTOR3( 300.0f, 100.0f, 100.0f));
 
 	return S_OK;
 }
@@ -100,32 +110,77 @@ void CGame::Update()
 		if( m_pMeshWall[cntWall]->HitCheck( posP,  posP + front, &wall_nor, NULL))
 		{
 			bHit = true;
+			break;
 		}
 	}
+
+	//キューブとの当たり判定
+	bool bHitCube = false;
+	int nIDCube = 0;
+	for(int cntCube = 0; cntCube < m_nNumCube; cntCube++)
+	{
+		float len = m_cube[cntCube]->GetDistanceBoxPoint( m_player->GetPosition() + front);
+		if( len < 15.0f)
+		{
+			bHitCube = true;
+			bHit = true;
+			nIDCube = cntCube;
+			break;
+		}	
+	}
+
+
+
+	//移動
 	if( bHit == false)
 	{
 		m_player->SetPosition( posP + front);
 	}
 	else
 	{
-		bHit = false;
-
-		//前進方向の修正
-		CCollision::GetWallScratchVector( &front, front, wall_nor);
-
-		//壁との当たり判定
-		for(int cntWall = 0; cntWall < m_nNumWall; cntWall++)
+		if( bHitCube == true)
 		{
-			if( m_pMeshWall[cntWall]->HitCheck( posP,  posP + front, &wall_nor, NULL))
+			D3DXVECTOR3 vecX = D3DXVECTOR3( 1.0f, 0.0f, 0.0f);
+			D3DXVECTOR3 vecZ = D3DXVECTOR3( 0.0f, 0.0f, 1.0f);
+			CCollision::GetWallScratchVector( &vecX, front, vecX);
+			CCollision::GetWallScratchVector( &vecZ, front, vecZ);
+			
+
+			if( m_cube[nIDCube]->GetDistanceBoxPoint( m_player->GetPosition() + vecX) >= 15.0f)
 			{
-				bHit = true;
+				m_player->SetPosition( posP + vecX);
 			}
+			if( m_cube[nIDCube]->GetDistanceBoxPoint( m_player->GetPosition() + vecZ) >= 15.0f)
+			{
+				m_player->SetPosition( posP + vecZ);
+			}			
+
+
 		}
-		//移動
-		if( bHit == false)
+		else
 		{
-			m_player->SetPosition( posP + front);
+			bHit = false;
+
+			//前進方向の修正
+			CCollision::GetWallScratchVector( &front, front, wall_nor);
+
+			//壁との当たり判定(2回目)
+			for(int cntWall = 0; cntWall < m_nNumWall; cntWall++)
+			{
+				if( m_pMeshWall[cntWall]->HitCheck( posP,  posP + front, &wall_nor, NULL))
+				{
+					bHit = true;
+					break;
+				}
+			}
+			//移動
+			if( bHit == false)
+			{
+				m_player->SetPosition( posP + front);
+			}		
 		}
+
+
 	}
 
 

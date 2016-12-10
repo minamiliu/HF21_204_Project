@@ -80,6 +80,7 @@
   <ItemGroup>
     <ClCompile Include="bullet2D.cpp" />
     <ClCompile Include="camera.cpp" />
+    <ClCompile Include="cubeX.cpp" />
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="debugproc.cpp" />
     <ClCompile Include="fade.cpp" />
@@ -111,6 +112,7 @@
   <ItemGroup>
     <ClInclude Include="bullet2D.h" />
     <ClInclude Include="camera.h" />
+    <ClInclude Include="cubeX.h" />
     <ClInclude Include="collision.h" />
     <ClInclude Include="debugproc.h" />
     <ClInclude Include="fade.h" />
