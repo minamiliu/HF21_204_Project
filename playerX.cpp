@@ -12,16 +12,19 @@
 //============================================
 #include "main.h"
 #include "playerX.h"
-#include "manager.h"
 #include "input.h"
 #include "camera.h"
 #include "debugproc.h"
+#include "collision.h"
+#include "score.h"
+#include "game.h"
 
 //============================================
 // マクロ定義
 //============================================
 #define MODEL_FILENAME "data/MODEL/plain.x"
 #define VALUE_ROTATE	(D3DX_PI * 0.1f) 	// 回転量
+#define rotSpeed (2.0f)
 
 //=============================================================================
 // 構造体定義
@@ -54,12 +57,16 @@ HRESULT CPlayerX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float 
 
 	m_isGoAhead = false;
 	m_isGoBack = false;
-	m_speed = speed;
+	m_speed = 0.0f;
+	m_Accel = speed;
 	m_move = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
 	m_front = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
 	m_rotTarget = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
-	m_rotAngle = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);	
-	
+	m_rotAngle = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
+
+	m_state = STATE_NORMAL;
+	m_nCntState = 0;
+
 	return S_OK;
 }
 
@@ -85,6 +92,73 @@ void CPlayerX::Update(void)
 	}
 	CalcNextPos();
 
+	//当たり判定
+	for( int nCntScene = 0; nCntScene < MAX_SCENE; nCntScene++)
+	{
+		CScene *pScene;
+		pScene = CScene::GetScene( nCntScene);
+		
+		if( pScene != NULL)
+		{
+			CScene::OBJTYPE type;
+			type = pScene->GetObjType();
+
+			D3DXVECTOR3 posPlayer = GetPosition();
+
+			//アイテムとの当たり判定
+			if( type == CScene::OBJTYPE_L_ITEM)
+			{
+				D3DXVECTOR3 posItem;
+				posItem = pScene->GetPosition();
+
+				if( CCollision::HitCheckBall( posPlayer, 15.f, posItem, 10.f))
+				{
+
+					//アイテムの破棄
+ 					pScene->Uninit();
+
+					//スコア
+					CGame::GetScore()->AddScore( 100);
+					
+					return;
+				}
+			}
+			//敵との当たり判定
+			else if( type == CScene::OBJTYPE_L_ENEMY && m_state != STATE_DOWN)
+			{
+				D3DXVECTOR3 posEnemy;
+				posEnemy = pScene->GetPosition();
+
+				if( CCollision::HitCheckBall( posPlayer, 15.f, posEnemy, 15.f))
+				{
+					//スコア
+					CGame::GetScore()->AddScore( -100);
+					
+					m_state = STATE_DOWN;
+					m_nCntState = 60;
+					m_speed = 0.0f;
+					
+					return;
+				}
+			}
+
+
+		}
+	}
+
+	//状態更新
+	switch( m_state)
+	{
+	case STATE_DOWN:
+		m_nCntState--;
+		if( m_nCntState <= 0)
+		{
+			m_state = STATE_NORMAL;
+		}
+		break;
+	}
+
+	//プレイヤーの座標
 	D3DXVECTOR3 pos = GetPosition();
 	CDebugProc::Print("\nplayer x:%f, y:%f, z%f",pos.x, pos.y, pos.z);
 }
@@ -153,8 +227,6 @@ bool CPlayerX::isKeyUse(int nUp, int nDown, int nLeft, int nRight)
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
 	D3DXVECTOR3 rotCamera = CManager::GetCamera()->GetRot();
 	D3DXVECTOR3 rotPlayer = GetRot();
-
-	const float rotSpeed = 1.0f;
 
 	//初期化
 	m_isGoAhead = false;
@@ -241,7 +313,6 @@ bool CPlayerX::isMouseUse(void)
 	D3DXVECTOR3 rotCamera = CManager::GetCamera()->GetRot();
 	D3DXVECTOR3 rotPlayer = GetRot();
 
-	const float rotSpeed = 1.0f;
 	const int nDeadZone = 0;
 
 	//初期化
@@ -331,21 +402,33 @@ void CPlayerX::CalcNextPos(void)
 
 	if(m_isGoAhead == true)
 	{
+		m_speed += m_Accel;
+		if( m_speed > 10.0f)
+		{
+			m_speed = 10.0f;
+		}
+
 		//移動慣性の初期化
 		m_move = D3DXVECTOR3( m_speed, 0.0f, m_speed);
 
-		////時計回り、または逆時計回りを決める
-		//m_rotAngle =  Get2RotDiffAngle( m_rot, m_rotTarget);
 	}
-
-	if(m_isGoBack == true)
+	else if(m_isGoBack == true)
 	{
-		//移動慣性の初期化
-		m_move = -D3DXVECTOR3( m_speed, 0.0f, m_speed);
+		m_speed -= m_Accel;
 
-		////時計回り、または逆時計回りを決める
-		//m_rotAngle =  Get2RotDiffAngle( m_rot, m_rotTarget);		
+		if( m_speed < -10.0f)
+		{
+			m_speed = -10.0f;
+		}
+
+		//移動慣性の初期化
+		m_move = D3DXVECTOR3( m_speed, 0.0f, m_speed);	
 	}
+	else
+	{
+		m_speed -= m_speed * 0.25f;
+	}
+
 
 	//回転していない時
 	if( m_rotAngle.y == 0)
@@ -398,4 +481,19 @@ D3DXVECTOR3 CPlayerX::Get2RotDiffAngle( D3DXVECTOR3 rot, D3DXVECTOR3 rotTarget)
 	re.z = tAngle[2];
 
 	return re;
+}
+
+//=============================================================================
+// ステートを設定
+//=============================================================================
+void CPlayerX::SetState(STATE state)
+{
+	m_state = state;
+}
+//=============================================================================
+// ステートを取得
+//=============================================================================
+CPlayerX::STATE CPlayerX::GetState(void)
+{
+	return m_state;
 }

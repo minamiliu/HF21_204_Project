@@ -19,13 +19,14 @@
 //マクロ定義
 //============================================
 #define MAX_WALL (5)
-#define MAX_CUBE (10)
+#define MAX_CUBE (20)
 //============================================
 //前方宣言
 //============================================
 class CPlayerX;
 class CMeshWall;
 class CCubeX;
+class CScore;
 //============================================
 //構造体定義
 //============================================
@@ -41,6 +42,9 @@ public:
 	void Uninit(void);
 	void Update(void);
 	void Draw(void);
+	
+	//スコア
+	static CScore *GetScore(void);
 
 private:
 	CPlayerX *m_player;
@@ -49,6 +53,8 @@ private:
 
 	CCubeX *m_cube[MAX_CUBE];
 	int m_nNumCube;
+
+	static CScore *m_score;
 };
 
 #endif

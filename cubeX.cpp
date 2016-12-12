@@ -16,7 +16,9 @@
 //============================================
 // マクロ定義
 //============================================
-#define MODEL_FILENAME "data/MODEL/cube2.x"
+#define MODEL_FILENAME_1X1 "data/MODEL/cashier.x"
+#define MODEL_FILENAME_1X2 "data/MODEL/cube200.x"
+#define MODEL_FILENAME_1X4 "data/MODEL/cube400.x"
 
 //=============================================================================
 // 構造体定義
@@ -43,10 +45,24 @@ CCubeX::~CCubeX()
 //=============================================================================
 //
 //=============================================================================
-HRESULT CCubeX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, D3DXVECTOR3 sideLen)
+HRESULT CCubeX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, D3DXVECTOR3 sideLen, TYPE type)
 {
-	CSceneX::Init( pos, rot, scl, MODEL_FILENAME);
 	m_sideLen = sideLen;
+	
+	switch( type)
+	{
+	case TYPE_1X1:
+		CSceneX::Init( pos, rot, scl,MODEL_FILENAME_1X1);
+		break;
+
+	case TYPE_1X2:
+		CSceneX::Init( pos, rot, scl, MODEL_FILENAME_1X2);
+		break;
+
+	case TYPE_1X4:
+		CSceneX::Init( pos, rot, scl, MODEL_FILENAME_1X4);
+		break;
+	}
 	
 	return S_OK;
 }
@@ -78,11 +94,11 @@ void CCubeX::Draw(void)
 //=============================================================================
 //
 //=============================================================================
-CCubeX *CCubeX::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, D3DXVECTOR3 sideLen)
+CCubeX *CCubeX::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 sideLen, TYPE type)
 {
 	CCubeX *pCube;
 	pCube = new CCubeX;
-	pCube->Init(pos, rot, scl, sideLen);
+	pCube->Init(pos, rot, D3DXVECTOR3( 1.0f, 1.0f, 1.0f), sideLen, type);
 
 	return pCube;
 }

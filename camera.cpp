@@ -28,7 +28,7 @@
 #define	VIEW_ANGLE				(D3DXToRadian(60.0f))							// ビュー平面の視野角
 #define	VIEW_ASPECT				((float)SCREEN_WIDTH / (float)SCREEN_HEIGHT)	// ビュー平面のアスペクト比
 #define	VIEW_NEAR_Z				(1.f)											// ビュー平面のNearZ値
-#define	VIEW_FAR_Z				(2000.0f)										// ビュー平面のFarZ値
+#define	VIEW_FAR_Z				(2500.0f)										// ビュー平面のFarZ値
 #define	VALUE_MOVE_CAMERA		(2.0f)											// カメラの移動量
 #define	VALUE_ROTATE_CAMERA		(D3DX_PI * 0.01f)								// カメラの回転量
 #define	VALUE_ADJUST_DISTANCE	(2.0f)											// 視点と注視点の距離調整量

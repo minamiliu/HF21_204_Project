@@ -83,9 +83,11 @@
     <ClCompile Include="cubeX.cpp" />
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="debugproc.cpp" />
+    <ClCompile Include="enemyX.cpp" />
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="input.cpp" />
+    <ClCompile Include="itemX.cpp" />
     <ClCompile Include="light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="manager.cpp" />
@@ -115,9 +117,11 @@
     <ClInclude Include="cubeX.h" />
     <ClInclude Include="collision.h" />
     <ClInclude Include="debugproc.h" />
+    <ClInclude Include="enemyX.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="input.h" />
+    <ClInclude Include="itemX.h" />
     <ClInclude Include="light.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="manager.h" />

@@ -26,17 +26,27 @@
 class CCubeX : public CSceneX
 {
 public:
+	typedef enum
+	{
+		TYPE_1X1 = 0,
+		TYPE_1X2,
+		TYPE_1X4,
+		TYPE_MAX,
+	}TYPE;
+
 	CCubeX();
 	virtual ~CCubeX();
 
-	HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, D3DXVECTOR3 sideLen);
+	HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, D3DXVECTOR3 sideLen, TYPE type);
 	void Uninit(void);
 	void Update(void);
 	void Draw(void);
 
 	float GetDistanceBoxPoint(D3DXVECTOR3 point);
 
-	static CCubeX *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, D3DXVECTOR3 sideLen);
+	static HRESULT Load(void);
+	static void Unload(void);
+	static CCubeX *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 sideLen, TYPE type);
 
 protected:
 	D3DXVECTOR3 GetSideMin(void);
@@ -44,6 +54,7 @@ protected:
 
 private:
 	D3DXVECTOR3 m_sideLen;
+	TYPE m_type;
 };
 
 #endif

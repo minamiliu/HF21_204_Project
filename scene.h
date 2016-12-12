@@ -25,6 +25,8 @@ public:
 	typedef enum
 	{
 		OBJTYPE_TRASH = 0,
+		OBJTYPE_L_ITEM,
+		OBJTYPE_L_ENEMY,
 		OBJTYPE_MAX
 	}OBJTYPE;
 	CScene();
