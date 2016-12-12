@@ -30,7 +30,7 @@
 //============================================
 // マクロ定義
 //============================================
-#define CAMERA_DISTANCE	(200.0f)
+
 //============================================
 // 静的メンバー変数の初期化
 //============================================
@@ -109,7 +109,10 @@ HRESULT CGame::Init(void)
 	//CTime::Create( D3DXVECTOR3(SCREEN_WIDTH/2, 100.0f, 0.0f), D3DXVECTOR3(150, 100.0f, 0.0f), 2, 10, true, BLUE(1.0f));
 
 	//敵
-	CEnemyX::Create( D3DXVECTOR3(300, 30.0f, -200.0f), D3DXVECTOR3( 0, 0.0f, 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f));
+	CEnemyX::Create( D3DXVECTOR3( 50, 30.0f, 600.0f), D3DXVECTOR3( 0.0f, D3DX_PI/2, 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f));
+	CEnemyX::Create( D3DXVECTOR3(350, 30.0f, 600.0f), D3DXVECTOR3( 0.0f, D3DX_PI/2, 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f));
+	CEnemyX::Create( D3DXVECTOR3(650, 30.0f, 600.0f), D3DXVECTOR3( 0.0f, D3DX_PI/2, 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f));
+	CEnemyX::Create( D3DXVECTOR3(950, 30.0f, 600.0f), D3DXVECTOR3( 0.0f, D3DX_PI/2, 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f));
 
 	return S_OK;
 }
@@ -124,21 +127,6 @@ void CGame::Update()
 	//入力などの更新、各シーンのUpdateの最初に呼び出す
 	CManager::Update();
 
-	{//カメラ追従
-		CCamera *pCamera = GetCamera();
-
-		//注視点
-		pCamera->SetPosR( m_player->GetPosition());
-
-		//視点
-		D3DXVECTOR3 posV = pCamera->GetPosV();
-		posV.x = pCamera->GetPosR().x - CAMERA_DISTANCE * sinf(pCamera->GetRot().y);
-		posV.z = pCamera->GetPosR().z - CAMERA_DISTANCE * cosf(pCamera->GetRot().y);
-		pCamera->SetPosV( posV);
-
-		//向き
-		pCamera->SetRot( m_player->GetRot());
-	}
 
 	//壁との当たり判定
 	bool bHit = false;
@@ -171,7 +159,7 @@ void CGame::Update()
 
 
 
-	//移動
+	//当たり判定後のプレイヤー移動
 	if( bHit == false)
 	{
 		m_player->SetPosition( posP + front);
@@ -193,9 +181,7 @@ void CGame::Update()
 			if( m_cube[nIDCube]->GetDistanceBoxPoint( m_player->GetPosition() + vecZ) >= 15.0f)
 			{
 				m_player->SetPosition( posP + vecZ);
-			}			
-
-
+			}
 		}
 		else
 		{
@@ -219,8 +205,6 @@ void CGame::Update()
 				m_player->SetPosition( posP + front);
 			}		
 		}
-
-
 	}
 
 

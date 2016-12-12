@@ -23,9 +23,10 @@
 // マクロ定義
 //============================================
 #define MODEL_FILENAME "data/MODEL/plain.x"
-#define VALUE_ROTATE	(D3DX_PI * 0.1f) 	// 回転量
-#define rotSpeed (2.0f)
+#define VALUE_ROTATE	(2.0f) 	// 回転量
 
+#define PLAYER_RADIUS	(20.0f)
+#define CAMERA_DISTANCE	(200.0f)
 //=============================================================================
 // 構造体定義
 //=============================================================================
@@ -57,8 +58,10 @@ HRESULT CPlayerX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float 
 
 	m_isGoAhead = false;
 	m_isGoBack = false;
-	m_speed = 0.0f;
-	m_Accel = speed;
+	
+	m_fSpeed = 0.0f;
+	m_fAccel = speed;
+
 	m_move = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
 	m_front = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
 	m_rotTarget = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
@@ -83,6 +86,7 @@ void CPlayerX::Uninit(void)
 //=============================================================================
 void CPlayerX::Update(void)
 {
+	//移動処理
 	bool isMoved;
 	isMoved = isKeyUse(DIK_W, DIK_S, DIK_A, DIK_D);
 	//isMoved = isMouseUse();
@@ -91,6 +95,22 @@ void CPlayerX::Update(void)
 		UpdateRot();
 	}
 	CalcNextPos();
+
+	{//カメラ追従
+		CCamera *pCamera = CManager::GetCamera();
+
+		//注視点
+		pCamera->SetPosR( this->GetPosition());
+
+		//視点
+		D3DXVECTOR3 posV = pCamera->GetPosV();
+		posV.x = pCamera->GetPosR().x - CAMERA_DISTANCE * sinf(pCamera->GetRot().y);
+		posV.z = pCamera->GetPosR().z - CAMERA_DISTANCE * cosf(pCamera->GetRot().y);
+		pCamera->SetPosV( posV);
+
+		//向き
+		pCamera->SetRot( this->GetRot());
+	}
 
 	//当たり判定
 	for( int nCntScene = 0; nCntScene < MAX_SCENE; nCntScene++)
@@ -111,7 +131,7 @@ void CPlayerX::Update(void)
 				D3DXVECTOR3 posItem;
 				posItem = pScene->GetPosition();
 
-				if( CCollision::HitCheckBall( posPlayer, 15.f, posItem, 10.f))
+				if( CCollision::HitCheckBall( posPlayer, PLAYER_RADIUS, posItem, 10.f))
 				{
 
 					//アイテムの破棄
@@ -124,19 +144,19 @@ void CPlayerX::Update(void)
 				}
 			}
 			//敵との当たり判定
-			else if( type == CScene::OBJTYPE_L_ENEMY && m_state != STATE_DOWN)
+			else if( type == CScene::OBJTYPE_L_ENEMY && m_state != STATE_CRASH)
 			{
 				D3DXVECTOR3 posEnemy;
 				posEnemy = pScene->GetPosition();
 
-				if( CCollision::HitCheckBall( posPlayer, 15.f, posEnemy, 15.f))
+				if( CCollision::HitCheckBall( posPlayer, PLAYER_RADIUS, posEnemy, PLAYER_RADIUS))
 				{
 					//スコア
 					CGame::GetScore()->AddScore( -100);
 					
-					m_state = STATE_DOWN;
+					m_state = STATE_CRASH;
 					m_nCntState = 60;
-					m_speed = 0.0f;
+					m_fSpeed = -5.0f;
 					
 					return;
 				}
@@ -146,10 +166,12 @@ void CPlayerX::Update(void)
 		}
 	}
 
+	D3DXVECTOR3 pos;
+
 	//状態更新
 	switch( m_state)
 	{
-	case STATE_DOWN:
+	case STATE_CRASH:
 		m_nCntState--;
 		if( m_nCntState <= 0)
 		{
@@ -158,9 +180,6 @@ void CPlayerX::Update(void)
 		break;
 	}
 
-	//プレイヤーの座標
-	D3DXVECTOR3 pos = GetPosition();
-	CDebugProc::Print("\nplayer x:%f, y:%f, z%f",pos.x, pos.y, pos.z);
 }
 
 //=============================================================================
@@ -236,7 +255,7 @@ bool CPlayerX::isKeyUse(int nUp, int nDown, int nLeft, int nRight)
 	//斜め移動
 	if( (pInputKeyboard->GetKeyPress(nRight) && pInputKeyboard->GetKeyPress(nUp)) ) //右上
 	{
-		m_rotTarget.y = rotPlayer.y + D3DXToRadian(rotSpeed);
+		m_rotTarget.y = rotPlayer.y + D3DXToRadian(VALUE_ROTATE);
 		if( m_rotTarget.y > D3DX_PI)
 		{
 			m_rotTarget.y -= D3DX_PI * 2.0f;
@@ -245,7 +264,7 @@ bool CPlayerX::isKeyUse(int nUp, int nDown, int nLeft, int nRight)
 	}
 	else if((pInputKeyboard->GetKeyPress(nRight) && pInputKeyboard->GetKeyPress(nDown)) ) //右下
 	{
-		m_rotTarget.y = rotPlayer.y + D3DXToRadian(rotSpeed);
+		m_rotTarget.y = rotPlayer.y + D3DXToRadian(VALUE_ROTATE);
 		if( m_rotTarget.y > D3DX_PI)
 		{
 			m_rotTarget.y -= D3DX_PI * 2.0f;
@@ -254,7 +273,7 @@ bool CPlayerX::isKeyUse(int nUp, int nDown, int nLeft, int nRight)
 	}
 	else if((pInputKeyboard->GetKeyPress(nLeft)  && pInputKeyboard->GetKeyPress(nUp))  ) //左上
 	{
-		m_rotTarget.y = rotPlayer.y + D3DXToRadian(-rotSpeed);
+		m_rotTarget.y = rotPlayer.y + D3DXToRadian(-VALUE_ROTATE);
 		if( m_rotTarget.y < -D3DX_PI)
 		{
 			m_rotTarget.y += D3DX_PI * 2.0f;
@@ -263,7 +282,7 @@ bool CPlayerX::isKeyUse(int nUp, int nDown, int nLeft, int nRight)
 	}
 	else if((pInputKeyboard->GetKeyPress(nLeft) && pInputKeyboard->GetKeyPress(nDown)) ) //左下
 	{
-		m_rotTarget.y = rotPlayer.y + D3DXToRadian(-rotSpeed);
+		m_rotTarget.y = rotPlayer.y + D3DXToRadian(-VALUE_ROTATE);
 		if( m_rotTarget.y < -D3DX_PI)
 		{
 			m_rotTarget.y += D3DX_PI * 2.0f;
@@ -280,7 +299,7 @@ bool CPlayerX::isKeyUse(int nUp, int nDown, int nLeft, int nRight)
 	}
 	else if(pInputKeyboard->GetKeyPress(nLeft) )
 	{
-		m_rotTarget.y = rotPlayer.y + D3DXToRadian(-1.0f);
+		m_rotTarget.y = rotPlayer.y + D3DXToRadian(-VALUE_ROTATE);
 		if( m_rotTarget.y < -D3DX_PI)
 		{
 			m_rotTarget.y += D3DX_PI * 2.0f;
@@ -289,7 +308,7 @@ bool CPlayerX::isKeyUse(int nUp, int nDown, int nLeft, int nRight)
 	}
 	else if(pInputKeyboard->GetKeyPress(nRight) )
 	{
-		m_rotTarget.y = rotPlayer.y + D3DXToRadian(1.0f);
+		m_rotTarget.y = rotPlayer.y + D3DXToRadian(VALUE_ROTATE);
 		if( m_rotTarget.y > D3DX_PI)
 		{
 			m_rotTarget.y -= D3DX_PI * 2.0f;
@@ -323,7 +342,7 @@ bool CPlayerX::isMouseUse(void)
 	//斜め移動
 	if( (pInputMouse->GetMouseAxisX() > nDeadZone && pInputMouse->GetMouseLeftPress()) ) //右上
 	{
-		m_rotTarget.y = rotPlayer.y + D3DXToRadian(rotSpeed);
+		m_rotTarget.y = rotPlayer.y + D3DXToRadian(VALUE_ROTATE);
 		if( m_rotTarget.y > D3DX_PI)
 		{
 			m_rotTarget.y -= D3DX_PI * 2.0f;
@@ -332,7 +351,7 @@ bool CPlayerX::isMouseUse(void)
 	}
 	else if((pInputMouse->GetMouseAxisX() > nDeadZone && pInputMouse->GetMouseRightPress()) ) //右下
 	{
-		m_rotTarget.y = rotPlayer.y + D3DXToRadian(rotSpeed);
+		m_rotTarget.y = rotPlayer.y + D3DXToRadian(VALUE_ROTATE);
 		if( m_rotTarget.y > D3DX_PI)
 		{
 			m_rotTarget.y -= D3DX_PI * 2.0f;
@@ -341,7 +360,7 @@ bool CPlayerX::isMouseUse(void)
 	}
 	else if((pInputMouse->GetMouseAxisX() < -nDeadZone  && pInputMouse->GetMouseLeftPress())  ) //左上
 	{
-		m_rotTarget.y = rotPlayer.y + D3DXToRadian(-rotSpeed);
+		m_rotTarget.y = rotPlayer.y + D3DXToRadian(-VALUE_ROTATE);
 		if( m_rotTarget.y < -D3DX_PI)
 		{
 			m_rotTarget.y += D3DX_PI * 2.0f;
@@ -350,7 +369,7 @@ bool CPlayerX::isMouseUse(void)
 	}
 	else if((pInputMouse->GetMouseAxisX() < -nDeadZone && pInputMouse->GetMouseRightPress()) ) //左下
 	{
-		m_rotTarget.y = rotPlayer.y + D3DXToRadian(-rotSpeed);
+		m_rotTarget.y = rotPlayer.y + D3DXToRadian(-VALUE_ROTATE);
 		if( m_rotTarget.y < -D3DX_PI)
 		{
 			m_rotTarget.y += D3DX_PI * 2.0f;
@@ -367,7 +386,7 @@ bool CPlayerX::isMouseUse(void)
 	}
 	else if(pInputMouse->GetMouseAxisX() < -nDeadZone )
 	{
-		m_rotTarget.y = rotPlayer.y + D3DXToRadian(-1.0f);
+		m_rotTarget.y = rotPlayer.y + D3DXToRadian(-VALUE_ROTATE);
 		if( m_rotTarget.y < -D3DX_PI)
 		{
 			m_rotTarget.y += D3DX_PI * 2.0f;
@@ -376,7 +395,7 @@ bool CPlayerX::isMouseUse(void)
 	}
 	else if(pInputMouse->GetMouseAxisX() > nDeadZone )
 	{
-		m_rotTarget.y = rotPlayer.y + D3DXToRadian(1.0f);
+		m_rotTarget.y = rotPlayer.y + D3DXToRadian(VALUE_ROTATE);
 		if( m_rotTarget.y > D3DX_PI)
 		{
 			m_rotTarget.y -= D3DX_PI * 2.0f;
@@ -402,31 +421,31 @@ void CPlayerX::CalcNextPos(void)
 
 	if(m_isGoAhead == true)
 	{
-		m_speed += m_Accel;
-		if( m_speed > 10.0f)
+		m_fSpeed += m_fAccel;
+		if( m_fSpeed > 10.0f)
 		{
-			m_speed = 10.0f;
+			m_fSpeed = 10.0f;
 		}
 
 		//移動慣性の初期化
-		m_move = D3DXVECTOR3( m_speed, 0.0f, m_speed);
+		m_move = D3DXVECTOR3( m_fSpeed, 0.0f, m_fSpeed);
 
 	}
 	else if(m_isGoBack == true)
 	{
-		m_speed -= m_Accel;
+		m_fSpeed -= m_fAccel;
 
-		if( m_speed < -10.0f)
+		if( m_fSpeed < -10.0f)
 		{
-			m_speed = -10.0f;
+			m_fSpeed = -10.0f;
 		}
 
 		//移動慣性の初期化
-		m_move = D3DXVECTOR3( m_speed, 0.0f, m_speed);	
+		m_move = D3DXVECTOR3( m_fSpeed, 0.0f, m_fSpeed);	
 	}
 	else
 	{
-		m_speed -= m_speed * 0.25f;
+		m_fSpeed -= m_fSpeed * 0.25f;
 	}
 
 
@@ -446,41 +465,6 @@ void CPlayerX::CalcNextPos(void)
 D3DXVECTOR3 CPlayerX::GetFront(void)
 {
 	return m_front;
-}
-
-//=============================================================================
-// 回転角度を取得
-//=============================================================================
-D3DXVECTOR3 CPlayerX::Get2RotDiffAngle( D3DXVECTOR3 rot, D3DXVECTOR3 rotTarget)
-{
-	float tAngle[3];
-	D3DXVECTOR3 re;
-
-	tAngle[0] = rotTarget.x - rot.x;
-	tAngle[1] = rotTarget.y - rot.y;
-	tAngle[2] = rotTarget.z - rot.z;
-
-	for(int cntXYZ = 0; cntXYZ < 3; cntXYZ++)
-	{
-		if(tAngle[cntXYZ] > D3DX_PI)
-		{
-			tAngle[cntXYZ] -= 2 * D3DX_PI;
-		}
-		if(tAngle[cntXYZ] < -D3DX_PI)
-		{
-			tAngle[cntXYZ] += 2 * D3DX_PI;
-		}		
-
-//		tAngle[cntXYZ] = tAngle[cntXYZ] / DIVIDE_ROTATE;
-		tAngle[cntXYZ] = tAngle[cntXYZ] / abs(tAngle[cntXYZ]) * VALUE_ROTATE;
-
-	}
-
-	re.x = tAngle[0];
-	re.y = tAngle[1];
-	re.z = tAngle[2];
-
-	return re;
 }
 
 //=============================================================================

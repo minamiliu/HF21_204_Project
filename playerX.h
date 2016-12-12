@@ -29,7 +29,7 @@ public:
 	typedef enum
 	{
 		STATE_NORMAL = 0,
-		STATE_DOWN,
+		STATE_CRASH,
 		STATE_MAX,
 	}STATE;
 
@@ -48,7 +48,6 @@ public:
 	STATE GetState(void);
 
 protected:
-	D3DXVECTOR3 Get2RotDiffAngle( D3DXVECTOR3 rot, D3DXVECTOR3 rotTarget);
 	void UpdateRot(void);
 	void CalcNextPos(void);
 	bool isKeyUse(int nUp, int nDown, int nLeft, int nRight);
@@ -56,10 +55,9 @@ protected:
 
 private:
 	D3DXVECTOR3 m_move;			// モデルの移動量
-	float m_speed;				// モデルのスピード
-	float m_Accel;				// 加速度
+	float m_fSpeed;				// モデルのスピード
+	float m_fAccel;				// 加速度
 	D3DXVECTOR3 m_front;		// 前進ベクトル
-
 
 	D3DXVECTOR3 m_rotTarget;	// モデルの向き(回転)
 	D3DXVECTOR3 m_rotAngle;		// モデルの向き(回転)
