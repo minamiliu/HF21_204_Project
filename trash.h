@@ -46,6 +46,7 @@ public:
 	void SetSpeed(D3DXVECTOR3 speed);
 	void ReverseMove(void);
 	TRASHTYPE GetTrashType(void);
+	void TrashEnd(void);
 private:
 	D3DXVECTOR3 m_speed;
 	bool m_fallFlag;//—Ž‰ºƒtƒ‰ƒO

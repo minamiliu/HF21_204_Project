@@ -72,7 +72,7 @@ void CTrajectory::Update(void)
 	m_nTrajectoryCnt++;
 	//CScene2D::SetAlpha(255 - (float)m_nTrajectoryCnt/30);
 	CScene2D::Update();
-	if(m_nTrajectoryCnt > 30)
+	if(m_nTrajectoryCnt > 20)
 	{
 		this->Uninit();
 		return;

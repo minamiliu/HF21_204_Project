@@ -23,6 +23,7 @@
 #include "game.h"
 #include "zebragame.h"
 #include "trashGame.h"
+#include "trashGameResult.h"
 #include "title.h"
 #include "result.h"
 #include "fade.h"
@@ -329,6 +330,10 @@ void CManager::SceneChange(void)
 	case MODE_TRASHGAME:
 		m_pSceneManager = new CTrashGame;
 		break;
+
+	case MODE_TRASHGAMERESULT:
+		m_pSceneManager = new CTrashGameResult;
+		break;
 		
 	case MODE_ZEBRAGAME:
 		m_pSceneManager = new CZebraGame;
@@ -337,7 +342,7 @@ void CManager::SceneChange(void)
 	case MODE_GAME:
 		m_pSceneManager = new CGame;
 		break;
-		
+
 	case MODE_RESULT:
 		m_pSceneManager = new CResult;
 		break;
