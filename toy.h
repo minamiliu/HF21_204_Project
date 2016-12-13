@@ -48,13 +48,14 @@ public:
 	static HRESULT CToy::LoadXfile(LPCSTR strFileName, int nCnt);
 	void CToy::BindXfile( int type);
 
-	void CToy::ChangePicked(bool pick);
+	void CToy::ChangePicked(bool pick, bool zebra);
 private:
 	static LPDIRECT3DTEXTURE9	m_pTexture		[MAX_TOYTYPE];		// テクスチャへのポインタ
 	static LPD3DXMESH			m_pD3DXMesh		[MAX_TOYTYPE];		// メッシュ情報へのポインタ
 	static LPD3DXBUFFER			m_pD3DXBuffMat	[MAX_TOYTYPE];		// マテリアル情報へのポインタ
 	static DWORD				m_nNumMat		[MAX_TOYTYPE];		// マテリアル情報の数
 	bool m_bPicked;
+	bool m_bZebra;
 	static int m_nNumber;
 };
 

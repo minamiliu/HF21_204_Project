@@ -46,6 +46,7 @@ private:
 	D3DXVECTOR3 m_speed;
 	D3DXVECTOR3 m_3Dpos;
 	HWND m_hwnd;
+	bool m_zebra;
 };
 
 #endif

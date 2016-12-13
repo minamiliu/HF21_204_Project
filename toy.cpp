@@ -74,6 +74,7 @@ HRESULT CToy::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float spee
 	BindXfile(m_nNumber%4);
 	SetObjType(OBJTYPE_TOY); ;
 	m_bPicked = false;
+	m_bZebra= false;
 	return S_OK;
 }
 
@@ -124,9 +125,10 @@ HRESULT CToy::LoadXfile(LPCSTR strFileName, int nCnt)
 //=============================================================================
 //xファイルの設定
 //=============================================================================
-void CToy::ChangePicked(bool pick)	
+void CToy::ChangePicked(bool pick, bool zebra)	
 {
 	m_bPicked = pick;
+	m_bZebra = zebra ;
 }
 //=============================================================================
 //
@@ -146,7 +148,7 @@ void CToy::Update(void)
 	CScore *pScore;
 	pScore = CZebraGame::GetScoreP();
 	CDebugProc::Print("\nトイの場所.x.y.z:%f,%f,%f",pos.x,pos.y,pos.z);
-	if(m_bPicked == true)
+	if(m_bPicked == true && m_bZebra == false)
 	{
 		//カーソルの位置を取得
 		for(int Cnt=0; Cnt<MAX_SCENE ; Cnt++)
@@ -169,6 +171,11 @@ void CToy::Update(void)
 				}
 			}
 		}	
+	}
+
+	if(m_bPicked == true && m_bZebra == true)
+	{
+		CDebugProc::Print("\nゼブラ");
 	}
 	else if(m_bPicked == false)
 	{

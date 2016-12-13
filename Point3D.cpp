@@ -57,6 +57,7 @@ HRESULT CPoint3D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size,HWND hwnd)
 	m_startPos = D3DXVECTOR3(0.0f,0.0f,0.0f);
 	m_endPos = D3DXVECTOR3(0.0f,0.0f,0.0f);
 	m_speed = D3DXVECTOR3(0.0f,0.0f,0.0f);
+	m_zebra = false;
 	return S_OK;
 }
 
@@ -114,7 +115,8 @@ void CPoint3D::Update(void)
 						)
 					{
 					
-						((CToy*)pScene)->ChangePicked(true);
+						((CToy*)pScene)->ChangePicked(true,m_zebra);
+						
 						return;
 					}
 					
@@ -148,13 +150,22 @@ void CPoint3D::Update(void)
 							)
 						{
 					
-							((CToy*)pScene)->ChangePicked(false);
+							((CToy*)pScene)->ChangePicked(false,m_zebra);
 							return;
 						}
 					
 					}
 			}
 		}
+	}
+	if(CManager::GetInputMouse()->GetMouseRightTrigger())
+	{
+		m_zebra = !m_zebra;
+
+	}
+	if(m_zebra == true)
+	{
+		CDebugProc::Print("\nƒ[ƒuƒ‰");
 	}
 	pos.x = po.x;
 	pos.y = po.y;
