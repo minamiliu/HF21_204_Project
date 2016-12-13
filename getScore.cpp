@@ -16,7 +16,7 @@
 #include "score.h"
 #include "number.h"
 #include "getScore.h"
-
+#include "scene.h"
 //============================================
 // ƒ}ƒNƒ’è‹`
 //============================================
@@ -127,9 +127,10 @@ void CGetScore::Update(void)
 	D3DXVECTOR3 posGetScore = GetPosition();
 	
 	m_nApCnt++;
-	posGetScore.y-=5;
+	posGetScore.y-=1;
 
 	SetPosition(posGetScore);
+	
 	if(m_nApCnt >60)
 	{
 		this->Uninit();
@@ -270,4 +271,12 @@ D3DXVECTOR3 CGetScore::GetSize(void)
 void CGetScore::SetPosition(D3DXVECTOR3 pos)
 {
 	m_pos = pos;
+	for(int cntKeta = 0; cntKeta < m_nMaxKeta; cntKeta++)
+	{
+		D3DXVECTOR3 posGetScore;
+		posGetScore = m_ppPolygon[cntKeta]->GetPosition();
+		posGetScore.y = pos.y;
+		//”ŽšŒ…‚Ì”jŠü
+		m_ppPolygon[cntKeta]->SetPosition(posGetScore);
+	}
 }
