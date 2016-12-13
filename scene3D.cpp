@@ -248,7 +248,6 @@ D3DXVECTOR3 CScene3D::GetSize(void)
 {
 	return m_size;
 }
-
 bool CScene3D::HitCheck( D3DXVECTOR3 tNowPos, D3DXVECTOR3 tNextPos, D3DXVECTOR3 *wall_nor, D3DXVECTOR3 *HitPoint)
 {
 	bool bHit = false;
@@ -361,4 +360,8 @@ HRESULT CScene3D::Load(LPCSTR strFileName)
 void CScene3D::BindTexture( LPDIRECT3DTEXTURE9 pTexture)
 {
 	m_pTexture = pTexture;
+}
+void CScene3D::SetPosition(D3DXVECTOR3 pos)
+{
+	m_pos = pos;
 }

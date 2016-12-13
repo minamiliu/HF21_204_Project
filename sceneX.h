@@ -47,9 +47,7 @@ public:
 	D3DXVECTOR3 GetRot(void);
 	void SetPosition( D3DXVECTOR3 pos);
 	void SetSize( D3DXVECTOR3 size);
-	void SetRot( D3DXVECTOR3 rot);
-
-private:
+	void SetRot( D3DXVECTOR3 rot);private:
 	//変数
 	LPDIRECT3DTEXTURE9	m_pTexture;		// テクスチャへのポインタ
 	LPD3DXMESH  m_pD3DXMesh;			// メッシュ情報へのポインタ

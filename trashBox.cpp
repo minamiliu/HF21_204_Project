@@ -20,7 +20,7 @@
 //============================================
 // マクロ定義
 //============================================
-#define TEXTURENAME "data/TEXTURE/player000.png"
+#define TEXTURENAME "data/TEXTURE/ゴリラ.png"
 
 //=============================================================================
 // 構造体定義
@@ -70,7 +70,6 @@ void CTrashBox2D::Uninit(void)
 //=============================================================================
 void CTrashBox2D::Update(void)
 {
-	//D3DXVECTOR3 pos = CTrashBox2D::GetPosition();
 	CScene2D::Update();
 }
 

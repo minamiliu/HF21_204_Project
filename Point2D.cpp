@@ -50,6 +50,7 @@ HRESULT CPoint2D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size,HWND hwnd)
 {
 	m_hwnd=hwnd;
 	CScene2D::Init(pos, size);
+	CScene2D::SetObjType(CScene::OBJTYPE_POINT2D);
 	m_startPos = D3DXVECTOR3(0.0f,0.0f,0.0f);
 	m_endPos = D3DXVECTOR3(0.0f,0.0f,0.0f);
 	m_speed = D3DXVECTOR3(0.0f,0.0f,0.0f);
@@ -92,10 +93,7 @@ void CPoint2D::Update(void)
 	CScene2D::Update();
 	float print = CManager::GetInputMouse()->GetMouseAxisX();
 	CDebugProc::Print("\nƒJ[ƒ\ƒ‹‚ÌêŠ.x.y:%f,%f",pos.x,pos.y);
-	//PrintDebugProc("\nm_startPos.y:%f",m_startPos.y);
-	//PrintDebugProc("\nm_speed.x:%f",m_speed.x);
-	//PrintDebugProc("\nm_speed.y:%f",m_speed.y);
-	//PrintDebugProc("\nprint:%f",print);
+
 	
 }
 

@@ -61,8 +61,8 @@ public:
 	D3DXVECTOR3 GetSize(void);
 	void SetColor(const D3DXCOLOR &col); //色を変更
 	static CScene2D *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, LPCSTR strFileName);
-
-
+	void SetTexture(LPCSTR strFileName);
+	void SetAlpha(int alpha);
 private:
 
 	LPDIRECT3DTEXTURE9		m_pTexture;		// テクスチャへのポインタ

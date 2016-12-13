@@ -27,6 +27,11 @@ public:
 		OBJTYPE_TRASH = 0,
 		OBJTYPE_L_ITEM,
 		OBJTYPE_L_ENEMY,
+		OBJTYPE_LEFTTRASH,
+		OBJTYPE_RIGHTTRASH,
+		OBJTYPE_POINT2D,//マウスの位置
+		OBJTYPE_PLAYER,
+		OBJTYPE_TRASHGAME,
 		OBJTYPE_MAX
 	}OBJTYPE;
 	CScene();
@@ -47,6 +52,7 @@ public:
 	static CScene *GetScene(int nIdxScene);
 	virtual D3DXVECTOR3 GetPosition(void) = 0;
 	virtual D3DXVECTOR3 GetSize(void) = 0;
+	virtual void SetPosition(D3DXVECTOR3 pos) = 0;
 protected:
 	
 	void Release(void);

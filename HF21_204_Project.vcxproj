@@ -107,6 +107,7 @@
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="time.cpp" />
     <ClCompile Include="title.cpp" />
+    <ClCompile Include="trajectory.cpp" />
     <ClCompile Include="trash.cpp" />
     <ClCompile Include="trashBox.cpp" />
     <ClCompile Include="trashGame.cpp" />
@@ -141,6 +142,7 @@
     <ClInclude Include="sound.h" />
     <ClInclude Include="time.h" />
     <ClInclude Include="title.h" />
+    <ClInclude Include="trajectory.h" />
     <ClInclude Include="trash.h" />
     <ClInclude Include="trashBox.h" />
     <ClInclude Include="trashGame.h" />

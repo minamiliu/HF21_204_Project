@@ -72,7 +72,7 @@ void CTitle::Update()
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
 	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN))
 	{
-		SetNextScene( MODE_GAME);
+		SetNextScene( MODE_TRASHGAME);
 	}
 
 	if( pInputKeyboard->GetKeyTrigger(DIK_UP))
