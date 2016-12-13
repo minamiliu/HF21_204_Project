@@ -1,9 +1,9 @@
 //============================================
 //
 // タイトル:	 未来創造展チーム204
-// プログラム名: bullet2D.cpp
-// 作成者:		 HAL東京ゲーム学科　劉南宏
-// 作成日:       2016/11/11
+// プログラム名: trajectory.cpp
+// 作成者:		 HAL東京ゲーム学科　山家啓介
+// 作成日:       2016/12/08
 //
 //============================================
 
@@ -12,17 +12,13 @@
 //============================================
 #include "main.h"
 #include "manager.h"
-#include "renderer.h"
-#include "time.h"
-
-
+#include "bullet2D.h"
+#include "debugproc.h"
+#include "trajectory.h"
 //============================================
 // マクロ定義
 //============================================
-
-//============================================
-// 静的メンバー変数の初期化
-//============================================
+#define TEXTURENAME "data/TEXTURE/maru.png"
 
 //=============================================================================
 // 構造体定義
@@ -31,14 +27,15 @@
 //=============================================================================
 //コンストラクタ
 //=============================================================================
-CTime::CTime()
+CTrajectory::CTrajectory()
 {
+
 }
 
 //=============================================================================
 //デストラクタ
 //=============================================================================
-CTime::~CTime()
+CTrajectory::~CTrajectory()
 {
 	
 }
@@ -48,16 +45,10 @@ CTime::~CTime()
 // ポリゴンの初期化処理
 //=============================================================================
 
-HRESULT CTime::Init(D3DXVECTOR3 numberPos, D3DXVECTOR3 numberSize, int maxKeta, int startTime, bool bCountDown, const D3DXCOLOR &col)
+HRESULT CTrajectory::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
-	CScore::Init( numberPos, numberSize, maxKeta, col);
-	CScore::SetScore(startTime);
-
-	m_nCntFrame = 0;
-	m_nTime = 0;
-	m_nTime = startTime;
-	m_bCountDown = bCountDown;
-	m_useFlag = true;
+	CScene2D::Init(pos, size);
+	m_nTrajectoryCnt = 0;
 	return S_OK;
 }
 
@@ -67,84 +58,49 @@ HRESULT CTime::Init(D3DXVECTOR3 numberPos, D3DXVECTOR3 numberSize, int maxKeta, 
 //=============================================================================
 // ポリゴンの終了処理
 //=============================================================================
-void CTime::Uninit(void)
+void CTrajectory::Uninit(void)
 {
-	CScore::Uninit();
+	CScene2D::Uninit();
 }
 
 
 //=============================================================================
 // ポリゴンの更新処理
 //=============================================================================
-void CTime::Update(void)
+void CTrajectory::Update(void)
 {
-	if(m_useFlag == true)
+	m_nTrajectoryCnt++;
+	//CScene2D::SetAlpha(255 - (float)m_nTrajectoryCnt/30);
+	CScene2D::Update();
+	if(m_nTrajectoryCnt > 30)
 	{
-		m_nCntFrame++;
-
-		if( m_nCntFrame >= 60)
-		{
-			if( m_bCountDown == true)
-			{
-				if( m_nTime > 0) m_nTime--;
-			}
-			else
-			{
-				m_nTime++;
-			}
-
-			m_nCntFrame = 0;
-			this->SetScore(m_nTime);
-		}
+		this->Uninit();
+		return;
 	}
+	
 }
 
 //=============================================================================
 // ポリゴンの描画処理
 //=============================================================================
-void CTime::Draw(void)
+void CTrajectory::Draw(void)
 {
-	CScore::Draw();
+	CScene2D::Draw();
 }
 
-CTime *CTime::Create(D3DXVECTOR3 numberPos, D3DXVECTOR3 numberSize, int maxKeta, int startTime, bool bCountDown, const D3DXCOLOR &col)
+//=============================================================================
+// ポリゴンの生成処理
+//=============================================================================
+CTrajectory *CTrajectory::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
-	CTime *pTime;
-	pTime = new CTime;
-	pTime->Init(numberPos, numberSize, maxKeta, startTime, bCountDown, col);
+	CTrajectory *pTrajectory;
+	pTrajectory = new CTrajectory;
+	pTrajectory->Init(pos, size);
 
-	//テクスチャの読み込み
-	pTime->Load();
-
-	//桁分のテクスチャの割り当て
-	pTime->BindAllTexture();
+	//テクスチャの割り当て
+	pTrajectory->Load( TEXTURENAME);
 	
-	return pTime;
+	return pTrajectory;
 }
 
 
-
-bool CTime::TimeUp(void)
-{
-	if(m_bCountDown == true && m_nTime == 0)
-	{
-		return true;
-	}
-	else 
-	{
-		return false;
-	}
-}
-
-int CTime::GetTime(void)
-{
-	return m_nTime;
-}
-
-void CTime::StopTime(void)
-{
-	if(m_useFlag == true)
-	m_useFlag = false;
-	else if(m_useFlag == false)
-	m_useFlag = true;
-}

@@ -20,8 +20,8 @@
 //============================================
 // マクロ定義
 //============================================
-#define TEXTURENAME "data/TEXTURE/ゴリラ.png"
-
+#define TEXTURENAME "data/TEXTURE/player000.png"
+#define TEXTURE_GORILLA "data/TEXTURE/ゴリラ.png"
 //=============================================================================
 // 構造体定義
 //=============================================================================
@@ -128,6 +128,7 @@ CPlayer2D *CPlayer2D::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 void CPlayer2D::SetGorillaMode(void)
 {
 	m_bGorillaMode = true;
+	SetTexture(TEXTURE_GORILLA);
 }
 
 
@@ -135,3 +136,4 @@ bool CPlayer2D::GetGorillaMode(void)
 {
 	return m_bGorillaMode;
 }
+

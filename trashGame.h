@@ -42,6 +42,7 @@ public:
 	void Update(void);
 	void Draw(void);
 	static void SetTrashPointer(CTrash *pTrash);
+	static int GetTrashGameCnt(void);
 private:
 	static CTrash *m_pTrash;
 	static CScene2D *m_pTrashBox;
@@ -49,6 +50,7 @@ private:
 	static CScene2D *m_pPoint2D;
 	static CScene2D *m_pMouse;
 	static CScene2D *m_pMidpoint;
+	static int m_nTrashGameCnt;
 };
 
 #endif

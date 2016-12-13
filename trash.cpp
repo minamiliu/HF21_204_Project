@@ -19,12 +19,14 @@
 #include "trashBox.h"
 #include "trashGame.h"
 #include "player2D.h"
+#include "trajectory.h"
 //============================================
 // マクロ定義
 //============================================
 #define TEXTURE_TRASH "data/TEXTURE/ペットボトル.png"
 #define TEXTURE_BANANA "data/TEXTURE/banana.png"
 #define TEXTURE_PAPER "data/TEXTURE/paper.png"
+
 #define GRAVITY_POINT (0.98f)
 #define WEIGHT_COEFFICIENT_LIGHT (0.5f)
 #define WEIGHT_COEFFICIENT_HEAVY (3.0f)
@@ -84,36 +86,7 @@ void CTrash::Update(void)
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
 	D3DXVECTOR3 posTrash = GetPosition();
 
-	//playerのポインタを取る
-	CPlayer2D* pPlayer;
-	for(int nCntScene = 0;nCntScene < MAX_SCENE;nCntScene++)
-	{
-		CScene *pScene;
-		pScene = CScene::GetScene(nCntScene);
-		if(pScene != NULL)
-		{
-			CScene::OBJTYPE type;
-			type = pScene->GetObjType();
-			if(type == CScene::OBJTYPE_PLAYER)
-			{
-				if( pInputKeyboard->GetKeyTrigger(DIK_G) && ((CPlayer2D*)pScene)->GetGorillaMode() == false)
-				{
-					((CPlayer2D*)pScene)->SetGorillaMode();
-					Create(D3DXVECTOR3(100.0f, 270.0f, 0.0f), D3DXVECTOR3(200.0f, 200.0f, 0.0f),TEXTURE_TRASH,OBJTYPE_LEFTTRASH);
-					Create(D3DXVECTOR3(300.0f, 270.0f, 0.0f), D3DXVECTOR3(200.0f, 200.0f, 0.0f),TEXTURE_TRASH,OBJTYPE_RIGHTTRASH);
-				}
-			
-
-
-				if(((CPlayer2D*)pScene)->GetGorillaMode() == true)
-				{
-					//ゴミの複数生成
-				}
-			}
-		}
-		break;
-	}
-
+	CDebugProc::Print("\n移動量.x,.y:%f,%f",m_speed.x,m_speed.y);
 
 	if(CManager::GetInputMouse()->GetMouseLeftPress() && m_fallFlag == false)
 	{
@@ -128,6 +101,16 @@ void CTrash::Update(void)
 		m_fallFlag = true;
 		//出現フラグをＯＮ
 		m_apFlag = true;
+		//移動量の最大（最小）範囲を設定
+		if(m_speed.x > 200)
+		{
+			m_speed.x = 200;
+		}
+		else if(m_speed.y < -200)
+		{
+			m_speed.y = -200;
+		}
+
 	}
 	if(m_fallFlag == true)
 	{
@@ -207,15 +190,48 @@ void CTrash::Update(void)
 			int nNum = rand()%3;//０～２のランダムな数
 			if(nNum == 0)
 			{
-				pTrash = CTrash::Create(D3DXVECTOR3(200.0f, 300.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_BANANA,OBJTYPE_TRASH);
+				if(GetObjType() == OBJTYPE_TRASH)
+				{
+					pTrash = CTrash::Create(D3DXVECTOR3(200.0f, 300.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_BANANA,OBJTYPE_TRASH);
+				}
+				else if(GetObjType() == OBJTYPE_LEFTTRASH)
+				{
+					pTrash = CTrash::Create(D3DXVECTOR3(100.0f, 270.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_BANANA,OBJTYPE_LEFTTRASH);
+				}
+				else if(GetObjType() == OBJTYPE_RIGHTTRASH)
+				{
+					pTrash = CTrash::Create(D3DXVECTOR3(300.0f, 270.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_BANANA,OBJTYPE_RIGHTTRASH);
+				}
 			}
 			else if(nNum == 1)
 			{
-				pTrash = CTrash::Create(D3DXVECTOR3(200.0f, 300.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_TRASH,OBJTYPE_TRASH);
+				if(GetObjType() == OBJTYPE_TRASH)
+				{
+					pTrash = CTrash::Create(D3DXVECTOR3(200.0f, 300.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_TRASH,OBJTYPE_TRASH);
+				}
+				else if(GetObjType() == OBJTYPE_LEFTTRASH)
+				{
+					pTrash = CTrash::Create(D3DXVECTOR3(100.0f, 270.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_TRASH,OBJTYPE_LEFTTRASH);
+				}
+				else if(GetObjType() == OBJTYPE_RIGHTTRASH)
+				{
+					pTrash = CTrash::Create(D3DXVECTOR3(300.0f, 270.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_TRASH,OBJTYPE_RIGHTTRASH);
+				}
 			}
 			else if(nNum == 2)
 			{
-				pTrash = CTrash::Create(D3DXVECTOR3(200.0f, 300.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_PAPER,OBJTYPE_TRASH);
+				if(GetObjType() == OBJTYPE_TRASH)
+				{
+					pTrash = CTrash::Create(D3DXVECTOR3(200.0f, 300.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_PAPER,OBJTYPE_TRASH);
+				}
+				else if(GetObjType() == OBJTYPE_LEFTTRASH)
+				{
+					pTrash = CTrash::Create(D3DXVECTOR3(100.0f, 270.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_PAPER,OBJTYPE_LEFTTRASH);
+				}
+				else if(GetObjType() == OBJTYPE_RIGHTTRASH)
+				{
+					pTrash = CTrash::Create(D3DXVECTOR3(300.0f, 270.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_PAPER,OBJTYPE_RIGHTTRASH);
+				}
 			}
 			CTrashGame::SetTrashPointer(pTrash);
 			//再出現しないようにリセット

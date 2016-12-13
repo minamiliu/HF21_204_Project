@@ -37,11 +37,13 @@ public:
 
 	static CTime *Create(D3DXVECTOR3 numberPos, D3DXVECTOR3 numberSize, int maxKeta, int startTime, bool bCountDown, const D3DXCOLOR &col);
 	bool TimeUp(void);
+	void StopTime(void);
+	int GetTime(void);
 private:
 	int m_nCntFrame;
 	int m_nTime;
-
 	bool m_bCountDown;
+	bool m_useFlag;//カウントを進めるかどうか
 };
 
 #endif

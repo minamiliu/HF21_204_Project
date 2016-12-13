@@ -99,6 +99,9 @@
     <ClCompile Include="Point2D.cpp">
       <Filter>ソース ファイル\TrashGame</Filter>
     </ClCompile>
+    <ClCompile Include="trajectory.cpp">
+      <Filter>ソース ファイル\TrashGame</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -177,6 +180,9 @@
       <Filter>ヘッダー ファイル\TashGame</Filter>
     </ClInclude>
     <ClInclude Include="point2D.h">
+      <Filter>ヘッダー ファイル\TashGame</Filter>
+    </ClInclude>
+    <ClInclude Include="trajectory.h">
       <Filter>ヘッダー ファイル\TashGame</Filter>
     </ClInclude>
   </ItemGroup>
