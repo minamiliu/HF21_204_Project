@@ -20,6 +20,7 @@
 #include "trashGame.h"
 #include "player2D.h"
 #include "trajectory.h"
+
 //============================================
 // マクロ定義
 //============================================
@@ -243,6 +244,7 @@ void CTrash::Update(void)
 		this->Uninit();
 	}
 	
+	
 	CScene2D::Update();
 }
 
@@ -304,4 +306,12 @@ void CTrash::ReverseMove(void)
 CTrash::TRASHTYPE CTrash::GetTrashType(void)
 {
 	return m_TrashType;
+}
+//タイムアップ時に呼ぶ
+void CTrash::TrashEnd(void)
+{
+	//落下フラグをＯＮ
+	m_fallFlag = true;
+	//出現フラグをOFF
+	m_apFlag = false;
 }

@@ -268,3 +268,4 @@ void CNumber::SetColor(const D3DXCOLOR &col)
 
 	m_pVtxBuff->Unlock();
 }
+

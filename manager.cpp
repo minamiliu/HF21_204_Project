@@ -23,6 +23,7 @@
 
 #include "game.h"
 #include "trashGame.h"
+#include "trashGameResult.h"
 #include "title.h"
 #include "result.h"
 #include "fade.h"
@@ -250,6 +251,14 @@ CManager *CManager::SetScene(MODE mode)
 	case MODE_GAME:
 		m_pSceneManager = new CGame;
 		
+		break;
+
+	case MODE_TRASHGAME:
+		m_pSceneManager = new CTrashGame;
+		break;
+
+	case MODE_TRASHGAMERESULT:
+		m_pSceneManager = new CTrashGameResult;
 		break;
 
 	case MODE_RESULT:

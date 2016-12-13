@@ -26,6 +26,7 @@
 #include "time.h"
 #include "debugproc.h"
 #include "trajectory.h"
+#include "getScore.h"
 //============================================
 // マクロ定義
 //============================================
@@ -83,7 +84,7 @@ HRESULT CTrashGame::Init(void)
 	//スコア
 	m_pScore = CScore::Create(D3DXVECTOR3(150, 50.0f, 0.0f), D3DXVECTOR3(300.0f, 50.0f, 0.0f), 6, BLUE(1.0f));
 	//ゴミ箱
-	m_pTrashBox = CScene2D::Create(D3DXVECTOR3(1000.0f, 500.0f, 0.0f), D3DXVECTOR3(400.0f, 500.0f, 0.0f),TEXTURE_TRASHBOX);
+	m_pTrashBox = CScene2D::Create(D3DXVECTOR3(1000.0f, 500.0f, 0.0f), D3DXVECTOR3(400.0f, 600.0f, 0.0f),TEXTURE_TRASHBOX);
 	//タイム
 	pTime = CTime::Create(D3DXVECTOR3(600, 50.0f, 0.0f),D3DXVECTOR3(100, 100.0f, 0.0f),3,15,true,D3DXCOLOR(255,255,255,255));
 	//マウスの位置を得る
@@ -122,6 +123,7 @@ void CTrashGame::Update()
 		SetNextScene( MODE_RESULT);
 	}
 
+	//時止め
 	if( pInputKeyboard->GetKeyTrigger(DIK_T))
 	{
 		pTime->StopTime();
@@ -170,23 +172,30 @@ void CTrashGame::Update()
 						if(((CTrash*)pScene)->GetTrashType() == CTrash::TRASHTYPE_NORMAL)
 						{
 							m_pScore->AddScore(100);
+							CGetScore *pGetScore = CGetScore::Create(posTrash,D3DXVECTOR3(100,100,0.0f),3,BLUE(1.0));
+							pGetScore->AddScore(100);
 						}
 						else if(((CTrash*)pScene)->GetTrashType() == CTrash::TRASHTYPE_LIGHT)
 						{
 							m_pScore->AddScore(180);
+							CGetScore *pGetScore = CGetScore::Create(posTrash,D3DXVECTOR3(100,100,0.0f),3,RED(1.0));
+							pGetScore->AddScore(180);
 						}
 						else if(((CTrash*)pScene)->GetTrashType() == CTrash::TRASHTYPE_HEAVY)
 						{
 							m_pScore->AddScore(150);
+							CGetScore *pGetScore = CGetScore::Create(posTrash,D3DXVECTOR3(100,100,0.0f),3,YELLOW(1.0));
+							pGetScore->AddScore(150);
 						}
 						//オブジェクトの位置を画面外へ -> 画面外判定で消滅
 						pScene->SetPosition(D3DXVECTOR3(100.0f,1000.0f,0.0f));
 					}
 				}
-				if(m_nTrashGameCnt % 5 == 0)
+				//軌跡生成
+				/*if(m_nTrashGameCnt % 5 == 0)
 				{
 					CTrajectory::Create(D3DXVECTOR3(posTrash.x,posTrash.y,0.0f),D3DXVECTOR3(50,50,0.0f));
-				}
+				}*/
 			}
 			else if(type == CScene::OBJTYPE_POINT2D)
 			{//マウスの位置にテクスチャ
@@ -201,6 +210,7 @@ void CTrashGame::Update()
 		}
 	}
 
+	//残り時間が１０になったら
 	if(pTime->GetTime() == 10)
 	{
 		//playerのポインタを取る
@@ -222,9 +232,9 @@ void CTrashGame::Update()
 		if( pPlayer2D->CPlayer2D::GetGorillaMode() == false )
 		{
 			pPlayer2D->CPlayer2D::SetGorillaMode();
-						//ゴミを複数生成
-						CTrash::Create(D3DXVECTOR3(100.0f, 270.0f, 0.0f), D3DXVECTOR3(200.0f, 200.0f, 0.0f),TEXTURE_TRASH,CTrash::OBJTYPE_LEFTTRASH);
-						CTrash::Create(D3DXVECTOR3(300.0f, 270.0f, 0.0f), D3DXVECTOR3(200.0f, 200.0f, 0.0f),TEXTURE_TRASH,CTrash::OBJTYPE_RIGHTTRASH);
+			//ゴミを複数生成
+			CTrash::Create(D3DXVECTOR3(100.0f, 270.0f, 0.0f), D3DXVECTOR3(200.0f, 200.0f, 0.0f),TEXTURE_TRASH,CTrash::OBJTYPE_LEFTTRASH);
+			CTrash::Create(D3DXVECTOR3(300.0f, 270.0f, 0.0f), D3DXVECTOR3(200.0f, 200.0f, 0.0f),TEXTURE_TRASH,CTrash::OBJTYPE_RIGHTTRASH);
 		}
 						/*			}
 				}
@@ -232,10 +242,26 @@ void CTrashGame::Update()
 			break;
 		}*/
 	}
+
+	//時間が０になったら
 	if(pTime->GetTime() == 0)
 	{
+		for(int nCntScene = 0;nCntScene < MAX_SCENE;nCntScene++)
+		{
+			CScene *pScene;
+			pScene = CScene::GetScene(nCntScene);
+			if(pScene != NULL)
+			{
+				CScene::OBJTYPE type;
+				type = pScene->GetObjType();
+				if(type == CScene::OBJTYPE_TRASH || type == CScene::OBJTYPE_LEFTTRASH || type == CScene::OBJTYPE_RIGHTTRASH)
+				{
+					((CTrash*)pScene)->TrashEnd();
+				}
+			}
+		}
 		pTime->Uninit();
-		SetNextScene( MODE_RESULT);
+		SetNextScene( MODE_TRASHGAMERESULT);
 	}
 	CManager::Update();
 }
@@ -243,6 +269,7 @@ void CTrashGame::Draw()
 {
 	CManager::Draw();
 }
+//次に投げるゴミのポインタをセット
 void CTrashGame::SetTrashPointer(CTrash *pTrash)
 {
 	m_pTrash = pTrash;
