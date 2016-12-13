@@ -92,8 +92,8 @@ HRESULT CSceneX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float s
 		pDevice,					// IDirect3DDevice9インターフェイスへのポインタ
 		NULL,						// 隣接性データを含むバッファへのポインタ
 		&m_pD3DXBuffMat,		// マテリアルデータを含むバッファへのポインタ
-		NULL,						// エフェクトインスタンスの配列を含むバッファへのポインタ
-		&m_nNumMat,			// D3DXMATERIAL構造体の数
+		NULL,					// エフェクトインスタンスの配列を含むバッファへのポインタ
+		&m_nNumMat,				// D3DXMATERIAL構造体の数
 		&m_pD3DXMesh			// ID3DXMeshインターフェイスへのポインタのアドレス
 		)))
 	{
@@ -133,7 +133,7 @@ HRESULT CSceneX::LoadXfile(LPCSTR strFileName)
 		return E_FAIL;
 	}	
 
-
+	
 	return S_OK;
 }
 
