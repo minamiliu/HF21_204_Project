@@ -153,7 +153,7 @@ bool CCollision::HitCheck(D3DXVECTOR3 p0, D3DXVECTOR3 p1, D3DXVECTOR3 p2, D3DXVE
 // normal: 衝突点での法線ベクトル
 //
 //=============================================================================
-D3DXVECTOR3* CCollision::GetWallScratchVector(D3DXVECTOR3 *out,D3DXVECTOR3 &front, D3DXVECTOR3 &normal)
+D3DXVECTOR3* CCollision::GetWallScratchVector(D3DXVECTOR3 *out, D3DXVECTOR3 &front, D3DXVECTOR3 &normal)
 {
     D3DXVECTOR3 tNormal;
     D3DXVec3Normalize(&tNormal, &normal);

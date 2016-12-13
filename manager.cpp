@@ -20,8 +20,8 @@
 #include "scene3D.h"
 #include "playerX.h"
 #include "sound.h"
-
 #include "game.h"
+#include "zebragame.h"
 #include "trashGame.h"
 #include "title.h"
 #include "result.h"
@@ -325,15 +325,19 @@ void CManager::SceneChange(void)
 	case MODE_TITLE:
 		m_pSceneManager = new CTitle;
 		break;
-
+		
 	case MODE_TRASHGAME:
 		m_pSceneManager = new CTrashGame;
 		break;
-
+		
+	case MODE_ZEBRAGAME:
+		m_pSceneManager = new CZebraGame;
+		break;
+		
 	case MODE_GAME:
 		m_pSceneManager = new CGame;
 		break;
-
+		
 	case MODE_RESULT:
 		m_pSceneManager = new CResult;
 		break;

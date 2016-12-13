@@ -77,7 +77,6 @@ HRESULT CTrashGame::Init(void)
 	//背景
 	CScene2D::Create(D3DXVECTOR3(SCREEN_WIDTH/2,SCREEN_HEIGHT/2,0.0f),D3DXVECTOR3(SCREEN_WIDTH,SCREEN_HEIGHT,0.0f),TEXTURE_BGPOLYGON);
 	//オブジェクトの生成(2Dポリゴン)
-	pPlayer2D = CPlayer2D::Create( D3DXVECTOR3( 150.0f, 480.0f, 0.0f), D3DXVECTOR3( 200.0f, 200.0f, 0.0f));
 	//ゴミ
 	m_pTrash = CTrash::Create(D3DXVECTOR3(200.0f, 300.0f, 0.0f), D3DXVECTOR3(200.0f, 200.0f, 0.0f),TEXTURE_TRASH,CScene::OBJTYPE_TRASH);
 	//スコア
@@ -94,7 +93,7 @@ HRESULT CTrashGame::Init(void)
 	m_pMidpoint = CScene2D::Create(D3DXVECTOR3(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f), D3DXVECTOR3(40.0f, 40.0f, 0.0f),TEXTURE_POINT);
 	//マウスの位置にテクスチャ
 	m_pMouse = CScene2D::Create(D3DXVECTOR3(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f), D3DXVECTOR3(120.0f, 120.0f, 0.0f),TEXTURE_POINT);
-	return S_OK;
+		return S_OK;
 }
 
 void CTrashGame::Uninit()
@@ -231,12 +230,12 @@ void CTrashGame::Update()
 	if(pTime->GetTime() == 0)
 	{
 		pTime->Uninit();
-		SetNextScene( MODE_GAME);
+		SetNextScene( MODE_ZEBRAGAME);
 	}
 
 	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN))
 	{
-		SetNextScene( MODE_GAME);
+		SetNextScene( MODE_ZEBRAGAME);
 	}
 
 

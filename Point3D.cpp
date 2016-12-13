@@ -13,8 +13,10 @@
 #include "main.h"
 #include "manager.h"
 #include "input.h"
-#include "point2D.h"
+#include "point3D.h"
 #include "debugproc.h"
+#include "mousePick.h"
+#include "toy.h"
 //============================================
 // マクロ定義
 //============================================
@@ -23,12 +25,12 @@
 //=============================================================================
 // 構造体定義
 //=============================================================================
-bool PointFlag = false;
+//bool PointFlag = false;
 
 //=============================================================================
 //コンストラクタ
 //=============================================================================
-CPoint2D::CPoint2D()
+CPoint3D::CPoint3D()
 {
 
 }
@@ -36,7 +38,7 @@ CPoint2D::CPoint2D()
 //=============================================================================
 //デストラクタ
 //=============================================================================
-CPoint2D::~CPoint2D()
+CPoint3D::~CPoint3D()
 {
 	
 }
@@ -46,13 +48,16 @@ CPoint2D::~CPoint2D()
 // ポリゴンの初期化処理
 //=============================================================================
 
-HRESULT CPoint2D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size,HWND hwnd)
+HRESULT CPoint3D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size,HWND hwnd)
 {
 	m_hwnd=hwnd;
 	CScene2D::Init(pos, size);
-	CScene2D::SetObjType(CScene::OBJTYPE_POINT2D);	CScene2D::Load(TEXTURENAME);	m_startPos = D3DXVECTOR3(0.0f,0.0f,0.0f);
+	CScene2D::Load(TEXTURENAME);
+	CScene2D::SetObjType(OBJTYPE_POINT);
+	m_startPos = D3DXVECTOR3(0.0f,0.0f,0.0f);
 	m_endPos = D3DXVECTOR3(0.0f,0.0f,0.0f);
 	m_speed = D3DXVECTOR3(0.0f,0.0f,0.0f);
+	m_zebra = false;
 	return S_OK;
 }
 
@@ -62,7 +67,7 @@ HRESULT CPoint2D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size,HWND hwnd)
 //=============================================================================
 // ポリゴンの終了処理
 //=============================================================================
-void CPoint2D::Uninit(void)
+void CPoint3D::Uninit(void)
 {
 	CScene2D::Uninit();
 }
@@ -71,34 +76,111 @@ void CPoint2D::Uninit(void)
 //=============================================================================
 // ポリゴンの更新処理
 //=============================================================================
-void CPoint2D::Update(void)
+void CPoint3D::Update(void)
 {
 	//// マウス座標の取得
 	POINT po;
 	GetCursorPos(&po);
+	
 	ScreenToClient(m_hwnd,&po);
 	ShowCursor(FALSE);
 	D3DXVECTOR3 pos ;
-	if(CManager::GetInputMouse()->GetMouseLeftPress())
+	m_3Dpos = CMousePick::GetWorldPos(po);
+	CDebugProc::Print("\nカーソルの場所3D.x.y.z:%f,%f,%f",m_3Dpos.x,m_3Dpos.y,m_3Dpos.z);
+
+	
+	if(CManager::GetInputMouse()->GetMouseLeftTrigger())
 	{
+		//トイの場所取得
+		for(int Cnt=0; Cnt<MAX_SCENE ; Cnt++)
+		{
+
+			CScene *pScene = NULL;
+			pScene = CScene::GetScene(Cnt);
+			if(pScene != NULL)
+			{
+				CScene::OBJTYPE type;
+				type = pScene -> GetObjType();
+				if(type == CScene::OBJTYPE_TOY)
+				{
+					D3DXVECTOR3 PosToy;
+					D3DXVECTOR3 SizeToy = D3DXVECTOR3(50,50,50);
+					PosToy = pScene ->GetPosition();
+
+					//当たった
+					if(	   m_3Dpos.x > PosToy.x - SizeToy.x/2.0f 
+						&& m_3Dpos.x < PosToy.x + SizeToy.x/2.0f 
+						&& m_3Dpos.z > PosToy.z - SizeToy.z/2.0f  
+						&& m_3Dpos.z < PosToy.z + SizeToy.z/2.0f 
+						)
+					{
+					
+						((CToy*)pScene)->ChangePicked(true,m_zebra);
+						
+						return;
+					}
+					
+				}
+			}
+		}
+		
 	}
 	if(CManager::GetInputMouse()->GetMouseLeftRelease())
 	{
+		//トイの場所取得
+		for(int Cnt=0; Cnt<MAX_SCENE ; Cnt++)
+		{
+			CScene *pScene = NULL;
+			pScene = CScene::GetScene(Cnt);
+			if(pScene != NULL)
+			{
+				CScene::OBJTYPE type;
+					type = pScene -> GetObjType();
+					if(type == CScene::OBJTYPE_TOY)
+					{
+						D3DXVECTOR3 PosToy;
+						D3DXVECTOR3 SizeToy = D3DXVECTOR3(50,50,50);
+						PosToy = pScene ->GetPosition();
+
+						//当たった
+						if(	   m_3Dpos.x > PosToy.x - SizeToy.x/2.0f 
+							&& m_3Dpos.x < PosToy.x + SizeToy.x/2.0f 
+							&& m_3Dpos.z > PosToy.z - SizeToy.z/2.0f  
+							&& m_3Dpos.z < PosToy.z + SizeToy.z/2.0f 
+							)
+						{
+					
+							((CToy*)pScene)->ChangePicked(false,m_zebra);
+							return;
+						}
+					
+					}
+			}
+		}
+	}
+	if(CManager::GetInputMouse()->GetMouseRightTrigger())
+	{
+		m_zebra = !m_zebra;
+
+	}
+	if(m_zebra == true)
+	{
+		CDebugProc::Print("\nゼブラ");
 	}
 	pos.x = po.x;
 	pos.y = po.y;
-	CPoint2D::SetPosition(D3DXVECTOR3(pos.x,pos.y,0.0f));
+	CPoint3D::SetPosition(D3DXVECTOR3(pos.x,pos.y,0.0f));
 	CScene2D::Update();
 	float print = CManager::GetInputMouse()->GetMouseAxisX();
 	CDebugProc::Print("\nカーソルの場所.x.y:%f,%f",pos.x,pos.y);
-
+	
 	
 }
 
 //=============================================================================
 // ポリゴンの描画処理
 //=============================================================================
-void CPoint2D::Draw(void)
+void CPoint3D::Draw(void)
 {
 	CScene2D::Draw();
 }
@@ -106,12 +188,18 @@ void CPoint2D::Draw(void)
 //=============================================================================
 // ポリゴンの生成処理
 //=============================================================================
-CPoint2D *CPoint2D::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size,HWND hwnd)
+CPoint3D *CPoint3D::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size,HWND hwnd)
 {
-	CPoint2D *pPoint2D;
-	pPoint2D = new CPoint2D;
-	pPoint2D->Init(pos, size,hwnd);
+	CPoint3D *pPoint3D;
+	pPoint3D = new CPoint3D;
+	pPoint3D->Init(pos, size,hwnd);
 	
-	return pPoint2D;
+	return pPoint3D;
 }
-
+//=============================================================================
+// ポリゴンの座標取得
+//=============================================================================
+D3DXVECTOR3 CPoint3D::Get3DPosition(void)
+{
+	return m_3Dpos;
+}

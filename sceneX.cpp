@@ -66,13 +66,11 @@ HRESULT CSceneX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, LPCSTR 
 	m_rot = rot;
 	m_scl = scl;
 	
-
 	// モデルに関する変数の初期化							
 	m_pTexture = NULL;		// テクスチャへのポインタ
 	m_pD3DXMesh = NULL;		// メッシュ情報へのポインタ
 	m_pD3DXBuffMat = NULL;	// マテリアル情報へのポインタ
 	m_nNumMat = 0;			// マテリアル情報の数
-
 	// Xファイルの読み込み
 	if(FAILED(D3DXLoadMeshFromX(
 		strFileName,			// 読み込むモデルファイル名(Xファイル)
@@ -91,6 +89,40 @@ HRESULT CSceneX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, LPCSTR 
 
 	return S_OK;
 }
+
+//=============================================================================
+//
+//=============================================================================
+HRESULT CSceneX::LoadXfile(LPCSTR strFileName)
+{
+	LPDIRECT3DDEVICE9 pDevice;
+	pDevice = CManager::GetRenderer()->GetDevice();
+
+	
+	// モデルに関する変数の初期化							
+	m_pTexture = NULL;		// テクスチャへのポインタ
+	m_pD3DXMesh = NULL;		// メッシュ情報へのポインタ
+	m_pD3DXBuffMat = NULL;		// マテリアル情報へのポインタ
+	m_nNumMat = 0;			// マテリアル情報の数
+	// Xファイルの読み込み
+	if(FAILED(D3DXLoadMeshFromX(
+		strFileName,				// 読み込むモデルファイル名(Xファイル)
+		D3DXMESH_SYSTEMMEM,			// メッシュの作成オプションを指定
+		pDevice,					// IDirect3DDevice9インターフェイスへのポインタ
+		NULL,						// 隣接性データを含むバッファへのポインタ
+		&m_pD3DXBuffMat,		// マテリアルデータを含むバッファへのポインタ
+		NULL,						// エフェクトインスタンスの配列を含むバッファへのポインタ
+		&m_nNumMat,			// D3DXMATERIAL構造体の数
+		&m_pD3DXMesh			// ID3DXMeshインターフェイスへのポインタのアドレス
+		)))
+	{
+		return E_FAIL;
+	}	
+
+	
+	return S_OK;
+}
+
 
 //=============================================================================
 //
@@ -120,7 +152,20 @@ void CSceneX::Uninit(void)
 	//オブジェクトの破棄
 	Release();
 }
-
+//=============================================================================
+// Xファイルを割り当てる
+//=============================================================================
+void CSceneX::BindXfile(LPDIRECT3DTEXTURE9	pTexture,		// テクスチャへのポインタ
+						LPD3DXMESH			pD3DXMesh,			// メッシュ情報へのポインタ
+						LPD3DXBUFFER		pD3DXBuffMat,		// マテリアル情報へのポインタ
+						DWORD				nNumMat
+						)					// マテリアル情報の数
+{
+	m_pTexture		= pTexture;				
+	m_pD3DXMesh		= pD3DXMesh;		
+	m_pD3DXBuffMat	= pD3DXBuffMat;		
+	m_nNumMat		= nNumMat	;		
+}
 //=============================================================================
 //
 //=============================================================================
@@ -201,7 +246,6 @@ D3DXVECTOR3 CSceneX::GetSize(void)
 {
 	return m_size;
 }
-
 D3DXVECTOR3 CSceneX::GetRot(void)
 {
 	return m_rot;

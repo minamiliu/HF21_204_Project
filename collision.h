@@ -57,6 +57,7 @@ public:
 
 	// äOêœ
 	static D3DXVECTOR3 CrossProduct( D3DXVECTOR3 vl, D3DXVECTOR3 vr );
+
 private:
 
 };
