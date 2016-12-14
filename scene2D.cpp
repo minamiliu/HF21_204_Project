@@ -274,30 +274,31 @@ void CScene2D::BindTexture( LPDIRECT3DTEXTURE9 pTexture)
 //=============================================================================
 //アニメのパターンを変える
 //=============================================================================
-void CScene2D::ChangeTextureAnime( int nPatternAnim, D3DXVECTOR2 ptnSize, D3DXVECTOR2 ptnDivide)
+void CScene2D::SetTexture(int patX,int patY,int animPat)
 {
-	//頂点バッファの中身を埋める
-	VERTEX_2D *pVtx;
-	float fPosXLeft, fPosXRight;
-	float fPosYUp, fPosYDown;
+	{//頂点バッファの中身を埋める
+		VERTEX_2D *pVtx;
 
-	// 頂点データの範囲をロックし、頂点バッファへのポインタを取得
-	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+		float fPosXLeft	, fPosXRight;
+		float fPosYUp	, fPosYDown;
+		// 頂点データの範囲をロックし、頂点バッファへのポインタを取得
 
-	// テクスチャ座標の設定
-	fPosXLeft	= ptnSize.x * (nPatternAnim % (int)ptnDivide.x);
-	fPosXRight	= ptnSize.x * (nPatternAnim % (int)ptnDivide.x + 1);
-	fPosYUp		= ptnSize.y * (nPatternAnim / (int)ptnDivide.x);
-	fPosYDown	= ptnSize.y * (nPatternAnim / (int)ptnDivide.x + 1);
+		m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
+		// テクスチャ座標の設定
+		fPosXLeft	= animPat % patX * (1.0f/patX);
+		fPosXRight	= fPosXLeft + (1.0f/patX);
+		fPosYUp		= animPat / patX * (1.0f/patY);
+		fPosYDown	= fPosYUp + (1.0f/patY);
 
-	pVtx[0].tex = D3DXVECTOR2( fPosXLeft, fPosYUp );
-	pVtx[1].tex = D3DXVECTOR2( fPosXRight, fPosYUp );
-	pVtx[2].tex = D3DXVECTOR2( fPosXLeft, fPosYDown );
-	pVtx[3].tex = D3DXVECTOR2( fPosXRight, fPosYDown );
+		pVtx[0].tex = D3DXVECTOR2( fPosXLeft, fPosYUp );
+		pVtx[1].tex = D3DXVECTOR2( fPosXRight, fPosYUp );
+		pVtx[2].tex = D3DXVECTOR2( fPosXLeft, fPosYDown );
+		pVtx[3].tex = D3DXVECTOR2( fPosXRight, fPosYDown );
 
-	// 頂点データをアンロックする
-	m_pVtxBuff->Unlock();
+		// 頂点データをアンロックする
+		m_pVtxBuff->Unlock();
+	}
 }
 
 //=============================================================================

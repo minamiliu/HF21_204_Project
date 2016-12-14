@@ -19,6 +19,12 @@
     <Filter Include="ヘッダー ファイル\TrashGame">
       <UniqueIdentifier>{ee565c29-5a9c-4267-8eb9-bd2c5a5bff63}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\title">
+      <UniqueIdentifier>{7cedd894-2e98-4b0c-be89-0465783b2863}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\title">
+      <UniqueIdentifier>{66682c40-ef6d-4cf0-aa29-c5225e323fe2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -70,9 +76,6 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="sceneX.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="title.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="sound.cpp">
@@ -138,6 +141,18 @@
     <ClCompile Include="trajectory.cpp">
       <Filter>ソース ファイル\TrashGame</Filter>
     </ClCompile>
+    <ClCompile Include="zebra.cpp">
+      <Filter>ソース ファイル\title</Filter>
+    </ClCompile>
+    <ClCompile Include="gorira.cpp">
+      <Filter>ソース ファイル\title</Filter>
+    </ClCompile>
+    <ClCompile Include="lion.cpp">
+      <Filter>ソース ファイル\title</Filter>
+    </ClCompile>
+    <ClCompile Include="title.cpp">
+      <Filter>ソース ファイル\title</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -189,9 +204,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="sceneX.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="title.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="sound.h">
@@ -253,6 +265,18 @@
     </ClInclude>
     <ClInclude Include="getScore.h">
       <Filter>ヘッダー ファイル\TrashGame</Filter>
+    </ClInclude>
+    <ClInclude Include="gorira.h">
+      <Filter>ヘッダー ファイル\title</Filter>
+    </ClInclude>
+    <ClInclude Include="zebra.h">
+      <Filter>ヘッダー ファイル\title</Filter>
+    </ClInclude>
+    <ClInclude Include="title.h">
+      <Filter>ヘッダー ファイル\title</Filter>
+    </ClInclude>
+    <ClInclude Include="lion.h">
+      <Filter>ヘッダー ファイル\title</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
