@@ -257,7 +257,7 @@ void CTrashGame::Update()
 				}
 			}
 		}
-		pTime->Uninit();
+		//pTime->Uninit();
 		//pTime->StopTime();
 		//pTime->Uninit();
 		//pTime = NULL;

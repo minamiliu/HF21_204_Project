@@ -39,12 +39,13 @@ public:
 	CScene3D();
 	virtual ~CScene3D();
 
-	virtual HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ);
+	virtual HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ, bool bUseYnotZ);
 	virtual void Uninit(void);
 	virtual void Update(void);
 	virtual void Draw(void);
+	virtual void Draw(const D3DXMATRIX *mtxView);
 
-	static CScene3D *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ);
+	static CScene3D *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ, bool bUseYnotZ);
 
 	HRESULT Load(LPCSTR strFileName);
 	void BindTexture( LPDIRECT3DTEXTURE9 pTexture);
@@ -78,6 +79,7 @@ private:
 	float m_fSizeBlockX, m_fSizeBlockZ;		// ブロックサイズ
 
 	D3DXVECTOR3 m_size;
+	bool m_bUseYnotZ;
 };
 
 #endif

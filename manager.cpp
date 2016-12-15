@@ -20,7 +20,7 @@
 #include "scene3D.h"
 #include "playerX.h"
 #include "sound.h"
-#include "game.h"
+#include "lionGame.h"
 #include "zebragame.h"
 #include "trashGame.h"
 #include "trashGameResult.h"
@@ -302,8 +302,11 @@ void CManager::NextModeChange(void)
 //=============================================================================
 void CManager::SetNextScene(MODE mode)
 {
-	m_modeNext = mode;
-	CFade::SetFade();
+	if( CFade::isFading() == false)
+	{
+		m_modeNext = mode;
+		CFade::SetFade();
+	}
 }
 
 //=============================================================================
@@ -339,8 +342,8 @@ void CManager::SceneChange(void)
 		m_pSceneManager = new CZebraGame;
 		break;
 		
-	case MODE_GAME:
-		m_pSceneManager = new CGame;
+	case MODE_LIONGAME:
+		m_pSceneManager = new CLionGame;
 		break;
 
 	case MODE_RESULT:

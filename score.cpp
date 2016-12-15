@@ -102,14 +102,20 @@ HRESULT CScore::Init(D3DXVECTOR3 numberPos, D3DXVECTOR3 numberSize, int maxKeta,
 //=============================================================================
 void CScore::Uninit(void)
 {
-	for(int cntKeta = 0; cntKeta < m_nMaxKeta; cntKeta++)
+	if( m_ppPolygon != NULL)
 	{
-		//”ŽšŒ…‚Ì”jŠü
-		m_ppPolygon[cntKeta]->Uninit();
-	}
+		for(int cntKeta = 0; cntKeta < m_nMaxKeta; cntKeta++)
+		{
+			if( m_ppPolygon[cntKeta] != NULL)
+			{
+				//”ŽšŒ…‚Ì”jŠü
+				m_ppPolygon[cntKeta]->Uninit();
+			}
+		}
 
-	delete[] m_ppPolygon;
-	m_ppPolygon = NULL;
+		delete[] m_ppPolygon;
+		m_ppPolygon = NULL;
+	}
 
 	//ƒeƒNƒXƒ`ƒƒ‚Ì”jŠü
 	this->Unload();

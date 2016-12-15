@@ -1,14 +1,14 @@
 //============================================
 //
 // タイトル:	 未来創造展チーム204
-// プログラム名: game.h
+// プログラム名: lionGame.h
 // 作成者:		 HAL東京ゲーム学科　劉南宏
 // 作成日:       2016/11/17
 //
 //============================================
 
-#ifndef _GAME_H_
-#define _GAME_H_
+#ifndef _LIONGAME_H_
+#define _LIONGAME_H_
 
 //============================================
 //インクルードファイル
@@ -31,12 +31,12 @@ class CScore;
 //構造体定義
 //============================================
 
-class CGame : public CManager
+class CLionGame : public CManager
 {
 public:
 
-	CGame();
-	virtual ~CGame();
+	CLionGame();
+	virtual ~CLionGame();
 	
 	HRESULT Init(void);
 	void Uninit(void);

@@ -1,7 +1,7 @@
 //============================================
 //
 // タイトル:	 未来創造展チーム204
-// プログラム名: game.cpp
+// プログラム名: lionGame.cpp
 // 作成者:		 HAL東京ゲーム学科　劉南宏
 // 作成日:       2016/11/17
 //
@@ -12,7 +12,7 @@
 //============================================
 #include "main.h"
 #include "debugproc.h"
-#include "game.h"
+#include "lionGame.h"
 #include "renderer.h"
 #include "input.h"
 #include "light.h"
@@ -26,6 +26,7 @@
 #include "score.h"
 #include "enemyX.h"
 #include "time.h"
+#include "food.h"
 
 //============================================
 // マクロ定義
@@ -34,27 +35,27 @@
 //============================================
 // 静的メンバー変数の初期化
 //============================================
-CScore *CGame::m_score = NULL;
+CScore *CLionGame::m_score = NULL;
 
 //============================================
 //コンストラクタ
 //============================================
-CGame::CGame() : CManager(MODE_GAME)
+CLionGame::CLionGame() : CManager(MODE_LIONGAME)
 {
 
 }
 
-CGame::~CGame()
+CLionGame::~CLionGame()
 {
 	
 }
 
-HRESULT CGame::Init(void)
+HRESULT CLionGame::Init(void)
 {
 	m_pCamera->Init();
 
 	//床
-	CScene3D::Create( D3DXVECTOR3( 1000.0f, 0.0f, 750.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 20, 15, 100.0f, 100.0f);
+	CScene3D::Create( D3DXVECTOR3( 1000.0f, 0.0f, 750.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 20, 15, 100.0f, 100.0f, false);
 
 	//ウォール
 	CMeshWall::Load();
@@ -91,8 +92,6 @@ HRESULT CGame::Init(void)
 	m_cube[m_nNumCube++] = CCubeX::Create( D3DXVECTOR3(1250.0f, 50.0f, 250.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 100.0f, 100.0f, 100.0f), CCubeX::TYPE_1X1);
 	m_cube[m_nNumCube++] = CCubeX::Create( D3DXVECTOR3(1550.0f, 50.0f, 250.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 100.0f, 100.0f, 100.0f), CCubeX::TYPE_1X1);
 	
-
-
 	//プレイヤー
 	m_player = CPlayerX::Create( D3DXVECTOR3( 50.0f, 30.0f, 50.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), 0.10f);
 
@@ -103,10 +102,10 @@ HRESULT CGame::Init(void)
 	CItemX::Create( D3DXVECTOR3( 100.0f, 30.0f, 100.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f));
 
 	//スコア
-	m_score = CScore::Create( D3DXVECTOR3(150, 100.0f, 0.0f), D3DXVECTOR3( 300, 50.0f, 0.0f), 6, RED(1.0f)); 
+	m_score = CScore::Create( D3DXVECTOR3(SCREEN_WIDTH-150, 30.0f, 0.0f), D3DXVECTOR3( 300, 50.0f, 0.0f), 6, RED(1.0f)); 
 
 	//タイム
-	//CTime::Create( D3DXVECTOR3(SCREEN_WIDTH/2, 100.0f, 0.0f), D3DXVECTOR3(150, 100.0f, 0.0f), 2, 10, true, BLUE(1.0f));
+	CTime::Create( D3DXVECTOR3(SCREEN_WIDTH/2, 100.0f, 0.0f), D3DXVECTOR3(140, 70.0f, 0.0f), 2, 0, false, BLUE(1.0f));
 
 	//敵
 	CEnemyX::Create( D3DXVECTOR3( 50, 30.0f, 600.0f), D3DXVECTOR3( 0.0f, D3DX_PI/2, 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f));
@@ -114,15 +113,19 @@ HRESULT CGame::Init(void)
 	CEnemyX::Create( D3DXVECTOR3(650, 30.0f, 600.0f), D3DXVECTOR3( 0.0f, D3DX_PI/2, 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f));
 	CEnemyX::Create( D3DXVECTOR3(950, 30.0f, 600.0f), D3DXVECTOR3( 0.0f, D3DX_PI/2, 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f));
 
+	//スーパーの食べ物
+	CFood::Load();
+	CFood::Create( D3DXVECTOR3( 50.0f, 50.0f, 300.0f), D3DXVECTOR3( 150.0f, 150.0f, 150.0f));
+
 	return S_OK;
 }
 
-void CGame::Uninit()
+void CLionGame::Uninit()
 {
 	CManager::Uninit();
 }
 
-void CGame::Update()
+void CLionGame::Update()
 {
 	//入力などの更新、各シーンのUpdateの最初に呼び出す
 	CManager::Update();
@@ -219,12 +222,12 @@ void CGame::Update()
 	//シーンが切り替えるところ、各シーンのUpdateの最後に置いとく
 	CManager::SceneChange();
 }
-void CGame::Draw()
+void CLionGame::Draw()
 {
 	CManager::Draw();
 }
 
-CScore *CGame::GetScore(void)
+CScore *CLionGame::GetScore(void)
 {
 	return m_score;
 }

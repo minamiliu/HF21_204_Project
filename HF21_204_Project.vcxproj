@@ -78,6 +78,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="billboard.cpp" />
     <ClCompile Include="bullet2D.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="cubeX.cpp" />
@@ -85,7 +86,8 @@
     <ClCompile Include="debugproc.cpp" />
     <ClCompile Include="enemyX.cpp" />
     <ClCompile Include="fade.cpp" />
-    <ClCompile Include="game.cpp" />
+    <ClCompile Include="food.cpp" />
+    <ClCompile Include="lionGame.cpp" />
     <ClCompile Include="getScore.cpp" />
     <ClCompile Include="gorira.cpp" />
     <ClCompile Include="input.cpp" />
@@ -121,6 +123,7 @@
     <ClCompile Include="trashGameResult.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="billboard.h" />
     <ClInclude Include="bullet2D.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="cubeX.h" />
@@ -128,7 +131,8 @@
     <ClInclude Include="debugproc.h" />
     <ClInclude Include="enemyX.h" />
     <ClInclude Include="fade.h" />
-    <ClInclude Include="game.h" />
+    <ClInclude Include="food.h" />
+    <ClInclude Include="lionGame.h" />
     <ClInclude Include="getScore.h" />
     <ClInclude Include="gorira.h" />
     <ClInclude Include="input.h" />

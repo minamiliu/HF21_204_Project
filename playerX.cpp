@@ -17,7 +17,7 @@
 #include "debugproc.h"
 #include "collision.h"
 #include "score.h"
-#include "game.h"
+#include "lionGame.h"
 
 //============================================
 // マクロ定義
@@ -138,7 +138,7 @@ void CPlayerX::Update(void)
  					pScene->Uninit();
 
 					//スコア
-					CGame::GetScore()->AddScore( 100);
+					CLionGame::GetScore()->AddScore( 100);
 					
 					return;
 				}
@@ -152,7 +152,7 @@ void CPlayerX::Update(void)
 				if( CCollision::HitCheckBall( posPlayer, PLAYER_RADIUS, posEnemy, PLAYER_RADIUS))
 				{
 					//スコア
-					CGame::GetScore()->AddScore( -100);
+					CLionGame::GetScore()->AddScore( -100);
 					
 					m_state = STATE_CRASH;
 					m_nCntState = 60;

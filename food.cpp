@@ -11,27 +11,24 @@
 //インクルードファイル
 //============================================
 #include "main.h"
-#include "meshWall.h"
-#include "renderer.h"
+#include "food.h"
 #include "manager.h"
-#include "input.h"
+#include "renderer.h"
 
 //============================================
 // マクロ定義
 //============================================
-
-#define TEXTURENAME "data/TEXTURE/wall000.jpg"
+#define TEXTURENAME "data/TEXTURE/tomato.png"
 
 //============================================
 // 静的メンバー変数の初期化
 //============================================
-LPDIRECT3DTEXTURE9 CMeshWall::m_pTexture = NULL;
-
+LPDIRECT3DTEXTURE9 CFood::m_pTexture = NULL;
 
 //=============================================================================
 //コンストラクタ
 //=============================================================================
-CMeshWall::CMeshWall()
+CFood::CFood()
 {
 
 }
@@ -39,7 +36,7 @@ CMeshWall::CMeshWall()
 //=============================================================================
 //デストラクタ
 //=============================================================================
-CMeshWall::~CMeshWall()
+CFood::~CFood()
 {
 	
 }
@@ -49,57 +46,51 @@ CMeshWall::~CMeshWall()
 // ポリゴンの初期化処理
 //=============================================================================
 
-HRESULT CMeshWall::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ)
+HRESULT CFood::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
-	CScene3D::Init( pos, rot, nNumBlockX, nNumBlockZ, fSizeBlockX, fSizeBlockZ, true);
+	CBillBoard::Init( pos, size);
 	return S_OK;
 }
 //=============================================================================
 //
 //=============================================================================
-void CMeshWall::Uninit(void)
+void CFood::Uninit(void)
 {
-	CScene3D::Uninit();
+	CBillBoard::Uninit();
 }
 //=============================================================================
 //
 //=============================================================================
-void CMeshWall::Update(void)
+void CFood::Update(void)
 {
 	
 }
 //=============================================================================
 //
 //=============================================================================
-void CMeshWall::Draw(void)
+void CFood::Draw(void)
 {
-	CScene3D::Draw();
+	CBillBoard::Draw();
 }
 //=============================================================================
 //
 //=============================================================================
-CMeshWall *CMeshWall::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ)
+CFood *CFood::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
-	CMeshWall *pMeshWall;
-	pMeshWall = new CMeshWall;
+	CFood *pFood;
+	pFood = new CFood;
 
-	pMeshWall->Init(pos, rot, nNumBlockX, nNumBlockZ, fSizeBlockX, fSizeBlockZ);
-
+	pFood->Init(pos, size);
+	
 	//テクスチャの割り当て
-	pMeshWall->BindTexture( m_pTexture);
+	pFood->BindTexture( m_pTexture);
 
-	return pMeshWall;
+	return pFood;
 }
-
-bool CMeshWall::HitCheck( D3DXVECTOR3 tNowPos, D3DXVECTOR3 tNextPos, D3DXVECTOR3 *wall_nor, D3DXVECTOR3 *HitPoint)
-{
-	return CScene3D::HitCheck( tNowPos, tNextPos, wall_nor, HitPoint);
-}
-
 //=============================================================================
-//
+//テクスチャのロード
 //=============================================================================
-HRESULT CMeshWall::Load(void)
+HRESULT CFood::Load(void)
 {
 	if( m_pTexture == NULL)
 	{
@@ -114,9 +105,9 @@ HRESULT CMeshWall::Load(void)
 }
 
 //=============================================================================
-//
+//テクスチャのアンロード
 //=============================================================================
-void CMeshWall::Unload(void)
+void CFood::Unload(void)
 {
 	//テクスチャの破棄
 	if( m_pTexture != NULL)
@@ -125,5 +116,3 @@ void CMeshWall::Unload(void)
 		m_pTexture = NULL;
 	}
 }
-
-
