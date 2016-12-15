@@ -30,12 +30,12 @@ public:
 	CMeshWall();
 	virtual ~CMeshWall();
 
-	HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ);
+	HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockY, float fSizeBlockX, float fSizeBlockY);
 	void Uninit(void);
 	void Update(void);
 	void Draw(void);
 
-	static CMeshWall *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ);
+	static CMeshWall *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockY, float fSizeBlockX, float fSizeBlockY);
 
 	static HRESULT Load(void);
 	static void Unload(void);

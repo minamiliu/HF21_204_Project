@@ -1,9 +1,9 @@
 //============================================
 //
 // タイトル:	 未来創造展チーム204
-// プログラム名: scene3D.cpp
+// プログラム名: shadow.cpp
 // 作成者:		 HAL東京ゲーム学科　劉南宏
-// 作成日:       2016/11/10
+// 作成日:       2016/12/15
 //
 //============================================
 
@@ -11,24 +11,24 @@
 //インクルードファイル
 //============================================
 #include "main.h"
-#include "food.h"
-#include "manager.h"
+#include "shadow.h"
 #include "renderer.h"
+#include "manager.h"
 
 //============================================
 // マクロ定義
 //============================================
-#define TEXTURENAME "data/TEXTURE/tomato.png"
+#define TEXTURENAME "data/TEXTURE/effect000.jpg"
 
 //============================================
 // 静的メンバー変数の初期化
 //============================================
-LPDIRECT3DTEXTURE9 CFood::m_pTexture = NULL;
+LPDIRECT3DTEXTURE9 CShadow::m_pTexture = NULL;
 
 //=============================================================================
 //コンストラクタ
 //=============================================================================
-CFood::CFood()
+CShadow::CShadow()
 {
 
 }
@@ -36,7 +36,7 @@ CFood::CFood()
 //=============================================================================
 //デストラクタ
 //=============================================================================
-CFood::~CFood()
+CShadow::~CShadow()
 {
 	
 }
@@ -46,51 +46,75 @@ CFood::~CFood()
 // ポリゴンの初期化処理
 //=============================================================================
 
-HRESULT CFood::Init(D3DXVECTOR3 pos, D3DXVECTOR2 size)
+HRESULT CShadow::Init(D3DXVECTOR3 pos, D3DXVECTOR2 size)
 {
-	CBillBoard::Init( pos, size);
+	pos.y = 0.1f;
+	CScene3D::Init( pos, D3DXVECTOR3(0,0,0), 1, 1, size.x, size.y, false);
 	return S_OK;
 }
 //=============================================================================
 //
 //=============================================================================
-void CFood::Uninit(void)
+void CShadow::Uninit(void)
 {
-	CBillBoard::Uninit();
+	CScene3D::Uninit();
 }
 //=============================================================================
 //
 //=============================================================================
-void CFood::Update(void)
+void CShadow::Update(void)
 {
 	
 }
 //=============================================================================
 //
 //=============================================================================
-void CFood::Draw(void)
+void CShadow::Draw(void)
 {
-	CBillBoard::Draw();
-}
-//=============================================================================
-//
-//=============================================================================
-CFood *CFood::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size)
-{
-	CFood *pFood;
-	pFood = new CFood;
+	LPDIRECT3DDEVICE9 pDevice;
+	pDevice = CManager::GetRenderer()->GetDevice();
 
-	pFood->Init(pos, size);
-	
+	// 減算合成
+	pDevice->SetRenderState( D3DRS_BLENDOP, D3DBLENDOP_REVSUBTRACT);// 結果 = 転送先(DEST) - 転送元(SRC)
+	pDevice->SetRenderState( D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	pDevice->SetRenderState( D3DRS_DESTBLEND, D3DBLEND_ONE);
+
+	CScene3D::Draw();
+
+	// 通常ブレンド 
+	pDevice->SetRenderState( D3DRS_BLENDOP, D3DBLENDOP_ADD);		// 結果 = 転送元(SRC) + 転送先(DEST)
+	pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);	
+	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+}
+//=============================================================================
+//
+//=============================================================================
+CShadow *CShadow::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size)
+{
+	CShadow *pShadow;
+	pShadow = new CShadow;
+
+	pShadow->Init(pos, size);
+
 	//テクスチャの割り当て
-	pFood->BindTexture( m_pTexture);
+	pShadow->BindTexture( m_pTexture);
 
-	return pFood;
+	return pShadow;
 }
+
+//=============================================================================
+// 座標の設定
+//=============================================================================
+void CShadow::SetPosition(D3DXVECTOR3 pos)
+{
+	pos.y = 0.1f;
+	CScene3D::SetPosition( pos);
+}
+
 //=============================================================================
 //テクスチャのロード
 //=============================================================================
-HRESULT CFood::Load(void)
+HRESULT CShadow::Load(void)
 {
 	if( m_pTexture == NULL)
 	{
@@ -107,7 +131,7 @@ HRESULT CFood::Load(void)
 //=============================================================================
 //テクスチャのアンロード
 //=============================================================================
-void CFood::Unload(void)
+void CShadow::Unload(void)
 {
 	//テクスチャの破棄
 	if( m_pTexture != NULL)
@@ -116,3 +140,5 @@ void CFood::Unload(void)
 		m_pTexture = NULL;
 	}
 }
+
+

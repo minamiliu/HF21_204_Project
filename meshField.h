@@ -1,19 +1,19 @@
 //============================================
 //
 // タイトル:	 未来創造展チーム204
-// プログラム名: food.h
+// プログラム名: meshField.h
 // 作成者:		 HAL東京ゲーム学科　劉南宏
 // 作成日:       2016/12/15
 //
 //============================================
 
-#ifndef _FOOD_H_
-#define _FOOD_H_
+#ifndef _MESHFIELD_H_
+#define _MESHFIELD_H_
 
 //============================================
 //インクルードファイル
 //============================================
-#include "billboard.h"
+#include "scene3D.h"
 
 //============================================
 //マクロ定義
@@ -23,25 +23,25 @@
 //構造体定義
 //============================================
 
-class CFood : public CBillBoard
+class CMeshField : public CScene3D
 {
 public:
 
-	CFood();
-	virtual ~CFood();
+	CMeshField();
+	virtual ~CMeshField();
 
-	HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR2 size);
+	HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ);
 	void Uninit(void);
 	void Update(void);
 	void Draw(void);
 
-	static CFood *Create(D3DXVECTOR3 pos, D3DXVECTOR2 size);
+	static CMeshField *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ);
 
-	static HRESULT Load(void);
-	static void Unload(void);
+	//static HRESULT Load(void);
+	//static void Unload(void);
 
 private:
-	static LPDIRECT3DTEXTURE9 m_pTexture;
+	
 };
 
 #endif

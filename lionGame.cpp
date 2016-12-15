@@ -17,7 +17,7 @@
 #include "input.h"
 #include "light.h"
 #include "camera.h"
-#include "scene3D.h"
+#include "meshField.h"
 #include "meshWall.h"
 #include "playerX.h"
 #include "collision.h"
@@ -27,6 +27,7 @@
 #include "enemyX.h"
 #include "time.h"
 #include "food.h"
+#include "shadow.h"
 
 //============================================
 // マクロ定義
@@ -55,7 +56,7 @@ HRESULT CLionGame::Init(void)
 	m_pCamera->Init();
 
 	//床
-	CScene3D::Create( D3DXVECTOR3( 1000.0f, 0.0f, 750.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 20, 15, 100.0f, 100.0f, false);
+	CMeshField::Create( D3DXVECTOR3( 1000.0f, 0.0f, 750.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 20, 15, 100.0f, 100.0f);
 
 	//ウォール
 	CMeshWall::Load();
@@ -92,6 +93,9 @@ HRESULT CLionGame::Init(void)
 	m_cube[m_nNumCube++] = CCubeX::Create( D3DXVECTOR3(1250.0f, 50.0f, 250.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 100.0f, 100.0f, 100.0f), CCubeX::TYPE_1X1);
 	m_cube[m_nNumCube++] = CCubeX::Create( D3DXVECTOR3(1550.0f, 50.0f, 250.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 100.0f, 100.0f, 100.0f), CCubeX::TYPE_1X1);
 	
+	//影
+	CShadow::Load();
+
 	//プレイヤー
 	m_player = CPlayerX::Create( D3DXVECTOR3( 50.0f, 30.0f, 50.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), 0.10f);
 
@@ -115,7 +119,7 @@ HRESULT CLionGame::Init(void)
 
 	//スーパーの食べ物
 	CFood::Load();
-	CFood::Create( D3DXVECTOR3( 50.0f, 50.0f, 300.0f), D3DXVECTOR3( 150.0f, 150.0f, 150.0f));
+	CFood::Create( D3DXVECTOR3( 50.0f, 50.0f, 300.0f), D3DXVECTOR2( 150.0f, 150.0f));
 
 	return S_OK;
 }

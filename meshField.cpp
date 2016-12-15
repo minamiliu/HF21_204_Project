@@ -1,9 +1,9 @@
 //============================================
 //
 // タイトル:	 未来創造展チーム204
-// プログラム名: scene3D.cpp
+// プログラム名: meshField.cpp
 // 作成者:		 HAL東京ゲーム学科　劉南宏
-// 作成日:       2016/11/10
+// 作成日:       2016/12/15
 //
 //============================================
 
@@ -11,24 +11,24 @@
 //インクルードファイル
 //============================================
 #include "main.h"
-#include "food.h"
-#include "manager.h"
+#include "meshField.h"
 #include "renderer.h"
+#include "manager.h"
 
 //============================================
 // マクロ定義
 //============================================
-#define TEXTURENAME "data/TEXTURE/tomato.png"
+
+#define TEXTURENAME "data/TEXTURE/field001.jpg"
 
 //============================================
 // 静的メンバー変数の初期化
 //============================================
-LPDIRECT3DTEXTURE9 CFood::m_pTexture = NULL;
 
 //=============================================================================
 //コンストラクタ
 //=============================================================================
-CFood::CFood()
+CMeshField::CMeshField()
 {
 
 }
@@ -36,7 +36,7 @@ CFood::CFood()
 //=============================================================================
 //デストラクタ
 //=============================================================================
-CFood::~CFood()
+CMeshField::~CMeshField()
 {
 	
 }
@@ -46,73 +46,81 @@ CFood::~CFood()
 // ポリゴンの初期化処理
 //=============================================================================
 
-HRESULT CFood::Init(D3DXVECTOR3 pos, D3DXVECTOR2 size)
+HRESULT CMeshField::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ)
 {
-	CBillBoard::Init( pos, size);
+	CScene3D::Init( pos, rot, nNumBlockX, nNumBlockZ, fSizeBlockX, fSizeBlockZ, false);
+
 	return S_OK;
 }
 //=============================================================================
 //
 //=============================================================================
-void CFood::Uninit(void)
+void CMeshField::Uninit(void)
 {
-	CBillBoard::Uninit();
+	CScene3D::Uninit();
 }
 //=============================================================================
 //
 //=============================================================================
-void CFood::Update(void)
+void CMeshField::Update(void)
 {
 	
 }
 //=============================================================================
 //
 //=============================================================================
-void CFood::Draw(void)
+void CMeshField::Draw(void)
 {
-	CBillBoard::Draw();
+	CScene3D::Draw();
 }
 //=============================================================================
 //
 //=============================================================================
-CFood *CFood::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size)
+CMeshField *CMeshField::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ)
 {
-	CFood *pFood;
-	pFood = new CFood;
+	CMeshField *pMeshField;
+	pMeshField = new CMeshField;
 
-	pFood->Init(pos, size);
-	
-	//テクスチャの割り当て
-	pFood->BindTexture( m_pTexture);
+	pMeshField->Init(pos, rot, nNumBlockX, nNumBlockZ, fSizeBlockX, fSizeBlockZ);
 
-	return pFood;
-}
-//=============================================================================
-//テクスチャのロード
-//=============================================================================
-HRESULT CFood::Load(void)
-{
-	if( m_pTexture == NULL)
-	{
-		LPDIRECT3DDEVICE9 pDevice;
-		pDevice = CManager::GetRenderer()->GetDevice();
+	////テクスチャの割り当て
+	//pMeshField->BindTexture( m_pTexture);
 
-		// テクスチャの読み込み
-		D3DXCreateTextureFromFile( pDevice, TEXTURENAME, &m_pTexture);
-	}
+	//テクスチャの読み込み
+	pMeshField->Load( TEXTURENAME);
 
-	return S_OK;
+	return pMeshField;
 }
 
-//=============================================================================
-//テクスチャのアンロード
-//=============================================================================
-void CFood::Unload(void)
-{
-	//テクスチャの破棄
-	if( m_pTexture != NULL)
-	{
-		m_pTexture->Release();
-		m_pTexture = NULL;
-	}
-}
+
+////=============================================================================
+////
+////=============================================================================
+//HRESULT CMeshField::Load(void)
+//{
+//	if( m_pTexture == NULL)
+//	{
+//		LPDIRECT3DDEVICE9 pDevice;
+//		pDevice = CManager::GetRenderer()->GetDevice();
+//
+//		// テクスチャの読み込み
+//		D3DXCreateTextureFromFile( pDevice, TEXTURENAME, &m_pTexture);
+//	}
+//
+//	return S_OK;
+//}
+//
+////=============================================================================
+////
+////=============================================================================
+//void CMeshField::Unload(void)
+//{
+//	//テクスチャの破棄
+//	if( m_pTexture != NULL)
+//	{
+//		m_pTexture->Release();
+//		m_pTexture = NULL;
+//	}
+//}
+
+

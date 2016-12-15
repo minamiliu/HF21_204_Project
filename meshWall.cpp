@@ -49,9 +49,9 @@ CMeshWall::~CMeshWall()
 // ポリゴンの初期化処理
 //=============================================================================
 
-HRESULT CMeshWall::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ)
+HRESULT CMeshWall::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockY, float fSizeBlockX, float fSizeBlockY)
 {
-	CScene3D::Init( pos, rot, nNumBlockX, nNumBlockZ, fSizeBlockX, fSizeBlockZ, true);
+	CScene3D::Init( pos, rot, nNumBlockX, nNumBlockY, fSizeBlockX, fSizeBlockY, true);
 	return S_OK;
 }
 //=============================================================================
@@ -78,12 +78,12 @@ void CMeshWall::Draw(void)
 //=============================================================================
 //
 //=============================================================================
-CMeshWall *CMeshWall::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ)
+CMeshWall *CMeshWall::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockY, float fSizeBlockX, float fSizeBlockY)
 {
 	CMeshWall *pMeshWall;
 	pMeshWall = new CMeshWall;
 
-	pMeshWall->Init(pos, rot, nNumBlockX, nNumBlockZ, fSizeBlockX, fSizeBlockZ);
+	pMeshWall->Init(pos, rot, nNumBlockX, nNumBlockY, fSizeBlockX, fSizeBlockY);
 
 	//テクスチャの割り当て
 	pMeshWall->BindTexture( m_pTexture);

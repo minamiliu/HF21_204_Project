@@ -18,6 +18,7 @@
 #include "collision.h"
 #include "score.h"
 #include "lionGame.h"
+#include "shadow.h"
 
 //============================================
 // マクロ定義
@@ -69,6 +70,9 @@ HRESULT CPlayerX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float 
 
 	m_state = STATE_NORMAL;
 	m_nCntState = 0;
+
+	//影の生成
+	m_shadow = CShadow::Create( pos, D3DXVECTOR2( 50.0f, 50.0f));
 
 	return S_OK;
 }
@@ -166,8 +170,6 @@ void CPlayerX::Update(void)
 		}
 	}
 
-	D3DXVECTOR3 pos;
-
 	//状態更新
 	switch( m_state)
 	{
@@ -179,6 +181,10 @@ void CPlayerX::Update(void)
 		}
 		break;
 	}
+
+	//影の更新処理
+	D3DXVECTOR3 posPlayer = this->GetPosition();
+	m_shadow->SetPosition( posPlayer);
 
 }
 

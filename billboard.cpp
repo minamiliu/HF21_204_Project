@@ -46,7 +46,7 @@ CBillBoard::~CBillBoard()
 // É|ÉäÉSÉìÇÃèâä˙âªèàóù
 //=============================================================================
 
-HRESULT CBillBoard::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size)
+HRESULT CBillBoard::Init(D3DXVECTOR3 pos, D3DXVECTOR2 size)
 {
 	CScene3D::Init( pos, D3DXVECTOR3(0,0,0), 1, 1, size.x, size.y, true);
 	return S_OK;
@@ -76,7 +76,7 @@ void CBillBoard::Draw(void)
 //=============================================================================
 //
 //=============================================================================
-CBillBoard *CBillBoard::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
+CBillBoard *CBillBoard::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size)
 {
 	CBillBoard *pBoard;
 	pBoard = new CBillBoard;
