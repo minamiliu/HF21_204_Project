@@ -23,7 +23,7 @@
 //============================================
 // マクロ定義
 //============================================
-#define MODEL_FILENAME "data/MODEL/plain.x"
+#define MODEL_FILENAME "data/MODEL/mom.x"
 #define VALUE_ROTATE	(2.0f) 	// 回転量
 
 #define PLAYER_RADIUS	(20.0f)
@@ -129,24 +129,24 @@ void CPlayerX::Update(void)
 
 			D3DXVECTOR3 posPlayer = GetPosition();
 
-			//アイテムとの当たり判定
-			if( type == CScene::OBJTYPE_L_ITEM)
+			//食べ物とのあたり判定
+			if (type == CScene::OBJTYPE_L_FOOD)
 			{
-				D3DXVECTOR3 posItem;
-				posItem = pScene->GetPosition();
+				D3DXVECTOR3 posFood;
+				posFood = pScene->GetPosition();
 
-				if( CCollision::HitCheckBall( posPlayer, PLAYER_RADIUS, posItem, 10.f))
+				if (CCollision::HitCheckCircleXZ(posPlayer, PLAYER_RADIUS, posFood, 10.f))
 				{
-
-					//アイテムの破棄
- 					pScene->Uninit();
+					//食べ物の破棄
+					pScene->Uninit();
 
 					//スコア
-					CLionGame::GetScore()->AddScore( 100);
-					
+					CLionGame::GetScore()->AddScore(100);
+
 					return;
 				}
 			}
+
 			//敵との当たり判定
 			else if( type == CScene::OBJTYPE_L_ENEMY && m_state != STATE_CRASH)
 			{
@@ -156,7 +156,7 @@ void CPlayerX::Update(void)
 				if( CCollision::HitCheckBall( posPlayer, PLAYER_RADIUS, posEnemy, PLAYER_RADIUS))
 				{
 					//スコア
-					CLionGame::GetScore()->AddScore( -100);
+					//CLionGame::GetScore()->AddScore( -100);
 					
 					m_state = STATE_CRASH;
 					m_nCntState = 60;
@@ -217,7 +217,7 @@ void CPlayerX::UpdateRot(void)
 	m_rotAngle.y *= 0.999f;
 
 	//次の回転位置に到着したら
-	float diff = abs(rotPlayer.y - m_rotTarget.y);
+	float diff = fabsf(rotPlayer.y - m_rotTarget.y);
 	if( diff > D3DX_PI)
 	{
 		diff -= D3DX_PI*2;

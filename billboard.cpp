@@ -70,8 +70,19 @@ void CBillBoard::Update(void)
 //=============================================================================
 void CBillBoard::Draw(void)
 {
+	LPDIRECT3DDEVICE9 pDevice;
+	pDevice = CManager::GetRenderer()->GetDevice();
 	D3DXMATRIX *mtxView = CManager::GetCamera()->GetMtxView();
+
+	//αテスト
+	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+	pDevice->SetRenderState(D3DRS_ALPHAREF, 0);
+	pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+	
 	CScene3D::Draw(mtxView);
+
+	// αテストを無効に
+	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 }
 //=============================================================================
 //

@@ -1,7 +1,7 @@
 //============================================
 //
 // タイトル:	 未来創造展チーム204
-// プログラム名: scene3D.cpp
+// プログラム名: food.cpp
 // 作成者:		 HAL東京ゲーム学科　劉南宏
 // 作成日:       2016/11/10
 //
@@ -18,12 +18,14 @@
 //============================================
 // マクロ定義
 //============================================
-#define TEXTURENAME "data/TEXTURE/tomato.png"
+#define TEXTURE_TOMATO	"data/TEXTURE/tomato.png"
+#define TEXTURE_CABBAGE "data/TEXTURE/cabbage.png"
+#define TEXTURE_MEAT	"data/TEXTURE/meet.png"
 
 //============================================
 // 静的メンバー変数の初期化
 //============================================
-LPDIRECT3DTEXTURE9 CFood::m_pTexture = NULL;
+LPDIRECT3DTEXTURE9 CFood::m_pTexture[TYPE_MAX] = {};
 
 //=============================================================================
 //コンストラクタ
@@ -49,6 +51,8 @@ CFood::~CFood()
 HRESULT CFood::Init(D3DXVECTOR3 pos, D3DXVECTOR2 size)
 {
 	CBillBoard::Init( pos, size);
+	SetObjType(OBJTYPE_L_FOOD);
+
 	return S_OK;
 }
 //=============================================================================
@@ -75,7 +79,7 @@ void CFood::Draw(void)
 //=============================================================================
 //
 //=============================================================================
-CFood *CFood::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size)
+CFood *CFood::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, TYPE type)
 {
 	CFood *pFood;
 	pFood = new CFood;
@@ -83,7 +87,7 @@ CFood *CFood::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size)
 	pFood->Init(pos, size);
 	
 	//テクスチャの割り当て
-	pFood->BindTexture( m_pTexture);
+	pFood->BindTexture( m_pTexture[type]);
 
 	return pFood;
 }
@@ -92,13 +96,32 @@ CFood *CFood::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size)
 //=============================================================================
 HRESULT CFood::Load(void)
 {
-	if( m_pTexture == NULL)
+	for (int cntType = 0; cntType < TYPE_MAX; cntType++)
 	{
-		LPDIRECT3DDEVICE9 pDevice;
-		pDevice = CManager::GetRenderer()->GetDevice();
+		LPCSTR strFileName;
+		switch (cntType)
+		{
+		case TYPE_TOMATO:
+			strFileName = TEXTURE_TOMATO;
+			break;
 
-		// テクスチャの読み込み
-		D3DXCreateTextureFromFile( pDevice, TEXTURENAME, &m_pTexture);
+		case TYPE_CABBAGE:
+			strFileName = TEXTURE_CABBAGE;
+			break;
+
+		case TYPE_MEAT:
+			strFileName = TEXTURE_MEAT;
+			break;
+		}
+
+		if (m_pTexture[cntType] == NULL)
+		{
+			LPDIRECT3DDEVICE9 pDevice;
+			pDevice = CManager::GetRenderer()->GetDevice();
+
+			// テクスチャの読み込み
+			D3DXCreateTextureFromFile(pDevice, strFileName, &m_pTexture[cntType]);
+		}
 	}
 
 	return S_OK;
@@ -110,9 +133,12 @@ HRESULT CFood::Load(void)
 void CFood::Unload(void)
 {
 	//テクスチャの破棄
-	if( m_pTexture != NULL)
+	for (int cntType = 0; cntType < TYPE_MAX; cntType++)
 	{
-		m_pTexture->Release();
-		m_pTexture = NULL;
+		if (m_pTexture[cntType] != NULL)
+		{
+			m_pTexture[cntType]->Release();
+			m_pTexture[cntType] = NULL;
+		}
 	}
 }

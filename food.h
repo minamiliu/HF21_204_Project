@@ -26,6 +26,14 @@
 class CFood : public CBillBoard
 {
 public:
+	typedef enum 
+	{
+		TYPE_NONE = -1,
+		TYPE_TOMATO,
+		TYPE_CABBAGE,
+		TYPE_MEAT,
+		TYPE_MAX,
+	}TYPE;
 
 	CFood();
 	virtual ~CFood();
@@ -35,13 +43,13 @@ public:
 	void Update(void);
 	void Draw(void);
 
-	static CFood *Create(D3DXVECTOR3 pos, D3DXVECTOR2 size);
+	static CFood *Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, TYPE type);
 
 	static HRESULT Load(void);
 	static void Unload(void);
 
 private:
-	static LPDIRECT3DTEXTURE9 m_pTexture;
+	static LPDIRECT3DTEXTURE9 m_pTexture[TYPE_MAX];
 };
 
 #endif
