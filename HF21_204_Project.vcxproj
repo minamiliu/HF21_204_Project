@@ -102,6 +102,7 @@
     <ClCompile Include="meshWall.cpp" />
     <ClCompile Include="mousePick.cpp" />
     <ClCompile Include="number.cpp" />
+    <ClCompile Include="partX.cpp" />
     <ClCompile Include="player2D.cpp" />
     <ClCompile Include="playerX.cpp" />
     <ClCompile Include="Point2D.cpp" />
@@ -149,6 +150,7 @@
     <ClInclude Include="meshWall.h" />
     <ClInclude Include="mousePick.h" />
     <ClInclude Include="number.h" />
+    <ClInclude Include="partX.h" />
     <ClInclude Include="player2D.h" />
     <ClInclude Include="playerX.h" />
     <ClInclude Include="point2D.h" />

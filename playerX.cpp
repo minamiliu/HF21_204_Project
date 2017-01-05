@@ -23,7 +23,7 @@
 //============================================
 // É}ÉNÉçíËã`
 //============================================
-#define MODEL_FILENAME "data/MODEL/mom.x"
+#define MODEL_FILENAME "data/MODEL/mom_body.x"
 #define VALUE_ROTATE	(2.0f) 	// âÒì]ó 
 
 #define PLAYER_RADIUS	(20.0f)
@@ -38,7 +38,9 @@
 //=============================================================================
 CPlayerX::CPlayerX()
 {
-
+	m_shadow = NULL;
+	m_pRHand = NULL;
+	m_pLHand = NULL;
 }
 
 //=============================================================================

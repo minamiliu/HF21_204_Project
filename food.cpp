@@ -20,7 +20,7 @@
 //============================================
 #define TEXTURE_TOMATO	"data/TEXTURE/tomato.png"
 #define TEXTURE_CABBAGE "data/TEXTURE/cabbage.png"
-#define TEXTURE_MEAT	"data/TEXTURE/meet.png"
+#define TEXTURE_MEAT	"data/TEXTURE/meat.png"
 
 //============================================
 // Ã“Iƒƒ“ƒo[•Ï”‚Ì‰Šú‰»

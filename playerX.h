@@ -23,6 +23,7 @@
 //前方宣言
 //============================================
 class CShadow;
+class CPartX;
 //============================================
 //構造体定義
 //============================================
@@ -72,6 +73,12 @@ private:
 	STATE m_state;				//状態
 	int m_nCntState;			//状態のカウンター
 	CShadow *m_shadow;			//影
+
+	//手足
+	CPartX *m_pRHand;
+	D3DXVECTOR3 m_posRHand;
+	CPartX *m_pLHand;
+	D3DXVECTOR3 m_posLHand;
 };
 
 #endif
