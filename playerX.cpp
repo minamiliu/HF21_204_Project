@@ -24,7 +24,7 @@
 // É}ÉNÉçíËã`
 //============================================
 #define MODEL_FILENAME "data/MODEL/mom_body.x"
-#define VALUE_ROTATE	(2.0f) 	// âÒì]ó 
+#define VALUE_ROTATE	(1.0f) 	// âÒì]ó 
 
 #define PLAYER_RADIUS	(20.0f)
 #define CAMERA_DISTANCE	(200.0f)
@@ -95,7 +95,7 @@ void CPlayerX::Update(void)
 	//à⁄ìÆèàóù
 	bool isMoved;
 	isMoved = isKeyUse(DIK_W, DIK_S, DIK_A, DIK_D);
-	//isMoved = isMouseUse();
+	isMoved = isMouseUse();
 	if( isMoved == true)
 	{
 		UpdateRot();
@@ -162,7 +162,7 @@ void CPlayerX::Update(void)
 					
 					m_state = STATE_CRASH;
 					m_nCntState = 60;
-					m_fSpeed = -5.0f;
+					m_fSpeed = -2.0f;
 					
 					return;
 				}

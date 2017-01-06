@@ -97,7 +97,7 @@ HRESULT CLionGame::Init(void)
 	CShadow::Load();
 
 	//プレイヤー
-	m_player = CPlayerX::Create( D3DXVECTOR3( 50.0f, 60.0f, 50.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 2.0f, 2.0f, 2.0f), 0.10f);
+	m_player = CPlayerX::Create( D3DXVECTOR3( 50.0f, 60.0f, 50.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 2.0f, 2.0f, 2.0f), 0.03f);
 
 	//アイテム
 	//CItemX::Create( D3DXVECTOR3( -200.0f, 30.0f, -200.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f));
