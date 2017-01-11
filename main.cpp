@@ -64,8 +64,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	hWnd = CreateWindow(CLASS_NAME,
 						WINDOW_NAME,
 						WS_OVERLAPPEDWINDOW,
-						0, //CW_USEDEFAULT,
-						0, //CW_USEDEFAULT,
+						CW_USEDEFAULT,
+						CW_USEDEFAULT,
 						(rect.right - rect.left),
 						(rect.bottom - rect.top),
 						NULL,
@@ -73,8 +73,28 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 						hInstance,
 						NULL);
 
+	//{//偽物のフルスクリーンの設定
+	//	//デスクトップのサイズを取得
+	//	RECT rcWnd;
+	//	GetClientRect( GetDesktopWindow(), &rcWnd);
+
+	//	// ウィンドウの作成
+	//	hWnd = CreateWindowEx(0,
+	//						CLASS_NAME,
+	//						WINDOW_NAME,
+	//						WS_VISIBLE | WS_POPUP,
+	//						0, 
+	//						0,  
+	//						rcWnd.right + GetSystemMetrics(SM_CXDLGFRAME) * 2,
+	//						rcWnd.bottom + GetSystemMetrics(SM_CXDLGFRAME) * 2 + GetSystemMetrics(SM_CYCAPTION),
+	//						NULL,
+	//						NULL,
+	//						hInstance,
+	//						NULL);
+	//}
+
 	//マネージャの生成
-	CManager::Create( CManager::MODE_TITLE, hInstance, hWnd, true);
+	CManager::Create( CManager::MODE_LIONGAME, hInstance, hWnd, true);
 
 	// 分解能を設定
 	timeBeginPeriod(1);

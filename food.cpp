@@ -11,9 +11,10 @@
 //インクルードファイル
 //============================================
 #include "main.h"
-#include "food.h"
 #include "manager.h"
 #include "renderer.h"
+#include "food.h"
+#include "foodIcon.h"
 
 //============================================
 // マクロ定義
@@ -48,10 +49,13 @@ CFood::~CFood()
 // ポリゴンの初期化処理
 //=============================================================================
 
-HRESULT CFood::Init(D3DXVECTOR3 pos, D3DXVECTOR2 size)
+HRESULT CFood::Init(D3DXVECTOR3 pos, D3DXVECTOR2 size, TYPE type)
 {
 	CBillBoard::Init( pos, size);
 	SetObjType(OBJTYPE_L_FOOD);
+
+	//アイコン
+	m_pIcon = CFoodIcon::Create(D3DXVECTOR3( 50.0f + type * 100.0f, 50.0f, 0.0f), D3DXVECTOR3(100.0f, 100.0f, 0.0f), m_pTexture[type]);
 
 	return S_OK;
 }
@@ -84,8 +88,8 @@ CFood *CFood::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, TYPE type)
 	CFood *pFood;
 	pFood = new CFood;
 
-	pFood->Init(pos, size);
-	
+	pFood->Init(pos, size, type);
+
 	//テクスチャの割り当て
 	pFood->BindTexture( m_pTexture[type]);
 
@@ -141,4 +145,12 @@ void CFood::Unload(void)
 			m_pTexture[cntType] = NULL;
 		}
 	}
+}
+
+//=============================================================================
+//アイコンの取得
+//=============================================================================
+CFoodIcon* CFood::GetIcon(void)
+{
+	return m_pIcon;
 }

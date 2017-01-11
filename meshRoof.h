@@ -1,62 +1,53 @@
 //============================================
 //
 // タイトル:	 未来創造展チーム204
-// プログラム名: food.h
+// プログラム名: meshRoof.h
 // 作成者:		 HAL東京ゲーム学科　劉南宏
-// 作成日:       2016/12/15
+// 作成日:       2017/01/11
 //
 //============================================
 
-#ifndef _FOOD_H_
-#define _FOOD_H_
+#ifndef _MESHROOF_H_
+#define _MESHROOF_H_
 
 //============================================
 //インクルードファイル
 //============================================
-#include "billboard.h"
+#include "scene3D.h"
 
 //============================================
 //マクロ定義
 //============================================
 
 //============================================
-//前方宣言
-//============================================
-class CFoodIcon;
-
-//============================================
 //構造体定義
 //============================================
-class CFood : public CBillBoard
+
+class CMeshRoof : public CScene3D
 {
 public:
-	typedef enum 
+	typedef enum
 	{
-		TYPE_NONE = -1,
-		TYPE_TOMATO,
-		TYPE_CABBAGE,
-		TYPE_MEAT,
+		TYPE_GREEN = 0,
+		TYPE_WHITE,
 		TYPE_MAX,
 	}TYPE;
 
-	CFood();
-	virtual ~CFood();
+	CMeshRoof();
+	virtual ~CMeshRoof();
 
-	HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR2 size, TYPE type);
+	HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ);
 	void Uninit(void);
 	void Update(void);
 	void Draw(void);
 
-	CFoodIcon* GetIcon(void);
+	static CMeshRoof *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ, TYPE type);
 
-	static CFood *Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, TYPE type);
 	static HRESULT Load(void);
 	static void Unload(void);
 
 private:
 	static LPDIRECT3DTEXTURE9 m_pTexture[TYPE_MAX];
-
-	CFoodIcon *m_pIcon;
 };
 
 #endif

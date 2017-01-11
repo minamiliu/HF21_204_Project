@@ -17,8 +17,8 @@
 // マクロ定義
 //============================================
 #define MODEL_FILENAME_1X1 "data/MODEL/cashier.x"
-#define MODEL_FILENAME_1X2 "data/MODEL/cube200.x"
-#define MODEL_FILENAME_1X4 "data/MODEL/cube400.x"
+#define MODEL_FILENAME_1X2 "data/MODEL/shelf200.x"
+#define MODEL_FILENAME_1X4 "data/MODEL/shelf400.x"
 
 //=============================================================================
 // 構造体定義

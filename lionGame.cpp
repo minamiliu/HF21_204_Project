@@ -19,6 +19,7 @@
 #include "camera.h"
 #include "meshField.h"
 #include "meshWall.h"
+#include "meshRoof.h"
 #include "playerX.h"
 #include "collision.h"
 #include "cubeX.h"
@@ -28,6 +29,7 @@
 #include "time.h"
 #include "food.h"
 #include "shadow.h"
+#include "foodIcon.h"
 
 //============================================
 // マクロ定義
@@ -36,7 +38,7 @@
 //============================================
 // 静的メンバー変数の初期化
 //============================================
-CScore *CLionGame::m_score = NULL;
+//CScore *CLionGame::m_score = NULL;
 
 //============================================
 //コンストラクタ
@@ -56,7 +58,12 @@ HRESULT CLionGame::Init(void)
 	m_pCamera->Init();
 
 	//床
-	CMeshField::Create( D3DXVECTOR3( 1000.0f, 0.0f, 750.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 20, 15, 100.0f, 100.0f);
+	CMeshField::Load();
+	CMeshField::Create( D3DXVECTOR3( 1000.0f, 0.0f, 750.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 20, 15, 100.0f, 100.0f, CMeshField::TYPE_GREEN);
+
+	//天井
+	CMeshRoof::Load();
+	CMeshRoof::Create( D3DXVECTOR3( 1000.0f, 300.0f, 750.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 20, 15, 100.0f, 100.0f, CMeshRoof::TYPE_WHITE);
 
 	//ウォール
 	CMeshWall::Load();
@@ -68,7 +75,6 @@ HRESULT CLionGame::Init(void)
 	
 	//棚
 	m_nNumCube = 0;
-	//m_cube[m_nNumCube++] = CCubeX::Create( D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), D3DXVECTOR3( 200.0f, 100.0f, 100.0f));
 	
 	//一番奥 ６個
 	m_cube[m_nNumCube++] = CCubeX::Create( D3DXVECTOR3( 250.0f, 50.0f, 1100.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 100.0f, 100.0f, 400.0f), CCubeX::TYPE_1X4);
@@ -106,7 +112,7 @@ HRESULT CLionGame::Init(void)
 	//CItemX::Create( D3DXVECTOR3( 100.0f, 30.0f, 100.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f));
 
 	//スコア
-	m_score = CScore::Create( D3DXVECTOR3(SCREEN_WIDTH-150, 30.0f, 0.0f), D3DXVECTOR3( 300, 50.0f, 0.0f), 6, RED(1.0f)); 
+	//m_score = CScore::Create( D3DXVECTOR3(SCREEN_WIDTH-150, 30.0f, 0.0f), D3DXVECTOR3( 300, 50.0f, 0.0f), 6, RED(1.0f)); 
 
 	//タイム
 	CTime::Create( D3DXVECTOR3(SCREEN_WIDTH/2, 100.0f, 0.0f), D3DXVECTOR3(140, 70.0f, 0.0f), 2, 0, false, BLUE(1.0f));
@@ -128,21 +134,15 @@ HRESULT CLionGame::Init(void)
 	CEnemyX::Create(D3DXVECTOR3(1550, 30.0f, 1000.0f), D3DXVECTOR3(0.0f, D3DX_PI / 2, 0.0f), D3DXVECTOR3(1.0f, 1.0f, 1.0f));
 	CEnemyX::Create(D3DXVECTOR3(1850, 30.0f, 1000.0f), D3DXVECTOR3(0.0f, D3DX_PI / 2, 0.0f), D3DXVECTOR3(1.0f, 1.0f, 1.0f));
 
-	//スーパーの食べ物
+	//スーパーの食材
 	CFood::Load();
 	CFood::Create(D3DXVECTOR3( 100.0f, 50.0f, 700.0f), D3DXVECTOR2(100.0f, 100.0f), CFood::TYPE_MEAT);
 	CFood::Create(D3DXVECTOR3( 400.0f, 50.0f, 700.0f), D3DXVECTOR2(100.0f, 100.0f), CFood::TYPE_CABBAGE);
 	CFood::Create(D3DXVECTOR3( 700.0f, 50.0f, 700.0f), D3DXVECTOR2(100.0f, 100.0f), CFood::TYPE_TOMATO);
-	CFood::Create(D3DXVECTOR3(1000.0f, 50.0f, 700.0f), D3DXVECTOR2(100.0f, 100.0f), CFood::TYPE_MEAT);
-	CFood::Create(D3DXVECTOR3(1300.0f, 50.0f, 700.0f), D3DXVECTOR2(100.0f, 100.0f), CFood::TYPE_CABBAGE);
-	CFood::Create(D3DXVECTOR3(1600.0f, 50.0f, 700.0f), D3DXVECTOR2(100.0f, 100.0f), CFood::TYPE_TOMATO);
 
-	CFood::Create(D3DXVECTOR3( 100.0f, 50.0f, 1100.0f), D3DXVECTOR2(100.0f, 100.0f), CFood::TYPE_MEAT);
-	CFood::Create(D3DXVECTOR3( 400.0f, 50.0f, 1100.0f), D3DXVECTOR2(100.0f, 100.0f), CFood::TYPE_CABBAGE);
-	CFood::Create(D3DXVECTOR3( 700.0f, 50.0f, 1100.0f), D3DXVECTOR2(100.0f, 100.0f), CFood::TYPE_TOMATO);
-	CFood::Create(D3DXVECTOR3(1000.0f, 50.0f, 1100.0f), D3DXVECTOR2(100.0f, 100.0f), CFood::TYPE_MEAT);
-	CFood::Create(D3DXVECTOR3(1300.0f, 50.0f, 1100.0f), D3DXVECTOR2(100.0f, 100.0f), CFood::TYPE_CABBAGE);
-	CFood::Create(D3DXVECTOR3(1600.0f, 50.0f, 1100.0f), D3DXVECTOR2(100.0f, 100.0f), CFood::TYPE_TOMATO);
+	//食材のアイコン
+	//CFoodIcon::Load();
+	//CFoodIcon::CreateAllFoodIcon();
 
 
 	return S_OK;
@@ -255,7 +255,7 @@ void CLionGame::Draw()
 	CManager::Draw();
 }
 
-CScore *CLionGame::GetScore(void)
-{
-	return m_score;
-}
+//CScore *CLionGame::GetScore(void)
+//{
+//	return m_score;
+//}

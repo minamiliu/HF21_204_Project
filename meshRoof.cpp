@@ -1,9 +1,9 @@
 //============================================
 //
 // タイトル:	 未来創造展チーム204
-// プログラム名: scene3D.cpp
+// プログラム名: meshField.cpp
 // 作成者:		 HAL東京ゲーム学科　劉南宏
-// 作成日:       2016/11/10
+// 作成日:       2016/12/15
 //
 //============================================
 
@@ -11,27 +11,27 @@
 //インクルードファイル
 //============================================
 #include "main.h"
-#include "meshWall.h"
+#include "meshRoof.h"
 #include "renderer.h"
 #include "manager.h"
-#include "input.h"
 
 //============================================
 // マクロ定義
 //============================================
 
-#define TEXTURENAME "data/TEXTURE/wall001.jpg"
+#define TEXTURE_GREEN "data/TEXTURE/field000.jpg"
+#define TEXTURE_WHITE "data/TEXTURE/field001.jpg"
+
 
 //============================================
 // 静的メンバー変数の初期化
 //============================================
-LPDIRECT3DTEXTURE9 CMeshWall::m_pTexture = NULL;
-
+LPDIRECT3DTEXTURE9 CMeshRoof::m_pTexture[TYPE_MAX] = {};
 
 //=============================================================================
 //コンストラクタ
 //=============================================================================
-CMeshWall::CMeshWall()
+CMeshRoof::CMeshRoof()
 {
 
 }
@@ -39,7 +39,7 @@ CMeshWall::CMeshWall()
 //=============================================================================
 //デストラクタ
 //=============================================================================
-CMeshWall::~CMeshWall()
+CMeshRoof::~CMeshRoof()
 {
 	
 }
@@ -49,65 +49,86 @@ CMeshWall::~CMeshWall()
 // ポリゴンの初期化処理
 //=============================================================================
 
-HRESULT CMeshWall::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockY, float fSizeBlockX, float fSizeBlockY)
+HRESULT CMeshRoof::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ)
 {
-	CScene3D::Init( pos, rot, nNumBlockX, nNumBlockY, fSizeBlockX, fSizeBlockY, true);
+	CScene3D::Init( pos, rot, nNumBlockX, nNumBlockZ, fSizeBlockX, fSizeBlockZ, false);
+
 	return S_OK;
 }
 //=============================================================================
 //
 //=============================================================================
-void CMeshWall::Uninit(void)
+void CMeshRoof::Uninit(void)
 {
 	CScene3D::Uninit();
 }
 //=============================================================================
 //
 //=============================================================================
-void CMeshWall::Update(void)
+void CMeshRoof::Update(void)
 {
 	
 }
 //=============================================================================
 //
 //=============================================================================
-void CMeshWall::Draw(void)
-{
+void CMeshRoof::Draw(void)
+{	
+	LPDIRECT3DDEVICE9 pDevice;
+	pDevice = CManager::GetRenderer()->GetDevice();
+
+	//頂点の描画順番を変える
+	pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
+
 	CScene3D::Draw();
+
+	//頂点の描画順番を戻す
+	pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 //=============================================================================
 //
 //=============================================================================
-CMeshWall *CMeshWall::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockY, float fSizeBlockX, float fSizeBlockY)
+CMeshRoof *CMeshRoof::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ, TYPE type)
 {
-	CMeshWall *pMeshWall;
-	pMeshWall = new CMeshWall;
+	CMeshRoof *pMeshField;
+	pMeshField = new CMeshRoof;
 
-	pMeshWall->Init(pos, rot, nNumBlockX, nNumBlockY, fSizeBlockX, fSizeBlockY);
+	pMeshField->Init(pos, rot, nNumBlockX, nNumBlockZ, fSizeBlockX, fSizeBlockZ);
 
 	//テクスチャの割り当て
-	pMeshWall->BindTexture( m_pTexture);
+	pMeshField->BindTexture( m_pTexture[type]);
 
-	return pMeshWall;
+	return pMeshField;
 }
 
-bool CMeshWall::HitCheck( D3DXVECTOR3 tNowPos, D3DXVECTOR3 tNextPos, D3DXVECTOR3 *wall_nor, D3DXVECTOR3 *HitPoint)
-{
-	return CScene3D::HitCheck( tNowPos, tNextPos, wall_nor, HitPoint);
-}
 
 //=============================================================================
 //
 //=============================================================================
-HRESULT CMeshWall::Load(void)
+HRESULT CMeshRoof::Load(void)
 {
-	if( m_pTexture == NULL)
+	for(int cntType = 0; cntType < TYPE_MAX; cntType++)
 	{
-		LPDIRECT3DDEVICE9 pDevice;
-		pDevice = CManager::GetRenderer()->GetDevice();
+		LPCSTR strFileName;
+		switch( cntType)
+		{
+		case TYPE_GREEN:
+			strFileName = TEXTURE_GREEN;
+			break;
 
-		// テクスチャの読み込み
-		D3DXCreateTextureFromFile( pDevice, TEXTURENAME, &m_pTexture);
+		case TYPE_WHITE:
+			strFileName = TEXTURE_WHITE;
+			break;
+		}
+
+		if( m_pTexture[cntType] == NULL)
+		{
+			LPDIRECT3DDEVICE9 pDevice;
+			pDevice = CManager::GetRenderer()->GetDevice();
+
+			// テクスチャの読み込み
+			D3DXCreateTextureFromFile( pDevice, strFileName, &m_pTexture[cntType]);
+		}	
 	}
 
 	return S_OK;
@@ -116,14 +137,18 @@ HRESULT CMeshWall::Load(void)
 //=============================================================================
 //
 //=============================================================================
-void CMeshWall::Unload(void)
+void CMeshRoof::Unload(void)
 {
-	//テクスチャの破棄
-	if( m_pTexture != NULL)
+	for(int cntType = 0; cntType < TYPE_MAX; cntType++)
 	{
-		m_pTexture->Release();
-		m_pTexture = NULL;
+		//テクスチャの破棄
+		if( m_pTexture[cntType] != NULL)
+		{
+			m_pTexture[cntType]->Release();
+			m_pTexture[cntType] = NULL;
+		}	
 	}
+
 }
 
 

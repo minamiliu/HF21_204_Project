@@ -26,6 +26,12 @@
 class CMeshField : public CScene3D
 {
 public:
+	typedef enum
+	{
+		TYPE_GREEN = 0,
+		TYPE_WHITE,
+		TYPE_MAX,
+	}TYPE;
 
 	CMeshField();
 	virtual ~CMeshField();
@@ -35,13 +41,13 @@ public:
 	void Update(void);
 	void Draw(void);
 
-	static CMeshField *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ);
+	static CMeshField *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ, TYPE type);
 
-	//static HRESULT Load(void);
-	//static void Unload(void);
+	static HRESULT Load(void);
+	static void Unload(void);
 
 private:
-	
+	static LPDIRECT3DTEXTURE9 m_pTexture[TYPE_MAX];
 };
 
 #endif

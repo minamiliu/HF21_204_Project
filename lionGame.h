@@ -54,7 +54,7 @@ private:
 	CCubeX *m_cube[MAX_CUBE];
 	int m_nNumCube;
 
-	static CScore *m_score;
+	//static CScore *m_score;
 };
 
 #endif

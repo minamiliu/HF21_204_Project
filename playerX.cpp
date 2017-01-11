@@ -19,11 +19,13 @@
 #include "score.h"
 #include "lionGame.h"
 #include "shadow.h"
+#include "food.h"
+#include "foodIcon.h"
 
 //============================================
 // マクロ定義
 //============================================
-#define MODEL_FILENAME "data/MODEL/mom_body.x"
+#define MODEL_FILENAME "data/MODEL/mom.x"
 #define VALUE_ROTATE	(1.0f) 	// 回転量
 
 #define PLAYER_RADIUS	(20.0f)
@@ -95,7 +97,7 @@ void CPlayerX::Update(void)
 	//移動処理
 	bool isMoved;
 	isMoved = isKeyUse(DIK_W, DIK_S, DIK_A, DIK_D);
-	isMoved = isMouseUse();
+	//isMoved = isMouseUse();
 	if( isMoved == true)
 	{
 		UpdateRot();
@@ -131,7 +133,7 @@ void CPlayerX::Update(void)
 
 			D3DXVECTOR3 posPlayer = GetPosition();
 
-			//食べ物とのあたり判定
+			//食材とのあたり判定
 			if (type == CScene::OBJTYPE_L_FOOD)
 			{
 				D3DXVECTOR3 posFood;
@@ -139,11 +141,15 @@ void CPlayerX::Update(void)
 
 				if (CCollision::HitCheckCircleXZ(posPlayer, PLAYER_RADIUS, posFood, 10.f))
 				{
-					//食べ物の破棄
+					//アイコンの色を変える
+					CFoodIcon *pFoodIcon = ((CFood*)pScene)->GetIcon();
+					pFoodIcon->SetColor(WHITE(1.0f));
+
+					//食材の破棄
 					pScene->Uninit();
 
 					//スコア
-					CLionGame::GetScore()->AddScore(100);
+					//CLionGame::GetScore()->AddScore(100);
 
 					return;
 				}
@@ -466,7 +472,7 @@ void CPlayerX::CalcNextPos(void)
 		m_front.z = m_move.z * cosf( rotPlayer.y);
 
 		//慣性処理
-		m_move -= m_move * 0.25f;	
+		m_move -= m_move * 0.05f;	
 	}
 }
 

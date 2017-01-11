@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -20,14 +20,12 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -89,16 +87,18 @@
     <ClCompile Include="enemyX.cpp" />
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="food.cpp" />
-    <ClCompile Include="lionGame.cpp" />
+    <ClCompile Include="foodIcon.cpp" />
     <ClCompile Include="getScore.cpp" />
     <ClCompile Include="gorira.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="itemX.cpp" />
     <ClCompile Include="light.cpp" />
     <ClCompile Include="lion.cpp" />
+    <ClCompile Include="lionGame.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="manager.cpp" />
     <ClCompile Include="meshField.cpp" />
+    <ClCompile Include="meshRoof.cpp" />
     <ClCompile Include="meshWall.cpp" />
     <ClCompile Include="mousePick.cpp" />
     <ClCompile Include="number.cpp" />
@@ -137,16 +137,18 @@
     <ClInclude Include="enemyX.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="food.h" />
-    <ClInclude Include="lionGame.h" />
+    <ClInclude Include="foodIcon.h" />
     <ClInclude Include="getScore.h" />
     <ClInclude Include="gorira.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="itemX.h" />
     <ClInclude Include="light.h" />
     <ClInclude Include="lion.h" />
+    <ClInclude Include="lionGame.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="manager.h" />
     <ClInclude Include="meshField.h" />
+    <ClInclude Include="meshRoof.h" />
     <ClInclude Include="meshWall.h" />
     <ClInclude Include="mousePick.h" />
     <ClInclude Include="number.h" />
