@@ -26,7 +26,7 @@
 // 構造体定義
 //=============================================================================
 //bool PointFlag = false;
-
+CScene *pScenePick = NULL;
 //=============================================================================
 //コンストラクタ
 //=============================================================================
@@ -87,15 +87,15 @@ void CPoint3D::Update(void)
 	D3DXVECTOR3 pos ;
 	m_3Dpos = CMousePick::GetWorldPos(po);
 	CDebugProc::Print("\nカーソルの場所3D.x.y.z:%f,%f,%f",m_3Dpos.x,m_3Dpos.y,m_3Dpos.z);
-
+	
 	
 	if(CManager::GetInputMouse()->GetMouseLeftTrigger())
 	{
+		
 		//トイの場所取得
 		for(int Cnt=0; Cnt<MAX_SCENE ; Cnt++)
 		{
-
-			CScene *pScene = NULL;
+			CScene *pScene ;
 			pScene = CScene::GetScene(Cnt);
 			if(pScene != NULL)
 			{
@@ -114,49 +114,32 @@ void CPoint3D::Update(void)
 						&& m_3Dpos.z < PosToy.z + SizeToy.z/2.0f 
 						)
 					{
-					
+						pScenePick = pScene;
 						((CToy*)pScene)->ChangePicked(true,m_zebra);
 						
 						return;
 					}
 					
 				}
+				
 			}
+			
 		}
 		
 	}
 	if(CManager::GetInputMouse()->GetMouseLeftRelease())
 	{
 		//トイの場所取得
-		for(int Cnt=0; Cnt<MAX_SCENE ; Cnt++)
-		{
-			CScene *pScene = NULL;
-			pScene = CScene::GetScene(Cnt);
-			if(pScene != NULL)
+		
+			if(pScenePick != NULL)
 			{
-				CScene::OBJTYPE type;
-					type = pScene -> GetObjType();
-					if(type == CScene::OBJTYPE_TOY)
-					{
-						D3DXVECTOR3 PosToy;
-						D3DXVECTOR3 SizeToy = D3DXVECTOR3(50,50,50);
-						PosToy = pScene ->GetPosition();
-
-						//当たった
-						if(	   m_3Dpos.x > PosToy.x - SizeToy.x/2.0f 
-							&& m_3Dpos.x < PosToy.x + SizeToy.x/2.0f 
-							&& m_3Dpos.z > PosToy.z - SizeToy.z/2.0f  
-							&& m_3Dpos.z < PosToy.z + SizeToy.z/2.0f 
-							)
-						{
-					
-							((CToy*)pScene)->ChangePicked(false,m_zebra);
-							return;
-						}
-					
-					}
+	
+				((CToy*)pScenePick)->ChangePicked(false,m_zebra);
+				pScenePick = NULL;
+				return;
+	
 			}
-		}
+		
 	}
 	if(CManager::GetInputMouse()->GetMouseRightTrigger())
 	{

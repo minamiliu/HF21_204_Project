@@ -49,6 +49,7 @@ public:
 	void CToy::BindXfile( int type);
 
 	void CToy::ChangePicked(bool pick, bool zebra);
+	void GetBoxpos(void);
 private:
 	static LPDIRECT3DTEXTURE9	m_pTexture		[MAX_TOYTYPE];		// テクスチャへのポインタ
 	static LPD3DXMESH			m_pD3DXMesh		[MAX_TOYTYPE];		// メッシュ情報へのポインタ
@@ -57,6 +58,7 @@ private:
 	bool m_bPicked;
 	bool m_bZebra;
 	static int m_nNumber;
+	D3DXVECTOR3 m_Move;
 };
 
 #endif

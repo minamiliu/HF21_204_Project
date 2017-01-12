@@ -25,6 +25,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
+#include "toybox.h"
 //============================================
 // マクロ定義
 //============================================
@@ -64,6 +65,8 @@ HRESULT CZebraGame::Init(void)
 		//オブジェクトの生成(Xfile)
 		CToy::Create( D3DXVECTOR3( 5.0f*var-200.0f, 0.0f, 2.0f*var-50.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), 5.0f);
 	}
+	//オブジェクトの生成(3D)
+	CBookBox::Create(D3DXVECTOR3(300.0f,0.0f,300.0f) , D3DXVECTOR3( 0.0f, 0.0f, 0.0f),CBookBox::TYPE_TVSET);
 	//オブジェクトの生成(2Dポリゴン)
 	m_score = CScore::Create( D3DXVECTOR3(150, 100.0f, 0.0f), D3DXVECTOR3( 300, 50.0f, 0.0f), 6, RED(1.0f));
 	m_score->SetScore(1000);

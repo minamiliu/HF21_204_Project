@@ -138,6 +138,9 @@
     <ClCompile Include="trajectory.cpp">
       <Filter>ソース ファイル\TrashGame</Filter>
     </ClCompile>
+    <ClCompile Include="toybox.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -253,6 +256,9 @@
     </ClInclude>
     <ClInclude Include="getScore.h">
       <Filter>ヘッダー ファイル\TrashGame</Filter>
+    </ClInclude>
+    <ClInclude Include="toybox.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

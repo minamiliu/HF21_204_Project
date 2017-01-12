@@ -40,13 +40,16 @@ int CToy::m_nNumber = 0;
 // 構造体定義
 //=============================================================================
 
-
+//=============================================================================
+// グローバル変数
+//============================================================================
+D3DXVECTOR3 boxpos;
 //=============================================================================
 //コンストラクタ
 //=============================================================================
 CToy::CToy()
 {
-
+	
 }
 
 //=============================================================================
@@ -75,6 +78,7 @@ HRESULT CToy::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float spee
 	SetObjType(OBJTYPE_TOY); ;
 	m_bPicked = false;
 	m_bZebra= false;
+	m_Move = D3DXVECTOR3(0.0f,0.0f,0.0f);
 	return S_OK;
 }
 
@@ -123,12 +127,21 @@ HRESULT CToy::LoadXfile(LPCSTR strFileName, int nCnt)
 }
 
 //=============================================================================
-//xファイルの設定
+//クリックされたとき
 //=============================================================================
 void CToy::ChangePicked(bool pick, bool zebra)	
 {
+	D3DXVECTOR3 pos;
+	pos = CSceneX::GetPosition();
 	m_bPicked = pick;
 	m_bZebra = zebra ;
+	if(m_bPicked == true && m_bZebra == true)
+	{
+		
+		//現在位置と箱の位置から、速度を算出
+
+		m_Move = boxpos-pos;
+	}
 }
 //=============================================================================
 //
@@ -147,6 +160,7 @@ void CToy::Update(void)
 	pos = CSceneX::GetPosition();
 	CScore *pScore;
 	pScore = CZebraGame::GetScoreP();
+	GetBoxpos();
 	CDebugProc::Print("\nトイの場所.x.y.z:%f,%f,%f",pos.x,pos.y,pos.z);
 	if(m_bPicked == true && m_bZebra == false)
 	{
@@ -166,16 +180,34 @@ void CToy::Update(void)
 					
 					Cursorpos.y = 20.0f;
 					pos = Cursorpos;
+					if(pos.x <= -400.0f)
+					{
+						pos.x = -400.0f;
+					}
+					if(pos.x >= 400.0f)
+					{
+						pos.x = 400.0f;
+					}
+					if(pos.z >= 400.0f)
+					{
+						pos.z = 400.0f;
+					}
 					CSceneX::SetPosition(pos);
 					return;
 				}
 			}
 		}	
 	}
-
-	if(m_bPicked == true && m_bZebra == true)
+	//ゼブラモード
+	if( m_bZebra == true)
 	{
-		CDebugProc::Print("\nゼブラ");
+		m_Move.y = 30.0f;
+		pos += m_Move/100.0f;
+		CSceneX::SetPosition(pos);
+		if(boxpos.x<pos.x)
+		{
+			m_bZebra = false;
+		}
 	}
 	else if(m_bPicked == false)
 	{
@@ -184,9 +216,9 @@ void CToy::Update(void)
 			pos.y -= 3.0f;
 			CSceneX::SetPosition(pos);
 		}
-		if(pos.z >200.0)
+		if(pos.z >200.0 && pos.y <= 0.0f)
 		{
-			pScore ->AddScore (100);
+			pScore -> AddScore (100);
 			Uninit();
 		}
 	}
@@ -210,4 +242,25 @@ CToy *CToy::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float spee
 	pToy->Init(pos, rot, scl, speed);
 
 	return pToy;
+}
+
+//=============================================================================
+////箱の位置を取得
+//=============================================================================
+void CToy::GetBoxpos(void)
+{
+	for(int Cnt=0; Cnt<MAX_SCENE ; Cnt++)
+	{
+		CScene *pScene;
+		pScene = CScene::GetScene(Cnt);
+		if(pScene != NULL)
+		{
+			CScene::OBJTYPE type;
+			type = pScene -> GetObjType();
+			if(type == CScene::OBJTYPE_TOYBOX)
+			{
+				boxpos = pScene -> GetPosition();
+			}
+		}
+	}	
 }
