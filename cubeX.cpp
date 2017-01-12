@@ -48,6 +48,7 @@ CCubeX::~CCubeX()
 HRESULT CCubeX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, D3DXVECTOR3 sideLen, TYPE type)
 {
 	m_sideLen = sideLen;
+	m_type = type;
 	
 	switch( type)
 	{
@@ -80,7 +81,7 @@ void CCubeX::Uninit(void)
 //=============================================================================
 void CCubeX::Update(void)
 {
-
+	
 }
 
 //=============================================================================
@@ -103,6 +104,9 @@ CCubeX *CCubeX::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 sideLen, TY
 	return pCube;
 }
 
+//=============================================================================
+//
+//=============================================================================
 D3DXVECTOR3 CCubeX::GetSideMin(void)
 {
 	D3DXVECTOR3 sideMin = this->GetPosition();
@@ -113,6 +117,9 @@ D3DXVECTOR3 CCubeX::GetSideMin(void)
 	return sideMin;
 }
 
+//=============================================================================
+//
+//=============================================================================
 D3DXVECTOR3 CCubeX::GetSideMax(void)
 {
 	D3DXVECTOR3 sideMax = this->GetPosition();
@@ -123,6 +130,9 @@ D3DXVECTOR3 CCubeX::GetSideMax(void)
 	return sideMax;
 }
 
+//=============================================================================
+//
+//=============================================================================
 float CCubeX::GetDistanceBoxPoint(D3DXVECTOR3 point)
 {
 	float distance = 0.0f;   // í∑Ç≥ÇÃÇ◊Ç´èÊÇÃílÇäiî[
@@ -170,4 +180,12 @@ float CCubeX::GetDistanceBoxPoint(D3DXVECTOR3 point)
 	distance = sqrtf(distance);
 
 	return distance;
+}
+
+//=============================================================================
+//
+//=============================================================================
+CCubeX::TYPE CCubeX::GetType(void)
+{
+	return m_type;
 }

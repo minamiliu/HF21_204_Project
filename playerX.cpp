@@ -155,9 +155,14 @@ void CPlayerX::Update(void)
 
 				if (CCollision::HitCheckCircleXZ(posPlayer, PLAYER_RADIUS, posFood, 10.f))
 				{
+					CFood *pFood = ((CFood*)pScene);
+
 					//アイコンの色を変える
-					CFoodIcon *pFoodIcon = ((CFood*)pScene)->GetIcon();
+					CFoodIcon *pFoodIcon = pFood->GetIcon();
 					pFoodIcon->SetColor(WHITE(1.0f));
+
+					//食材ゲット
+					pFood->SetClear();
 
 					//食材の破棄
 					pScene->Uninit();
@@ -205,18 +210,6 @@ void CPlayerX::Update(void)
 	}
 
 	//手足
-	//m_posLHand.x = this->GetPosition().x + 8 * sinf(this->GetRot().y + D3DX_PI / 2.0f);
-	//m_posLHand.z = this->GetPosition().z + 8 * cosf(this->GetRot().y + D3DX_PI / 2.0f);
-	//m_pLHand->SetPosition(m_posLHand);
-	//m_pLHand->SetRot(this->GetRot());
-	//m_pLHand->Update();
-
-	//m_posRHand.x = this->GetPosition().x - 8 * sinf(this->GetRot().y + D3DX_PI / 2.0f);
-	//m_posRHand.z = this->GetPosition().z - 8 * cosf(this->GetRot().y + D3DX_PI / 2.0f);
-	//m_pRHand->SetPosition(m_posRHand);
-	//m_pRHand->SetRot(this->GetRot());
-	//m_pRHand->Update();
-
 	m_pLHand->SetPosition(this->GetPosition());
 	m_pLHand->SetRot(this->GetRot());
 	m_pLHand->Update();

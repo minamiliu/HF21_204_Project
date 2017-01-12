@@ -48,15 +48,19 @@ public:
 	void Draw(void);
 
 	CFoodIcon* GetIcon(void);
+	void SetClear(void);
 
 	static CFood *Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, TYPE type);
 	static HRESULT Load(void);
 	static void Unload(void);
+	static bool isAllClear(void);
 
 private:
 	static LPDIRECT3DTEXTURE9 m_pTexture[TYPE_MAX];
 
 	CFoodIcon *m_pIcon;
+	TYPE m_type;
+	static bool bClear[TYPE_MAX];
 };
 
 #endif

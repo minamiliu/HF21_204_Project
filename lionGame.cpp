@@ -196,12 +196,21 @@ void CLionGame::Update()
 	{
 		if( bHitCube == true)
 		{
+			//ƒŒƒW‚É‚¢‚½‚ç
+			if( m_cube[nIDCube]->GetType() == CCubeX::TYPE_1X1)
+			{
+				if( CFood::isAllClear() == true)
+				{
+					SetNextScene( MODE_RESULT);
+				}
+			}
+
+			//•Ç‚¸‚è
 			D3DXVECTOR3 vecX = D3DXVECTOR3( 1.0f, 0.0f, 0.0f);
 			D3DXVECTOR3 vecZ = D3DXVECTOR3( 0.0f, 0.0f, 1.0f);
 			CCollision::GetWallScratchVector( &vecX, front, vecX);
 			CCollision::GetWallScratchVector( &vecZ, front, vecZ);
 			
-
 			if( m_cube[nIDCube]->GetDistanceBoxPoint( m_player->GetPosition() + vecX) >= 15.0f)
 			{
 				m_player->SetPosition( posP + vecX);

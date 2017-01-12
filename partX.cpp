@@ -89,28 +89,24 @@ HRESULT CPartX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, TYPE typ
 	{
 	case TYPE_L_HAND:
 		strFileName = MODEL_FILENAME_L_HAND;
-		//m_rotXLocal = D3DXToRadian(30);
 		m_rotLocal = D3DXVECTOR3( D3DXToRadian(30.0f), 0.0f, 0.0f);
 		m_posLocal = D3DXVECTOR3( 8, -15, 0);
 		m_nMotionNow = 0;
 		break;
 	case TYPE_R_HAND:
 		strFileName = MODEL_FILENAME_R_HAND;
-		//m_rotXLocal = D3DXToRadian(-30);
 		m_rotLocal = D3DXVECTOR3( D3DXToRadian(-30.0f), 0.0f, 0.0f);
 		m_posLocal = D3DXVECTOR3( -8, -15, 0);
 		m_nMotionNow = 1;
 		break;
 	case TYPE_L_FOOT:
 		strFileName = MODEL_FILENAME_L_FOOT;
-		//m_rotXLocal = D3DXToRadian(-30);
 		m_rotLocal = D3DXVECTOR3( D3DXToRadian(-30.0f), 0.0f, 0.0f);
 		m_posLocal = D3DXVECTOR3( 4, -35, 0);
 		m_nMotionNow = 1;
 		break;
 	case TYPE_R_FOOT:
 		strFileName = MODEL_FILENAME_R_FOOT;
-		//m_rotXLocal = D3DXToRadian(30);
 		m_rotLocal = D3DXVECTOR3( D3DXToRadian(30.0f), 0.0f, 0.0f);
 		m_posLocal = D3DXVECTOR3( -4, -35, 0);
 		m_nMotionNow = 0;
@@ -228,27 +224,12 @@ void CPartX::Update(void)
 	//CDebugProc::Print("posZ = %f\n", m_pos.z);
 	//CDebugProc::Print("rotY = %f\n", m_rot.y);
 
-	//switch(m_type)
-	//{
-	//case TYPE_L_HAND:
-
-	//	break;
-	//case TYPE_R_HAND:
-
-	//	break;
-	//case TYPE_L_FOOT:
-
-	//	break;
-	//case TYPE_R_FOOT:
-
-	//	break;
-	//}
-
 	//ローカル座標の更新
-	m_pos += m_posLocal;
+	m_pos.x +=  m_posLocal.x * sinf(this->GetRot().y + D3DX_PI / 2.0f);
+	m_pos.z +=  m_posLocal.x * cosf(this->GetRot().y + D3DX_PI / 2.0f);
+	m_pos.y += m_posLocal.y;
 
 	//向き
-	//m_rotXLocal += m_rotXTurn;
 	m_rotLocal.x += m_rotXTurn;
 	m_rot += m_rotLocal;
 

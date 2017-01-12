@@ -27,7 +27,7 @@
 // 静的メンバー変数の初期化
 //============================================
 LPDIRECT3DTEXTURE9 CFood::m_pTexture[TYPE_MAX] = {};
-
+bool CFood::bClear[TYPE_MAX] = {false};
 //=============================================================================
 //コンストラクタ
 //=============================================================================
@@ -53,6 +53,9 @@ HRESULT CFood::Init(D3DXVECTOR3 pos, D3DXVECTOR2 size, TYPE type)
 {
 	CBillBoard::Init( pos, size);
 	SetObjType(OBJTYPE_L_FOOD);
+
+	m_type = type;
+	bClear[type] = false;
 
 	//アイコン
 	m_pIcon = CFoodIcon::Create(D3DXVECTOR3( 50.0f + type * 100.0f, 50.0f, 0.0f), D3DXVECTOR3(100.0f, 100.0f, 0.0f), m_pTexture[type]);
@@ -153,4 +156,28 @@ void CFood::Unload(void)
 CFoodIcon* CFood::GetIcon(void)
 {
 	return m_pIcon;
+}
+
+//=============================================================================
+//食材をゲット
+//=============================================================================
+void CFood::SetClear(void)
+{
+	bClear[m_type] = true;
+}
+
+//=============================================================================
+//食材を全部ゲットしたか
+//=============================================================================
+bool CFood::isAllClear(void)
+{
+	//check
+	for(int cntType = 0; cntType < TYPE_MAX; cntType++)
+	{
+		if( bClear[cntType] == false)
+		{
+			return false;
+		}
+	}
+	return true;
 }

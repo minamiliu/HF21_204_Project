@@ -43,6 +43,7 @@ public:
 	void Draw(void);
 
 	float GetDistanceBoxPoint(D3DXVECTOR3 point);
+	TYPE GetType(void);
 
 	static HRESULT Load(void);
 	static void Unload(void);
