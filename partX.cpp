@@ -14,15 +14,25 @@
 #include "partX.h"
 #include "renderer.h"
 #include "manager.h"
+#include "playerX.h"
 
 //============================================
 // マクロ定義
 //============================================
+#define MODEL_FILENAME_L_HAND	"data/MODEL/mom_L_hand.x"
+#define MODEL_FILENAME_R_HAND	"data/MODEL/mom_R_hand.x"
+#define MODEL_FILENAME_L_FOOT	"data/MODEL/mom_L_foot.x"
+#define MODEL_FILENAME_R_FOOT	"data/MODEL/mom_R_foot.x"
+#define MAX_MOTION (2)
 
 //=============================================================================
 // 構造体定義
 //=============================================================================
 
+//============================================
+// 静的メンバー変数の初期化
+//============================================
+CPartX::MOTION *CPartX::m_pMotionPara = NULL;
 
 //=============================================================================
 //コンストラクタ
@@ -53,22 +63,69 @@ CPartX::~CPartX()
 //=============================================================================
 // ポリゴンの初期化処理
 //=============================================================================
-HRESULT CPartX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, LPCSTR strFileName)
+HRESULT CPartX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, TYPE type)
 {
 	LPDIRECT3DDEVICE9 pDevice;
 	pDevice = CManager::GetRenderer()->GetDevice();
-
-	// 位置・回転・スケールの初期設定
-	m_pos = pos;
-	m_rot = rot;
-	m_scl = scl;
 
 	// モデルに関する変数の初期化							
 	m_pTexture = NULL;		// テクスチャへのポインタ
 	m_pD3DXMesh = NULL;		// メッシュ情報へのポインタ
 	m_pD3DXBuffMat = NULL;	// マテリアル情報へのポインタ
 	m_nNumMat = 0;			// マテリアル情報の数
-							// Xファイルの読み込み
+
+	//モーション
+	m_pMotionPara = new MOTION[MAX_MOTION];
+	
+	m_pMotionPara[0].nFrame = 30;
+	m_pMotionPara[0].rotX = D3DXToRadian(-60.0f);
+
+	m_pMotionPara[1].nFrame = 30;
+	m_pMotionPara[1].rotX = D3DXToRadian(60.0f);
+
+	//TYPEことの初期化
+	LPCSTR strFileName;
+	switch(type)
+	{
+	case TYPE_L_HAND:
+		strFileName = MODEL_FILENAME_L_HAND;
+		//m_rotXLocal = D3DXToRadian(30);
+		m_rotLocal = D3DXVECTOR3( D3DXToRadian(30.0f), 0.0f, 0.0f);
+		m_posLocal = D3DXVECTOR3( 8, -15, 0);
+		m_nMotionNow = 0;
+		break;
+	case TYPE_R_HAND:
+		strFileName = MODEL_FILENAME_R_HAND;
+		//m_rotXLocal = D3DXToRadian(-30);
+		m_rotLocal = D3DXVECTOR3( D3DXToRadian(-30.0f), 0.0f, 0.0f);
+		m_posLocal = D3DXVECTOR3( -8, -15, 0);
+		m_nMotionNow = 1;
+		break;
+	case TYPE_L_FOOT:
+		strFileName = MODEL_FILENAME_L_FOOT;
+		//m_rotXLocal = D3DXToRadian(-30);
+		m_rotLocal = D3DXVECTOR3( D3DXToRadian(-30.0f), 0.0f, 0.0f);
+		m_posLocal = D3DXVECTOR3( 4, -35, 0);
+		m_nMotionNow = 1;
+		break;
+	case TYPE_R_FOOT:
+		strFileName = MODEL_FILENAME_R_FOOT;
+		//m_rotXLocal = D3DXToRadian(30);
+		m_rotLocal = D3DXVECTOR3( D3DXToRadian(30.0f), 0.0f, 0.0f);
+		m_posLocal = D3DXVECTOR3( -4, -35, 0);
+		m_nMotionNow = 0;
+		break;
+	}
+
+	//初期設定
+	m_pos = pos + m_posLocal;
+	m_rot = rot + m_rotLocal;
+	m_scl = scl;
+	m_type = type;
+	m_nCntFrame = 0;
+	m_rotXTurn = m_pMotionPara[m_nMotionNow].rotX / m_pMotionPara[m_nMotionNow].nFrame;
+	
+	// Xファイルの読み込み
 	if (FAILED(D3DXLoadMeshFromX(
 		strFileName,			// 読み込むモデルファイル名(Xファイル)
 		D3DXMESH_SYSTEMMEM,		// メッシュの作成オプションを指定
@@ -82,7 +139,6 @@ HRESULT CPartX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, LPCSTR s
 	{
 		return E_FAIL;
 	}
-
 
 	return S_OK;
 }
@@ -171,6 +227,39 @@ void CPartX::Update(void)
 	//CDebugProc::Print("\nposX = %f\n", m_pos.x);
 	//CDebugProc::Print("posZ = %f\n", m_pos.z);
 	//CDebugProc::Print("rotY = %f\n", m_rot.y);
+
+	//switch(m_type)
+	//{
+	//case TYPE_L_HAND:
+
+	//	break;
+	//case TYPE_R_HAND:
+
+	//	break;
+	//case TYPE_L_FOOT:
+
+	//	break;
+	//case TYPE_R_FOOT:
+
+	//	break;
+	//}
+
+	//ローカル座標の更新
+	m_pos += m_posLocal;
+
+	//向き
+	//m_rotXLocal += m_rotXTurn;
+	m_rotLocal.x += m_rotXTurn;
+	m_rot += m_rotLocal;
+
+	//モーション更新処理
+	m_nCntFrame++;
+	if( m_nCntFrame >= m_pMotionPara[m_nMotionNow].nFrame)
+	{
+		m_nMotionNow = (m_nMotionNow + 1) % MAX_MOTION;
+		m_rotXTurn = m_pMotionPara[m_nMotionNow].rotX / m_pMotionPara[m_nMotionNow].nFrame;
+		m_nCntFrame = 0;
+	}
 }
 
 //=============================================================================
@@ -225,11 +314,11 @@ void CPartX::Draw(void)
 //=============================================================================
 //
 //=============================================================================
-CPartX *CPartX::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, LPCSTR strFileName)
+CPartX *CPartX::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, TYPE type)
 {
 	CPartX *pSceneX;
 	pSceneX = new CPartX;
-	pSceneX->Init(pos, rot, scl, strFileName);
+	pSceneX->Init(pos, rot, scl, type);
 
 	return pSceneX;
 }

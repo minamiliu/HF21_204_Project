@@ -75,10 +75,11 @@ private:
 	CShadow *m_shadow;			//‰e
 
 	//Žè‘«
-	CPartX *m_pRHand;
-	D3DXVECTOR3 m_posRHand;
 	CPartX *m_pLHand;
-	D3DXVECTOR3 m_posLHand;
+	CPartX *m_pRHand;
+	CPartX *m_pLFoot;
+	CPartX *m_pRFoot;
+
 };
 
 #endif

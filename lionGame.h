@@ -27,6 +27,7 @@ class CPlayerX;
 class CMeshWall;
 class CCubeX;
 class CScore;
+class CTime;
 //============================================
 //ç\ë¢ëÃíËã`
 //============================================
@@ -54,6 +55,7 @@ private:
 	CCubeX *m_cube[MAX_CUBE];
 	int m_nNumCube;
 
+	CTime *m_pTime;
 	//static CScore *m_score;
 };
 

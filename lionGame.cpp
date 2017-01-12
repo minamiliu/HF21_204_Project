@@ -55,6 +55,7 @@ CLionGame::~CLionGame()
 
 HRESULT CLionGame::Init(void)
 {
+	//カメラの初期化
 	m_pCamera->Init();
 
 	//床
@@ -115,7 +116,7 @@ HRESULT CLionGame::Init(void)
 	//m_score = CScore::Create( D3DXVECTOR3(SCREEN_WIDTH-150, 30.0f, 0.0f), D3DXVECTOR3( 300, 50.0f, 0.0f), 6, RED(1.0f)); 
 
 	//タイム
-	CTime::Create( D3DXVECTOR3(SCREEN_WIDTH/2, 100.0f, 0.0f), D3DXVECTOR3(140, 70.0f, 0.0f), 2, 0, false, BLUE(1.0f));
+	m_pTime = CTime::Create( D3DXVECTOR3(SCREEN_WIDTH/2, 100.0f, 0.0f), D3DXVECTOR3(140, 70.0f, 0.0f), 2, 99, true, BLUE(1.0f));
 
 	//敵
 	CEnemyX::Create(D3DXVECTOR3(  50, 30.0f, 600.0f), D3DXVECTOR3(0.0f, D3DX_PI / 2, 0.0f), D3DXVECTOR3(1.0f, 1.0f, 1.0f));
@@ -139,10 +140,6 @@ HRESULT CLionGame::Init(void)
 	CFood::Create(D3DXVECTOR3( 100.0f, 50.0f, 700.0f), D3DXVECTOR2(100.0f, 100.0f), CFood::TYPE_MEAT);
 	CFood::Create(D3DXVECTOR3( 400.0f, 50.0f, 700.0f), D3DXVECTOR2(100.0f, 100.0f), CFood::TYPE_CABBAGE);
 	CFood::Create(D3DXVECTOR3( 700.0f, 50.0f, 700.0f), D3DXVECTOR2(100.0f, 100.0f), CFood::TYPE_TOMATO);
-
-	//食材のアイコン
-	//CFoodIcon::Load();
-	//CFoodIcon::CreateAllFoodIcon();
 
 
 	return S_OK;
@@ -238,6 +235,11 @@ void CLionGame::Update()
 		}
 	}
 
+	//Time Up
+	if(m_pTime->TimeUp())
+	{
+		SetNextScene( MODE_RESULT);
+	}
 
 
 	//スキップシーン
