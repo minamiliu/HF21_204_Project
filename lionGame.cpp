@@ -30,6 +30,7 @@
 #include "food.h"
 #include "shadow.h"
 #include "foodIcon.h"
+#include "meshDome.h"
 
 //============================================
 // マクロ定義
@@ -58,21 +59,25 @@ HRESULT CLionGame::Init(void)
 	//カメラの初期化
 	m_pCamera->Init();
 
+	//ドーム
+	CMeshDome::Create( D3DXVECTOR3( 1000.0f, 0.0f, 750.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 1500.0f, 32, 32);
+	CMeshDome::Create( D3DXVECTOR3( 1000.0f, 0.0f, 750.0f), D3DXVECTOR3( 0.0f, 0.0f, D3DX_PI), 1500.0f, 32, 32);
+
 	//床
 	CMeshField::Load();
 	CMeshField::Create( D3DXVECTOR3( 1000.0f, 0.0f, 750.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 20, 15, 100.0f, 100.0f, CMeshField::TYPE_GREEN);
 
 	//天井
 	CMeshRoof::Load();
-	CMeshRoof::Create( D3DXVECTOR3( 1000.0f, 300.0f, 750.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 20, 15, 100.0f, 100.0f, CMeshRoof::TYPE_WHITE);
+	CMeshRoof::Create( D3DXVECTOR3( 1000.0f, 300.0f, 750.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 10, 8, 200.0f, 200.0f, CMeshRoof::TYPE_WHITE);
 
 	//ウォール
-	CMeshWall::Load();
-	m_nNumWall = 0;
-	m_pMeshWall[m_nNumWall++] = CMeshWall::Create( D3DXVECTOR3( 1000.0f, 100.0f, 1500.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 21, 4, 100.0f, 100.0f);
-	m_pMeshWall[m_nNumWall++] = CMeshWall::Create( D3DXVECTOR3( 1000.0f, 100.0f, 0.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(180.0f), 0.0f), 21, 4, 100.0f, 100.0f);
-	m_pMeshWall[m_nNumWall++] = CMeshWall::Create( D3DXVECTOR3( 2000.0f, 100.0f, 750.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(90.0f), 0.0f), 16, 4, 100.0f, 100.0f);
-	m_pMeshWall[m_nNumWall++] = CMeshWall::Create( D3DXVECTOR3( 0.0f, 100.0f, 750.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(-90.0f), 0.0f), 16, 4, 100.0f, 100.0f);
+	//CMeshWall::Load();
+	//m_nNumWall = 0;
+	//m_pMeshWall[m_nNumWall++] = CMeshWall::Create( D3DXVECTOR3( 1000.0f, 100.0f, 1500.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 21, 4, 100.0f, 100.0f);
+	//m_pMeshWall[m_nNumWall++] = CMeshWall::Create( D3DXVECTOR3( 1000.0f, 100.0f, 0.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(180.0f), 0.0f), 21, 4, 100.0f, 100.0f);
+	//m_pMeshWall[m_nNumWall++] = CMeshWall::Create( D3DXVECTOR3( 2000.0f, 100.0f, 750.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(90.0f), 0.0f), 16, 4, 100.0f, 100.0f);
+	//m_pMeshWall[m_nNumWall++] = CMeshWall::Create( D3DXVECTOR3( 0.0f, 100.0f, 750.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(-90.0f), 0.0f), 16, 4, 100.0f, 100.0f);
 	
 	//棚
 	m_nNumCube = 0;

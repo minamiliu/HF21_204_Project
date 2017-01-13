@@ -20,7 +20,7 @@
 //============================================
 
 #define TEXTURE_GREEN "data/TEXTURE/field000.jpg"
-#define TEXTURE_WHITE "data/TEXTURE/field001.jpg"
+#define TEXTURE_WHITE "data/TEXTURE/field007.jpg"
 
 
 //============================================

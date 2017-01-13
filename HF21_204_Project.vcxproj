@@ -97,6 +97,7 @@
     <ClCompile Include="lionGame.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="manager.cpp" />
+    <ClCompile Include="meshDome.cpp" />
     <ClCompile Include="meshField.cpp" />
     <ClCompile Include="meshRoof.cpp" />
     <ClCompile Include="meshWall.cpp" />
@@ -147,6 +148,7 @@
     <ClInclude Include="lionGame.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="manager.h" />
+    <ClInclude Include="meshDome.h" />
     <ClInclude Include="meshField.h" />
     <ClInclude Include="meshRoof.h" />
     <ClInclude Include="meshWall.h" />
