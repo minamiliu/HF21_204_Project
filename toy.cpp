@@ -64,7 +64,7 @@ CToy::~CToy()
 HRESULT CToy::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float speed)
 {
 	m_nNumber++;
-	CSceneX::Init( pos, rot, scl, MODEL_FILENAME);
+	CSceneX::Init( pos, rot, scl);
 
 	LoadXfile(MODEL_FILENAME,TYPE_ROBOT);
 	LoadXfile(MODEL_BOOK,TYPE_BLOCK);

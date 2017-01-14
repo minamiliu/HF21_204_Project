@@ -56,7 +56,7 @@ CSceneX::~CSceneX()
 //=============================================================================
 // ポリゴンの初期化処理
 //=============================================================================
-HRESULT CSceneX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, LPCSTR strFileName)
+HRESULT CSceneX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl)
 {
 	LPDIRECT3DDEVICE9 pDevice;
 	pDevice = CManager::GetRenderer()->GetDevice();
@@ -66,27 +66,6 @@ HRESULT CSceneX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, LPCSTR 
 	m_rot = rot;
 	m_scl = scl;
 	
-	// モデルに関する変数の初期化							
-	m_pTexture = NULL;		// テクスチャへのポインタ
-	m_pD3DXMesh = NULL;		// メッシュ情報へのポインタ
-	m_pD3DXBuffMat = NULL;	// マテリアル情報へのポインタ
-	m_nNumMat = 0;			// マテリアル情報の数
-	// Xファイルの読み込み
-	if(FAILED(D3DXLoadMeshFromX(
-		strFileName,			// 読み込むモデルファイル名(Xファイル)
-		D3DXMESH_SYSTEMMEM,		// メッシュの作成オプションを指定
-		pDevice,				// IDirect3DDevice9インターフェイスへのポインタ
-		NULL,					// 隣接性データを含むバッファへのポインタ
-		&m_pD3DXBuffMat,		// マテリアルデータを含むバッファへのポインタ
-		NULL,					// エフェクトインスタンスの配列を含むバッファへのポインタ
-		&m_nNumMat,				// D3DXMATERIAL構造体の数
-		&m_pD3DXMesh			// ID3DXMeshインターフェイスへのポインタのアドレス
-		)))
-	{
-		return E_FAIL;
-	}	
-
-
 	return S_OK;
 }
 
@@ -119,6 +98,8 @@ HRESULT CSceneX::LoadXfile(LPCSTR strFileName)
 		return E_FAIL;
 	}	
 
+	//Xファイルの読み込みフラグ
+	m_bLoadXfile = true;
 	
 	return S_OK;
 }
@@ -130,20 +111,20 @@ HRESULT CSceneX::LoadXfile(LPCSTR strFileName)
 void CSceneX::Uninit(void)
 {
 	// テクスチャの開放
-	if(m_pTexture != NULL)
+	if(m_pTexture != NULL && m_bLoadXfile == true)
 	{
 		m_pTexture->Release();
 		m_pTexture = NULL;
 	}
 
 	// メッシュの開放
-	if(m_pD3DXMesh != NULL)
+	if(m_pD3DXMesh != NULL && m_bLoadXfile == true)
 	{
 		m_pD3DXMesh->Release();
 		m_pD3DXMesh = NULL;
 	}
 	// マテリアルの開放
-	if(m_pD3DXBuffMat != NULL)
+	if(m_pD3DXBuffMat != NULL && m_bLoadXfile == true)
 	{
 		m_pD3DXBuffMat->Release();
 		m_pD3DXBuffMat = NULL;
@@ -155,16 +136,15 @@ void CSceneX::Uninit(void)
 //=============================================================================
 // Xファイルを割り当てる
 //=============================================================================
-void CSceneX::BindXfile(LPDIRECT3DTEXTURE9	pTexture,		// テクスチャへのポインタ
-						LPD3DXMESH			pD3DXMesh,			// メッシュ情報へのポインタ
-						LPD3DXBUFFER		pD3DXBuffMat,		// マテリアル情報へのポインタ
-						DWORD				nNumMat
-						)					// マテリアル情報の数
+void CSceneX::BindXfile(LPDIRECT3DTEXTURE9	pTexture,	// テクスチャへのポインタ
+						LPD3DXMESH  pD3DXMesh,			// メッシュ情報へのポインタ
+						LPD3DXBUFFER  pD3DXBuffMat,		// マテリアル情報へのポインタ
+						DWORD	nNumMat)				// マテリアル情報の数
 {
-	m_pTexture		= pTexture;				
-	m_pD3DXMesh		= pD3DXMesh;		
-	m_pD3DXBuffMat	= pD3DXBuffMat;		
-	m_nNumMat		= nNumMat	;		
+	m_pTexture		= pTexture;
+	m_pD3DXMesh		= pD3DXMesh;
+	m_pD3DXBuffMat	= pD3DXBuffMat;
+	m_nNumMat		= nNumMat;
 }
 //=============================================================================
 //
@@ -232,7 +212,10 @@ CSceneX *CSceneX::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, LPCS
 {
 	CSceneX *pSceneX;
 	pSceneX = new CSceneX;
-	pSceneX->Init(pos, rot, scl, strFileName);
+	pSceneX->Init(pos, rot, scl);
+
+	//Xファイルの読み込み
+	pSceneX->LoadXfile(strFileName);
 
 	return pSceneX;
 }
@@ -244,7 +227,7 @@ D3DXVECTOR3 CSceneX::GetPosition(void)
 
 D3DXVECTOR3 CSceneX::GetSize(void)
 {
-	return m_size;
+	return m_scl;
 }
 D3DXVECTOR3 CSceneX::GetRot(void)
 {
@@ -256,9 +239,9 @@ void CSceneX::SetPosition( D3DXVECTOR3 pos)
 	m_pos = pos;
 }
 
-void CSceneX::SetSize( D3DXVECTOR3 size)
+void CSceneX::SetSize( D3DXVECTOR3 scl)
 {
-	m_size = size;
+	m_scl = scl;
 }
 
 void CSceneX::SetRot( D3DXVECTOR3 rot)

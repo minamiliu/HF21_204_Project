@@ -19,9 +19,17 @@
 //============================================
 // マクロ定義
 //============================================
-#define TEXTURE_TOMATO	"data/TEXTURE/tomato.png"
-#define TEXTURE_CABBAGE "data/TEXTURE/cabbage.png"
-#define TEXTURE_MEAT	"data/TEXTURE/meat.png"
+#define TEXTURE_TOMATO	"data/TEXTURE/LionGame/tomato.png"
+#define TEXTURE_CARROT  "data/TEXTURE/LionGame/carrot.png"
+#define TEXTURE_BANANA	"data/TEXTURE/LionGame/banana.png"
+#define TEXTURE_MILK	"data/TEXTURE/LionGame/milk.png"
+#define TEXTURE_CABBAGE	"data/TEXTURE/LionGame/cabbage.png"
+#define TEXTURE_CURRY	"data/TEXTURE/LionGame/curry.png"
+#define TEXTURE_EGG		"data/TEXTURE/LionGame/egg.png"
+#define TEXTURE_ONION	"data/TEXTURE/LionGame/onion.png"
+#define TEXTURE_POTATO	"data/TEXTURE/LionGame/potato.png"
+#define TEXTURE_MEAT	"data/TEXTURE/LionGame/meat.png"
+
 
 //============================================
 // 静的メンバー変数の初期化
@@ -58,7 +66,7 @@ HRESULT CFood::Init(D3DXVECTOR3 pos, D3DXVECTOR2 size, TYPE type)
 	bClear[type] = false;
 
 	//アイコン
-	m_pIcon = CFoodIcon::Create(D3DXVECTOR3( 50.0f + type * 100.0f, 50.0f, 0.0f), D3DXVECTOR3(100.0f, 100.0f, 0.0f), m_pTexture[type]);
+	m_pIcon = CFoodIcon::Create(D3DXVECTOR3(100.0f, 100.0f, 0.0f), m_pTexture[type], (int)type);
 
 	return S_OK;
 }
@@ -112,8 +120,36 @@ HRESULT CFood::Load(void)
 			strFileName = TEXTURE_TOMATO;
 			break;
 
+		case TYPE_CARROT:
+			strFileName = TEXTURE_CARROT;
+			break;
+
+		case TYPE_BANANA:
+			strFileName = TEXTURE_BANANA;
+			break;
+
+		case TYPE_MILK:
+			strFileName = TEXTURE_MILK;
+			break;
+
 		case TYPE_CABBAGE:
 			strFileName = TEXTURE_CABBAGE;
+			break;
+
+		case TYPE_CURRY:
+			strFileName = TEXTURE_CURRY;
+			break;
+
+		case TYPE_EGG:
+			strFileName = TEXTURE_EGG;
+			break;
+
+		case TYPE_ONION:
+			strFileName = TEXTURE_ONION;
+			break;
+
+		case TYPE_POTATO:
+			strFileName = TEXTURE_POTATO;
 			break;
 
 		case TYPE_MEAT:

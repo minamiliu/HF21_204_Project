@@ -12,6 +12,8 @@
 //============================================
 #include "main.h"
 #include "cubeX.h"
+#include "manager.h"
+#include "renderer.h"
 
 //============================================
 // マクロ定義
@@ -24,6 +26,14 @@
 // 構造体定義
 //=============================================================================
 
+
+//============================================
+// 静的メンバー変数の初期化
+//============================================
+LPDIRECT3DTEXTURE9	CCubeX::m_pTexture		[TYPE_MAX] = {};		// テクスチャへのポインタ
+LPD3DXMESH			CCubeX::m_pD3DXMesh		[TYPE_MAX] = {};		// メッシュ情報へのポインタ
+LPD3DXBUFFER		CCubeX::m_pD3DXBuffMat	[TYPE_MAX] = {};		// マテリアル情報へのポインタ
+DWORD				CCubeX::m_nNumMat		[TYPE_MAX] = {};		// マテリアル情報の数
 
 //=============================================================================
 //コンストラクタ
@@ -53,15 +63,15 @@ HRESULT CCubeX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, D3DXVECT
 	switch( type)
 	{
 	case TYPE_1X1:
-		CSceneX::Init( pos, rot, scl,MODEL_FILENAME_1X1);
+		CSceneX::Init( pos, rot, scl);
 		break;
 
 	case TYPE_1X2:
-		CSceneX::Init( pos, rot, scl, MODEL_FILENAME_1X2);
+		CSceneX::Init( pos, rot, scl);
 		break;
 
 	case TYPE_1X4:
-		CSceneX::Init( pos, rot, scl, MODEL_FILENAME_1X4);
+		CSceneX::Init( pos, rot, scl);
 		break;
 	}
 	
@@ -100,6 +110,9 @@ CCubeX *CCubeX::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 sideLen, TY
 	CCubeX *pCube;
 	pCube = new CCubeX;
 	pCube->Init(pos, rot, D3DXVECTOR3( 1.0f, 1.0f, 1.0f), sideLen, type);
+
+	//Xfileの割り当て
+	pCube->BindXfile( m_pTexture[type], m_pD3DXMesh[type], m_pD3DXBuffMat[type], m_nNumMat[type]);
 
 	return pCube;
 }
@@ -188,4 +201,85 @@ float CCubeX::GetDistanceBoxPoint(D3DXVECTOR3 point)
 CCubeX::TYPE CCubeX::GetType(void)
 {
 	return m_type;
+}
+
+//=============================================================================
+//
+//=============================================================================
+HRESULT CCubeX::Load(void)
+{
+	LPDIRECT3DDEVICE9 pDevice;
+	pDevice = CManager::GetRenderer()->GetDevice();
+
+	for(int cntType = 0; cntType < TYPE_MAX; cntType++)
+	{
+		LPCSTR strFileName;
+		switch( cntType)
+		{
+		case TYPE_1X1:
+			strFileName = MODEL_FILENAME_1X1;
+			break;
+
+		case TYPE_1X2:
+			strFileName = MODEL_FILENAME_1X2;
+			break;
+
+		case TYPE_1X4:
+			strFileName = MODEL_FILENAME_1X4;
+			break;
+		}
+
+		if( m_pTexture[cntType] == NULL &&
+			m_pD3DXMesh[cntType] == NULL &&
+			m_pD3DXBuffMat[cntType] == NULL &&
+			m_nNumMat[cntType] == 0
+			)
+		{
+			// Xファイルの読み込み
+			if(FAILED(D3DXLoadMeshFromX(
+				strFileName,			// 読み込むモデルファイル名(Xファイル)
+				D3DXMESH_SYSTEMMEM,		// メッシュの作成オプションを指定
+				pDevice,				// IDirect3DDevice9インターフェイスへのポインタ
+				NULL,					// 隣接性データを含むバッファへのポインタ
+				&m_pD3DXBuffMat[cntType],	// マテリアルデータを含むバッファへのポインタ
+				NULL,					// エフェクトインスタンスの配列を含むバッファへのポインタ
+				&m_nNumMat[cntType],	// D3DXMATERIAL構造体の数
+				&m_pD3DXMesh[cntType]	// ID3DXMeshインターフェイスへのポインタのアドレス
+				)))
+			{
+				return E_FAIL;
+			}
+		
+		}
+	}
+
+	return S_OK;
+}
+
+//=============================================================================
+//
+//=============================================================================
+void CCubeX::Unload(void)
+{
+	for(int cntType = 0; cntType < TYPE_MAX; cntType++)
+	{
+		// テクスチャの開放
+		if(m_pTexture[cntType] != NULL)
+		{
+			m_pTexture[cntType]->Release();
+			m_pTexture[cntType] = NULL;
+		}
+		// メッシュの開放
+		if(m_pD3DXMesh[cntType] != NULL)
+		{
+			m_pD3DXMesh[cntType]->Release();
+			m_pD3DXMesh[cntType] = NULL;
+		}
+		// マテリアルの開放
+		if(m_pD3DXBuffMat != NULL)
+		{
+			m_pD3DXBuffMat[cntType]->Release();
+			m_pD3DXBuffMat[cntType] = NULL;
+		}	
+	}
 }

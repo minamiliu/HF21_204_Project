@@ -13,13 +13,14 @@
 #include "main.h"
 #include "enemyX.h"
 #include "manager.h"
+#include "renderer.h"
 #include "debugproc.h"
 #include "collision.h"
 
 //============================================
 // マクロ定義
 //============================================
-#define MODEL_FILENAME "data/MODEL/player.x"
+#define MODEL_ENEMY000 "data/MODEL/enemy_body.x"
 #define VALUE_ROTATE	(D3DX_PI * 0.1f) 	// 回転量
 #define MAX_MOTION (4)
 
@@ -31,6 +32,10 @@
 // 静的メンバー変数の初期化
 //============================================
 CEnemyX::MOTION *CEnemyX::m_pMotionPara = NULL;
+LPDIRECT3DTEXTURE9	CEnemyX::m_pTexture		[TYPE_MAX] = {};		// テクスチャへのポインタ
+LPD3DXMESH			CEnemyX::m_pD3DXMesh	[TYPE_MAX] = {};		// メッシュ情報へのポインタ
+LPD3DXBUFFER		CEnemyX::m_pD3DXBuffMat	[TYPE_MAX] = {};		// マテリアル情報へのポインタ
+DWORD				CEnemyX::m_nNumMat		[TYPE_MAX] = {};		// マテリアル情報の数
 
 //=============================================================================
 //コンストラクタ
@@ -54,7 +59,7 @@ CEnemyX::~CEnemyX()
 //=============================================================================
 HRESULT CEnemyX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl)
 {
-	CSceneX::Init( pos, rot, scl, MODEL_FILENAME);
+	CSceneX::Init( pos, rot, scl);
 	SetObjType( OBJTYPE_L_ENEMY);
 
 	m_nCntFrame = 0;
@@ -133,11 +138,14 @@ void CEnemyX::Draw(void)
 //=============================================================================
 //
 //=============================================================================
-CEnemyX *CEnemyX::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl)
+CEnemyX *CEnemyX::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, TYPE type)
 {
 	CEnemyX *pEnemy;
 	pEnemy = new CEnemyX;
 	pEnemy->Init(pos, rot, scl);
+
+	//Xfileの割り当て
+	pEnemy->BindXfile( m_pTexture[type], m_pD3DXMesh[type], m_pD3DXBuffMat[type], m_nNumMat[type]);
 
 	return pEnemy;
 }
@@ -175,4 +183,78 @@ D3DXVECTOR3 CEnemyX::Get2RotDiffAngle( D3DXVECTOR3 rot, D3DXVECTOR3 rotTarget)
 	re.z = tAngle[2];
 
 	return re;
+}
+
+//=============================================================================
+//XFILEのロード
+//=============================================================================
+HRESULT CEnemyX::Load(void)
+{
+	LPDIRECT3DDEVICE9 pDevice;
+	pDevice = CManager::GetRenderer()->GetDevice();
+
+	for(int cntType = 0; cntType < TYPE_MAX; cntType++)
+	{
+		LPCSTR strFileName;
+		switch( cntType)
+		{
+		case TYPE_000:
+			strFileName = MODEL_ENEMY000;
+			break;
+		}
+
+		if( m_pTexture[cntType] == NULL &&
+			m_pD3DXMesh[cntType] == NULL &&
+			m_pD3DXBuffMat[cntType] == NULL &&
+			m_nNumMat[cntType] == 0
+			)
+		{
+			// Xファイルの読み込み
+			if(FAILED(D3DXLoadMeshFromX(
+				strFileName,			// 読み込むモデルファイル名(Xファイル)
+				D3DXMESH_SYSTEMMEM,		// メッシュの作成オプションを指定
+				pDevice,				// IDirect3DDevice9インターフェイスへのポインタ
+				NULL,					// 隣接性データを含むバッファへのポインタ
+				&m_pD3DXBuffMat[cntType],	// マテリアルデータを含むバッファへのポインタ
+				NULL,					// エフェクトインスタンスの配列を含むバッファへのポインタ
+				&m_nNumMat[cntType],	// D3DXMATERIAL構造体の数
+				&m_pD3DXMesh[cntType]	// ID3DXMeshインターフェイスへのポインタのアドレス
+				)))
+			{
+				return E_FAIL;
+			}
+		
+		}
+	}
+
+	return S_OK;
+}
+
+//=============================================================================
+//XFILEのアンロード
+//=============================================================================
+void CEnemyX::Unload(void)
+{
+	for(int cntType = 0; cntType < TYPE_MAX; cntType++)
+	{
+		// テクスチャの開放
+		if(m_pTexture[cntType] != NULL)
+		{
+			m_pTexture[cntType]->Release();
+			m_pTexture[cntType] = NULL;
+		}
+		// メッシュの開放
+		if(m_pD3DXMesh[cntType] != NULL)
+		{
+			m_pD3DXMesh[cntType]->Release();
+			m_pD3DXMesh[cntType] = NULL;
+		}
+		// マテリアルの開放
+		if(m_pD3DXBuffMat != NULL)
+		{
+			m_pD3DXBuffMat[cntType]->Release();
+			m_pD3DXBuffMat[cntType] = NULL;
+		}	
+	}
+
 }

@@ -98,8 +98,9 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 
 	//ÉâÉCÉgÇÃê∂ê¨
 	CLight::Create( D3DXVECTOR3( 0.2f, -0.6f, 0.8f), D3DXCOLOR( 1.0f, 1.0f, 1.0f, 1.0f));
-	CLight::Create( D3DXVECTOR3( -0.2f, -0.3f, -0.5f), D3DXCOLOR( 0.75f, 0.75f, 0.75f, 1.0f));
-	CLight::Create( D3DXVECTOR3( 0.8f, 0.1f, 0.5f), D3DXCOLOR( 0.15f, 0.15f, 0.15f, 1.0f));
+	CLight::Create( D3DXVECTOR3( -0.2f, -0.3f, -0.5f), D3DXCOLOR( 1.0f, 1.0f, 1.0f, 1.0f));
+	CLight::Create( D3DXVECTOR3( 0.8f, 0.1f, 0.5f), D3DXCOLOR( 1.0f, 1.0f, 1.0f, 1.0f));
+	CLight::Create( D3DXVECTOR3( 0.0f, 1.0f, 0.0f), D3DXCOLOR( 1.0f, 1.0f, 1.0f, 1.0f));
 	CLight::SetAllLightOn();
 
 	//ÉJÉÅÉâÇÃê∂ê¨

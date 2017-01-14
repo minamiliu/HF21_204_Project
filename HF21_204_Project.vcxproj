@@ -91,7 +91,6 @@
     <ClCompile Include="getScore.cpp" />
     <ClCompile Include="gorira.cpp" />
     <ClCompile Include="input.cpp" />
-    <ClCompile Include="itemX.cpp" />
     <ClCompile Include="light.cpp" />
     <ClCompile Include="lion.cpp" />
     <ClCompile Include="lionGame.cpp" />
@@ -142,7 +141,6 @@
     <ClInclude Include="getScore.h" />
     <ClInclude Include="gorira.h" />
     <ClInclude Include="input.h" />
-    <ClInclude Include="itemX.h" />
     <ClInclude Include="light.h" />
     <ClInclude Include="lion.h" />
     <ClInclude Include="lionGame.h" />

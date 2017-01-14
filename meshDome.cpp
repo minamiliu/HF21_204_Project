@@ -19,7 +19,7 @@
 //============================================
 // マクロ定義
 //============================================
-#define	TEXTURE_MESHDOME	"data/TEXTURE/pattern01.jpg"	// 読み込むテクスチャファイル名
+#define	TEXTURE_MESHDOME	"data/TEXTURE/pattern02.jpg"	// 読み込むテクスチャファイル名
 #define	VALUE_MOVE_DOME		(4.0f)						// 移動速度
 #define	VALUE_ROTATE_DOME	(D3DX_PI * 0.01f)			// 回転速度
 

@@ -18,7 +18,7 @@
 //============================================
 //マクロ定義
 //============================================
-
+#define MAX_ICON (10)
 //============================================
 //構造体定義
 //============================================
@@ -35,7 +35,7 @@ public:
 	void Draw(void);
 
 	//静的関数
-	static CFoodIcon *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, LPDIRECT3DTEXTURE9);
+	static CFoodIcon *Create(D3DXVECTOR3 size, LPDIRECT3DTEXTURE9, int id);
 	//static void CreateAllFoodIcon(void);
 	//static HRESULT Load(void);
 	//static void Unload(void);
@@ -43,6 +43,7 @@ public:
 private:
 
 	//static LPDIRECT3DTEXTURE9 m_pTexture[TYPE_MAX];
+	static D3DXVECTOR3 m_posInit[MAX_ICON];
 };
 
 #endif

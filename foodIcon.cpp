@@ -19,15 +19,20 @@
 //============================================
 // マクロ定義
 //============================================
-#define TEXTURE_TOMATO	"data/TEXTURE/tomato.png"
-#define TEXTURE_CABBAGE "data/TEXTURE/cabbage.png"
-#define TEXTURE_MEAT	"data/TEXTURE/meat.png"
+
 
 //============================================
 // 静的メンバー変数の初期化
 //============================================
 //LPDIRECT3DTEXTURE9 CFoodIcon::m_pTexture[CFoodIcon::TYPE_MAX] = {};
-
+D3DXVECTOR3 CFoodIcon::m_posInit[MAX_ICON] = 
+{
+	D3DXVECTOR3( 50.0f, 50.0f, 0.0f), D3DXVECTOR3(150.0f, 50.0f, 0.0f), 
+	D3DXVECTOR3( 50.0f,150.0f, 0.0f), D3DXVECTOR3(150.0f,150.0f, 0.0f), 
+	D3DXVECTOR3( 50.0f,250.0f, 0.0f), D3DXVECTOR3(150.0f,250.0f, 0.0f), 
+	D3DXVECTOR3( 50.0f,350.0f, 0.0f), D3DXVECTOR3(150.0f,350.0f, 0.0f), 
+	D3DXVECTOR3( 50.0f,450.0f, 0.0f), D3DXVECTOR3(150.0f,450.0f, 0.0f), 
+};
 
 //=============================================================================
 // 構造体定義
@@ -95,11 +100,11 @@ void CFoodIcon::Draw(void)
 //=============================================================================
 // 食材の生成処理
 //=============================================================================
-CFoodIcon *CFoodIcon::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, LPDIRECT3DTEXTURE9 pTexture)
+CFoodIcon *CFoodIcon::Create(D3DXVECTOR3 size, LPDIRECT3DTEXTURE9 pTexture, int id)
 {
 	CFoodIcon *pFoodIcon;
 	pFoodIcon = new CFoodIcon;
-	pFoodIcon->Init(pos, size);
+	pFoodIcon->Init(m_posInit[id], size);
 
 	//テクスチャの割り当て
 	pFoodIcon->BindTexture( pTexture);

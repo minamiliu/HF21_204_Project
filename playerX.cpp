@@ -60,7 +60,7 @@ CPlayerX::~CPlayerX()
 //=============================================================================
 HRESULT CPlayerX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float speed)
 {
-	CSceneX::Init( pos, rot, scl, MODEL_FILENAME_BODY);
+	CSceneX::Init( pos, rot, scl);
 
 	m_isGoAhead = false;
 	m_isGoBack = false;
@@ -254,6 +254,9 @@ CPlayerX *CPlayerX::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, fl
 	CPlayerX *pPlayerX;
 	pPlayerX = new CPlayerX;
 	pPlayerX->Init(pos, rot, scl, speed);
+
+	//Xƒtƒ@ƒCƒ‹‚Ì“Ç‚Ýž‚Ý
+	pPlayerX->LoadXfile(MODEL_FILENAME_BODY);
 
 	return pPlayerX;
 }

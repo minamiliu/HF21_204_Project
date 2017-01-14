@@ -54,6 +54,11 @@ protected:
 	D3DXVECTOR3 GetSideMax(void);
 
 private:
+	static LPDIRECT3DTEXTURE9	m_pTexture		[TYPE_MAX];		// テクスチャへのポインタ
+	static LPD3DXMESH			m_pD3DXMesh		[TYPE_MAX];		// メッシュ情報へのポインタ
+	static LPD3DXBUFFER			m_pD3DXBuffMat	[TYPE_MAX];		// マテリアル情報へのポインタ
+	static DWORD				m_nNumMat		[TYPE_MAX];		// マテリアル情報の数
+
 	D3DXVECTOR3 m_sideLen;
 	TYPE m_type;
 };
