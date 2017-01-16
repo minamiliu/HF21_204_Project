@@ -14,6 +14,7 @@
 #include "result.h"
 #include "input.h"
 #include "scene2D.h"
+#include "effectBG.h"
 
 
 //============================================
@@ -43,6 +44,8 @@ HRESULT CResult::Init(void)
 {
 	//オブジェクトの生成(2Dポリゴン)
 	CScene2D::Create( D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f), D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f), TEXTURE_BG);
+
+	//CEffectBG::Create( D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f), D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f));
 
 	return S_OK;
 }

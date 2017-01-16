@@ -144,7 +144,7 @@ int CTime::GetTime(void)
 void CTime::StopTime(void)
 {
 	if(m_useFlag == true)
-	m_useFlag = false;
+		m_useFlag = false;
 	else if(m_useFlag == false)
-	m_useFlag = true;
+		m_useFlag = true;
 }

@@ -30,6 +30,7 @@
 #include "shadow.h"
 #include "foodIcon.h"
 #include "meshDome.h"
+#include "effectBG.h"
 
 //============================================
 // マクロ定義
@@ -45,7 +46,8 @@
 //============================================
 CLionGame::CLionGame() : CManager(MODE_LIONGAME)
 {
-
+	m_pTime = NULL;
+	m_player = NULL;
 }
 
 CLionGame::~CLionGame()
@@ -55,6 +57,11 @@ CLionGame::~CLionGame()
 
 HRESULT CLionGame::Init(void)
 {
+	//変数の初期化
+	m_state = STATE_NORMAL;
+	m_nNumCube = 0; //棚の数
+	m_nNumWall = 0; //壁の数
+
 	//カメラの初期化
 	m_pCamera->Init();
 
@@ -72,14 +79,10 @@ HRESULT CLionGame::Init(void)
 
 	//ウォール
 	CMeshWall::Load();
-	m_nNumWall = 0;
 	m_pMeshWall[m_nNumWall++] = CMeshWall::Create( D3DXVECTOR3( 1000.0f, 100.0f, 1500.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 21, 4, 100.0f, 100.0f);
 	m_pMeshWall[m_nNumWall++] = CMeshWall::Create( D3DXVECTOR3( 1000.0f, 100.0f, 0.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(180.0f), 0.0f), 21, 4, 100.0f, 100.0f);
 	m_pMeshWall[m_nNumWall++] = CMeshWall::Create( D3DXVECTOR3( 2000.0f, 100.0f, 750.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(90.0f), 0.0f), 16, 4, 100.0f, 100.0f);
 	m_pMeshWall[m_nNumWall++] = CMeshWall::Create( D3DXVECTOR3( 0.0f, 100.0f, 750.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(-90.0f), 0.0f), 16, 4, 100.0f, 100.0f);
-	
-	//棚
-	m_nNumCube = 0;
 	
 	//一番奥 ６個
 	CCubeX::Load();
@@ -121,7 +124,7 @@ HRESULT CLionGame::Init(void)
 	//m_score = CScore::Create( D3DXVECTOR3(SCREEN_WIDTH-150, 30.0f, 0.0f), D3DXVECTOR3( 300, 50.0f, 0.0f), 6, RED(1.0f)); 
 
 	//タイム
-	m_pTime = CTime::Create( D3DXVECTOR3(SCREEN_WIDTH/2, 100.0f, 0.0f), D3DXVECTOR3(140, 70.0f, 0.0f), 2, 99, true, BLUE(1.0f));
+	m_pTime = CTime::Create( D3DXVECTOR3(SCREEN_WIDTH/2, 100.0f, 0.0f), D3DXVECTOR3(140, 70.0f, 0.0f), 2, 11, true, BLUE(1.0f));
 
 	//敵
 	CEnemyX::Load();
@@ -167,7 +170,6 @@ void CLionGame::Update()
 {
 	//入力などの更新、各シーンのUpdateの最初に呼び出す
 	CManager::Update();
-
 
 	//壁との当たり判定
 	bool bHit = false;
@@ -262,6 +264,13 @@ void CLionGame::Update()
 	{
 		SetNextScene( MODE_RESULT);
 	}
+
+	//if(m_pTime->GetTime() == 10 && m_state == STATE_NORMAL)
+	//{
+	//	//m_pTime->StopTime();
+	//	CEffectBG::Create( D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f), D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f));
+	//	m_state = STATE_SUPER;
+	//}
 
 
 	//スキップシーン

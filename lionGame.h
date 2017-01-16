@@ -35,6 +35,12 @@ class CTime;
 class CLionGame : public CManager
 {
 public:
+	typedef enum 
+	{
+		STATE_NORMAL = 0,
+		STATE_SUPER,
+		STATE_MAX,
+	}STATE;
 
 	CLionGame();
 	virtual ~CLionGame();
@@ -56,6 +62,7 @@ private:
 	int m_nNumCube;
 
 	CTime *m_pTime;
+	STATE m_state;
 	//static CScore *m_score;
 };
 
