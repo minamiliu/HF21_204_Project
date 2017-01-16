@@ -117,6 +117,7 @@ void CPlayerX::Update(void)
 	int nHitCubeID = 0;
 	D3DXVECTOR3 wall_nor;
 	D3DXVECTOR3 posPlayer = GetPosition();
+	D3DXVECTOR3 rotPlayer = GetRot();
 
 
 	isMoved = isKeyUse(DIK_W, DIK_S, DIK_A, DIK_D);
@@ -142,6 +143,15 @@ void CPlayerX::Update(void)
 		//向き
 		pCamera->SetRot( this->GetRot());
 	}
+
+	//当たり判定の前準備
+	D3DXVECTOR3 posLside = posPlayer;
+	posLside.x = posPlayer.x +  15.0f * sinf(rotPlayer.y + D3DXToRadian(-90.0f));
+	posLside.z = posPlayer.z +  15.0f * cosf(rotPlayer.y + D3DXToRadian(-90.0f));
+
+	D3DXVECTOR3 posRside = posPlayer;
+	posRside.x = posPlayer.x +  15.0f * sinf(rotPlayer.y + D3DXToRadian(90.0f));
+	posRside.z = posPlayer.z +  15.0f * cosf(rotPlayer.y + D3DXToRadian(90.0f));
 
 	//当たり判定
 	for( int nCntScene = 0; nCntScene < MAX_SCENE; nCntScene++)
@@ -204,12 +214,17 @@ void CPlayerX::Update(void)
 			else if( type == CScene::OBJTYPE_WALL)
 			{
 				CMeshWall *pWall = (CMeshWall*)pScene;
-				
-				if( pWall->HitCheck( posPlayer, posPlayer + m_front, &wall_nor, NULL))
+
+				D3DXVECTOR3 tSphere;
+				D3DXVec3Normalize( &tSphere, &m_front);
+				tSphere *= 15.0f;
+
+				if( pWall->HitCheck( posPlayer, posPlayer + tSphere, &wall_nor, NULL) ||
+					pWall->HitCheck( posLside, posLside + tSphere, &wall_nor, NULL) ||
+					pWall->HitCheck( posRside, posRside + tSphere, &wall_nor, NULL))
 				{
 					bHitWall = true;
 				}
-				
 			}
 
 			//棚とのあたり判定
@@ -251,8 +266,14 @@ void CPlayerX::Update(void)
 				if( type == CScene::OBJTYPE_WALL)
 				{
 					CMeshWall *pWall = (CMeshWall*)pScene;
+
+					D3DXVECTOR3 tSphere;
+					D3DXVec3Normalize( &tSphere, &m_front);
+					tSphere *= 15.0f;
 				
-					if( pWall->HitCheck( posPlayer, posPlayer + m_front, &wall_nor, NULL))
+					if( pWall->HitCheck( posPlayer, posPlayer + tSphere, &wall_nor, NULL) ||
+						pWall->HitCheck( posLside, posLside + tSphere, &wall_nor, NULL) ||
+						pWall->HitCheck( posRside, posRside + tSphere, &wall_nor, NULL))
 					{
 						bHitWall = true;
 					}
@@ -298,11 +319,10 @@ void CPlayerX::Update(void)
 	}
 	
 	//座標更新処理
-	if( bHitWall != true && bHitCube != true)
+	if( bHitWall == false && bHitCube == false)
 	{
 		SetPosition( posPlayer + m_front);
 	}
-
 
 	//状態更新
 	switch( m_state)
@@ -624,7 +644,7 @@ void CPlayerX::CalcNextPos(void)
 		m_front.z = m_move.z * cosf( rotPlayer.y);
 
 		//慣性処理
-		m_move -= m_move * 0.05f;	
+		m_move -= m_move * 0.05f;
 	}
 }
 
