@@ -22,6 +22,8 @@
 #include "food.h"
 #include "foodIcon.h"
 #include "partX.h"
+#include "meshWall.h"
+#include "cubeX.h"
 
 //============================================
 // マクロ定義
@@ -110,6 +112,13 @@ void CPlayerX::Update(void)
 {
 	//移動処理
 	bool isMoved;
+	bool bHitWall = false;
+	bool bHitCube = false;
+	int nHitCubeID = 0;
+	D3DXVECTOR3 wall_nor;
+	D3DXVECTOR3 posPlayer = GetPosition();
+
+
 	isMoved = isKeyUse(DIK_W, DIK_S, DIK_A, DIK_D);
 	//isMoved = isMouseUse();
 	if( isMoved == true)
@@ -145,8 +154,6 @@ void CPlayerX::Update(void)
 			CScene::OBJTYPE type;
 			type = pScene->GetObjType();
 
-			D3DXVECTOR3 posPlayer = GetPosition();
-
 			//食材とのあたり判定
 			if (type == CScene::OBJTYPE_L_FOOD)
 			{
@@ -170,7 +177,7 @@ void CPlayerX::Update(void)
 					//スコア
 					//CLionGame::GetScore()->AddScore(100);
 
-					return;
+					//return;
 				}
 			}
 
@@ -189,13 +196,113 @@ void CPlayerX::Update(void)
 					m_nCntState = 60;
 					m_fSpeed = -2.0f;
 					
-					return;
+					//return;
 				}
 			}
 
+			//壁とのあたり判定
+			else if( type == CScene::OBJTYPE_WALL)
+			{
+				CMeshWall *pWall = (CMeshWall*)pScene;
+				
+				if( pWall->HitCheck( posPlayer, posPlayer + m_front, &wall_nor, NULL))
+				{
+					bHitWall = true;
+				}
+				
+			}
 
+			//棚とのあたり判定
+			else if( type == CScene::OBJTYPE_CUBE)
+			{
+				CCubeX *pCube = (CCubeX*)pScene;
+				
+				float len = pCube->GetDistanceBoxPoint( posPlayer + m_front);
+				if( len < 15.0f)
+				{
+					nHitCubeID = nCntScene;
+					bHitCube = true;
+				}	
+				
+			}
 		}
 	}
+
+	//修正した前進ベクトルをもう一度あたり判定をとる
+	if( bHitWall == true)
+	{
+		bHitWall = false;
+
+		//前進方向の修正
+		CCollision::GetWallScratchVector( &m_front, m_front, wall_nor);
+
+		//当たり判定(二回目)
+		for( int nCntScene = 0; nCntScene < MAX_SCENE; nCntScene++)
+		{
+			CScene *pScene;
+			pScene = CScene::GetScene( nCntScene);
+		
+			if( pScene != NULL)
+			{
+				CScene::OBJTYPE type;
+				type = pScene->GetObjType();
+
+				//壁とのあたり判定(二回目)
+				if( type == CScene::OBJTYPE_WALL)
+				{
+					CMeshWall *pWall = (CMeshWall*)pScene;
+				
+					if( pWall->HitCheck( posPlayer, posPlayer + m_front, &wall_nor, NULL))
+					{
+						bHitWall = true;
+					}
+				
+				}	
+			}		
+		}
+	}
+	else if( bHitCube == true)
+	{
+		//前進方向の修正
+		D3DXVECTOR3 vecX = D3DXVECTOR3( 1.0f, 0.0f, 0.0f);
+		D3DXVECTOR3 vecZ = D3DXVECTOR3( 0.0f, 0.0f, 1.0f);
+		CCollision::GetWallScratchVector( &vecX, m_front, vecX);
+		CCollision::GetWallScratchVector( &vecZ, m_front, vecZ);
+
+		//当たり判定(二回目)
+		CScene *pScene;
+		pScene = CScene::GetScene( nHitCubeID);
+		
+		if( pScene != NULL)
+		{
+			CScene::OBJTYPE type;
+			type = pScene->GetObjType();
+
+			//棚とのあたり判定(二回目)
+			if( type == CScene::OBJTYPE_CUBE)
+			{
+				CCubeX *pCube = (CCubeX*)pScene;
+
+				if( pCube->GetDistanceBoxPoint( posPlayer + vecX) >= 15.0f)
+				{
+					bHitCube = false;
+					m_front = vecX;
+				}
+				if( pCube->GetDistanceBoxPoint( posPlayer + vecZ) >= 15.0f)
+				{
+					bHitCube = false;
+					m_front = vecZ;
+				}
+			}	
+		}		
+	}
+	
+	//座標更新処理
+	if( bHitWall != true && bHitCube != true)
+	{
+		SetPosition( posPlayer + m_front);
+	}
+
 
 	//状態更新
 	switch( m_state)

@@ -91,7 +91,6 @@
     <ClCompile Include="foodIcon.cpp" />
     <ClCompile Include="getScore.cpp" />
     <ClCompile Include="gorira.cpp" />
-    <ClCompile Include="handFoot.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="light.cpp" />
     <ClCompile Include="lion.cpp" />
@@ -143,7 +142,6 @@
     <ClInclude Include="foodIcon.h" />
     <ClInclude Include="getScore.h" />
     <ClInclude Include="gorira.h" />
-    <ClInclude Include="handFoot.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="light.h" />
     <ClInclude Include="lion.h" />

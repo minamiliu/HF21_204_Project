@@ -52,6 +52,10 @@ CMeshWall::~CMeshWall()
 HRESULT CMeshWall::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockY, float fSizeBlockX, float fSizeBlockY)
 {
 	CScene3D::Init( pos, rot, nNumBlockX, nNumBlockY, fSizeBlockX, fSizeBlockY, true);
+
+	//scene‚É“o˜^
+	SetObjType(OBJTYPE_WALL);
+
 	return S_OK;
 }
 //=============================================================================

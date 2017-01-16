@@ -54,12 +54,6 @@ public:
 	static CScore *GetScore(void);
 
 private:
-	CPlayerX *m_player;
-	CMeshWall *m_pMeshWall[MAX_WALL];
-	int m_nNumWall;
-
-	CCubeX *m_cube[MAX_CUBE];
-	int m_nNumCube;
 
 	CTime *m_pTime;
 	STATE m_state;

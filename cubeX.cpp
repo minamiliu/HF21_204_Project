@@ -59,6 +59,9 @@ HRESULT CCubeX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, D3DXVECT
 {
 	m_sideLen = sideLen;
 	m_type = type;
+
+	//scene‚É“o˜^
+	SetObjType(OBJTYPE_CUBE);
 	
 	switch( type)
 	{
