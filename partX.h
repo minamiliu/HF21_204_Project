@@ -25,30 +25,16 @@
 class CPartX
 {
 public:
-	typedef struct
-	{
-		int nFrame;
-		float rotX;
-	}MOTION;
-
-	typedef enum
-	{
-		TYPE_L_HAND = 0,
-		TYPE_R_HAND,
-		TYPE_L_FOOT,
-		TYPE_R_FOOT,
-		TYPE_MAX,
-	}TYPE;
 
 	CPartX();
 	virtual ~CPartX();
 
-	HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, TYPE type);
+	HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl);
 	void Uninit(void);
 	void Update(void);
 	void Draw(void);
 
-	static CPartX *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, TYPE type);
+	static CPartX *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl);
 	HRESULT LoadXfile(LPCSTR strFileName);
 	
 	void BindXfile( LPDIRECT3DTEXTURE9	pTexture,		// テクスチャへのポインタ
@@ -76,21 +62,12 @@ private:
 	D3DXVECTOR3 m_pos;					// モデルの位置
 	D3DXVECTOR3 m_rot;					// モデルの向き(回転)
 	D3DXVECTOR3 m_scl;					// モデルの大きさ(スケール)
-	TYPE m_type;
 
 	D3DXMATRIX m_mtxWorld;				// ワールドマトリックス
 
 	D3DXVECTOR3 m_size;
 	bool m_bLoadXfile;
 
-	//モーション
-	static MOTION *m_pMotionPara;
-	int m_nCntFrame;
-	int m_nMotionNow;
-	float m_rotXTurn;
-	float m_rotXLocal;
-	D3DXVECTOR3 m_posLocal;
-	D3DXVECTOR3 m_rotLocal;
 };
 
 #endif

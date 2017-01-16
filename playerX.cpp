@@ -21,7 +21,7 @@
 #include "shadow.h"
 #include "food.h"
 #include "foodIcon.h"
-#include "partX.h"
+#include "limbX.h"
 #include "meshWall.h"
 #include "cubeX.h"
 
@@ -31,7 +31,7 @@
 #define MODEL_FILENAME_BODY		"data/MODEL/mom_body.x"
 #define VALUE_ROTATE	(1.0f) 	// 回転量
 
-#define PLAYER_RADIUS	(20.0f)
+#define PLAYER_RADIUS	(15.0f)
 #define CAMERA_DISTANCE	(200.0f)
 //=============================================================================
 // 構造体定義
@@ -43,9 +43,13 @@
 //=============================================================================
 CPlayerX::CPlayerX()
 {
-	m_shadow = NULL;
-	m_pRHand = NULL;
-	m_pLHand = NULL;
+	m_pShadow = NULL;
+
+	//手足
+	for(int cntLimb = 0; cntLimb < MAX_LIMB; cntLimb++)
+	{
+		m_pLimb[cntLimb] = NULL;
+	}
 }
 
 //=============================================================================
@@ -79,13 +83,13 @@ HRESULT CPlayerX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float 
 	m_nCntState = 0;
 
 	//手足
-	m_pLHand = CPartX::Create( pos, rot, scl, CPartX::TYPE_L_HAND);
-	m_pRHand = CPartX::Create( pos, rot, scl, CPartX::TYPE_R_HAND);
-	m_pLFoot = CPartX::Create( pos, rot, scl, CPartX::TYPE_L_FOOT);
-	m_pRFoot = CPartX::Create( pos, rot, scl, CPartX::TYPE_R_FOOT);
+	m_pLimb[0] = CLimbX::Create( pos, rot, scl, CLimbX::TYPE_L_HAND);
+	m_pLimb[1] = CLimbX::Create( pos, rot, scl, CLimbX::TYPE_R_HAND);
+	m_pLimb[2] = CLimbX::Create( pos, rot, scl, CLimbX::TYPE_L_FOOT);
+	m_pLimb[3] = CLimbX::Create( pos, rot, scl, CLimbX::TYPE_R_FOOT);
 
 	//影の生成
-	m_shadow = CShadow::Create( pos, D3DXVECTOR2( 50.0f, 50.0f));
+	m_pShadow = CShadow::Create( pos, D3DXVECTOR2( 50.0f, 50.0f));
 
 	return S_OK;
 }
@@ -96,10 +100,10 @@ HRESULT CPlayerX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float 
 void CPlayerX::Uninit(void)
 {
 	//手足
-	m_pLHand->Uninit();
-	m_pRHand->Uninit();
-	m_pLFoot->Uninit();
-	m_pRFoot->Uninit();
+	for(int cntLimb = 0; cntLimb < MAX_LIMB; cntLimb++)
+	{
+		m_pLimb[cntLimb]->Uninit();
+	}
 
 	//本体
 	CSceneX::Uninit();
@@ -111,7 +115,7 @@ void CPlayerX::Uninit(void)
 void CPlayerX::Update(void)
 {
 	//移動処理
-	bool isMoved;
+	bool isMoved = false;
 	bool bHitWall = false;
 	bool bHitCube = false;
 	int nHitCubeID = 0;
@@ -126,7 +130,7 @@ void CPlayerX::Update(void)
 	{
 		UpdateRot();
 	}
-	CalcNextPos();
+
 
 	{//カメラ追従
 		CCamera *pCamera = CManager::GetCamera();
@@ -206,6 +210,7 @@ void CPlayerX::Update(void)
 					m_nCntState = 60;
 					m_fSpeed = -2.0f;
 					
+					m_isGoBack = true;
 					//return;
 				}
 			}
@@ -317,7 +322,10 @@ void CPlayerX::Update(void)
 			}	
 		}		
 	}
-	
+
+	//移動慣性の更新
+	CalcNextPos();
+
 	//座標更新処理
 	if( bHitWall == false && bHitCube == false)
 	{
@@ -337,24 +345,15 @@ void CPlayerX::Update(void)
 	}
 
 	//手足
-	m_pLHand->SetPosition(this->GetPosition());
-	m_pLHand->SetRot(this->GetRot());
-	m_pLHand->Update();
-
-	m_pRHand->SetPosition(this->GetPosition());
-	m_pRHand->SetRot(this->GetRot());
-	m_pRHand->Update();
-	
-	m_pLFoot->SetPosition(this->GetPosition());
-	m_pLFoot->SetRot(this->GetRot());
-	m_pLFoot->Update();
-
-	m_pRFoot->SetPosition(this->GetPosition());
-	m_pRFoot->SetRot(this->GetRot());
-	m_pRFoot->Update();
+	for(int cntLimb = 0; cntLimb < MAX_LIMB; cntLimb++)
+	{
+		m_pLimb[cntLimb]->SetPosition(this->GetPosition());
+		m_pLimb[cntLimb]->SetRot(this->GetRot());
+		m_pLimb[cntLimb]->Update();
+	}
 
 	//影の更新処理
-	m_shadow->SetPosition( this->GetPosition());
+	m_pShadow->SetPosition( this->GetPosition());
 
 }
 
@@ -364,10 +363,10 @@ void CPlayerX::Update(void)
 void CPlayerX::Draw(void)
 {
 	//手足
-	m_pLHand->Draw();
-	m_pRHand->Draw();
-	m_pLFoot->Draw();
-	m_pRFoot->Draw();
+	for(int cntLimb = 0; cntLimb < MAX_LIMB; cntLimb++)
+	{
+		m_pLimb[cntLimb]->Draw();
+	}
 
 	//本体
 	CSceneX::Draw();

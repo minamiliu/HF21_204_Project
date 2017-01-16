@@ -16,6 +16,8 @@
 #include "renderer.h"
 #include "debugproc.h"
 #include "collision.h"
+#include "shadow.h"
+#include "limbX.h"
 
 //============================================
 // マクロ定義
@@ -42,7 +44,13 @@ DWORD				CEnemyX::m_nNumMat		[TYPE_MAX] = {};		// マテリアル情報の数
 //=============================================================================
 CEnemyX::CEnemyX()
 {
+	m_pShadow = NULL;
 
+	//手足
+	for(int cntLimb = 0; cntLimb < MAX_LIMB; cntLimb++)
+	{
+		m_pLimb[cntLimb] = NULL;
+	}
 }
 
 //=============================================================================
@@ -86,6 +94,15 @@ HRESULT CEnemyX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl)
 	m_front = m_pMotionPara[0].front / m_pMotionPara[0].nFrame;
 	m_rotTurn = m_pMotionPara[0].rotY / m_pMotionPara[0].nFrame;
 
+	//手足
+	m_pLimb[0] = CLimbX::Create( pos, rot, scl, CLimbX::TYPE_L_HAND);
+	m_pLimb[1] = CLimbX::Create( pos, rot, scl, CLimbX::TYPE_R_HAND);
+	m_pLimb[2] = CLimbX::Create( pos, rot, scl, CLimbX::TYPE_L_FOOT);
+	m_pLimb[3] = CLimbX::Create( pos, rot, scl, CLimbX::TYPE_R_FOOT);
+
+	//影の生成
+	m_pShadow = CShadow::Create( pos, D3DXVECTOR2( 50.0f, 50.0f));
+
 	return S_OK;
 }
 
@@ -94,6 +111,12 @@ HRESULT CEnemyX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl)
 //=============================================================================
 void CEnemyX::Uninit(void)
 {
+	//手足
+	for(int cntLimb = 0; cntLimb < MAX_LIMB; cntLimb++)
+	{
+		m_pLimb[cntLimb]->Uninit();
+	}
+
 	CSceneX::Uninit();
 }
 
@@ -125,6 +148,17 @@ void CEnemyX::Update(void)
 		m_rotTurn = m_pMotionPara[m_nMotionNow].rotY / m_pMotionPara[m_nMotionNow].nFrame;
 		m_nCntFrame = 0;
 	}
+
+	//手足
+	for(int cntLimb = 0; cntLimb < MAX_LIMB; cntLimb++)
+	{
+		m_pLimb[cntLimb]->SetPosition(this->GetPosition());
+		m_pLimb[cntLimb]->SetRot(this->GetRot());
+		m_pLimb[cntLimb]->Update();
+	}
+
+	//影の更新処理
+	m_pShadow->SetPosition( this->GetPosition());
 }
 
 //=============================================================================
@@ -132,6 +166,12 @@ void CEnemyX::Update(void)
 //=============================================================================
 void CEnemyX::Draw(void)
 {
+	//手足
+	for(int cntLimb = 0; cntLimb < MAX_LIMB; cntLimb++)
+	{
+		m_pLimb[cntLimb]->Draw();
+	}
+
 	CSceneX::Draw();
 }
 

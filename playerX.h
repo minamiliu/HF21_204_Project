@@ -18,12 +18,13 @@
 //============================================
 //マクロ定義
 //============================================
+#define MAX_LIMB (4) 
 
 //============================================
 //前方宣言
 //============================================
 class CShadow;
-class CPartX;
+class CLimbX;
 //============================================
 //構造体定義
 //============================================
@@ -72,14 +73,9 @@ private:
 
 	STATE m_state;				//状態
 	int m_nCntState;			//状態のカウンター
-	CShadow *m_shadow;			//影
+	CShadow *m_pShadow;			//影
 
-	//手足
-	CPartX *m_pLHand;
-	CPartX *m_pRHand;
-	CPartX *m_pLFoot;
-	CPartX *m_pRFoot;
-
+	CLimbX *m_pLimb[MAX_LIMB];	//手足x4
 };
 
 #endif

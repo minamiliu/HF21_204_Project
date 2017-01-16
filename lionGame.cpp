@@ -31,6 +31,7 @@
 #include "foodIcon.h"
 #include "meshDome.h"
 #include "effectBG.h"
+#include "limbX.h"
 
 //============================================
 // ƒ}ƒNƒ’è‹`
@@ -56,6 +57,8 @@ CLionGame::~CLionGame()
 
 HRESULT CLionGame::Init(void)
 {
+	CLimbX::Load();
+
 	//•Ï”‚Ì‰Šú‰»
 	m_state = STATE_NORMAL;
 
