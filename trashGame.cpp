@@ -117,6 +117,9 @@ HRESULT CTrashGame::Init(void)
 
 void CTrashGame::Uninit()
 {
+	//点数を保存
+	CManager::SaveScore( MODE_TRASHGAME, m_pScore->GetScore());
+
 	CManager::Uninit();
 }
 
@@ -190,14 +193,12 @@ void CTrashGame::Update()
 							m_pScore->AddScore(100);
 							CGetScore *pGetScore = CGetScore::Create(posTrash,D3DXVECTOR3(100,100,0.0f),3,BLUE(1.0));
 							pGetScore->AddScore(100);
-							CManager::AddScore(CManager::MODE_TRASHGAME,100);
 						}
 						else if(((CTrash*)pScene)->GetTrashType() == CTrash::TRASHTYPE_LIGHT)
 						{
 							m_pScore->AddScore(180);
 							CGetScore *pGetScore = CGetScore::Create(posTrash,D3DXVECTOR3(140,140,0.0f),3,RED(1.0));
 							pGetScore->AddScore(180);
-							CManager::AddScore(CManager::MODE_TRASHGAME,180);
 							for(int cnt=0;cnt<8;cnt++)
 							{
 								CTrajectory::Create(D3DXVECTOR3(posTrash.x,posTrash.y,100.0f),D3DXVECTOR3(100,100,0.0f),CTrajectory::TJRTYPE_ALLDIRECTION,2*3.14/8*cnt);
@@ -208,7 +209,6 @@ void CTrashGame::Update()
 							m_pScore->AddScore(150);
 							CGetScore *pGetScore = CGetScore::Create(posTrash,D3DXVECTOR3(120,120,0.0f),3,YELLOW(1.0));
 							pGetScore->AddScore(150);
-							CManager::AddScore(CManager::MODE_TRASHGAME,150);
 						}
 						//オブジェクトの位置を画面外へ -> 画面外判定で消滅
 						pScene->SetPosition(D3DXVECTOR3(100.0f,1000.0f,0.0f));

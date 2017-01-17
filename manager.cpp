@@ -14,11 +14,8 @@
 #include "manager.h"
 #include "renderer.h"
 #include "input.h"
-#include "player2D.h"
 #include "light.h"
 #include "camera.h"
-#include "scene3D.h"
-#include "playerX.h"
 #include "sound.h"
 #include "lionGame.h"
 #include "zebragame.h"
@@ -27,6 +24,7 @@
 #include "title.h"
 #include "result.h"
 #include "fade.h"
+#include "scene.h"
 
 //============================================
 // マクロ定義
@@ -180,6 +178,11 @@ CManager *CManager::Create( MODE mode, HINSTANCE hInstance, HWND hWnd, bool bWin
 		m_pSceneManager = new CManager;
 		m_pSceneManager->Init( hInstance, hWnd, bWindow);
 	}
+
+	//ゲームデータのロード
+	LoadAll();
+
+	//ゲームシーンの生成
 	m_modeNext = mode;
 	NextModeChange();
 	SceneChange();
@@ -331,8 +334,7 @@ void CManager::SceneChange(void)
 	switch(m_modeNext)
 	{
 	case MODE_TITLE:
-		//m_pSceneManager = new CTitle;
-		m_pSceneManager = new CTrashGame;
+		m_pSceneManager = new CTitle;
 		break;
 		
 	case MODE_TRASHGAME:
@@ -366,19 +368,19 @@ void CManager::SceneChange(void)
 //=============================================================================
 //スコアセーブ
 //=============================================================================
-void CManager::SaveScore(MODE game,int score)
+void CManager::SaveScore(MODE game, int score)
 {
-	if(game == MODE_TRASHGAME)
+	switch(game)
 	{
+	case MODE_TRASHGAME:
 		m_trashGameScore = score;
-	}
-	if(game == MODE_ZEBRAGAME)
-	{
+		break;
+	case MODE_ZEBRAGAME:
 		m_zebraGameScore = score;
-	}
-	if(game == MODE_LIONGAME)
-	{
+		break;
+	case MODE_LIONGAME:
 		m_lionGameScore = score;
+		break;	
 	}
 }
 //=============================================================================
@@ -402,20 +404,10 @@ int CManager::LoadScore(MODE game)
 	}
 }
 //=============================================================================
-//スコア加算
+//モデルやテクスチャを一気にロードする
 //=============================================================================
-void CManager::AddScore(MODE game,int score)
+HRESULT CManager::LoadAll(void)
 {
-	if(game == MODE_TRASHGAME)
-	{
-		m_trashGameScore+=score;	
-	}
-	if(game == MODE_ZEBRAGAME)
-	{
-		m_zebraGameScore+=score;
-	}
-	if(game == MODE_LIONGAME)
-	{
-		m_lionGameScore+=score;
-	}
+	CLionGame::LoadAll();
+	return S_OK;
 }

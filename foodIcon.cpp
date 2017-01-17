@@ -26,12 +26,12 @@
 //============================================
 //LPDIRECT3DTEXTURE9 CFoodIcon::m_pTexture[CFoodIcon::TYPE_MAX] = {};
 D3DXVECTOR3 CFoodIcon::m_posInit[MAX_ICON] = 
-{
-	D3DXVECTOR3( 50.0f, 50.0f, 0.0f), D3DXVECTOR3(150.0f, 50.0f, 0.0f), 
-	D3DXVECTOR3( 50.0f,150.0f, 0.0f), D3DXVECTOR3(150.0f,150.0f, 0.0f), 
-	D3DXVECTOR3( 50.0f,250.0f, 0.0f), D3DXVECTOR3(150.0f,250.0f, 0.0f), 
-	D3DXVECTOR3( 50.0f,350.0f, 0.0f), D3DXVECTOR3(150.0f,350.0f, 0.0f), 
-	D3DXVECTOR3( 50.0f,450.0f, 0.0f), D3DXVECTOR3(150.0f,450.0f, 0.0f), 
+{ 
+	D3DXVECTOR3( 190.0f, 650.0f, 0.0f), D3DXVECTOR3( 290.0f, 650.0f, 0.0f),
+	D3DXVECTOR3( 390.0f, 650.0f, 0.0f), D3DXVECTOR3( 490.0f, 650.0f, 0.0f),
+	D3DXVECTOR3( 590.0f, 650.0f, 0.0f), D3DXVECTOR3( 690.0f, 650.0f, 0.0f),
+	D3DXVECTOR3( 790.0f, 650.0f, 0.0f), D3DXVECTOR3( 890.0f, 650.0f, 0.0f),
+	D3DXVECTOR3( 990.0f, 650.0f, 0.0f), D3DXVECTOR3(1090.0f, 650.0f, 0.0f),
 };
 
 //=============================================================================

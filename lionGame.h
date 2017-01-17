@@ -52,8 +52,9 @@ public:
 	void Update(void);
 	void Draw(void);
 	
-	//スコア
+	//静的
 	static CScore *GetScore(void);
+	static HRESULT LoadAll(void);
 
 private:
 
@@ -63,7 +64,8 @@ private:
 
 	CEffectBG *m_pEffectBG;
 	CPlayerX *m_pPlayer;
-	//static CScore *m_score;
+	
+	static CScore *m_pScore;
 };
 
 #endif

@@ -85,7 +85,9 @@ public:
 	//スコア保存
 	void SaveScore(MODE game,int score);
 	int LoadScore(MODE game);
-	void AddScore(MODE game,int score);
+
+	//モデルやテクスチャを一気にロードする
+	static HRESULT LoadAll(void);
 
 protected:
 	//カメラ

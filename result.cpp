@@ -76,7 +76,7 @@ HRESULT CResult::Init(void)
 	//スコア取得
 	m_nTrashGameScore = CManager::LoadScore(MODE_TRASHGAME);
 	m_nZebraGameScore = 500;
-	m_nLionGameScore = 100;
+	m_nLionGameScore = CManager::LoadScore(MODE_LIONGAME);
 	//目標値
 	m_nTargetScore[0] = m_nTrashGameScore;
 	m_nTargetScore[1] = m_nZebraGameScore;

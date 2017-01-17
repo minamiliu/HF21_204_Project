@@ -193,7 +193,7 @@ void CPlayerX::Update(void)
 					pScene->Uninit();
 
 					//スコア
-					//CLionGame::GetScore()->AddScore(100);
+					CLionGame::GetScore()->AddScore(100);
 
 					//return;
 				}
@@ -207,8 +207,6 @@ void CPlayerX::Update(void)
 
 				if( CCollision::HitCheckBall( posPlayer, PLAYER_RADIUS, posEnemy, PLAYER_RADIUS))
 				{
-					//スコア
-					//CLionGame::GetScore()->AddScore( -100);
 					switch(m_state)
 					{
 					case STATE_NORMAL:
@@ -249,10 +247,20 @@ void CPlayerX::Update(void)
 			else if( type == CScene::OBJTYPE_CUBE)
 			{
 				CCubeX *pCube = (CCubeX*)pScene;
-				
+
+				//あたり判定
 				float len = pCube->GetDistanceBoxPoint( posPlayer + m_front);
 				if( len < PLAYER_RADIUS)
 				{
+					//レジ
+					if(pCube->GetType() == CCubeX::TYPE_1X1)
+					{
+						if(CFood::isAllClear() == true)
+						{
+							CManager::SetNextScene( CManager::MODE_RESULT);
+						}
+					}
+
 					nHitCubeID = nCntScene;
 					bHitCube = true;
 				}	
