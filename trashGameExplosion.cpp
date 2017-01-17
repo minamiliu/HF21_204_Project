@@ -12,16 +12,21 @@
 //============================================
 #include "main.h"
 #include "manager.h"
-#include "input.h"
-#include "player2D.h"
-#include "bullet2D.h"
+#include "trashGameExplosion.h"
 #include "debugproc.h"
 
 //============================================
 // マクロ定義
 //============================================
-#define TEXTURENAME "data/TEXTURE/player000.png"
-#define TEXTURE_GORILLA "data/TEXTURE/ゴリラ.png"
+
+#define TEXTURE_EXPLOSION "data/TEXTURE/explosion000.png"
+#define	TEX_PATTERN_DIVIDE_X		(8)												// アニメーションパターンのテクスチャ内での分割数(Ｘ方向)
+#define	TEX_PATTERN_DIVIDE_Y		(1)												// アニメーションパターンのテクスチャ内での分割数(Ｙ方向)
+#define	TEX_PATTERN_SIZE_X			(1.0f / TEX_PATTERN_DIVIDE_X)					// １パターンのテクスチャサイズ(Ｘ方向)(1.0f/X方向分割数)
+#define	TEX_PATTERN_SIZE_Y			(1.0f / TEX_PATTERN_DIVIDE_Y)					// １パターンのテクスチャサイズ(Ｙ方向)(1.0f/Y方向分割数)
+#define	NUM_ANIM_PATTERN			(TEX_PATTERN_DIVIDE_X * TEX_PATTERN_DIVIDE_Y)	// アニメーションのパターン数(X方向分割数×Y方向分割数)
+#define	TIME_CHANGE_PATTERN			(10)											// アニメーションの切り替わるタイミング(フレーム数)
+//============================================
 //=============================================================================
 // 構造体定義
 //=============================================================================
@@ -29,7 +34,7 @@
 //=============================================================================
 //コンストラクタ
 //=============================================================================
-CPlayer2D::CPlayer2D()
+CTrashGameExplosion::CTrashGameExplosion()
 {
 
 }
@@ -37,7 +42,7 @@ CPlayer2D::CPlayer2D()
 //=============================================================================
 //デストラクタ
 //=============================================================================
-CPlayer2D::~CPlayer2D()
+CTrashGameExplosion::~CTrashGameExplosion()
 {
 	
 }
@@ -47,12 +52,12 @@ CPlayer2D::~CPlayer2D()
 // ポリゴンの初期化処理
 //=============================================================================
 
-HRESULT CPlayer2D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size)
+HRESULT CTrashGameExplosion::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
 	CScene2D::Init(pos, size);
-	m_bGorillaMode = false;
-	CScene2D::SetObjType(CScene::OBJTYPE_PLAYER);
-
+	m_nAnimCnt = 0;
+	m_nPatternAnim = 0;
+	ChangeTextureAnime(m_nPatternAnim, D3DXVECTOR2(TEX_PATTERN_SIZE_X,TEX_PATTERN_SIZE_Y), D3DXVECTOR2(TEX_PATTERN_DIVIDE_X,TEX_PATTERN_DIVIDE_Y));
 	return S_OK;
 }
 
@@ -62,30 +67,40 @@ HRESULT CPlayer2D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 //=============================================================================
 // ポリゴンの終了処理
 //=============================================================================
-void CPlayer2D::Uninit(void)
+void CTrashGameExplosion::Uninit(void)
 {
 	CScene2D::Uninit();
-
-	CBullet2D::Unload();
 }
 
 
 //=============================================================================
 // ポリゴンの更新処理
 //=============================================================================
-void CPlayer2D::Update(void)
+void CTrashGameExplosion::Update(void)
 {
-	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
-	CInputMouse *pInputMouse = CManager::GetInputMouse();
-	D3DXVECTOR3 pos = CPlayer2D::GetPosition();
-	
 	CScene2D::Update();
+	//爆発アニメーション
+		m_nAnimCnt++;
+		if((m_nAnimCnt % TIME_CHANGE_PATTERN) == 0)
+		{
+			if( m_nPatternAnim == ( NUM_ANIM_PATTERN -1) )
+			{
+				//g_explosion[nCntExplosion].bUse = false;//未使用に変更
+				//CScene2D::Uninit();
+				this->Uninit();
+				return;
+			}
+			// パターンの切り替え
+			m_nPatternAnim = (m_nPatternAnim + 1) % NUM_ANIM_PATTERN;
+			ChangeTextureAnime(m_nPatternAnim, D3DXVECTOR2(TEX_PATTERN_SIZE_X,TEX_PATTERN_SIZE_Y),
+												D3DXVECTOR2(TEX_PATTERN_DIVIDE_X,TEX_PATTERN_DIVIDE_Y));
+		}
 }
 
 //=============================================================================
 // ポリゴンの描画処理
 //=============================================================================
-void CPlayer2D::Draw(void)
+void CTrashGameExplosion::Draw(void)
 {
 	CScene2D::Draw();
 }
@@ -93,27 +108,16 @@ void CPlayer2D::Draw(void)
 //=============================================================================
 // ポリゴンの生成処理
 //=============================================================================
-CPlayer2D *CPlayer2D::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
+CTrashGameExplosion *CTrashGameExplosion::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
-	CPlayer2D *pPlayer2D;
-	pPlayer2D = new CPlayer2D;
-	pPlayer2D->Init(pos, size);
+	CTrashGameExplosion *pTrashBox2D;
+	pTrashBox2D = new CTrashGameExplosion;
+	pTrashBox2D->Init(pos, size);
 
 	//テクスチャの割り当て
-	pPlayer2D->Load( TEXTURENAME);
+	pTrashBox2D->Load( TEXTURE_EXPLOSION);
 	
-	return pPlayer2D;
+	return pTrashBox2D;
 }
 
-void CPlayer2D::SetGorillaMode(void)
-{
-	m_bGorillaMode = true;
-	SetTexture(TEXTURE_GORILLA);
-}
-
-
-bool CPlayer2D::GetGorillaMode(void)
-{
-	return m_bGorillaMode;
-}
 

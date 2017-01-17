@@ -269,3 +269,21 @@ void CNumber::SetColor(const D3DXCOLOR &col)
 	m_pVtxBuff->Unlock();
 }
 
+void CNumber::SetSize(D3DXVECTOR3 size)
+{
+	m_size = size;
+
+	// 頂点情報を設定
+	VERTEX_2D *pVtx;
+
+	//頂点データの範囲をロックし、頂点バッファへのポインタを取得
+	m_pVtxBuff->Lock( 0, 0, (void**)&pVtx, 0);
+
+	// ポリゴンの位置を設定
+	pVtx[0].pos = D3DXVECTOR3(m_pos.x - (m_size.x/2), m_pos.y - (m_size.y/2), 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(m_pos.x + (m_size.x/2), m_pos.y - (m_size.y/2), 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(m_pos.x - (m_size.x/2), m_pos.y + (m_size.y/2), 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(m_pos.x + (m_size.x/2), m_pos.y + (m_size.y/2), 0.0f);
+
+	m_pVtxBuff->Unlock();
+}

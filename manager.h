@@ -48,6 +48,13 @@ public:
 		MODE_QUIT, // 終了
 		MODE_MAX,	//最大値
 	} MODE;
+	typedef enum
+	{
+		GAME_TRASH = 0,
+		GAME_ZEBRA,
+		GAME_LION,
+		GAME_MAX
+	}GAME;
 
 	CManager();
 	CManager(MODE mode);
@@ -82,6 +89,11 @@ public:
 	static void SetNextScene(MODE mode); //フェードあり
 	static void SceneChange(void); //シーンの切り替え
 
+	//スコア保存
+	void SaveScore(CManager::GAME game,int score);
+	int LoadScore(CManager::GAME game);
+	void AddScore(CManager::GAME game,int score);
+
 protected:
 	//カメラ
 	static CCamera *m_pCamera;
@@ -103,6 +115,11 @@ private:
 	static MODE m_modeNext;
 
 	static HWND m_hWnd;
+
+	//スコア保存
+	static int m_trashGameScore;
+	static int m_zebraGameScore;
+	static int m_lionGameScore;
 };
 
 #endif

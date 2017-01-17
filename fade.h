@@ -43,6 +43,7 @@ public:
 	static void Draw(void);
 
 	static void SetFade(void);
+	static bool isFading(void);
 	
 private:
 	//ä÷êî

@@ -172,24 +172,24 @@ void CScene2D::Update(void)
 //=============================================================================
 void CScene2D::Draw(void)
 {
-	LPDIRECT3DDEVICE9 pDevice;
-	pDevice = CManager::GetRenderer()->GetDevice();
+		LPDIRECT3DDEVICE9 pDevice;
+		pDevice = CManager::GetRenderer()->GetDevice();
 
-	// 頂点バッファをデータストリームに設定
-	pDevice->SetStreamSource(0, m_pVtxBuff, 0, sizeof(VERTEX_2D));
+		// 頂点バッファをデータストリームに設定
+		pDevice->SetStreamSource(0, m_pVtxBuff, 0, sizeof(VERTEX_2D));
 
-	// 頂点フォーマットの設定
-	pDevice->SetFVF(FVF_VERTEX_2D);
+		// 頂点フォーマットの設定
+		pDevice->SetFVF(FVF_VERTEX_2D);
 
-	// テクスチャの設定
-	pDevice->SetTexture(0, m_pTexture);
+		// テクスチャの設定
+		pDevice->SetTexture(0, m_pTexture);
 
-	// ポリゴンの描画
-	pDevice->DrawPrimitive(
-		D3DPT_TRIANGLESTRIP,	//プリミティブの種類
-		0,						//ロードする最初の頂点インデックス
-		NUM_POLYGON				//ポリゴンの数
-	);
+		// ポリゴンの描画
+		pDevice->DrawPrimitive(
+			D3DPT_TRIANGLESTRIP,	//プリミティブの種類
+			0,						//ロードする最初の頂点インデックス
+			NUM_POLYGON				//ポリゴンの数
+		);
 }
 
 //=============================================================================
@@ -342,6 +342,24 @@ void CScene2D::SetAlpha(int alpha)
 	pVtx[1].col = D3DCOLOR_RGBA(255,255,255,alpha);
 	pVtx[2].col = D3DCOLOR_RGBA(255,255,255,alpha);
 	pVtx[3].col = D3DCOLOR_RGBA(255,255,255,alpha);
+
+	m_pVtxBuff->Unlock();
+}
+
+void CScene2D::SetSize(D3DXVECTOR3 size)
+{
+	m_size = size;
+	// 頂点情報を設定
+	VERTEX_2D *pVtx;
+
+	//頂点データの範囲をロックし、頂点バッファへのポインタを取得
+	m_pVtxBuff->Lock( 0, 0, (void**)&pVtx, 0);
+
+	// ポリゴンの位置を設定
+	pVtx[0].pos = D3DXVECTOR3(m_pos.x - (m_size.x/2), m_pos.y - (m_size.y/2), 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(m_pos.x + (m_size.x/2), m_pos.y - (m_size.y/2), 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(m_pos.x - (m_size.x/2), m_pos.y + (m_size.y/2), 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(m_pos.x + (m_size.x/2), m_pos.y + (m_size.y/2), 0.0f);
 
 	m_pVtxBuff->Unlock();
 }

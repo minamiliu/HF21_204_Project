@@ -40,6 +40,7 @@ public:
 	D3DXVECTOR3 GetPosition(void);
 	D3DXVECTOR3 GetSize(void);
 	void SetColor(const D3DXCOLOR &col); //êFÇïœçX
+	void SetSize(D3DXVECTOR3 size);
 
 	static CNumber *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, D3DXVECTOR2 ptnSize);
 

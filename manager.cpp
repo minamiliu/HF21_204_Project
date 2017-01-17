@@ -46,6 +46,9 @@ CManager::MODE CManager::m_modeNow = MODE_NONE;
 CManager::MODE CManager::m_modeNext = MODE_NONE;
 HWND CManager::m_hWnd = NULL;
 
+int CManager::m_trashGameScore = 0;
+int CManager::m_zebraGameScore = 0;
+int CManager::m_lionGameScore = 0;
 //=============================================================================
 //コンストラクタ
 //=============================================================================
@@ -302,8 +305,11 @@ void CManager::NextModeChange(void)
 //=============================================================================
 void CManager::SetNextScene(MODE mode)
 {
-	m_modeNext = mode;
-	CFade::SetFade();
+	if( CFade::isFading() == false)
+	{
+		m_modeNext = mode;
+		CFade::SetFade();
+	}
 }
 
 //=============================================================================
@@ -324,7 +330,8 @@ void CManager::SceneChange(void)
 	switch(m_modeNext)
 	{
 	case MODE_TITLE:
-		m_pSceneManager = new CTitle;
+		//m_pSceneManager = new CTitle;
+		m_pSceneManager = new CTrashGame;
 		break;
 		
 	case MODE_TRASHGAME:
@@ -353,4 +360,61 @@ void CManager::SceneChange(void)
 
 	//次のシーンの初期化
 	m_pSceneManager->Init();
+}
+
+//=============================================================================
+//スコアセーブ
+//=============================================================================
+void CManager::SaveScore(CManager::GAME game,int score)
+{
+	if(game == GAME_TRASH)
+	{
+		m_trashGameScore = score;
+	}
+	if(game == GAME_ZEBRA)
+	{
+		m_zebraGameScore = score;
+	}
+	if(game == GAME_LION)
+	{
+		m_lionGameScore = score;
+	}
+}
+//=============================================================================
+//スコアロード
+//=============================================================================
+int CManager::LoadScore(CManager::GAME game)
+{
+	switch(game)
+	{
+	case GAME_TRASH:
+		return m_trashGameScore;
+		break;
+	case GAME_ZEBRA:
+		return m_zebraGameScore;
+		break;
+	case GAME_LION:
+		return m_lionGameScore;
+		break;
+	default:
+		return 0;
+	}
+}
+//=============================================================================
+//スコア加算
+//=============================================================================
+void CManager::AddScore(CManager::GAME game,int score)
+{
+	if(game == GAME_TRASH)
+	{
+		m_trashGameScore+=score;	
+	}
+	if(game == GAME_ZEBRA)
+	{
+		m_zebraGameScore+=score;
+	}
+	if(game == GAME_LION)
+	{
+		m_lionGameScore+=score;
+	}
 }

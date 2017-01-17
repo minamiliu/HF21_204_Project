@@ -51,6 +51,7 @@ private:
 	static CScene2D *m_pMouse;
 	static CScene2D *m_pMidpoint;
 	static int m_nTrashGameCnt;
+	static CScene2D *m_pCenterPoint;
 };
 
 #endif

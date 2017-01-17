@@ -138,6 +138,12 @@
     <ClCompile Include="trajectory.cpp">
       <Filter>ソース ファイル\TrashGame</Filter>
     </ClCompile>
+    <ClCompile Include="trashPlayer.cpp">
+      <Filter>ソース ファイル\TrashGame</Filter>
+    </ClCompile>
+    <ClCompile Include="trashGameExplosion.cpp">
+      <Filter>ソース ファイル\TrashGame</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -252,6 +258,12 @@
       <Filter>ヘッダー ファイル\TrashGame</Filter>
     </ClInclude>
     <ClInclude Include="getScore.h">
+      <Filter>ヘッダー ファイル\TrashGame</Filter>
+    </ClInclude>
+    <ClInclude Include="trashPlayer.h">
+      <Filter>ヘッダー ファイル\TrashGame</Filter>
+    </ClInclude>
+    <ClInclude Include="trashGameExplosion.h">
       <Filter>ヘッダー ファイル\TrashGame</Filter>
     </ClInclude>
   </ItemGroup>

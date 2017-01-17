@@ -125,17 +125,15 @@ void CGetScore::Uninit(void)
 void CGetScore::Update(void)
 {
 	D3DXVECTOR3 posGetScore = GetPosition();
-	
+	D3DXVECTOR3 sizeGetScore = GetSize();
 	m_nApCnt++;
 	posGetScore.y-=1;
-
 	SetPosition(posGetScore);
-	
+	//SetSize(D3DXVECTOR3(100,100,0));
 	if(m_nApCnt >60)
 	{
 		this->Uninit();
 	}
-
 }
 
 //=============================================================================
@@ -276,7 +274,20 @@ void CGetScore::SetPosition(D3DXVECTOR3 pos)
 		D3DXVECTOR3 posGetScore;
 		posGetScore = m_ppPolygon[cntKeta]->GetPosition();
 		posGetScore.y = pos.y;
-		//”ŽšŒ…‚Ì”jŠü
+
 		m_ppPolygon[cntKeta]->SetPosition(posGetScore);
+	}
+}
+
+void CGetScore::SetSize(D3DXVECTOR3 size)
+{
+	m_size = size;
+	for(int cntKeta = 0; cntKeta < m_nMaxKeta; cntKeta++)
+	{
+		D3DXVECTOR3 sizeGetScore;
+		sizeGetScore = m_ppPolygon[cntKeta]->GetSize();
+		sizeGetScore = size;
+
+		m_ppPolygon[cntKeta]->SetSize(sizeGetScore);
 	}
 }

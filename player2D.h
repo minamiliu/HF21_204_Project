@@ -41,6 +41,7 @@ public:
 private:
 	bool m_bGorillaMode;
 	//int nGorillaModeCnt;
+
 };
 
 #endif

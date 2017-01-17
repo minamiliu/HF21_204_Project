@@ -26,7 +26,13 @@
 class CTrajectory : public CScene2D
 {
 public:
-
+	typedef enum
+	{
+		TJRTYPE_NORMAL = 0,
+		TJRTYPE_GORILLA,
+		TJRTYPE_ALLDIRECTION,
+		TJRTYPE_MAX
+	}TJRTYPE;
 	CTrajectory();
 	virtual ~CTrajectory();
 
@@ -34,12 +40,16 @@ public:
 	void Uninit(void);
 	void Update(void);
 	void Draw(void);
-
-	static CTrajectory *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size);
+	static void Load(void);
+	static CTrajectory *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size,TJRTYPE type,float angle);
 	
 
 private:
 	int m_nTrajectoryCnt;
+	static LPDIRECT3DTEXTURE9 m_pTexture;
+	float m_alpha;
+	TJRTYPE m_tjrType;
+	float m_angle;
 };
 
 #endif

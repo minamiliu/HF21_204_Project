@@ -63,6 +63,7 @@ public:
 	static CScene2D *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, LPCSTR strFileName);
 	void SetTexture(LPCSTR strFileName);
 	void SetAlpha(int alpha);
+	void SetSize(D3DXVECTOR3 size);
 private:
 
 	LPDIRECT3DTEXTURE9		m_pTexture;		// テクスチャへのポインタ

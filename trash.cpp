@@ -20,7 +20,7 @@
 #include "trashGame.h"
 #include "player2D.h"
 #include "trajectory.h"
-
+#include "renderer.h"
 //============================================
 // マクロ定義
 //============================================
@@ -38,7 +38,7 @@
 
 //静的メンバ変数
 int CTrash::m_cnt = 0;
-LPDIRECT3DTEXTURE9 CTrash::m_pTexture = NULL;
+LPDIRECT3DTEXTURE9 CTrash::m_pTexture[] = {};
 
 //=============================================================================
 //コンストラクタ
@@ -87,12 +87,25 @@ void CTrash::Update(void)
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
 	D3DXVECTOR3 posTrash = GetPosition();
 
-	CDebugProc::Print("\n移動量.x,.y:%f,%f",m_speed.x,m_speed.y);
+	CDebugProc::Print("\n差異:%f",m_gravityCoefficient);
 
+	
 	if(CManager::GetInputMouse()->GetMouseLeftPress() && m_fallFlag == false)
 	{
 		//マウスの移動量を取得
 		m_speed.x -= CManager::GetInputMouse()->GetMouseAxisX()/3;
+		switch(GetObjType())
+		{
+		case OBJTYPE_LEFTTRASH:
+			m_speed.x *= 1.00;
+			break;
+		case OBJTYPE_TRASH:
+			m_speed.x *= 1.01;
+			break;
+		case OBJTYPE_RIGHTTRASH:
+			m_speed.x *= 1.02;
+			break;
+		}
 		m_speed.y += CManager::GetInputMouse()->GetMouseAxisY()/3;
 	}
 
@@ -111,10 +124,16 @@ void CTrash::Update(void)
 		{
 			m_speed.y = -200;
 		}
-
 	}
+
 	if(m_fallFlag == true)
 	{
+
+		//軌跡生成
+		if(CTrashGame::GetTrashGameCnt() % 5 == 0)
+		{
+			CTrajectory::Create(D3DXVECTOR3(posTrash.x,posTrash.y,100.0f),D3DXVECTOR3(50,50,0.0f),CTrajectory::TJRTYPE_NORMAL,0.0);
+		}
 		//放物線移動
 		posTrash.x += m_speed.x / 10;
 		m_speed.y -= GRAVITY_POINT * m_gravityCoefficient;
@@ -133,45 +152,45 @@ void CTrash::Update(void)
 			{
 				if(GetObjType() == OBJTYPE_TRASH)
 				{
-					pTrash = CTrash::Create(D3DXVECTOR3(200.0f, 300.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_BANANA,OBJTYPE_TRASH);
+					pTrash = CTrash::Create(D3DXVECTOR3(200.0f, 400.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_BANANA,OBJTYPE_TRASH);
 				}
 				else if(GetObjType() == OBJTYPE_LEFTTRASH)
 				{
-					pTrash = CTrash::Create(D3DXVECTOR3(100.0f, 270.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_BANANA,OBJTYPE_LEFTTRASH);
+					pTrash = CTrash::Create(D3DXVECTOR3(100.0f, 370.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_BANANA,OBJTYPE_LEFTTRASH);
 				}
 				else if(GetObjType() == OBJTYPE_RIGHTTRASH)
 				{
-					pTrash = CTrash::Create(D3DXVECTOR3(300.0f, 270.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_BANANA,OBJTYPE_RIGHTTRASH);
+					pTrash = CTrash::Create(D3DXVECTOR3(300.0f, 370.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_BANANA,OBJTYPE_RIGHTTRASH);
 				}
 			}
 			else if(nNum == 1)
 			{
 				if(GetObjType() == OBJTYPE_TRASH)
 				{
-					pTrash = CTrash::Create(D3DXVECTOR3(200.0f, 300.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_TRASH,OBJTYPE_TRASH);
+					pTrash = CTrash::Create(D3DXVECTOR3(200.0f, 400.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_TRASH,OBJTYPE_TRASH);
 				}
 				else if(GetObjType() == OBJTYPE_LEFTTRASH)
 				{
-					pTrash = CTrash::Create(D3DXVECTOR3(100.0f, 270.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_TRASH,OBJTYPE_LEFTTRASH);
+					pTrash = CTrash::Create(D3DXVECTOR3(100.0f, 370.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_TRASH,OBJTYPE_LEFTTRASH);
 				}
 				else if(GetObjType() == OBJTYPE_RIGHTTRASH)
 				{
-					pTrash = CTrash::Create(D3DXVECTOR3(300.0f, 270.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_TRASH,OBJTYPE_RIGHTTRASH);
+					pTrash = CTrash::Create(D3DXVECTOR3(300.0f, 370.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_TRASH,OBJTYPE_RIGHTTRASH);
 				}
 			}
 			else if(nNum == 2)
 			{
 				if(GetObjType() == OBJTYPE_TRASH)
 				{
-					pTrash = CTrash::Create(D3DXVECTOR3(200.0f, 300.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_PAPER,OBJTYPE_TRASH);
+					pTrash = CTrash::Create(D3DXVECTOR3(200.0f, 400.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_PAPER,OBJTYPE_TRASH);
 				}
 				else if(GetObjType() == OBJTYPE_LEFTTRASH)
 				{
-					pTrash = CTrash::Create(D3DXVECTOR3(100.0f, 270.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_PAPER,OBJTYPE_LEFTTRASH);
+					pTrash = CTrash::Create(D3DXVECTOR3(100.0f, 370.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_PAPER,OBJTYPE_LEFTTRASH);
 				}
 				else if(GetObjType() == OBJTYPE_RIGHTTRASH)
 				{
-					pTrash = CTrash::Create(D3DXVECTOR3(300.0f, 270.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_PAPER,OBJTYPE_RIGHTTRASH);
+					pTrash = CTrash::Create(D3DXVECTOR3(300.0f, 370.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_PAPER,OBJTYPE_RIGHTTRASH);
 				}
 			}
 			//カウントをリセット
@@ -193,45 +212,45 @@ void CTrash::Update(void)
 			{
 				if(GetObjType() == OBJTYPE_TRASH)
 				{
-					pTrash = CTrash::Create(D3DXVECTOR3(200.0f, 300.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_BANANA,OBJTYPE_TRASH);
+					pTrash = CTrash::Create(D3DXVECTOR3(200.0f, 400.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_BANANA,OBJTYPE_TRASH);
 				}
 				else if(GetObjType() == OBJTYPE_LEFTTRASH)
 				{
-					pTrash = CTrash::Create(D3DXVECTOR3(100.0f, 270.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_BANANA,OBJTYPE_LEFTTRASH);
+					pTrash = CTrash::Create(D3DXVECTOR3(100.0f, 370.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_BANANA,OBJTYPE_LEFTTRASH);
 				}
 				else if(GetObjType() == OBJTYPE_RIGHTTRASH)
 				{
-					pTrash = CTrash::Create(D3DXVECTOR3(300.0f, 270.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_BANANA,OBJTYPE_RIGHTTRASH);
+					pTrash = CTrash::Create(D3DXVECTOR3(300.0f, 370.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_BANANA,OBJTYPE_RIGHTTRASH);
 				}
 			}
 			else if(nNum == 1)
 			{
 				if(GetObjType() == OBJTYPE_TRASH)
 				{
-					pTrash = CTrash::Create(D3DXVECTOR3(200.0f, 300.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_TRASH,OBJTYPE_TRASH);
+					pTrash = CTrash::Create(D3DXVECTOR3(200.0f, 400.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_TRASH,OBJTYPE_TRASH);
 				}
 				else if(GetObjType() == OBJTYPE_LEFTTRASH)
 				{
-					pTrash = CTrash::Create(D3DXVECTOR3(100.0f, 270.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_TRASH,OBJTYPE_LEFTTRASH);
+					pTrash = CTrash::Create(D3DXVECTOR3(100.0f, 370.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_TRASH,OBJTYPE_LEFTTRASH);
 				}
 				else if(GetObjType() == OBJTYPE_RIGHTTRASH)
 				{
-					pTrash = CTrash::Create(D3DXVECTOR3(300.0f, 270.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_TRASH,OBJTYPE_RIGHTTRASH);
+					pTrash = CTrash::Create(D3DXVECTOR3(300.0f, 370.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_TRASH,OBJTYPE_RIGHTTRASH);
 				}
 			}
 			else if(nNum == 2)
 			{
 				if(GetObjType() == OBJTYPE_TRASH)
 				{
-					pTrash = CTrash::Create(D3DXVECTOR3(200.0f, 300.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_PAPER,OBJTYPE_TRASH);
+					pTrash = CTrash::Create(D3DXVECTOR3(200.0f, 400.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_PAPER,OBJTYPE_TRASH);
 				}
 				else if(GetObjType() == OBJTYPE_LEFTTRASH)
 				{
-					pTrash = CTrash::Create(D3DXVECTOR3(100.0f, 270.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_PAPER,OBJTYPE_LEFTTRASH);
+					pTrash = CTrash::Create(D3DXVECTOR3(100.0f, 370.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_PAPER,OBJTYPE_LEFTTRASH);
 				}
 				else if(GetObjType() == OBJTYPE_RIGHTTRASH)
 				{
-					pTrash = CTrash::Create(D3DXVECTOR3(300.0f, 270.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_PAPER,OBJTYPE_RIGHTTRASH);
+					pTrash = CTrash::Create(D3DXVECTOR3(300.0f, 370.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_PAPER,OBJTYPE_RIGHTTRASH);
 				}
 			}
 			CTrashGame::SetTrashPointer(pTrash);
@@ -265,25 +284,38 @@ CTrash *CTrash::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size,LPCSTR strFileName,OBJT
 	pTrash = new CTrash;
 	pTrash->Init(pos, size);
 	pTrash->SetObjType(type);
+	int num = rand()%3;
+	float plus;
+	switch(num)
+	{
+	case 0:
+		plus = 0.0;
+		break;
+	case 1:
+		plus = 0.4;
+		break;
+	case 2:
+		plus = 0.7;
+		break;
+	}
+
 	if(strFileName == TEXTURE_TRASH)
 	{
-		pTrash->m_gravityCoefficient = 2.0;
+		pTrash->m_gravityCoefficient = 1.8 + plus;
 		pTrash->m_TrashType = TRASHTYPE_HEAVY;
 	}
 	else if(strFileName == TEXTURE_BANANA)
 	{
-		pTrash->m_gravityCoefficient = 1.7;
+		pTrash->m_gravityCoefficient = 1.5 + plus;
 		pTrash->m_TrashType = TRASHTYPE_NORMAL;
 	}
 	else if(strFileName == TEXTURE_PAPER)
 	{
-		pTrash->m_gravityCoefficient = 0.7;
+		pTrash->m_gravityCoefficient = 0.5 + plus;
 		pTrash->m_TrashType = TRASHTYPE_LIGHT;
 	}
-	//テクスチャの割り当て
-	pTrash->Load(strFileName);
 	
-	//pTrash->CScene2D::BindTexture(m_pTexture);
+	pTrash->CScene2D::BindTexture(m_pTexture[pTrash->m_TrashType]);
 
 	return pTrash;
 }
@@ -314,4 +346,32 @@ void CTrash::TrashEnd(void)
 	m_fallFlag = true;
 	//出現フラグをOFF
 	m_apFlag = false;
+}
+
+void CTrash::Load(void)
+{
+	for(int cnt=0 ;cnt<TRASHTYPE_MAX;cnt++)
+	{
+		LPCSTR strFileName;
+		switch( cnt)
+		{
+		case TRASHTYPE_NORMAL:
+			strFileName = TEXTURE_BANANA;
+			break;
+		case TRASHTYPE_LIGHT:
+			strFileName = TEXTURE_PAPER;
+			break;
+		case TRASHTYPE_HEAVY:
+			strFileName = TEXTURE_TRASH;
+			break;
+		}
+
+		if( m_pTexture[cnt] == NULL)
+		{
+			LPDIRECT3DDEVICE9 pDevice;
+			pDevice = CManager::GetRenderer()->GetDevice();
+			// テクスチャの読み込み
+			D3DXCreateTextureFromFile( pDevice, strFileName, &m_pTexture[cnt]);
+		}
+	}
 }
