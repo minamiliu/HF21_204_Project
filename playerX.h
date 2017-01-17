@@ -62,7 +62,6 @@ protected:
 	bool isCollision(void);
 
 private:
-	D3DXVECTOR3 m_move;			// モデルの移動量
 	float m_fSpeed;				// モデルのスピード
 	float m_fAccel;				// 加速度
 	D3DXVECTOR3 m_front;		// 前進ベクトル

@@ -75,7 +75,6 @@ HRESULT CPlayerX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float 
 	m_fSpeed = 0.0f;
 	m_fAccel = speed;
 
-	m_move = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
 	m_front = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
 	m_rotTarget = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
 	m_rotAngle = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
@@ -115,22 +114,6 @@ void CPlayerX::Uninit(void)
 //=============================================================================
 void CPlayerX::Update(void)
 {
-	//移動処理
-	bool isMoved = false;
-	isMoved = isKeyUse(DIK_W, DIK_S, DIK_A, DIK_D);
-	//isMoved = isMouseUse();
-	if( isMoved == true)
-	{
-		UpdateRot();
-	}
-
-	if( m_state == STATE_NORMAL)
-	{
-		//前進ベクトルの更新
-		CalcFront();	
-	}
-
-
 	{//カメラ追従
 		CCamera *pCamera = CManager::GetCamera();
 
@@ -147,17 +130,22 @@ void CPlayerX::Update(void)
 		pCamera->SetRot( this->GetRot());
 	}
 
-
-
-	//座標更新処理
-	if( isCollision() == false)
+	//移動処理
+	bool isMoved;
+	isMoved = isKeyUse(DIK_W, DIK_S, DIK_A, DIK_D);
+	//isMoved = isMouseUse();
+	if( isMoved == true)
 	{
-		SetPosition( this->GetPosition() + m_front);
+		UpdateRot();
 	}
 
 	//状態更新
 	switch( m_state)
 	{
+	case STATE_NORMAL:
+		//前進ベクトルの更新
+		CalcFront();
+		break;
 	case STATE_HIT:
 		m_nCntState--;
 		if( m_nCntState <= 0)
@@ -170,10 +158,21 @@ void CPlayerX::Update(void)
 		}
 		else
 		{
+			//跳ね返る処理
 			m_front.y = (m_nCntState - 15) * 0.2f;
+			//移動慣性
+			m_fSpeed -= m_fSpeed * 0.05f;
 		}
 		break;
 	}
+
+
+	//座標更新処理
+	if( isCollision() == false)
+	{
+		SetPosition( this->GetPosition() + m_front);
+	}
+
 
 	//手足
 	for(int cntLimb = 0; cntLimb < MAX_LIMB; cntLimb++)
@@ -428,10 +427,6 @@ void CPlayerX::CalcFront(void)
 		{
 			m_fSpeed = 10.0f;
 		}
-
-		//移動慣性の初期化
-		m_move = D3DXVECTOR3( m_fSpeed, 0.0f, m_fSpeed);
-
 	}
 	else if(m_isGoBack == true)
 	{
@@ -441,13 +436,11 @@ void CPlayerX::CalcFront(void)
 		{
 			m_fSpeed = -10.0f;
 		}
-
-		//移動慣性の初期化
-		m_move = D3DXVECTOR3( m_fSpeed, 0.0f, m_fSpeed);	
 	}
 	else
 	{
-		m_fSpeed -= m_fSpeed * 0.25f;
+		//移動慣性
+		m_fSpeed -= m_fSpeed * 0.05f;	
 	}
 
 
@@ -455,11 +448,8 @@ void CPlayerX::CalcFront(void)
 	if( m_rotAngle.y == 0)
 	{
 		//移動
-		m_front.x = m_move.x * sinf( rotPlayer.y);
-		m_front.z = m_move.z * cosf( rotPlayer.y);
-
-		//慣性処理
-		m_move -= m_move * 0.05f;
+		m_front.x = m_fSpeed * sinf( rotPlayer.y);
+		m_front.z = m_fSpeed * cosf( rotPlayer.y);
 	}
 }
 
