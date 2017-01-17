@@ -35,7 +35,8 @@ public:
 	typedef enum
 	{
 		STATE_NORMAL = 0,
-		STATE_CRASH,
+		STATE_HIT,
+		STATE_LION,
 		STATE_MAX,
 	}STATE;
 

@@ -24,6 +24,7 @@
 #include "limbX.h"
 #include "meshWall.h"
 #include "cubeX.h"
+#include "enemyX.h"
 
 //============================================
 // マクロ定義
@@ -131,6 +132,9 @@ void CPlayerX::Update(void)
 		UpdateRot();
 	}
 
+	//前進ベクトルの更新
+	CalcNextPos();
+
 
 	{//カメラ追従
 		CCamera *pCamera = CManager::GetCamera();
@@ -150,12 +154,12 @@ void CPlayerX::Update(void)
 
 	//当たり判定の前準備
 	D3DXVECTOR3 posLside = posPlayer;
-	posLside.x = posPlayer.x +  15.0f * sinf(rotPlayer.y + D3DXToRadian(-90.0f));
-	posLside.z = posPlayer.z +  15.0f * cosf(rotPlayer.y + D3DXToRadian(-90.0f));
+	posLside.x = posPlayer.x +  PLAYER_RADIUS * sinf(rotPlayer.y + D3DXToRadian(-90.0f));
+	posLside.z = posPlayer.z +  PLAYER_RADIUS * cosf(rotPlayer.y + D3DXToRadian(-90.0f));
 
 	D3DXVECTOR3 posRside = posPlayer;
-	posRside.x = posPlayer.x +  15.0f * sinf(rotPlayer.y + D3DXToRadian(90.0f));
-	posRside.z = posPlayer.z +  15.0f * cosf(rotPlayer.y + D3DXToRadian(90.0f));
+	posRside.x = posPlayer.x +  PLAYER_RADIUS * sinf(rotPlayer.y + D3DXToRadian(90.0f));
+	posRside.z = posPlayer.z +  PLAYER_RADIUS * cosf(rotPlayer.y + D3DXToRadian(90.0f));
 
 	//当たり判定
 	for( int nCntScene = 0; nCntScene < MAX_SCENE; nCntScene++)
@@ -196,7 +200,7 @@ void CPlayerX::Update(void)
 			}
 
 			//敵との当たり判定
-			else if( type == CScene::OBJTYPE_L_ENEMY && m_state != STATE_CRASH)
+			else if( type == CScene::OBJTYPE_L_ENEMY && m_state != STATE_HIT)
 			{
 				D3DXVECTOR3 posEnemy;
 				posEnemy = pScene->GetPosition();
@@ -205,13 +209,22 @@ void CPlayerX::Update(void)
 				{
 					//スコア
 					//CLionGame::GetScore()->AddScore( -100);
-					
-					m_state = STATE_CRASH;
-					m_nCntState = 60;
-					m_fSpeed = -2.0f;
-					
-					m_isGoBack = true;
-					//return;
+					switch(m_state)
+					{
+					case STATE_NORMAL:
+						m_state = STATE_HIT;
+						m_nCntState = 60;
+						m_fSpeed = -2.0f;
+						m_isGoBack = true;
+						//前進ベクトルの更新
+						CalcNextPos();
+						break;
+					case STATE_LION:
+						CEnemyX *pEnemy = (CEnemyX*)pScene;
+						pEnemy->SetState(CEnemyX::STATE_STUN, 60);
+						break;
+					}
+			
 				}
 			}
 
@@ -222,7 +235,7 @@ void CPlayerX::Update(void)
 
 				D3DXVECTOR3 tSphere;
 				D3DXVec3Normalize( &tSphere, &m_front);
-				tSphere *= 15.0f;
+				tSphere *= PLAYER_RADIUS;
 
 				if( pWall->HitCheck( posPlayer, posPlayer + tSphere, &wall_nor, NULL) ||
 					pWall->HitCheck( posLside, posLside + tSphere, &wall_nor, NULL) ||
@@ -238,7 +251,7 @@ void CPlayerX::Update(void)
 				CCubeX *pCube = (CCubeX*)pScene;
 				
 				float len = pCube->GetDistanceBoxPoint( posPlayer + m_front);
-				if( len < 15.0f)
+				if( len < PLAYER_RADIUS)
 				{
 					nHitCubeID = nCntScene;
 					bHitCube = true;
@@ -274,7 +287,7 @@ void CPlayerX::Update(void)
 
 					D3DXVECTOR3 tSphere;
 					D3DXVec3Normalize( &tSphere, &m_front);
-					tSphere *= 15.0f;
+					tSphere *= PLAYER_RADIUS;
 				
 					if( pWall->HitCheck( posPlayer, posPlayer + tSphere, &wall_nor, NULL) ||
 						pWall->HitCheck( posLside, posLside + tSphere, &wall_nor, NULL) ||
@@ -309,12 +322,12 @@ void CPlayerX::Update(void)
 			{
 				CCubeX *pCube = (CCubeX*)pScene;
 
-				if( pCube->GetDistanceBoxPoint( posPlayer + vecX) >= 15.0f)
+				if( pCube->GetDistanceBoxPoint( posPlayer + vecX) >= PLAYER_RADIUS)
 				{
 					bHitCube = false;
 					m_front = vecX;
 				}
-				if( pCube->GetDistanceBoxPoint( posPlayer + vecZ) >= 15.0f)
+				if( pCube->GetDistanceBoxPoint( posPlayer + vecZ) >= PLAYER_RADIUS)
 				{
 					bHitCube = false;
 					m_front = vecZ;
@@ -322,9 +335,6 @@ void CPlayerX::Update(void)
 			}	
 		}		
 	}
-
-	//移動慣性の更新
-	CalcNextPos();
 
 	//座標更新処理
 	if( bHitWall == false && bHitCube == false)
@@ -335,7 +345,7 @@ void CPlayerX::Update(void)
 	//状態更新
 	switch( m_state)
 	{
-	case STATE_CRASH:
+	case STATE_HIT:
 		m_nCntState--;
 		if( m_nCntState <= 0)
 		{

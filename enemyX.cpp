@@ -70,8 +70,13 @@ HRESULT CEnemyX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl)
 	CSceneX::Init( pos, rot, scl);
 	SetObjType( OBJTYPE_L_ENEMY);
 
-	m_nCntFrame = 0;
+	m_nCntMotion = 0;
 	m_nMotionNow = 0;
+	m_state = STATE_NORMAL;
+	m_nCntState = 0;
+	m_posInit = pos;
+	m_rotInit = rot;
+	m_sclInit = scl;
 
 	m_pMotionPara = new MOTION[MAX_MOTION];
 
@@ -125,31 +130,34 @@ void CEnemyX::Uninit(void)
 //=============================================================================
 void CEnemyX::Update(void)
 {
-	//移動処理
-	D3DXVECTOR3 pos = this->GetPosition();
-	pos += m_front;
-	this->SetPosition( pos);
-
-	//向き
-	D3DXVECTOR3 rot = this->GetRot();
-	rot.y += m_rotTurn;
-	if( rot.y > D3DX_PI)
+	//状態更新
+	switch( m_state)
 	{
-		rot.y -= D3DX_PI * 2.0f;
+	case STATE_NORMAL:
+		UpdateMotion();
+		break;
+	case STATE_STUN:
+		m_nCntState--;
+		if( m_nCntState <= 0)
+		{
+			this->SetState(STATE_NORMAL, 0);
+			this->SetPosition(m_posInit);
+			this->SetRot(m_rotInit);
+			m_nMotionNow = 0;
+			m_nCntMotion = 0;
+			m_state = STATE_NORMAL;
+			m_front = m_pMotionPara[0].front / m_pMotionPara[0].nFrame;
+			m_rotTurn = m_pMotionPara[0].rotY / m_pMotionPara[0].nFrame;
+			
+		}
+		else
+		{
+			this->SetRot(this->GetRot() + D3DXVECTOR3( 0.0f, 1.0f, 0.0f));
+		}
+		break;
 	}
-	this->SetRot( rot);
 
-	//モーション更新処理
-	m_nCntFrame++;
-	if( m_nCntFrame >= m_pMotionPara[m_nMotionNow].nFrame)
-	{
-		m_nMotionNow = (m_nMotionNow + 1) % MAX_MOTION;
-		m_front = m_pMotionPara[m_nMotionNow].front / m_pMotionPara[m_nMotionNow].nFrame;
-		m_rotTurn = m_pMotionPara[m_nMotionNow].rotY / m_pMotionPara[m_nMotionNow].nFrame;
-		m_nCntFrame = 0;
-	}
-
-	//手足
+	//手足の更新処理
 	for(int cntLimb = 0; cntLimb < MAX_LIMB; cntLimb++)
 	{
 		m_pLimb[cntLimb]->SetPosition(this->GetPosition());
@@ -297,4 +305,57 @@ void CEnemyX::Unload(void)
 		}	
 	}
 
+}
+//=============================================================================
+// 敵がノーマル状態でのモーション
+//=============================================================================
+void CEnemyX::UpdateMotion(void)
+{
+	//移動処理
+	D3DXVECTOR3 pos = this->GetPosition();
+	pos += m_front;
+	this->SetPosition( pos);
+
+	//向き
+	D3DXVECTOR3 rot = this->GetRot();
+	rot.y += m_rotTurn;
+	if( rot.y > D3DX_PI)
+	{
+		rot.y -= D3DX_PI * 2.0f;
+	}
+	this->SetRot( rot);
+
+	//モーション更新処理
+	m_nCntMotion++;
+	if( m_nCntMotion >= m_pMotionPara[m_nMotionNow].nFrame)
+	{
+		m_nMotionNow = (m_nMotionNow + 1) % MAX_MOTION;
+		m_front = m_pMotionPara[m_nMotionNow].front / m_pMotionPara[m_nMotionNow].nFrame;
+		m_rotTurn = m_pMotionPara[m_nMotionNow].rotY / m_pMotionPara[m_nMotionNow].nFrame;
+		m_nCntMotion = 0;
+	}
+
+}
+//=============================================================================
+// ステートを設定
+//=============================================================================
+void CEnemyX::SetState(STATE state, int nCntState)
+{
+	m_state = state;
+	m_nCntState = nCntState;
+
+	switch(state)
+	{
+	case STATE_STUN:
+		break;
+	case STATE_NORMAL:
+		break;
+	}
+}
+//=============================================================================
+// ステートを取得
+//=============================================================================
+CEnemyX::STATE CEnemyX::GetState(void)
+{
+	return m_state;
 }

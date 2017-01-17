@@ -28,6 +28,7 @@ class CMeshWall;
 class CCubeX;
 class CScore;
 class CTime;
+class CEffectBG;
 //============================================
 //構造体定義
 //============================================
@@ -38,7 +39,8 @@ public:
 	typedef enum 
 	{
 		STATE_NORMAL = 0,
-		STATE_SUPER,
+		STATE_UPGRADE,
+		STATE_LION,
 		STATE_MAX,
 	}STATE;
 
@@ -57,6 +59,10 @@ private:
 
 	CTime *m_pTime;
 	STATE m_state;
+	int m_nCntState;	//状態のカウンター
+
+	CEffectBG *m_pEffectBG;
+	CPlayerX *m_pPlayer;
 	//static CScore *m_score;
 };
 
