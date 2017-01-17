@@ -82,6 +82,11 @@ public:
 	static void SetNextScene(MODE mode); //フェードあり
 	static void SceneChange(void); //シーンの切り替え
 
+	//スコア保存
+	void SaveScore(MODE game,int score);
+	int LoadScore(MODE game);
+	void AddScore(MODE game,int score);
+
 protected:
 	//カメラ
 	static CCamera *m_pCamera;
@@ -103,6 +108,11 @@ private:
 	static MODE m_modeNext;
 
 	static HWND m_hWnd;
+
+	//スコア保存
+	static int m_trashGameScore;
+	static int m_zebraGameScore;
+	static int m_lionGameScore;
 };
 
 #endif

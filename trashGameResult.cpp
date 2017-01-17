@@ -63,14 +63,17 @@ void CTrashGameResult::Uninit()
 
 void CTrashGameResult::Update()
 {
+	CManager::Update();
+
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
 
 	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN))
 	{
-		SetNextScene( MODE_RESULT);
+		SetNextScene( MODE_ZEBRAGAME);
 	}
 
-	CManager::Update();
+	//シーンが切り替えるところ、各シーンのUpdateの最後に置いとく
+	CManager::SceneChange();
 }
 
 void CTrashGameResult::Draw()

@@ -54,6 +54,7 @@ public:
 	HRESULT Load(LPCSTR strFileName);
 	void BindTexture( LPDIRECT3DTEXTURE9 pTexture);
 	void SetTexture(int patX,int patY,int animPat);
+	void ChangeTextureAnime( int nPatternAnim, D3DXVECTOR2 ptnSize, D3DXVECTOR2 ptnDivide); //アニメーション
 
 	//頂点データ関連
 	void SetPosition(D3DXVECTOR3 pos);
@@ -63,7 +64,7 @@ public:
 	static CScene2D *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, LPCSTR strFileName);
 	void SetTexture(LPCSTR strFileName);
 	void SetAlpha(int alpha);
-
+	void SetSize(D3DXVECTOR3 size);
 private:
 
 	LPDIRECT3DTEXTURE9		m_pTexture;		// テクスチャへのポインタ

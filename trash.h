@@ -47,13 +47,14 @@ public:
 	void ReverseMove(void);
 	TRASHTYPE GetTrashType(void);
 	void TrashEnd(void);
+	static void Load(void);
 private:
 	D3DXVECTOR3 m_speed;
 	bool m_fallFlag;//落下フラグ
 	bool m_apFlag;//出現フラグ
 	static int m_cnt;//出現タイミングカウンター
 	float m_gravityCoefficient;//重力係数
-	static LPDIRECT3DTEXTURE9 m_pTexture;
+	static LPDIRECT3DTEXTURE9 m_pTexture[3];
 	TRASHTYPE m_TrashType;
 };
 

@@ -172,24 +172,24 @@ void CScene2D::Update(void)
 //=============================================================================
 void CScene2D::Draw(void)
 {
-	LPDIRECT3DDEVICE9 pDevice;
-	pDevice = CManager::GetRenderer()->GetDevice();
+		LPDIRECT3DDEVICE9 pDevice;
+		pDevice = CManager::GetRenderer()->GetDevice();
 
-	// 頂点バッファをデータストリームに設定
-	pDevice->SetStreamSource(0, m_pVtxBuff, 0, sizeof(VERTEX_2D));
+		// 頂点バッファをデータストリームに設定
+		pDevice->SetStreamSource(0, m_pVtxBuff, 0, sizeof(VERTEX_2D));
 
-	// 頂点フォーマットの設定
-	pDevice->SetFVF(FVF_VERTEX_2D);
+		// 頂点フォーマットの設定
+		pDevice->SetFVF(FVF_VERTEX_2D);
 
-	// テクスチャの設定
-	pDevice->SetTexture(0, m_pTexture);
+		// テクスチャの設定
+		pDevice->SetTexture(0, m_pTexture);
 
-	// ポリゴンの描画
-	pDevice->DrawPrimitive(
-		D3DPT_TRIANGLESTRIP,	//プリミティブの種類
-		0,						//ロードする最初の頂点インデックス
-		NUM_POLYGON				//ポリゴンの数
-	);
+		// ポリゴンの描画
+		pDevice->DrawPrimitive(
+			D3DPT_TRIANGLESTRIP,	//プリミティブの種類
+			0,						//ロードする最初の頂点インデックス
+			NUM_POLYGON				//ポリゴンの数
+		);
 }
 
 //=============================================================================
@@ -320,7 +320,9 @@ void CScene2D::SetColor(const D3DXCOLOR &col)
 
 	m_pVtxBuff->Unlock();
 }
-
+//=============================================================================
+//
+//=============================================================================
 void CScene2D::SetTexture(LPCSTR strFileName)
 {
 	LPDIRECT3DDEVICE9 pDevice;
@@ -329,7 +331,9 @@ void CScene2D::SetTexture(LPCSTR strFileName)
 	// テクスチャの読み込み
 	D3DXCreateTextureFromFile( pDevice, strFileName, &m_pTexture);
 }
-
+//=============================================================================
+//
+//=============================================================================
 void CScene2D::SetAlpha(int alpha)
 {
 	// 頂点情報を設定
@@ -346,3 +350,52 @@ void CScene2D::SetAlpha(int alpha)
 
 	m_pVtxBuff->Unlock();
 }
+//=============================================================================
+//
+//=============================================================================
+void CScene2D::SetSize(D3DXVECTOR3 size)
+{
+	m_size = size;
+	// 頂点情報を設定
+	VERTEX_2D *pVtx;
+
+	//頂点データの範囲をロックし、頂点バッファへのポインタを取得
+	m_pVtxBuff->Lock( 0, 0, (void**)&pVtx, 0);
+
+	// ポリゴンの位置を設定
+	pVtx[0].pos = D3DXVECTOR3(m_pos.x - (m_size.x/2), m_pos.y - (m_size.y/2), 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(m_pos.x + (m_size.x/2), m_pos.y - (m_size.y/2), 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(m_pos.x - (m_size.x/2), m_pos.y + (m_size.y/2), 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(m_pos.x + (m_size.x/2), m_pos.y + (m_size.y/2), 0.0f);
+
+	m_pVtxBuff->Unlock();
+}
+//=============================================================================
+//アニメのパターンを変える
+//=============================================================================
+void CScene2D::ChangeTextureAnime( int nPatternAnim, D3DXVECTOR2 ptnSize, D3DXVECTOR2 ptnDivide)
+{
+	//頂点バッファの中身を埋める
+	VERTEX_2D *pVtx;
+	float fPosXLeft, fPosXRight;
+	float fPosYUp, fPosYDown;
+
+	// 頂点データの範囲をロックし、頂点バッファへのポインタを取得
+	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+	// テクスチャ座標の設定
+	fPosXLeft	= ptnSize.x * (nPatternAnim % (int)ptnDivide.x);
+	fPosXRight	= ptnSize.x * (nPatternAnim % (int)ptnDivide.x + 1);
+	fPosYUp		= ptnSize.y * (nPatternAnim / (int)ptnDivide.x);
+	fPosYDown	= ptnSize.y * (nPatternAnim / (int)ptnDivide.x + 1);
+
+
+	pVtx[0].tex = D3DXVECTOR2( fPosXLeft, fPosYUp );
+	pVtx[1].tex = D3DXVECTOR2( fPosXRight, fPosYUp );
+	pVtx[2].tex = D3DXVECTOR2( fPosXLeft, fPosYDown );
+	pVtx[3].tex = D3DXVECTOR2( fPosXRight, fPosYDown );
+
+	// 頂点データをアンロックする
+	m_pVtxBuff->Unlock();
+}
+
