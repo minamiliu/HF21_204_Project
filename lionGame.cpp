@@ -174,7 +174,7 @@ void CLionGame::Update()
 	}
 
 	//ŽžŠÔ‚É‚È‚Á‚½‚çA•Ïg‚·‚é
-	if(m_pTime->GetTime() == 95 && m_state == STATE_NORMAL)
+	if(m_pTime->GetTime() == 10 && m_state == STATE_NORMAL)
 	{
 		m_pTime->StopTime();
 		m_pEffectBG = CEffectBG::Create( D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f), D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f));

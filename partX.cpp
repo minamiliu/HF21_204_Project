@@ -70,6 +70,9 @@ HRESULT CPartX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl)
 	m_rot = rot;
 	m_scl = scl;
 
+	// Xファイルの読み込みフラグ
+	m_bLoadXfile = false;
+
 
 	return S_OK;
 }
@@ -103,6 +106,8 @@ HRESULT CPartX::LoadXfile(LPCSTR strFileName)
 		return E_FAIL;
 	}
 
+	// Xファイルの読み込みフラグ
+	m_bLoadXfile = true;
 
 	return S_OK;
 }

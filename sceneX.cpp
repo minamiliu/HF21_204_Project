@@ -65,6 +65,9 @@ HRESULT CSceneX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl)
 	m_pos = pos;
 	m_rot = rot;
 	m_scl = scl;
+
+	//Xファイルの読み込みフラグ
+	m_bLoadXfile = false;
 	
 	return S_OK;
 }

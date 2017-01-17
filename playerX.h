@@ -56,9 +56,10 @@ public:
 
 protected:
 	void UpdateRot(void);
-	void CalcNextPos(void);
+	void CalcFront(void);
 	bool isKeyUse(int nUp, int nDown, int nLeft, int nRight);
 	bool isMouseUse(void);
+	bool isCollision(void);
 
 private:
 	D3DXVECTOR3 m_move;			// ƒ‚ƒfƒ‹‚ÌˆÚ“®—Ê
