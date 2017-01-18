@@ -25,6 +25,7 @@
 #include "result.h"
 #include "fade.h"
 #include "scene.h"
+#include "stage.h"
 
 //============================================
 // マクロ定義
@@ -63,7 +64,6 @@ CManager::CManager(MODE mode)
 	m_modeNow = mode;
 	m_pSceneManager = this;
 }
-
 //=============================================================================
 //デストラクタ
 //=============================================================================
@@ -355,6 +355,16 @@ void CManager::SceneChange(void)
 
 	case MODE_RESULT:
 		m_pSceneManager = new CResult;
+		break;
+
+	case MODE_STAGE_START:
+		m_pSceneManager = new CStage(CStage::MASU_START);
+		break;
+	case MODE_STAGE_GORIRA:
+		m_pSceneManager = new CStage(CStage::MASU_GORIRA);
+		break;
+	case MODE_STAGE_ZEBRA:
+		m_pSceneManager = new CStage(CStage::MASU_ZEBRA);
 		break;
 	}
 	

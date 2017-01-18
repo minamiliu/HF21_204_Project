@@ -65,6 +65,18 @@ public:
 	void SetTexture(LPCSTR strFileName);
 	void SetAlpha(int alpha);
 	void SetSize(D3DXVECTOR3 size);
+		
+	//スクロール用
+	typedef enum
+	{
+		SCL_UP = 0,
+		SCL_DOWN,
+		SCL_LEFT,
+		SCL_RIGHT,
+		SCL_MAX
+	}SCL_TYPE;
+	void Scl(float nValue,SCL_TYPE type);
+
 private:
 
 	LPDIRECT3DTEXTURE9		m_pTexture;		// テクスチャへのポインタ

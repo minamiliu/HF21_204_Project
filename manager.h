@@ -46,11 +46,15 @@ public:
 		MODE_STAFFROLL, // スタッフロール
 		MODE_RESULT, // リザルト
 		MODE_QUIT, // 終了
+		MODE_STAGE_START,	//移動中のステージ画面　スタートから
+		MODE_STAGE_GORIRA,	//移動中のステージ画面　ゴリラから
+		MODE_STAGE_ZEBRA,	//移動中のステージ画面　シマウマから
 		MODE_MAX,	//最大値
 	} MODE;
 
 	CManager();
 	CManager(MODE mode);
+
 	virtual ~CManager();
 	
 	virtual HRESULT Init(HINSTANCE hInstance, HWND hWnd, bool bWindow);

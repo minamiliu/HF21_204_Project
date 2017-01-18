@@ -15,14 +15,16 @@
 #include "input.h"
 #include "scene2D.h"
 
-#include "zebra.h"
-#include "gorira.h"
-#include "lion.h"
+//#include "zebra.h"
+//#include "gorira.h"
+//#include "lion.h"
+#include "titleObj.h"
 //============================================
 // マクロ定義
 //============================================
-#define TEXTURE_BG "data/TEXTURE/サバンナタイトル用/背景/titleBg.png"
+//#define TEXTURE_BG "data/TEXTURE/サバンナタイトル用/背景/titleBg.png"
 
+#define LOGO_ROTATE (100)
 //============================================
 // 静的メンバー変数の初期化
 //============================================
@@ -45,13 +47,23 @@ HRESULT CTitle::Init(void)
 {
 
 	//オブジェクトの生成(2Dポリゴン)
-	CScene2D::Create( D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f), D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f), TEXTURE_BG);
+	//CScene2D::Create( D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f), D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f), TEXTURE_BG);
 
 	//
-	CZebra::Create(D3DXVECTOR3( SCREEN_WIDTH + 600, SCREEN_HEIGHT-250, 0.0f), D3DXVECTOR3(300, 200, 0.0f));
-	CGorira::Create(D3DXVECTOR3( SCREEN_WIDTH + 300, SCREEN_HEIGHT-230, 0.0f), D3DXVECTOR3(160, 140, 0.0f));
-	CLion::Create(D3DXVECTOR3( SCREEN_WIDTH + 900, SCREEN_HEIGHT-225, 0.0f), D3DXVECTOR3(230, 220, 0.0f));
+	//CZebra::Create(D3DXVECTOR3( SCREEN_WIDTH + 600, SCREEN_HEIGHT-250, 0.0f), D3DXVECTOR3(300, 200, 0.0f));
+	//CGorira::Create(D3DXVECTOR3( SCREEN_WIDTH + 300, SCREEN_HEIGHT-230, 0.0f), D3DXVECTOR3(160, 140, 0.0f));
+	//CLion::Create(D3DXVECTOR3( SCREEN_WIDTH + 900, SCREEN_HEIGHT-225, 0.0f), D3DXVECTOR3(230, 220, 0.0f));
 
+	//背景
+	CTitleObj::Create(CTitleObj::TITLE_BG,D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f),D3DXVECTOR3(0, 0, 0.0f), D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f));
+	//ロゴ
+	CTitleObj::Create(CTitleObj::TITLE_LOGO,D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_HEIGHT/4, 0.0f),D3DXVECTOR3(0, 0, 0.0f), D3DXVECTOR3(7.5*LOGO_ROTATE, 1.45*LOGO_ROTATE, 0.0f));
+	//動物たち
+	CTitleObj::Create(CTitleObj::TITLE_ZEBRA,D3DXVECTOR3( SCREEN_WIDTH + 600, SCREEN_HEIGHT-250, 0.0f),D3DXVECTOR3(0, 0, 0.0f), D3DXVECTOR3(300, 200, 0.0f));
+	CTitleObj::Create(CTitleObj::TITLE_GORIRA,D3DXVECTOR3( SCREEN_WIDTH + 300, SCREEN_HEIGHT-230, 0.0f),D3DXVECTOR3(0, 0, 0.0f), D3DXVECTOR3(160, 140, 0.0f));
+	CTitleObj::Create(CTitleObj::TITLE_LION,D3DXVECTOR3( SCREEN_WIDTH + 900, SCREEN_HEIGHT-225, 0.0f),D3DXVECTOR3(0, 0, 0.0f), D3DXVECTOR3(230, 220, 0.0f));
+	
+	CTitleObj::Create(CTitleObj::TITLE_START,D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_HEIGHT*6/7, 0.0f),D3DXVECTOR3(0, 0, 0.0f), D3DXVECTOR3(13.7* LOGO_ROTATE/3, 3 * LOGO_ROTATE/3, 0.0f));
 	return S_OK;
 }
 
