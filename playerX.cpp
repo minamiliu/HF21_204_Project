@@ -142,10 +142,6 @@ void CPlayerX::Update(void)
 	//状態更新
 	switch( m_state)
 	{
-	case STATE_NORMAL:
-		//前進ベクトルの更新
-		CalcFront();
-		break;
 	case STATE_HIT:
 		m_nCntState--;
 		if( m_nCntState <= 0)
@@ -163,6 +159,10 @@ void CPlayerX::Update(void)
 			//移動慣性
 			m_fSpeed -= m_fSpeed * 0.05f;
 		}
+		break;
+	default:
+		//前進ベクトルの更新
+		CalcFront();
 		break;
 	}
 
@@ -507,22 +507,23 @@ bool CPlayerX::isCollision(void)
 			//食材とのあたり判定
 			if (type == CScene::OBJTYPE_L_FOOD)
 			{
+				CFood *pFood = (CFood*)pScene;
+
 				D3DXVECTOR3 posFood;
-				posFood = pScene->GetPosition();
+				posFood = pFood->GetPosition();
 
-				if (CCollision::HitCheckCircleXZ(posPlayer, PLAYER_RADIUS, posFood, 10.f))
+				if (pFood->GetState() == CFood::STATE_NORMAL && CCollision::HitCheckCircleXZ(posPlayer, PLAYER_RADIUS, posFood, 15.0f))
 				{
-					CFood *pFood = ((CFood*)pScene);
-
 					//アイコンの色を変える
 					CFoodIcon *pFoodIcon = pFood->GetIcon();
 					pFoodIcon->SetColor(WHITE(1.0f));
 
 					//食材ゲット
 					pFood->SetClear();
+					pFood->SetState( CFood::STATE_FLYING, 60);
 
 					//食材の破棄
-					pScene->Uninit();
+					//pFood->Uninit();
 
 					//スコア
 					CLionGame::GetScore()->AddScore(100);

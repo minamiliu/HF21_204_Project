@@ -46,6 +46,13 @@ public:
 		TYPE_MAX,
 	}TYPE;
 
+	typedef enum
+	{
+		STATE_NORMAL = 0,
+		STATE_FLYING,
+		STATE_MAX,
+	}STATE;
+
 	CFood();
 	virtual ~CFood();
 
@@ -53,6 +60,9 @@ public:
 	void Uninit(void);
 	void Update(void);
 	void Draw(void);
+
+	void SetState(STATE state, int nCntState);
+	STATE GetState(void);
 
 	CFoodIcon* GetIcon(void);
 	void SetClear(void);
@@ -68,6 +78,14 @@ private:
 	CFoodIcon *m_pIcon;
 	TYPE m_type;
 	static bool bClear[TYPE_MAX];
+	D3DXVECTOR3 m_posInit;
+	float m_fAngle;
+	float m_fTurn;
+	float m_fMoveY;
+
+	//èÛë‘
+	STATE m_state;
+	int m_nCntState;
 };
 
 #endif

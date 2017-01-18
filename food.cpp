@@ -62,8 +62,15 @@ HRESULT CFood::Init(D3DXVECTOR3 pos, D3DXVECTOR2 size, TYPE type)
 	CBillBoard::Init( pos, size);
 	SetObjType(OBJTYPE_L_FOOD);
 
+	//初期状態
 	m_type = type;
 	bClear[type] = false;
+	m_state = STATE_NORMAL;
+	m_nCntState = 0;
+	m_posInit = pos;
+	m_fAngle = 0.0f;
+	m_fTurn = 0.0f;
+	m_fMoveY = 0.0f;
 
 	//アイコン
 	m_pIcon = CFoodIcon::Create(D3DXVECTOR3(100.0f, 100.0f, 0.0f), m_pTexture[type], (int)type);
@@ -82,7 +89,37 @@ void CFood::Uninit(void)
 //=============================================================================
 void CFood::Update(void)
 {
-	
+	//状態更新
+	switch( m_state)
+	{
+	case STATE_NORMAL:
+
+		break;
+	case STATE_FLYING:
+		m_nCntState--;
+		if( m_nCntState <= 0)
+		{			
+			//食材の破棄
+			this->Uninit();
+			return;
+		}
+		else
+		{
+			//座標
+			D3DXVECTOR3 pos = this->GetPosition();
+			m_fMoveY += 0.1f;
+			pos.y += m_fMoveY;
+			
+			//回転
+			m_fAngle += 0.01f;
+			m_fTurn += m_fAngle; 
+			pos.x = m_posInit.x + 30.0f * sinf( m_fTurn); 
+			pos.z = m_posInit.z + 30.0f * cosf( m_fTurn);
+
+			this->SetPosition(pos);
+		}
+		break;
+	}	
 }
 //=============================================================================
 //
@@ -216,4 +253,19 @@ bool CFood::isAllClear(void)
 		}
 	}
 	return true;
+}
+//=============================================================================
+// ステートを設定
+//=============================================================================
+void CFood::SetState(STATE state, int nCntState)
+{
+	m_state = state;
+	m_nCntState = nCntState;
+}
+//=============================================================================
+// ステートを取得
+//=============================================================================
+CFood::STATE CFood::GetState(void)
+{
+	return m_state;
 }
