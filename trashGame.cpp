@@ -321,21 +321,15 @@ void CTrashGame::Update()
 			}
 		}
 
-		//pTime->Uninit();
-		//SaveScore(GAME_TRASH,);
-		SetNextScene( MODE_TRASHGAMERESULT);
-		//pTime->Uninit();
-		//return;
-		//pTime->StopTime();
-		//pTime->Uninit();
-		//pTime = NULL;
+
+		SetNextScene( MODE_STAGE_GORIRA);
 
 	}
 #ifdef _DEBUG
 	//シーンの切り替え
 	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN))
 	{
-		SetNextScene( MODE_ZEBRAGAME);
+		SetNextScene( MODE_STAGE_GORIRA);
 	}
 
 	//シーンの切り替え

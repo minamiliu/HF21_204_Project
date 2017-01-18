@@ -85,7 +85,7 @@ void CZebraGame::Update()
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
 	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN))
 	{
-		SetNextScene( MODE_LIONGAME);
+		SetNextScene( MODE_STAGE_ZEBRA);
 	}
 
 	//シーンが切り替えるところ、各シーンのUpdateの最後に置いとく

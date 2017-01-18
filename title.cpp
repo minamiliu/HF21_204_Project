@@ -81,7 +81,7 @@ void CTitle::Update()
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
 	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN))
 	{
-		SetNextScene( MODE_TRASHGAME);
+		SetNextScene( MODE_STAGE_START);
 	}
 
 	//シーンが切り替えるところ、各シーンのUpdateの最後に置いとく

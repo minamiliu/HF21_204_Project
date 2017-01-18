@@ -115,7 +115,18 @@ void CStage::Update()
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
 	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN))
 	{
-		SetNextScene( MODE_TRASHGAME);
+		switch(m_stageNow)
+		{
+		case MASU_START:
+			SetNextScene( MODE_TRASHGAME);
+			break;
+		case MASU_GORIRA:
+			SetNextScene( MODE_ZEBRAGAME);
+			break;
+		case MASU_ZEBRA:
+			SetNextScene( MODE_LIONGAME);
+			break;
+		}
 	}
 
 	//シーンが切り替えるところ、各シーンのUpdateの最後に置いとく
@@ -124,5 +135,4 @@ void CStage::Update()
 void CStage::Draw()
 {
 	CManager::Draw();
-	//CZebra::Draw();
 }
