@@ -53,7 +53,7 @@ CEnemyX::~CEnemyX()
 //=============================================================================
 HRESULT CEnemyX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl)
 {
-	CSceneX::Init( pos, rot, scl, MODEL_FILENAME);
+	CSceneX::Init( pos, rot, scl);
 	SetObjType( OBJTYPE_L_ENEMY);
 
 	m_nCntFrame = 0;

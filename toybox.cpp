@@ -11,12 +11,12 @@
 //インクルードファイル
 //============================================
 #include "main.h"
-#include "bookbox.h"
+#include "toybox.h"
 
 //============================================
 // マクロ定義
 //============================================
-#define MODEL_FILENAME_BOOKBOX "data/MODEL/booklack.x"
+#define MODEL_FILENAME_BOOKBOX "data/MODEL/bookbox.x"
 #define MODEL_FILENAME_TOYBOX "data/MODEL/cube200.x"
 #define MODEL_FILENAME_1X4 "data/MODEL/tv_set.x"
 
@@ -51,20 +51,19 @@ HRESULT CBookBox::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, TYPE t
 	
 	switch( type)
 	{
-	case TYPE_BOOKLACK:
-		CSceneX::Init( pos, rot, scl,MODEL_FILENAME_BOOKBOX);
-		SetObjType(OBJTYPE_TOYBOX);
+	case TYPE_BOOKBOX:
+		CSceneX::Init( pos, rot, scl);
+		CSceneX::LoadXfile(MODEL_FILENAME_BOOKBOX);
+		SetObjType(OBJTYPE_BOOKBOX);
 		break;
 
 	case TYPE_TOYBOX:
-		CSceneX::Init( pos, rot, scl, MODEL_FILENAME_TOYBOX);
+		CSceneX::Init( pos, rot, scl);
+		CSceneX::LoadXfile(MODEL_FILENAME_TOYBOX);
 		SetObjType(OBJTYPE_TOYBOX);
 		break;
 
-	case TYPE_TVSET:
-		CSceneX::Init( pos, rot, scl, MODEL_FILENAME_1X4);
-		SetObjType(OBJTYPE_TOYBOX);
-		break;
+	
 	}
 	SetPosition(pos);
 	return S_OK;
@@ -101,7 +100,7 @@ CBookBox *CBookBox::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot,  TYPE type)
 {
 	CBookBox *pCube;
 	pCube = new CBookBox;
-	pCube->Init(pos, rot, D3DXVECTOR3( 10.0f, 10.0f, 10.0f),  type);
+	pCube->Init(pos, rot, D3DXVECTOR3( 1.0f, 1.0f, 1.0f),  type);
 	
 	return pCube;
 }

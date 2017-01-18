@@ -52,15 +52,15 @@ HRESULT CCubeX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, D3DXVECT
 	switch( type)
 	{
 	case TYPE_1X1:
-		CSceneX::Init( pos, rot, scl,MODEL_FILENAME_1X1);
+		CSceneX::Init( pos, rot, scl);
 		break;
 
 	case TYPE_1X2:
-		CSceneX::Init( pos, rot, scl, MODEL_FILENAME_1X2);
+		CSceneX::Init( pos, rot, scl);
 		break;
 
 	case TYPE_1X4:
-		CSceneX::Init( pos, rot, scl, MODEL_FILENAME_1X4);
+		CSceneX::Init( pos, rot, scl);
 		break;
 	}
 	

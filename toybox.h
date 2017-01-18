@@ -28,7 +28,7 @@ class CBookBox : public CSceneX
 public:
 	typedef enum
 	{
-		TYPE_BOOKLACK = 0,
+		TYPE_BOOKBOX = 0,
 		TYPE_TOYBOX,
 		TYPE_TVSET,
 		TYPE_MAX,
