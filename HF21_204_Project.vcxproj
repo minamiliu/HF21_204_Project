@@ -81,6 +81,7 @@
     <ClCompile Include="billboard.cpp" />
     <ClCompile Include="bullet2D.cpp" />
     <ClCompile Include="camera.cpp" />
+    <ClCompile Include="change.cpp" />
     <ClCompile Include="cubeX.cpp" />
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="debugproc.cpp" />
@@ -102,6 +103,7 @@
     <ClCompile Include="meshField.cpp" />
     <ClCompile Include="meshRoof.cpp" />
     <ClCompile Include="meshWall.cpp" />
+    <ClCompile Include="message.cpp" />
     <ClCompile Include="mousePick.cpp" />
     <ClCompile Include="number.cpp" />
     <ClCompile Include="partX.cpp" />
@@ -139,6 +141,7 @@
     <ClInclude Include="billboard.h" />
     <ClInclude Include="bullet2D.h" />
     <ClInclude Include="camera.h" />
+    <ClInclude Include="change.h" />
     <ClInclude Include="cubeX.h" />
     <ClInclude Include="effectBG.h" />
     <ClInclude Include="enemyX.h" />
@@ -158,6 +161,7 @@
     <ClInclude Include="meshField.h" />
     <ClInclude Include="meshRoof.h" />
     <ClInclude Include="meshWall.h" />
+    <ClInclude Include="message.h" />
     <ClInclude Include="mousePick.h" />
     <ClInclude Include="partX.h" />
     <ClInclude Include="trashGameExplosion.h" />

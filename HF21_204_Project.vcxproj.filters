@@ -201,6 +201,13 @@
     <ClCompile Include="stageBg.cpp">
       <Filter>ソース ファイル\stage</Filter>
     </ClCompile>  </ItemGroup>
+    <ClCompile Include="message.cpp">
+      <Filter>ソース ファイル\TrashGame</Filter>
+    </ClCompile>
+    <ClCompile Include="change.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+  </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
       <Filter>ヘッダー ファイル</Filter>
@@ -361,4 +368,11 @@
     <ClInclude Include="stageBg.h">
       <Filter>ヘッダー ファイル\stage</Filter>
     </ClInclude>  </ItemGroup>
+    <ClInclude Include="message.h">
+      <Filter>ヘッダー ファイル\TrashGame</Filter>
+    </ClInclude>
+    <ClInclude Include="change.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>
