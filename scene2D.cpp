@@ -346,3 +346,43 @@ void CScene2D::SetAlpha(int alpha)
 
 	m_pVtxBuff->Unlock();
 }
+void CScene2D::Scl(float nValue,SCL_TYPE type)
+{
+
+	{//頂点バッファの中身を埋める
+		VERTEX_2D *pVtx;
+
+		// 頂点データの範囲をロックし、頂点バッファへのポインタを取得
+
+		m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+		switch(type)
+		{
+		case SCL_UP:
+			pVtx[0].tex.y += nValue;
+			pVtx[1].tex.y += nValue;
+			pVtx[2].tex.y += nValue;
+			pVtx[3].tex.y += nValue;
+			break;
+		case SCL_DOWN:
+			pVtx[0].tex.y -= nValue;
+			pVtx[1].tex.y -= nValue;
+			pVtx[2].tex.y -= nValue;
+			pVtx[3].tex.y -= nValue;
+			break;
+		case SCL_LEFT:
+			pVtx[0].tex.x -= nValue;
+			pVtx[1].tex.x -= nValue;
+			pVtx[2].tex.x -= nValue;
+			pVtx[3].tex.x -= nValue;
+			break;
+		case SCL_RIGHT:
+			pVtx[0].tex.x += nValue;
+			pVtx[1].tex.x += nValue;
+			pVtx[2].tex.x += nValue;
+			pVtx[3].tex.x += nValue;
+			break;
+		}
+		// 頂点データをアンロックする
+		m_pVtxBuff->Unlock();
+	}
+}

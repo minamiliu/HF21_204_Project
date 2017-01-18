@@ -63,7 +63,18 @@ public:
 	static CScene2D *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, LPCSTR strFileName);
 	void SetTexture(LPCSTR strFileName);
 	void SetAlpha(int alpha);
-
+	
+	
+	//スクロール用
+	typedef enum
+	{
+		SCL_UP = 0,
+		SCL_DOWN,
+		SCL_LEFT,
+		SCL_RIGHT,
+		SCL_MAX
+	}SCL_TYPE;
+	void Scl(float nValue,SCL_TYPE type);
 private:
 
 	LPDIRECT3DTEXTURE9		m_pTexture;		// テクスチャへのポインタ

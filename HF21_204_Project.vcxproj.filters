@@ -25,6 +25,12 @@
     <Filter Include="ヘッダー ファイル\title">
       <UniqueIdentifier>{66682c40-ef6d-4cf0-aa29-c5225e323fe2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\stage">
+      <UniqueIdentifier>{fa40342f-7ee5-43b6-9427-4d297fcff004}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\stage">
+      <UniqueIdentifier>{a03336f3-8b45-409f-b61a-bd039b525c6b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -153,6 +159,18 @@
     <ClCompile Include="title.cpp">
       <Filter>ソース ファイル\title</Filter>
     </ClCompile>
+    <ClCompile Include="titleObj.cpp">
+      <Filter>ソース ファイル\title</Filter>
+    </ClCompile>
+    <ClCompile Include="stage.cpp">
+      <Filter>ソース ファイル\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="stagePlayer.cpp">
+      <Filter>ソース ファイル\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="stageBg.cpp">
+      <Filter>ソース ファイル\stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -277,6 +295,18 @@
     </ClInclude>
     <ClInclude Include="lion.h">
       <Filter>ヘッダー ファイル\title</Filter>
+    </ClInclude>
+    <ClInclude Include="titleObj.h">
+      <Filter>ヘッダー ファイル\title</Filter>
+    </ClInclude>
+    <ClInclude Include="stage.h">
+      <Filter>ヘッダー ファイル\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="stagePlayer.h">
+      <Filter>ヘッダー ファイル\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="stageBg.h">
+      <Filter>ヘッダー ファイル\stage</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
