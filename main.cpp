@@ -94,7 +94,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	//}
 
 	//マネージャの生成
-	CManager::Create( CManager::MODE_LIONGAME, hInstance, hWnd, true);
+	CManager::Create( CManager::MODE_TRASHGAME, hInstance, hWnd, true);
 
 	// 分解能を設定
 	timeBeginPeriod(1);

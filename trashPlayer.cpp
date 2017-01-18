@@ -171,6 +171,4 @@ void CTrashPlayer::Load(void)
 		// テクスチャの読み込み
 		D3DXCreateTextureFromFile( pDevice,TEXTURE_GORILLA, &m_pTexture[1]);
 	}
-
-
 }

@@ -20,13 +20,22 @@
 // マクロ定義
 //============================================
 #define TEXTURE_BG "data/TEXTURE/resultBG.jpg"
+#define TEXTURE_RANK_C "data/TEXTURE/rankC.png"
 #define TEXTURE_RANK_A "data/TEXTURE/rankA.png"
 #define TEXTURE_RANK_B "data/TEXTURE/rankB.png"
-#define TEXTURE_RANK_S "data/TEXTURE/rankS.png"
-#define TRASHGAME_SCORE_RANK_S (800)
-#define TRASHGAME_SCORE_RANK_A (600)
-#define TRASHGAME_SCORE_RANK_B (400)
-//#define TRASHGAME_SCORE_RANK_C (200)
+#define TEXTURE_RANK_S "data/TEXTURE/rankSサイズ調整.png"
+#define TRASHGAME_SCORE_RANK_S (1500)
+#define TRASHGAME_SCORE_RANK_A (1000)
+#define TRASHGAME_SCORE_RANK_B (500)
+#define TRASHGAME_SCORE_RANK_C (0)
+#define ZEBRAGAME_SCORE_RANK_S (1500)
+#define ZEBRAGAME_SCORE_RANK_A (1000)
+#define ZEBRAGAME_SCORE_RANK_B (500)
+#define ZEBRAGAME_SCORE_RANK_C (0)
+#define LIONGAME_SCORE_RANK_S (1500)
+#define LIONGAME_SCORE_RANK_A (1000)
+#define LIONGAME_SCORE_RANK_B (500)
+#define LIONGAME_SCORE_RANK_C (0)
 
 //============================================
 // 静的メンバー変数の初期化
@@ -130,16 +139,24 @@ void CResult::Update()
 	else if(m_pTrashGameScore != NULL && m_nTrashGameScore == 0)
 	{
 		//ランク表示
-		if(m_nTargetScore[0] >= 1500)
+		if(m_nTargetScore[0] >= TRASHGAME_SCORE_RANK_S)
 		{//ランクS
-			m_pRank[0] = CScene2D::Create(D3DXVECTOR3(1100, 160.0f, 0.0f),D3DXVECTOR3(230.0f, 230.0f, 0.0f),TEXTURE_RANK_S);
+			m_pRank[0] = CScene2D::Create(D3DXVECTOR3(1100, 160.0f, 0.0f),D3DXVECTOR3(270.0f, 270.0f, 0.0f),TEXTURE_RANK_S);
 			m_pRank[0]->SetColor(YELLOW(1.0f));
 		}
-		else if(m_nTargetScore[0] < 1500)
+		else if(m_nTargetScore[0] >= TRASHGAME_SCORE_RANK_A && m_nTargetScore[0] < TRASHGAME_SCORE_RANK_S)
 		{//ランクA
 			m_pRank[0] = CScene2D::Create(D3DXVECTOR3(1100, 160.0f, 0.0f),D3DXVECTOR3(380.0f, 380.0f, 0.0f),TEXTURE_RANK_A);
 		}
-		//以下略
+		else if(m_nTargetScore[0] >= TRASHGAME_SCORE_RANK_B && m_nTargetScore[0] < TRASHGAME_SCORE_RANK_A)
+		{//ランクB
+			m_pRank[0] = CScene2D::Create(D3DXVECTOR3(1100, 160.0f, 0.0f),D3DXVECTOR3(380.0f, 380.0f, 0.0f),TEXTURE_RANK_B);
+		}
+		else if(m_nTargetScore[0] >= TRASHGAME_SCORE_RANK_C && m_nTargetScore[0] < TRASHGAME_SCORE_RANK_B)
+		{//ランクC
+			m_pRank[0] = CScene2D::Create(D3DXVECTOR3(1100, 180.0f, 0.0f),D3DXVECTOR3(380.0f, 380.0f, 0.0f),TEXTURE_RANK_C);
+		}
+		
 
 		m_nTrashGameScore -= 100000;
 	}
@@ -185,15 +202,24 @@ void CResult::Update()
 		m_nLionGameScore -= 100000;
 	}
 	//ランク表示（サイズ変更）
-	if(m_pRank[0] != NULL && m_pRank[0]->GetSize().x > 150)
+	if(m_pRank[0] != NULL )
 	{
-		m_pRank[0]->SetSize(D3DXVECTOR3(m_pRank[0]->GetSize().x-2,m_pRank[0]->GetSize().y-2,0.0));
+		if(m_nTargetScore[0] >= TRASHGAME_SCORE_RANK_S && m_pRank[0]->GetSize().x > 150)
+		{
+			m_pRank[0]->SetSize(D3DXVECTOR3(m_pRank[0]->GetSize().x-3,m_pRank[0]->GetSize().y-3,0.0));
+		}
+		else if (m_pRank[0]->GetSize().x > 300)
+		{
+			m_pRank[0]->SetSize(D3DXVECTOR3(m_pRank[0]->GetSize().x-2,m_pRank[0]->GetSize().y-2,0.0));
+		}
 	}
-	else if(m_pRank[1] != NULL && m_pRank[1]->GetSize().x > 300)
+	
+	if(m_pRank[1] != NULL && m_pRank[1]->GetSize().x > 300)
 	{
 		m_pRank[1]->SetSize(D3DXVECTOR3(m_pRank[1]->GetSize().x-2,m_pRank[1]->GetSize().y-2,0.0));
 	}
-	else if(m_pRank[2] != NULL && m_pRank[2]->GetSize().x > 300)
+	
+	if(m_pRank[2] != NULL && m_pRank[2]->GetSize().x > 300)
 	{
 		m_pRank[2]->SetSize(D3DXVECTOR3(m_pRank[2]->GetSize().x-2,m_pRank[2]->GetSize().y-2,0.0));
 	}

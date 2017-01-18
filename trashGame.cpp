@@ -29,6 +29,8 @@
 #include "getScore.h"
 #include "trashPlayer.h"
 #include "trashGameExplosion.h"
+#include "message.h"
+#include "change.h"
 //============================================
 // マクロ定義
 //============================================
@@ -39,6 +41,10 @@
 #define TEXTURE_GORILLA "data/TEXTURE/throwingGorilla.png"
 #define TEXTURE_BGPOLYGON "data/TEXTURE/rendering003-16.png"
 #define TEXTURE_PLAYER "data/TEXTURE/throwingMother.png"
+#define TEXTURE_START "data/TEXTURE/start.png"
+#define TEXTURE_FINISH "data/TEXTURE/finish.png"
+#define GORILLA_GORILLA "data/TEXTURE/ゴリラ.png"
+#define STAND_GORILLA "data/TEXTURE/ゴリラ(立ち絵).png"
 
 #define TEXTURE_EXPLOSION "data/TEXTURE/explosion000.png"
 #define	TEX_PATTERN_DIVIDE_X		(8)												// アニメーションパターンのテクスチャ内での分割数(Ｘ方向)
@@ -63,6 +69,8 @@ CPlayer2D *pPlayer2D = NULL;
 int CTrashGame::m_nTrashGameCnt = 0;
 CTrashPlayer *pAnimPlayer = NULL;
 CScene2D *pExplosion = NULL;
+
+bool bMessageFlag = false;
 //============================================
 //コンストラクタ
 //============================================
@@ -91,13 +99,14 @@ HRESULT CTrashGame::Init(void)
 	CScene2D::Create(D3DXVECTOR3(SCREEN_WIDTH/2,SCREEN_HEIGHT/2,0.0f),D3DXVECTOR3(SCREEN_WIDTH*1.2,SCREEN_HEIGHT*1.4,0.0f),TEXTURE_BGPOLYGON);
 	//オブジェクトの生成
 	//プレイヤー
-	pAnimPlayer = CTrashPlayer::Create( D3DXVECTOR3( 150.0f, 580.0f, 0.0f), D3DXVECTOR3( 200.0f, 200.0f, 0.0f),TEXTURE_PLAYER);
+	pAnimPlayer = CTrashPlayer::Create( D3DXVECTOR3( 150.0f, 580.0f, 0.0f), D3DXVECTOR3( 300.0f, 300.0f, 0.0f),TEXTURE_PLAYER);
 	//ゴミ
 	m_pTrash = CTrash::Create(D3DXVECTOR3(200.0f, 400.0f, 0.0f), D3DXVECTOR3(200.0f, 200.0f, 0.0f),TEXTURE_TRASH,CScene::OBJTYPE_TRASH);
 	//スコア
 	m_pScore = CScore::Create(D3DXVECTOR3(150, 50.0f, 0.0f), D3DXVECTOR3(300.0f, 50.0f, 0.0f), 6, BLUE(1.0f));
 	//ゴミ箱
-	m_pTrashBox = CScene2D::Create(D3DXVECTOR3(1000.0f, 500.0f, 0.0f), D3DXVECTOR3(800.0f, 600.0f, 0.0f),TEXTURE_TRASHBOX);
+	//m_pTrashBox = CScene2D::Create(D3DXVECTOR3(1000.0f, 500.0f, 0.0f), D3DXVECTOR3(800.0f, 600.0f, 0.0f),TEXTURE_TRASHBOX);
+	m_pTrashBox = CScene2D::Create(D3DXVECTOR3(1100.0f, 350.0f, 0.0f), D3DXVECTOR3(650.0f, 300.0f, 0.0f),TEXTURE_TRASHBOX);
 	//タイム
 	pTime = CTime::Create(D3DXVECTOR3(600, 50.0f, 0.0f),D3DXVECTOR3(100, 100.0f, 0.0f),3,12,true,D3DXCOLOR(255,255,255,255));
 	pTime->StopTime();
@@ -111,7 +120,7 @@ HRESULT CTrashGame::Init(void)
 	m_pMouse = CScene2D::Create(D3DXVECTOR3(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f), D3DXVECTOR3(120.0f, 120.0f, 0.0f),TEXTURE_POINT);
 
 	pExplosion = NULL;
-	
+	bMessageFlag = false;
 	return S_OK;
 }
 
@@ -183,6 +192,7 @@ void CTrashGame::Update()
 						if(LoadScore(MODE_TRASHGAME) == 0)
 						{
 							pTime->StopTime();
+							CMessage::Create(D3DXVECTOR3(SCREEN_WIDTH + 100,100,0),D3DXVECTOR3(250,250,0),TEXTURE_START);
 						}
 						//スコア追加
 						if(((CTrash*)pScene)->GetTrashType() == CTrash::TRASHTYPE_NORMAL)
@@ -253,9 +263,10 @@ void CTrashGame::Update()
 		if(pExplosion == NULL)
 		{
 			//煙
-			pExplosion = CTrashGameExplosion::Create(D3DXVECTOR3( 150.0f, 580.0f, 0.0f), D3DXVECTOR3( 400.0f, 400.0f, 0.0f));
-			pExplosion->ChangeTextureAnime(0, D3DXVECTOR2(TEX_PATTERN_SIZE_X,TEX_PATTERN_SIZE_Y),
-											D3DXVECTOR2(TEX_PATTERN_DIVIDE_X,TEX_PATTERN_DIVIDE_Y));
+			//pExplosion = CTrashGameExplosion::Create(D3DXVECTOR3( 150.0f, 580.0f, 0.0f), D3DXVECTOR3( 400.0f, 400.0f, 0.0f));
+			//pExplosion->ChangeTextureAnime(0, D3DXVECTOR2(TEX_PATTERN_SIZE_X,TEX_PATTERN_SIZE_Y),
+											//D3DXVECTOR2(TEX_PATTERN_DIVIDE_X,TEX_PATTERN_DIVIDE_Y));
+
 		}
 	}
 	
@@ -287,14 +298,17 @@ void CTrashGame::Update()
 		//ゴリラモードにする
 		if( pAnimPlayer->GetGorillaMode() == false )
 		{
-			//pPlayer2D->CPlayer2D::SetGorillaMode();
-			//pAnimPlayer->SetTexture(TEXTURE_GORILLA);
-			pAnimPlayer->Uninit();
-			pAnimPlayer->Create(D3DXVECTOR3( 150.0f, 580.0f, 0.0f), D3DXVECTOR3( 200.0f, 200.0f, 0.0f),TEXTURE_GORILLA);
+			pTime->StopTime();
+			CChange::Create(TEXTURENAME,GORILLA_GORILLA,STAND_GORILLA);
+
+			//pAnimPlayer->Uninit();
+			//pAnimPlayer = NULL;
+			//pAnimPlayer = CTrashPlayer::Create(D3DXVECTOR3( 150.0f, 580.0f, 0.0f), D3DXVECTOR3( 200.0f, 200.0f, 0.0f),TEXTURE_GORILLA);
 			pAnimPlayer->SetGorillaMode();
+
 			//ゴミを複数生成
-			CTrash::Create(D3DXVECTOR3(100.0f, 370.0f, 0.0f), D3DXVECTOR3(200.0f, 200.0f, 0.0f),TEXTURE_TRASH,CTrash::OBJTYPE_LEFTTRASH);
-			CTrash::Create(D3DXVECTOR3(300.0f, 370.0f, 0.0f), D3DXVECTOR3(200.0f, 200.0f, 0.0f),TEXTURE_TRASH,CTrash::OBJTYPE_RIGHTTRASH);
+			//CTrash::Create(D3DXVECTOR3(100.0f, 370.0f, 0.0f), D3DXVECTOR3(200.0f, 200.0f, 0.0f),TEXTURE_TRASH,CTrash::OBJTYPE_LEFTTRASH);
+			//CTrash::Create(D3DXVECTOR3(300.0f, 370.0f, 0.0f), D3DXVECTOR3(200.0f, 200.0f, 0.0f),TEXTURE_TRASH,CTrash::OBJTYPE_RIGHTTRASH);
 		}
 						/*			}
 				}
@@ -303,9 +317,36 @@ void CTrashGame::Update()
 		}*/
 	}
 
+	if(pAnimPlayer->GetGorillaMode() == true && CChange::GetState() == false)
+	{
+		pAnimPlayer->Uninit();
+		pAnimPlayer = NULL;
+		pAnimPlayer = CTrashPlayer::Create(D3DXVECTOR3( 150.0f, 580.0f, 0.0f), D3DXVECTOR3( 200.0f, 200.0f, 0.0f),TEXTURE_GORILLA);
+		pAnimPlayer->SetGorillaMode();
+		//ゴミを複数生成
+		//CTrash::Create(D3DXVECTOR3(100.0f, 370.0f, 0.0f), D3DXVECTOR3(200.0f, 200.0f, 0.0f),TEXTURE_TRASH,CTrash::OBJTYPE_LEFTTRASH);
+		//CTrash::Create(D3DXVECTOR3(300.0f, 370.0f, 0.0f), D3DXVECTOR3(200.0f, 200.0f, 0.0f),TEXTURE_TRASH,CTrash::OBJTYPE_RIGHTTRASH);
+	
+		CChange::changeState();
+		pTime->StopTime();
+	}
+
+	if(pTime != NULL && pTime->GetTime() == 1)
+	{
+		if(bMessageFlag == false)
+		{
+			CMessage::Create(D3DXVECTOR3(SCREEN_WIDTH + 100,100,0),D3DXVECTOR3(200,200,0),TEXTURE_FINISH);
+			bMessageFlag = true;
+		}
+	}
 	//時間が０になったら
 	if(pTime != NULL && pTime->GetTime() == 0)
 	{
+		if(bMessageFlag == false)
+		{
+			CMessage::Create(D3DXVECTOR3(SCREEN_WIDTH + 100,100,0),D3DXVECTOR3(200,200,0),TEXTURE_FINISH);
+			bMessageFlag = true;
+		}
 		for(int nCntScene = 0;nCntScene < MAX_SCENE;nCntScene++)
 		{
 			CScene *pScene;
