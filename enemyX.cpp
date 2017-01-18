@@ -70,32 +70,16 @@ HRESULT CEnemyX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl)
 	CSceneX::Init( pos, rot, scl);
 	SetObjType( OBJTYPE_L_ENEMY);
 
-	m_nCntMotion = 0;
-	m_nMotionNow = 0;
+	//基本情報
 	m_state = STATE_NORMAL;
 	m_nCntState = 0;
 	m_posInit = pos;
 	m_rotInit = rot;
 	m_sclInit = scl;
 
-	m_pMotionPara = new MOTION[MAX_MOTION];
-
-	m_pMotionPara[0].nFrame = 60;
-	m_pMotionPara[0].front = D3DXVECTOR3( 100.0f, 0.0f, 0.0f);
-	m_pMotionPara[0].rotY = 0.0f;
-	
-	m_pMotionPara[1].nFrame = 30;
-	m_pMotionPara[1].front = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
-	m_pMotionPara[1].rotY = D3DX_PI;
-
-	m_pMotionPara[2].nFrame = 60;
-	m_pMotionPara[2].front = D3DXVECTOR3( -100.0f, 0.0f, 0.0f);
-	m_pMotionPara[2].rotY = 0.0f;
-
-	m_pMotionPara[3].nFrame = 30;
-	m_pMotionPara[3].front = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
-	m_pMotionPara[3].rotY = D3DX_PI;
-
+	//モーション関連
+	m_nCntMotion = 0;
+	m_nMotionNow = 0;
 	m_front = m_pMotionPara[0].front / m_pMotionPara[0].nFrame;
 	m_rotTurn = m_pMotionPara[0].rotY / m_pMotionPara[0].nFrame;
 
@@ -275,6 +259,9 @@ HRESULT CEnemyX::Load(void)
 		}
 	}
 
+	//モーションをロードする
+	LoadMotion();
+
 	return S_OK;
 }
 
@@ -358,4 +345,29 @@ void CEnemyX::SetState(STATE state, int nCntState)
 CEnemyX::STATE CEnemyX::GetState(void)
 {
 	return m_state;
+}
+//=============================================================================
+// モーションをロード
+//=============================================================================
+HRESULT CEnemyX::LoadMotion(void)
+{
+	m_pMotionPara = new MOTION[MAX_MOTION];
+
+	m_pMotionPara[0].nFrame = 60;
+	m_pMotionPara[0].front = D3DXVECTOR3( 100.0f, 0.0f, 0.0f);
+	m_pMotionPara[0].rotY = 0.0f;
+	
+	m_pMotionPara[1].nFrame = 30;
+	m_pMotionPara[1].front = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
+	m_pMotionPara[1].rotY = D3DX_PI;
+
+	m_pMotionPara[2].nFrame = 60;
+	m_pMotionPara[2].front = D3DXVECTOR3( -100.0f, 0.0f, 0.0f);
+	m_pMotionPara[2].rotY = 0.0f;
+
+	m_pMotionPara[3].nFrame = 30;
+	m_pMotionPara[3].front = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
+	m_pMotionPara[3].rotY = D3DX_PI;
+
+	return S_OK;
 }

@@ -11,6 +11,8 @@
 //インクルードファイル
 //============================================
 #include "main.h"
+#include "manager.h"
+#include "renderer.h"
 #include "playerX.h"
 #include "input.h"
 #include "camera.h"
@@ -29,7 +31,9 @@
 //============================================
 // マクロ定義
 //============================================
-#define MODEL_FILENAME_BODY		"data/MODEL/mom_body.x"
+#define MODEL_FILENAME_BODY			"data/MODEL/mom_body.x"
+#define MODEL_FILENAME_LION_BODY	"data/MODEL/lionMom_body.x"
+
 #define VALUE_ROTATE	(1.0f) 	// 回転量
 
 #define PLAYER_RADIUS	(15.0f)
@@ -37,6 +41,14 @@
 //=============================================================================
 // 構造体定義
 //=============================================================================
+
+//============================================
+// 静的メンバー変数の初期化
+//============================================
+LPDIRECT3DTEXTURE9	CPlayerX::m_pTexture		[TYPE_MAX] = {};		// テクスチャへのポインタ
+LPD3DXMESH			CPlayerX::m_pD3DXMesh		[TYPE_MAX] = {};		// メッシュ情報へのポインタ
+LPD3DXBUFFER		CPlayerX::m_pD3DXBuffMat	[TYPE_MAX] = {};		// マテリアル情報へのポインタ
+DWORD				CPlayerX::m_nNumMat			[TYPE_MAX] = {};		// マテリアル情報の数
 
 
 //=============================================================================
@@ -205,14 +217,14 @@ void CPlayerX::Draw(void)
 //=============================================================================
 //
 //=============================================================================
-CPlayerX *CPlayerX::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float speed)
+CPlayerX *CPlayerX::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float speed, TYPE type)
 {
 	CPlayerX *pPlayerX;
 	pPlayerX = new CPlayerX;
 	pPlayerX->Init(pos, rot, scl, speed);
 
-	//Xファイルの読み込み
-	pPlayerX->LoadXfile(MODEL_FILENAME_BODY);
+	//Xファイルの割り当て
+	((CSceneX*)pPlayerX)->BindXfile( m_pTexture[type], m_pD3DXMesh[type], m_pD3DXBuffMat[type], m_nNumMat[type]);
 
 	return pPlayerX;
 }
@@ -464,6 +476,21 @@ D3DXVECTOR3 CPlayerX::GetFront(void)
 void CPlayerX::SetState(STATE state)
 {
 	m_state = state;
+	
+	switch(m_state)
+	{
+	case STATE_LION:
+		//BODY
+		this->BindXfile( TYPE_LION);
+
+		//手足
+		m_pLimb[0]->BindXfile(CLimbX::TYPE_LION_L_HAND);
+		m_pLimb[1]->BindXfile(CLimbX::TYPE_LION_R_HAND);
+		m_pLimb[2]->BindXfile(CLimbX::TYPE_LION_L_FOOT);
+		m_pLimb[3]->BindXfile(CLimbX::TYPE_LION_R_FOOT);
+		
+		break;
+	}
 }
 //=============================================================================
 // ステートを取得
@@ -675,4 +702,88 @@ bool CPlayerX::isCollision(void)
 	}
 
 	return (bHitCube || bHitWall);
+}
+//=============================================================================
+//XFILEのロード
+//=============================================================================
+HRESULT CPlayerX::Load(void)
+{
+	LPDIRECT3DDEVICE9 pDevice;
+	pDevice = CManager::GetRenderer()->GetDevice();
+
+	for(int cntType = 0; cntType < TYPE_MAX; cntType++)
+	{
+		LPCSTR strFileName;
+		switch( cntType)
+		{
+		//HUMAN
+		case TYPE_HUMAN:
+			strFileName = MODEL_FILENAME_BODY;
+			break;
+		case TYPE_LION:
+			strFileName = MODEL_FILENAME_LION_BODY;
+			break;
+		}
+
+		if( m_pTexture[cntType] == NULL &&
+			m_pD3DXMesh[cntType] == NULL &&
+			m_pD3DXBuffMat[cntType] == NULL &&
+			m_nNumMat[cntType] == 0
+			)
+		{
+			// Xファイルの読み込み
+			if(FAILED(D3DXLoadMeshFromX(
+				strFileName,			// 読み込むモデルファイル名(Xファイル)
+				D3DXMESH_SYSTEMMEM,		// メッシュの作成オプションを指定
+				pDevice,				// IDirect3DDevice9インターフェイスへのポインタ
+				NULL,					// 隣接性データを含むバッファへのポインタ
+				&m_pD3DXBuffMat[cntType],	// マテリアルデータを含むバッファへのポインタ
+				NULL,					// エフェクトインスタンスの配列を含むバッファへのポインタ
+				&m_nNumMat[cntType],	// D3DXMATERIAL構造体の数
+				&m_pD3DXMesh[cntType]	// ID3DXMeshインターフェイスへのポインタのアドレス
+				)))
+			{
+				return E_FAIL;
+			}
+		
+		}
+	}
+
+	return S_OK;
+}
+
+//=============================================================================
+//XFILEのアンロード
+//=============================================================================
+void CPlayerX::Unload(void)
+{
+	for(int cntType = 0; cntType < TYPE_MAX; cntType++)
+	{
+		// テクスチャの開放
+		if(m_pTexture[cntType] != NULL)
+		{
+			m_pTexture[cntType]->Release();
+			m_pTexture[cntType] = NULL;
+		}
+		// メッシュの開放
+		if(m_pD3DXMesh[cntType] != NULL)
+		{
+			m_pD3DXMesh[cntType]->Release();
+			m_pD3DXMesh[cntType] = NULL;
+		}
+		// マテリアルの開放
+		if(m_pD3DXBuffMat != NULL)
+		{
+			m_pD3DXBuffMat[cntType]->Release();
+			m_pD3DXBuffMat[cntType] = NULL;
+		}	
+	}
+
+}
+//=============================================================================
+//XFILEの割り当て
+//=============================================================================
+void CPlayerX::BindXfile(TYPE type)
+{
+	((CSceneX*)this)->BindXfile( m_pTexture[type], m_pD3DXMesh[type], m_pD3DXBuffMat[type], m_nNumMat[type]);
 }

@@ -66,6 +66,7 @@ public:
 	static CEnemyX *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, TYPE type);
 	static HRESULT Load(void);
 	static void Unload(void);
+	static HRESULT LoadMotion(void);
 
 protected:
 	D3DXVECTOR3 Get2RotDiffAngle( D3DXVECTOR3 rot, D3DXVECTOR3 rotTarget);

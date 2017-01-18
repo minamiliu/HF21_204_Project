@@ -38,6 +38,10 @@ public:
 		TYPE_R_HAND,
 		TYPE_L_FOOT,
 		TYPE_R_FOOT,
+		TYPE_LION_L_HAND,
+		TYPE_LION_R_HAND,
+		TYPE_LION_L_FOOT,
+		TYPE_LION_R_FOOT,
 		TYPE_MAX,
 	}TYPE;
 
@@ -48,6 +52,8 @@ public:
 	void Uninit(void);
 	void Update(void);
 	void Draw(void);
+
+	void BindXfile(TYPE type);
 
 	static CLimbX *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, TYPE type);
 	static HRESULT Load(void);

@@ -34,6 +34,13 @@ class CPlayerX : public CSceneX
 public:
 	typedef enum
 	{
+		TYPE_HUMAN = 0,
+		TYPE_LION,
+		TYPE_MAX,
+	}TYPE;
+
+	typedef enum
+	{
 		STATE_NORMAL = 0,
 		STATE_HIT,
 		STATE_LION,
@@ -48,11 +55,15 @@ public:
 	void Update(void);
 	void Draw(void);
 
-	static CPlayerX *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float speed);
-	D3DXVECTOR3 GetFront(void);
-
 	void SetState(STATE state);
 	STATE GetState(void);
+	void BindXfile(TYPE type);
+	D3DXVECTOR3 GetFront(void);
+
+	static CPlayerX *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float speed, TYPE type);
+	static HRESULT Load(void);
+	static void Unload(void);
+
 
 protected:
 	void UpdateRot(void);
@@ -62,6 +73,11 @@ protected:
 	bool isCollision(void);
 
 private:
+	static LPDIRECT3DTEXTURE9	m_pTexture		[TYPE_MAX];		// テクスチャへのポインタ
+	static LPD3DXMESH			m_pD3DXMesh		[TYPE_MAX];		// メッシュ情報へのポインタ
+	static LPD3DXBUFFER			m_pD3DXBuffMat	[TYPE_MAX];		// マテリアル情報へのポインタ
+	static DWORD				m_nNumMat		[TYPE_MAX];		// マテリアル情報の数
+
 	float m_fSpeed;				// モデルのスピード
 	float m_fAccel;				// 加速度
 	D3DXVECTOR3 m_front;		// 前進ベクトル

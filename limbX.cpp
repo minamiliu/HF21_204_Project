@@ -18,10 +18,16 @@
 //============================================
 // マクロ定義
 //============================================
+//HUMAN
 #define MODEL_FILENAME_L_HAND	"data/MODEL/mom_L_hand.x"
 #define MODEL_FILENAME_R_HAND	"data/MODEL/mom_R_hand.x"
 #define MODEL_FILENAME_L_FOOT	"data/MODEL/mom_L_foot.x"
 #define MODEL_FILENAME_R_FOOT	"data/MODEL/mom_R_foot.x"
+//LION
+#define MODEL_FILENAME_LION_L_HAND	"data/MODEL/lionMom_L_hand.x"
+#define MODEL_FILENAME_LION_R_HAND	"data/MODEL/lionMom_R_hand.x"
+#define MODEL_FILENAME_LION_L_FOOT	"data/MODEL/lionMom_L_foot.x"
+#define MODEL_FILENAME_LION_R_FOOT	"data/MODEL/lionMom_R_foot.x"
 #define MAX_MOTION (2)
 
 //=============================================================================
@@ -72,24 +78,28 @@ HRESULT CLimbX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, TYPE typ
 	switch(type)
 	{
 	case TYPE_L_HAND:
+	case TYPE_LION_L_HAND:
 		strFileName = MODEL_FILENAME_L_HAND;
 		m_rotLocal = D3DXVECTOR3( D3DXToRadian(30.0f), 0.0f, 0.0f);
 		m_posLocal = D3DXVECTOR3( 8, -15, 0);
 		m_nMotionNow = 0;
 		break;
 	case TYPE_R_HAND:
+	case TYPE_LION_R_HAND:
 		strFileName = MODEL_FILENAME_R_HAND;
 		m_rotLocal = D3DXVECTOR3( D3DXToRadian(-30.0f), 0.0f, 0.0f);
 		m_posLocal = D3DXVECTOR3( -8, -15, 0);
 		m_nMotionNow = 1;
 		break;
 	case TYPE_L_FOOT:
+	case TYPE_LION_L_FOOT:
 		strFileName = MODEL_FILENAME_L_FOOT;
 		m_rotLocal = D3DXVECTOR3( D3DXToRadian(-30.0f), 0.0f, 0.0f);
 		m_posLocal = D3DXVECTOR3( 4, -35, 0);
 		m_nMotionNow = 1;
 		break;
 	case TYPE_R_FOOT:
+	case TYPE_LION_R_FOOT:
 		strFileName = MODEL_FILENAME_R_FOOT;
 		m_rotLocal = D3DXVECTOR3( D3DXToRadian(30.0f), 0.0f, 0.0f);
 		m_posLocal = D3DXVECTOR3( -4, -35, 0);
@@ -169,7 +179,7 @@ CLimbX *CLimbX::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, TYPE t
 	pSceneX->Init(pos, rot, scl, type);
 	
 	//Xファイルの割り当て
-	pSceneX->BindXfile( m_pTexture[type], m_pD3DXMesh[type], m_pD3DXBuffMat[type], m_nNumMat[type]);
+	((CPartX*)pSceneX)->BindXfile( m_pTexture[type], m_pD3DXMesh[type], m_pD3DXBuffMat[type], m_nNumMat[type]);
 
 	return pSceneX;
 }
@@ -187,6 +197,7 @@ HRESULT CLimbX::Load(void)
 		LPCSTR strFileName;
 		switch( cntType)
 		{
+		//HUMAN
 		case TYPE_L_HAND:
 			strFileName = MODEL_FILENAME_L_HAND;
 			break;
@@ -198,6 +209,19 @@ HRESULT CLimbX::Load(void)
 			break;
 		case TYPE_R_FOOT:
 			strFileName = MODEL_FILENAME_R_FOOT;
+			break;
+		//LION
+		case TYPE_LION_L_HAND:
+			strFileName = MODEL_FILENAME_LION_L_HAND;
+			break;
+		case TYPE_LION_R_HAND:
+			strFileName = MODEL_FILENAME_LION_R_HAND;
+			break;
+		case TYPE_LION_L_FOOT:
+			strFileName = MODEL_FILENAME_LION_L_FOOT;
+			break;
+		case TYPE_LION_R_FOOT:
+			strFileName = MODEL_FILENAME_LION_R_FOOT;
 			break;
 		}
 
@@ -255,4 +279,11 @@ void CLimbX::Unload(void)
 		}	
 	}
 
+}
+//=============================================================================
+//XFILEの割り当て
+//=============================================================================
+void CLimbX::BindXfile(TYPE type)
+{
+	((CPartX*)this)->BindXfile( m_pTexture[type], m_pD3DXMesh[type], m_pD3DXBuffMat[type], m_nNumMat[type]);
 }
