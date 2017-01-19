@@ -7,8 +7,8 @@
 //
 //============================================
 
-#ifndef _BOOK_H_
-#define _BOOK_H_
+#ifndef _PUTBOOK_H_
+#define _PUTBOOK_H_
 
 //============================================
 //インクルードファイル
@@ -23,12 +23,12 @@
 //構造体定義
 //============================================
 
-class CBook : public CSceneX
+class CPutBook : public CSceneX
 {
 public:
 
-	CBook();
-	virtual ~CBook();
+	CPutBook();
+	virtual ~CPutBook();
 	typedef enum
 	{
 			TYPE_RED,
@@ -39,35 +39,31 @@ public:
 	}BOOKTYPE;
 	#define MAX_BOOKTYPE (BOOKTYPE_MAX)
 	#define MAX_BOOK (15)
-	HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float speed);
+	//HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float speed);
+	HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl,int type);
 	void Uninit(void);
 	void Update(void);
 	void Draw(void);
 
-	static CBook *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float speed);
+	
 	static HRESULT Load(void);
-	void CBook::BindXfile( int type);
+	void CPutBook::BindXfile( int type);
 
-	void CBook::ChangePicked(bool pick, bool zebra);
-	void GetBoxpos(void);
+	//static CPutBook *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float speed);
+	static CPutBook *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, int type);
 private:
 	static LPDIRECT3DTEXTURE9	m_pTexture		[MAX_BOOKTYPE];		// テクスチャへのポインタ
 	static LPD3DXMESH			m_pD3DXMesh		[MAX_BOOKTYPE];		// メッシュ情報へのポインタ
 	static LPD3DXBUFFER			m_pD3DXBuffMat	[MAX_BOOKTYPE];		// マテリアル情報へのポインタ
 	static DWORD				m_nNumMat		[MAX_BOOKTYPE];		// マテリアル情報の数
-	bool m_bPicked;
-	bool m_bZebra;
-	bool m_bBack;
-	int m_nID;
+	
 	static int m_nNumber;
-	D3DXVECTOR3 m_Move;
-	float m_gravity;
+	
+	
 	int m_Timecnt;
-	D3DXVECTOR3 m_oldpos;
-	static int m_Puttoy;
-	static D3DXVECTOR3 Toyboxpos;
-	static D3DXVECTOR3 Bookboxpos;
-
+	
+	static D3DXVECTOR3 m_PutBookPos[MAX_BOOK];
+	
 };
 
 #endif

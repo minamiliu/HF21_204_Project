@@ -113,6 +113,7 @@
     <ClCompile Include="playerX.cpp" />
     <ClCompile Include="Point2D.cpp" />
     <ClCompile Include="Point3D.cpp" />
+    <ClCompile Include="putbook.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="result.cpp" />
     <ClCompile Include="scene.cpp" />
@@ -172,6 +173,7 @@
     <ClInclude Include="mousePick.h" />
     <ClInclude Include="number.h" />
     <ClInclude Include="partX.h" />
+    <ClInclude Include="putbook.h" />
     <ClInclude Include="trashGameExplosion.h" />
     <ClInclude Include="trashPlayer.h" />
     <ClInclude Include="player2D.h" />

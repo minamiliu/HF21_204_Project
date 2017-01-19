@@ -262,10 +262,10 @@ void CToy::Update(void)
 		}
 		//間違い
 		if( pos.y <= 0.0f&&
-			     pos.x > Bookboxpos.x - 50.0f 
-			  && pos.x < Bookboxpos.x + 50.0f 
-			  && pos.z > Bookboxpos.z - 50.0f  
-			  && pos.z < Bookboxpos.z + 50.0f 
+			     pos.x > Bookboxpos.x - 120.0f
+			  && pos.x < Bookboxpos.x + 120.0f
+			  && pos.z > Bookboxpos.z - 70.0f  
+			  && pos.z < Bookboxpos.z + 70.0f 
 			)
 		{
 			//現在位置と箱の位置から、速度を算出
@@ -277,10 +277,10 @@ void CToy::Update(void)
 		//正解
 		
 		if( pos.y <= 0.0f&&
-			     pos.x > Toyboxpos.x - 50.0f 
-			  && pos.x < Toyboxpos.x + 50.0f 
-			  && pos.z > Toyboxpos.z - 50.0f  
-			  && pos.z < Toyboxpos.z + 50.0f 
+			     pos.x > Toyboxpos.x - 150.0f 
+			  && pos.x < Toyboxpos.x + 150.0f 
+			  && pos.z > Toyboxpos.z - 150.0f  
+			  && pos.z < Toyboxpos.z + 150.0f 
 			)
 		{
 			CZebraGame::PutObj(true);

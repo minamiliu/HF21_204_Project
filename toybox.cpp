@@ -17,7 +17,7 @@
 // É}ÉNÉçíËã`
 //============================================
 #define MODEL_FILENAME_BOOKBOX "data/MODEL/bookbox.x"
-#define MODEL_FILENAME_TOYBOX "data/MODEL/cube200.x"
+#define MODEL_FILENAME_TOYBOX "data/MODEL/toybox.x"
 #define MODEL_FILENAME_1X4 "data/MODEL/tv_set.x"
 
 //=============================================================================
@@ -52,7 +52,7 @@ HRESULT CBookBox::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, TYPE t
 	switch( type)
 	{
 	case TYPE_BOOKBOX:
-		CSceneX::Init( pos, rot, scl);
+		CSceneX::Init( pos, rot, D3DXVECTOR3(1.0f,1.1f,1.0f));
 		CSceneX::LoadXfile(MODEL_FILENAME_BOOKBOX);
 		SetObjType(OBJTYPE_BOOKBOX);
 		break;

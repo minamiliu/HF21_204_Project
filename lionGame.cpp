@@ -73,8 +73,6 @@ HRESULT CLionGame::Init(void)
 	CreateStageLiu();
 	//CreateStageUsukura();
 
-
-
 	return S_OK;
 }
 //=============================================================================
@@ -102,7 +100,7 @@ void CLionGame::Update()
 	}
 
 	//時間になったら、変身する
-	if(m_pTime->GetTime() == 99 && m_state == STATE_NORMAL)
+	if(m_pTime->GetTime() == 10 && m_state == STATE_NORMAL)
 	{
 		m_pTime->StopTime();
 		m_pEffectBG = CEffectBG::Create( D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f), D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT/2, 0.0f));
@@ -220,7 +218,7 @@ void CLionGame::CreateStageLiu(void)
 	m_pScore = CScore::Create( D3DXVECTOR3( 150.0f, 30.0f, 0.0f), D3DXVECTOR3( 300, 50.0f, 0.0f), 6, RED(1.0f)); 
 
 	//タイム
-	m_pTime = CTime::Create( D3DXVECTOR3(SCREEN_WIDTH/2, 100.0f, 0.0f), D3DXVECTOR3(140, 70.0f, 0.0f), 2, 99, true, BLUE(1.0f));
+	m_pTime = CTime::Create( D3DXVECTOR3(SCREEN_WIDTH/2, 100.0f, 0.0f), D3DXVECTOR3(140, 70.0f, 0.0f), 2, 60, true, BLUE(1.0f));
 
 	//敵
 	//CEnemyX::Create(D3DXVECTOR3(  50, 60.0f, 600.0f), D3DXVECTOR3(0.0f, D3DX_PI / 2, 0.0f), D3DXVECTOR3(2.0f, 2.0f, 2.0f), CEnemyX::TYPE_000);
