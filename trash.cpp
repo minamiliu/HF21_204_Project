@@ -90,7 +90,7 @@ void CTrash::Update(void)
 	CDebugProc::Print("\n差異:%f",m_gravityCoefficient);
 
 	
-	if(CManager::GetInputMouse()->GetMouseLeftPress() && m_fallFlag == false)
+	if(CManager::GetInputMouse()->GetMouseLeftPress() && m_fallFlag == false && CTrashGame::GetState() != CTrashGame::STATE_CHANGE)
 	{
 		//マウスの移動量を取得
 		m_speed.x -= CManager::GetInputMouse()->GetMouseAxisX()/3;
@@ -109,7 +109,7 @@ void CTrash::Update(void)
 		m_speed.y += CManager::GetInputMouse()->GetMouseAxisY()/3;
 	}
 
-	if(CManager::GetInputMouse()->GetMouseLeftRelease() && m_fallFlag == false)
+	if(CManager::GetInputMouse()->GetMouseLeftRelease() && m_fallFlag == false && CTrashGame::GetState() != CTrashGame::STATE_CHANGE)
 	{
 		//マウスを話したら落下フラグをＯＮ
 		m_fallFlag = true;
@@ -139,7 +139,7 @@ void CTrash::Update(void)
 		m_speed.y -= GRAVITY_POINT * m_gravityCoefficient;
 		posTrash.y += -m_speed.y / 10;
 	}
-	if(m_apFlag == true)
+	if(m_apFlag == true && CTrashGame::GetState())
 	{
 		//出現タイミングをカウントで計る
 		m_cnt++;

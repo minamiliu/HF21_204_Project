@@ -33,7 +33,11 @@ class CScore;
 class CTrashGame : public CManager
 {
 public:
-
+	typedef enum
+	{
+		STATE_CHANGE = 0,//ïœêgíÜ
+		STATE_MAX
+	}STATE;
 	CTrashGame();
 	virtual ~CTrashGame();
 	
@@ -43,6 +47,8 @@ public:
 	void Draw(void);
 	static void SetTrashPointer(CTrash *pTrash);
 	static int GetTrashGameCnt(void);
+	void SetState(STATE state);
+	static STATE GetState(void);
 private:
 	static CTrash *m_pTrash;
 	static CScene2D *m_pTrashBox;
@@ -52,6 +58,7 @@ private:
 	static CScene2D *m_pMidpoint;
 	static int m_nTrashGameCnt;
 	static CScene2D *m_pCenterPoint;
+	static STATE m_state;
 };
 
 #endif
