@@ -68,7 +68,7 @@ void CEffect3D::Uninit(void)
 //=============================================================================
 void CEffect3D::Update(void)
 {
-	m_col.a -= 0.1f;
+	m_col.a -= 0.01f;
 	this->SetColor(m_col);
 	if( m_col.a <= 0)
 	{

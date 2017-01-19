@@ -15,11 +15,12 @@
 #include "input.h"
 #include "scene2D.h"
 #include "score.h"
+#include "bg.h"
 
 //============================================
 // マクロ定義
 //============================================
-#define TEXTURE_BG "data/TEXTURE/resultBG.jpg"
+#define TEXTURE_BG "data/TEXTURE/resultBG01.jpg"
 #define TEXTURE_RANK_C "data/TEXTURE/rankC.png"
 #define TEXTURE_RANK_A "data/TEXTURE/rankA.png"
 #define TEXTURE_RANK_B "data/TEXTURE/rankB.png"
@@ -69,11 +70,11 @@ CResult::~CResult()
 
 HRESULT CResult::Init(void)
 {
-
-
 	//オブジェクトの生成(2Dポリゴン)
-	CScene2D::Create( D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f), D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f), TEXTURE_BG);
+	//CScene2D::Create( D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f), D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f), TEXTURE_BG);
 
+	//背景
+	CBg::Create( D3DXVECTOR3(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f), D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f), TEXTURE_BG, 0.001f);
 	
 	m_pTrashGameScore = NULL;
 	m_pZebraGameScore = NULL;
@@ -84,7 +85,7 @@ HRESULT CResult::Init(void)
 	m_resultCnt = 0;
 	//スコア取得
 	m_nTrashGameScore = CManager::LoadScore(MODE_TRASHGAME);
-	m_nZebraGameScore = 500;
+	m_nZebraGameScore = CManager::LoadScore(MODE_ZEBRAGAME);
 	m_nLionGameScore = CManager::LoadScore(MODE_LIONGAME);
 	//目標値
 	m_nTargetScore[0] = m_nTrashGameScore;
@@ -103,8 +104,10 @@ void CResult::Update()
 {
 	//入力などの更新、各シーンのUpdateの最初に呼び出す
 	CManager::Update();
+
 	//時間経過を表すためのカウント
 	m_resultCnt++;
+	
 	//スコア加算に６０F、ランク表示に４０F使う
 	if(m_resultCnt == 30)
 	{
@@ -224,14 +227,13 @@ void CResult::Update()
 		m_pRank[2]->SetSize(D3DXVECTOR3(m_pRank[2]->GetSize().x-2,m_pRank[2]->GetSize().y-2,0.0));
 	}
 
+	//シーンスキップ	
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
-
-#ifdef _DEBUG
-	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN))
+	CInputMouse *pInputMouse = CManager::GetInputMouse();
+	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN) || pInputMouse->GetMouseLeftTrigger())
 	{
 		SetNextScene( MODE_TITLE);
 	}
-#endif
 
 	//シーンが切り替えるところ、各シーンのUpdateの最後に置いとく
 	CManager::SceneChange();

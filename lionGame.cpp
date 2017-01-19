@@ -42,7 +42,6 @@
 // 静的メンバー変数の初期化
 //============================================
 CScore *CLionGame::m_pScore = NULL;
-
 //=============================================================================
 //コンストラクタ
 //=============================================================================
@@ -124,13 +123,20 @@ void CLionGame::Update()
 		break;
 	}
 
+	//Game Clear
+	if(m_pPlayer->GetState() == CPlayerX::STATE_GOAL)
+	{
+		SetNextScene( MODE_RESULT);
+	}
 
+#ifdef _DEBUG
 	//スキップシーン
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
 	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN))
 	{
 		SetNextScene( MODE_RESULT);
 	}
+#endif
 
 	//シーンが切り替えるところ、各シーンのUpdateの最後に置いとく
 	CManager::SceneChange();

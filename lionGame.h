@@ -61,12 +61,12 @@ protected:
 private:
 
 	CTime *m_pTime;
-	STATE m_state;
 	int m_nCntState;	//状態のカウンター
 
 	CEffectBG *m_pEffectBG;
 	CPlayerX *m_pPlayer;
 	
+	STATE m_state;
 	static CScore *m_pScore;
 };
 

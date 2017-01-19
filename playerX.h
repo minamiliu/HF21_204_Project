@@ -44,6 +44,7 @@ public:
 		STATE_NORMAL = 0,
 		STATE_HIT,
 		STATE_LION,
+		STATE_GOAL,
 		STATE_MAX,
 	}STATE;
 

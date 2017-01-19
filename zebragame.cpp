@@ -115,11 +115,15 @@ void CZebraGame::Update()
 	//入力などの更新、各シーンのUpdateの最初に呼び出す
 	CManager::Update();
 
+#ifdef _DEBUG
+	//スキップシーン
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
 	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN))
 	{
 		SetNextScene( MODE_STAGE_ZEBRA);
 	}
+#endif
+
 	//シーンが切り替えるところ、各シーンのUpdateの最後に置いとく
 	CManager::SceneChange();
 }

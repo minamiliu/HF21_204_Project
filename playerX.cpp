@@ -143,13 +143,17 @@ void CPlayerX::Update(void)
 	}
 
 	//移動処理
-	bool isMoved;
-	isMoved = isKeyUse(DIK_W, DIK_S, DIK_A, DIK_D);
-	//isMoved = isMouseUse();
-	if( isMoved == true)
+	if( isMouseUse())
 	{
 		UpdateRot();
 	}
+
+#ifdef _DEBUG
+	if( isKeyUse(DIK_W, DIK_S, DIK_A, DIK_D) || isMouseUse())
+	{
+		UpdateRot();
+	}
+#endif
 
 	//状態更新
 	switch( m_state)
@@ -171,6 +175,9 @@ void CPlayerX::Update(void)
 			//移動慣性
 			m_fSpeed -= m_fSpeed * 0.05f;
 		}
+		break;
+	case STATE_GOAL:
+		//nothing
 		break;
 	default:
 		//前進ベクトルの更新
@@ -547,7 +554,7 @@ bool CPlayerX::isCollision(void)
 
 					//食材ゲット
 					pFood->SetClear();
-					pFood->SetState( CFood::STATE_FLYING, 60);
+					pFood->SetState( CFood::STATE_FLYING, 120);
 
 					//食材の破棄
 					//pFood->Uninit();
@@ -614,7 +621,8 @@ bool CPlayerX::isCollision(void)
 					{
 						if(CFood::isAllClear() == true)
 						{
-							CManager::SetNextScene( CManager::MODE_RESULT);
+							//goal
+							this->SetState(STATE_GOAL);
 						}
 					}
 

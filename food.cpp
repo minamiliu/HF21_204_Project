@@ -30,6 +30,8 @@
 #define TEXTURE_POTATO	"data/TEXTURE/LionGame/potato.png"
 #define TEXTURE_MEAT	"data/TEXTURE/LionGame/meat.png"
 
+#define ACCEL_RISE_UP	(0.05f)
+#define RATE_ALPHA		(0.005f)
 
 //============================================
 // 静的メンバー変数の初期化
@@ -107,16 +109,16 @@ void CFood::Update(void)
 		{
 			//座標
 			D3DXVECTOR3 pos = this->GetPosition();
-			m_fMoveY += 0.1f;
+			m_fMoveY += ACCEL_RISE_UP;
 			pos.y += m_fMoveY;
 			
 			//回転
-			m_fAngle += 0.01f;
+			m_fAngle += RATE_ALPHA;
 			m_fTurn += m_fAngle; 
 			pos.x = m_posInit.x + 30.0f * sinf( m_fTurn); 
 			pos.z = m_posInit.z + 30.0f * cosf( m_fTurn);
 
-			CEffect3D::Create(this->GetPosition(), D3DXVECTOR2( 20.0f, 20.0f), CEffect3D::TYPE_MARU, PINK(1.0f));
+			CEffect3D::Create(this->GetPosition(), D3DXVECTOR2( 20.0f, 20.0f), CEffect3D::TYPE_MARU, LIME(1.0f));
 
 			this->SetPosition(pos);
 		}

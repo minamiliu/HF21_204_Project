@@ -77,9 +77,10 @@ void CTitle::Update()
 	//入力などの更新、各シーンのUpdateの最初に呼び出す
 	CManager::Update();
 
-	//CZebra::Update();
+	//シーンスキップ
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
-	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN))
+	CInputMouse *pInputMouse = CManager::GetInputMouse();
+	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN) || pInputMouse->GetMouseLeftTrigger())
 	{
 		SetNextScene( MODE_STAGE_START);
 	}
@@ -90,5 +91,4 @@ void CTitle::Update()
 void CTitle::Draw()
 {
 	CManager::Draw();
-	//CZebra::Draw();
 }

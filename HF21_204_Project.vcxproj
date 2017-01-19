@@ -78,6 +78,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="bg.cpp" />
     <ClCompile Include="billboard.cpp" />
     <ClCompile Include="book.cpp" />
     <ClCompile Include="bullet2D.cpp" />
@@ -142,6 +143,7 @@
     <ClCompile Include="zebragame.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bg.h" />
     <ClInclude Include="billboard.h" />
     <ClInclude Include="book.h" />
     <ClInclude Include="bullet2D.h" />
