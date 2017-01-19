@@ -100,6 +100,7 @@
     <ClCompile Include="light.cpp" />
     <ClCompile Include="lion.cpp" />
     <ClCompile Include="lionGame.cpp" />
+    <ClCompile Include="loading.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="manager.cpp" />
     <ClCompile Include="meshDome.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="limbX.h" />
     <ClInclude Include="lion.h" />
     <ClInclude Include="lionGame.h" />
+    <ClInclude Include="loading.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="manager.h" />
     <ClInclude Include="meshDome.h" />

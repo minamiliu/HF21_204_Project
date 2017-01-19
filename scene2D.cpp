@@ -332,7 +332,7 @@ void CScene2D::SetTexture(LPCSTR strFileName)
 	D3DXCreateTextureFromFile( pDevice, strFileName, &m_pTexture);
 }
 //=============================================================================
-//
+//注意：アルファ値はint型
 //=============================================================================
 void CScene2D::SetAlpha(int alpha)
 {

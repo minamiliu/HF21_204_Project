@@ -26,6 +26,7 @@
 #include "fade.h"
 #include "scene.h"
 #include "stage.h"
+#include "loading.h"
 
 //============================================
 // マクロ定義
@@ -179,9 +180,6 @@ CManager *CManager::Create( MODE mode, HINSTANCE hInstance, HWND hWnd, bool bWin
 		m_pSceneManager->Init( hInstance, hWnd, bWindow);
 	}
 
-	//ゲームデータのロード
-	LoadAll();
-
 	//ゲームシーンの生成
 	m_modeNext = mode;
 	NextModeChange();
@@ -333,6 +331,10 @@ void CManager::SceneChange(void)
 
 	switch(m_modeNext)
 	{
+	case MODE_LOADING:
+		m_pSceneManager = new CLoading;
+		break;
+
 	case MODE_TITLE:
 		m_pSceneManager = new CTitle;
 		break;
@@ -419,7 +421,7 @@ int CManager::LoadScore(MODE game)
 //=============================================================================
 //モデルやテクスチャを一気にロードする
 //=============================================================================
-HRESULT CManager::LoadAll(void)
+HRESULT CManager::LoadAllGameData(void)
 {
 	CLionGame::LoadAll();
 	CZebraGame::LoadAll();

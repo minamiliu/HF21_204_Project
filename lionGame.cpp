@@ -99,12 +99,6 @@ void CLionGame::Update()
 	//入力などの更新、各シーンのUpdateの最初に呼び出す
 	CManager::Update();
 
-	//Time Up
-	if(m_pTime->TimeUp())
-	{
-		SetNextScene( MODE_RESULT);
-	}
-
 	//時間になったら、変身する
 	if(m_pTime->GetTime() == 55 && m_state == STATE_NORMAL)
 	{
@@ -130,10 +124,16 @@ void CLionGame::Update()
 		break;
 	}
 
-	//Game Clear
+	//Time Up
+	if(m_pTime->TimeUp())
+	{
+		SetNextScene( MODE_STAGE_LION);
+	}
+
+	//Game Clear or Time Up
 	if(m_pPlayer->GetState() == CPlayerX::STATE_GOAL)
 	{
-		SetNextScene( MODE_RESULT);
+		SetNextScene( MODE_STAGE_LION);
 	}
 
 #ifdef _DEBUG
@@ -141,7 +141,7 @@ void CLionGame::Update()
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
 	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN))
 	{
-		SetNextScene( MODE_RESULT);
+		SetNextScene( MODE_STAGE_LION);
 	}
 #endif
 

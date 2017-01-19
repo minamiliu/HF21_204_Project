@@ -170,6 +170,9 @@ void CStage::Update()
 		case MASU_ZEBRA:
 			SetNextScene( MODE_LIONGAME);
 			break;
+		case MASU_LION:
+			SetNextScene( MODE_RESULT);
+			break;
 		}
 	}
 

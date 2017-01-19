@@ -92,7 +92,7 @@ public:
 	int LoadScore(MODE game);
 
 	//モデルやテクスチャを一気にロードする
-	static HRESULT LoadAll(void);
+	static HRESULT LoadAllGameData(void);
 
 protected:
 	//カメラ
