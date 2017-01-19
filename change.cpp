@@ -41,6 +41,7 @@ CScene2D *pAnimalPlayer = NULL;
 bool CChange::m_bAnimalPlayerFlag = false;
 bool CChange::m_bState = true;
 int CChange::changeCnt = 0;
+CEffectBG *pEffect = NULL;
 //=============================================================================
 //コンストラクタ
 //=============================================================================
@@ -67,7 +68,7 @@ CChange::~CChange()
 HRESULT CChange::Init( LPCSTR strPlayerFileName, LPCSTR strAnimalFileName, LPCSTR strAnimalPlayerFileName)
 {
 	//pChamgeBg = CScene2D::Create(D3DXVECTOR3(),D3DXVECTOR3(),TEXTURE_BG);
-	CEffectBG::Create( D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f), D3DXVECTOR3(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f));
+	pEffect = CEffectBG::Create( D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f), D3DXVECTOR3(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f));
 	//CExplosion::Create();
 	pAnimalPlayer = CScene2D::Create(D3DXVECTOR3(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f),D3DXVECTOR3(300,300,0),strAnimalPlayerFileName);
 	pPlayer = CScene2D::Create(D3DXVECTOR3(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f),D3DXVECTOR3(300,300,0),strPlayerFileName);
@@ -85,6 +86,13 @@ HRESULT CChange::Init( LPCSTR strPlayerFileName, LPCSTR strAnimalFileName, LPCST
 //=============================================================================
 void CChange::Uninit(void)
 {
+	pExplosion = NULL;
+
+	pAnimalPlayer->Uninit();
+	pAnimalPlayer = NULL;
+
+	pEffect->Uninit();
+	pEffect = NULL;
 	//オブジェクトの破棄
 	Release();
 }

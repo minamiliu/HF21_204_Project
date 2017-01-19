@@ -69,8 +69,9 @@ CPlayer2D *pPlayer2D = NULL;
 int CTrashGame::m_nTrashGameCnt = 0;
 CTrashPlayer *pAnimPlayer = NULL;
 CScene2D *pExplosion = NULL;
-
+CChange *pChange = NULL;
 bool bMessageFlag = false;
+CTrashGame::STATE CTrashGame::m_state = STATE_CHANGE;
 //============================================
 //コンストラクタ
 //============================================
@@ -106,7 +107,7 @@ HRESULT CTrashGame::Init(void)
 	m_pScore = CScore::Create(D3DXVECTOR3(150, 50.0f, 0.0f), D3DXVECTOR3(300.0f, 50.0f, 0.0f), 6, BLUE(1.0f));
 	//ゴミ箱
 	//m_pTrashBox = CScene2D::Create(D3DXVECTOR3(1000.0f, 500.0f, 0.0f), D3DXVECTOR3(800.0f, 600.0f, 0.0f),TEXTURE_TRASHBOX);
-	m_pTrashBox = CScene2D::Create(D3DXVECTOR3(1100.0f, 350.0f, 0.0f), D3DXVECTOR3(650.0f, 300.0f, 0.0f),TEXTURE_TRASHBOX);
+	m_pTrashBox = CScene2D::Create(D3DXVECTOR3(1100.0f, 350.0f, 0.0f), D3DXVECTOR3(700.0f, 300.0f, 0.0f),TEXTURE_TRASHBOX);
 	//タイム
 	pTime = CTime::Create(D3DXVECTOR3(600, 50.0f, 0.0f),D3DXVECTOR3(100, 100.0f, 0.0f),3,12,true,D3DXCOLOR(255,255,255,255));
 	pTime->StopTime();
@@ -121,6 +122,7 @@ HRESULT CTrashGame::Init(void)
 
 	pExplosion = NULL;
 	bMessageFlag = false;
+	m_state = STATE_MAX;
 	return S_OK;
 }
 
@@ -299,11 +301,13 @@ void CTrashGame::Update()
 		if( pAnimPlayer->GetGorillaMode() == false )
 		{
 			pTime->StopTime();
-			CChange::Create(TEXTURENAME,GORILLA_GORILLA,STAND_GORILLA);
+			SetState(STATE_CHANGE);
+			pChange = CChange::Create(TEXTURENAME,GORILLA_GORILLA,STAND_GORILLA);
 
 			//pAnimPlayer->Uninit();
 			//pAnimPlayer = NULL;
 			//pAnimPlayer = CTrashPlayer::Create(D3DXVECTOR3( 150.0f, 580.0f, 0.0f), D3DXVECTOR3( 200.0f, 200.0f, 0.0f),TEXTURE_GORILLA);
+			
 			pAnimPlayer->SetGorillaMode();
 
 			//ゴミを複数生成
@@ -317,18 +321,26 @@ void CTrashGame::Update()
 		}*/
 	}
 
-	if(pAnimPlayer->GetGorillaMode() == true && CChange::GetState() == false)
+	//変身演出終了後の処理
+	if(pAnimPlayer->GetGorillaMode() == true && pChange != NULL )
 	{
-		pAnimPlayer->Uninit();
-		pAnimPlayer = NULL;
-		pAnimPlayer = CTrashPlayer::Create(D3DXVECTOR3( 150.0f, 580.0f, 0.0f), D3DXVECTOR3( 200.0f, 200.0f, 0.0f),TEXTURE_GORILLA);
-		pAnimPlayer->SetGorillaMode();
-		//ゴミを複数生成
-		//CTrash::Create(D3DXVECTOR3(100.0f, 370.0f, 0.0f), D3DXVECTOR3(200.0f, 200.0f, 0.0f),TEXTURE_TRASH,CTrash::OBJTYPE_LEFTTRASH);
-		//CTrash::Create(D3DXVECTOR3(300.0f, 370.0f, 0.0f), D3DXVECTOR3(200.0f, 200.0f, 0.0f),TEXTURE_TRASH,CTrash::OBJTYPE_RIGHTTRASH);
+		if(pChange->GetState() == false)
+		{
+			SetState(STATE_MAX);
+			pChange->Uninit();
+			pChange = NULL;
+			pAnimPlayer->Uninit();
+			pAnimPlayer = NULL;
+			pAnimPlayer = CTrashPlayer::Create(D3DXVECTOR3( 150.0f, 580.0f, 0.0f), D3DXVECTOR3( 300.0f, 300.0f, 0.0f),TEXTURE_GORILLA);
+			pAnimPlayer->SetGorillaMode();
+			//ゴミを複数生成
+			CTrash::Create(D3DXVECTOR3(100.0f, 370.0f, 0.0f), D3DXVECTOR3(200.0f, 200.0f, 0.0f),TEXTURE_TRASH,CTrash::OBJTYPE_LEFTTRASH);
+			CTrash::Create(D3DXVECTOR3(300.0f, 370.0f, 0.0f), D3DXVECTOR3(200.0f, 200.0f, 0.0f),TEXTURE_TRASH,CTrash::OBJTYPE_RIGHTTRASH);
 	
-		CChange::changeState();
-		pTime->StopTime();
+			//CChange::changeState();
+			//時が動き出す
+			pTime->StopTime();
+		}
 	}
 
 	if(pTime != NULL && pTime->GetTime() == 1)
@@ -396,4 +408,14 @@ void CTrashGame::SetTrashPointer(CTrash *pTrash)
 int CTrashGame::GetTrashGameCnt(void)
 {
 	return m_nTrashGameCnt;
+}
+
+void CTrashGame::SetState(STATE state)
+{
+	m_state = state;
+}
+
+CTrashGame::STATE CTrashGame::GetState(void)
+{
+	return m_state;
 }

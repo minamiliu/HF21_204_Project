@@ -88,6 +88,7 @@ void CTrashGameExplosion::Update(void)
 				//g_explosion[nCntExplosion].bUse = false;//未使用に変更
 				//CScene2D::Uninit();
 				this->Uninit();
+				
 				return;
 			}
 			// パターンの切り替え
