@@ -16,6 +16,8 @@
 #include "food.h"
 #include "foodIcon.h"
 #include "effect3D.h"
+#include "lionGame.h"
+#include "playerX.h"
 //============================================
 // マクロ定義
 //============================================
@@ -115,11 +117,12 @@ void CFood::Update(void)
 			//回転
 			m_fAngle += RATE_ALPHA;
 			m_fTurn += m_fAngle; 
-			pos.x = m_posInit.x + 30.0f * sinf( m_fTurn); 
-			pos.z = m_posInit.z + 30.0f * cosf( m_fTurn);
+			pos.x = CLionGame::GetPlayer()->GetPosition().x + 30.0f * sinf( m_fTurn); 
+			pos.z = CLionGame::GetPlayer()->GetPosition().z + 30.0f * cosf( m_fTurn);
 
+			//エフェクト
 			CEffect3D::Create(this->GetPosition(), D3DXVECTOR2( 20.0f, 20.0f), CEffect3D::TYPE_MARU, LIME(1.0f));
-
+			
 			this->SetPosition(pos);
 		}
 		break;

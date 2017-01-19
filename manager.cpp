@@ -419,5 +419,7 @@ int CManager::LoadScore(MODE game)
 HRESULT CManager::LoadAll(void)
 {
 	CLionGame::LoadAll();
+	CZebraGame::LoadAll();
+	CTrashGame::LoadAll();
 	return S_OK;
 }

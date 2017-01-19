@@ -33,21 +33,28 @@
 #include "effectBG.h"
 #include "limbX.h"
 #include "effect3D.h"
+#include "change.h"
 
 //============================================
 // マクロ定義
 //============================================
+#define TEXTURE_LION	"data/TEXTURE/lion.png"
+#define TEXTURE_LIONMOM "data/TEXTURE/lionMom.png"
+#define TEXTURE_MOM		"data/TEXTURE/player000.png"
 
 //============================================
 // 静的メンバー変数の初期化
 //============================================
 CScore *CLionGame::m_pScore = NULL;
+CPlayerX *CLionGame::m_pPlayer = NULL;
 //=============================================================================
 //コンストラクタ
 //=============================================================================
 CLionGame::CLionGame() : CManager(MODE_LIONGAME)
 {
 	m_pTime = NULL;
+	m_pChange = NULL;
+	m_pEffectBG = NULL;
 }
 //=============================================================================
 //デストラクタ
@@ -99,12 +106,12 @@ void CLionGame::Update()
 	}
 
 	//時間になったら、変身する
-	if(m_pTime->GetTime() == 10 && m_state == STATE_NORMAL)
+	if(m_pTime->GetTime() == 55 && m_state == STATE_NORMAL)
 	{
 		m_pTime->StopTime();
-		m_pEffectBG = CEffectBG::Create( D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f), D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT/2, 0.0f));
+		//m_pEffectBG = CEffectBG::Create( D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f), D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT/2, 0.0f));
+		m_pChange = CChange::Create(TEXTURE_MOM, TEXTURE_LION, TEXTURE_LIONMOM);
 		m_state = STATE_UPGRADE;
-		m_nCntState = 60;
 		m_pPlayer->SetState(CPlayerX::STATE_LION); //ライオンに変身
 	}
 
@@ -112,12 +119,12 @@ void CLionGame::Update()
 	switch( m_state)
 	{
 	case STATE_UPGRADE:
-		m_nCntState--;
-		if( m_nCntState <= 0)
+		
+		if( m_pChange->GetState() == false)
 		{
+			m_pChange->Uninit();
 			m_state = STATE_LION;
 			m_pTime->StopTime();
-			m_pEffectBG->Uninit();
 			m_pTime->SetColor(RED(1.0f));
 		}
 		break;
@@ -157,6 +164,13 @@ CScore *CLionGame::GetScore(void)
 }
 //=============================================================================
 //
+//=============================================================================
+CPlayerX *CLionGame::GetPlayer(void)
+{
+	return m_pPlayer;
+}
+//=============================================================================
+//ゲームが立ち上がるとき、一回のみ全部ロードする
 //=============================================================================
 HRESULT CLionGame::LoadAll(void)
 {

@@ -92,10 +92,6 @@ HRESULT CTrashGame::Init(void)
 	SetCursorPos(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
 	//スコア初期化
 	SaveScore(MODE_TRASHGAME,0);
-	//テクスチャの割り当て
-	CTrash::Load();
-	CTrajectory::Load();
-	CTrashPlayer::Load();
 	//背景
 	CScene2D::Create(D3DXVECTOR3(SCREEN_WIDTH/2,SCREEN_HEIGHT/2,0.0f),D3DXVECTOR3(SCREEN_WIDTH*1.2,SCREEN_HEIGHT*1.4,0.0f),TEXTURE_BGPOLYGON);
 	//オブジェクトの生成
@@ -418,4 +414,15 @@ void CTrashGame::SetState(STATE state)
 CTrashGame::STATE CTrashGame::GetState(void)
 {
 	return m_state;
+}
+//=============================================================================
+//ゲームが立ち上がるとき、一回のみ全部ロードする
+//=============================================================================
+HRESULT CTrashGame::LoadAll(void)
+{
+	CTrash::Load();
+	CTrajectory::Load();
+	CTrashPlayer::Load();
+
+	return S_OK;
 }

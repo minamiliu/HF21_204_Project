@@ -43,7 +43,7 @@ public:
 	void Draw(void);
 	static void SetZebraPointer(CScene2D *pZebra);
 	static void PutObj(bool toy);
-	
+	static HRESULT LoadAll(void);
 
 private:
 	static CScene2D *m_pZebra;

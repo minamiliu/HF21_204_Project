@@ -17,7 +17,7 @@
 #include "player2D.h"
 #include "light.h"
 #include "camera.h"
-#include "scene3D.h"
+#include "meshField.h"
 #include "playerX.h"
 #include "toy.h"
 #include "point3D.h"
@@ -53,20 +53,19 @@ CZebraGame::~CZebraGame()
 
 HRESULT CZebraGame::Init(void)
 {
-	m_pCamera->Init();
-
-	//オブジェクトの生成(3Dポリゴン)
-	CScene3D::Create( D3DXVECTOR3( 0.0f,- 10.0f, 0.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 10, 10, 100.0f, 100.0f, false);
-	//ウォール
-	CMeshWall::Load();
-	m_nNumWall = 0;
-	m_pMeshWall[m_nNumWall++] = CMeshWall::Create( D3DXVECTOR3( 0.0f, 100.0f, 450.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 10, 10, 100.0f, 100.0f);
-	m_pMeshWall[m_nNumWall++] = CMeshWall::Create( D3DXVECTOR3( -450.0f, 100.0f, 200.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(270.0f), 0.0f), 10, 10, 100.0f, 100.0f);
-	m_pMeshWall[m_nNumWall++] = CMeshWall::Create( D3DXVECTOR3( 450.0f, 100.0f, 200.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(90.0f), 0.0f), 10, 10, 100.0f, 100.0f);
-
 	//カメラの位置
-	CManager::GetCamera() ->SetPosV(D3DXVECTOR3(0.0f,300.0f,-500.0f));
-	CManager::GetCamera() ->SetPosR(D3DXVECTOR3(0.0f,0.0f,400.0f));
+	m_pCamera->Init();
+	m_pCamera->SetPosV(D3DXVECTOR3(0.0f,300.0f,-500.0f));
+	m_pCamera->SetPosR(D3DXVECTOR3(0.0f,0.0f,400.0f));
+
+	//床
+	CMeshField::Create( D3DXVECTOR3( 0.0f,- 10.0f, 0.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 10, 10, 100.0f, 100.0f, CMeshField::TYPE_GREEN);
+
+	//ウォール
+	CMeshWall::Create( D3DXVECTOR3( 0.0f, 100.0f, 450.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 10, 10, 100.0f, 100.0f);
+	CMeshWall::Create( D3DXVECTOR3( -450.0f, 100.0f, 200.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(270.0f), 0.0f), 10, 10, 100.0f, 100.0f);
+	CMeshWall::Create( D3DXVECTOR3( 450.0f, 100.0f, 200.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(90.0f), 0.0f), 10, 10, 100.0f, 100.0f);
+
 	//乱数
 	unsigned int now = (unsigned int)time( 0 );
 	srand(now);
@@ -74,7 +73,6 @@ HRESULT CZebraGame::Init(void)
 	//オブジェクトの生成(3D)
 	CBookBox::Create(D3DXVECTOR3(300.0f,0.0f,370.0f) , D3DXVECTOR3( 0.0f, 0.0f, 0.0f),CBookBox::TYPE_TOYBOX);
 	CBookBox::Create(D3DXVECTOR3(-300.0f,0.0f,370.0f) , D3DXVECTOR3( 0.0f,D3DXToRadian(90.0f), 0.0f),CBookBox::TYPE_BOOKBOX);
-	CToy::Load();
 	for(int nCnt = 0 ; nCnt < MAX_TOY ;nCnt++)
 	{
 		varX = rand() % 101 ;
@@ -85,7 +83,6 @@ HRESULT CZebraGame::Init(void)
 	}
 
 
-	CBook::Load();
 	for(int nCnt = 0 ; nCnt < MAX_BOOK ;nCnt++)
 	{
 		varX = rand() % 101 ;
@@ -94,7 +91,7 @@ HRESULT CZebraGame::Init(void)
 		//オブジェクトの生成(Xfile)
 		CBook::Create( D3DXVECTOR3( 5.0f*varX-350.0f, 10.0f, 5.0f*varZ-240.0f), D3DXVECTOR3( 0.0f,D3DXToRadian(30*varR), 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), 5.0f);
 	}
-	CPutBook::Load();
+
 	
 	
 	//オブジェクトの生成(2Dポリゴン)
@@ -150,4 +147,17 @@ void CZebraGame :: PutObj(bool toy)
 	{
 		SetNextScene( MODE_STAGE_ZEBRA);
 	}
+}
+//=============================================================================
+//ゲームが立ち上がるとき、一回のみ全部ロードする
+//=============================================================================
+HRESULT CZebraGame::LoadAll(void)
+{
+	CMeshField::Load();
+	CMeshWall::Load();
+	CPutBook::Load();
+	CToy::Load();
+	CBook::Load();
+
+	return S_OK;
 }

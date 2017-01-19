@@ -17,6 +17,7 @@
 #include "renderer.h"
 #include "mousePick.h"
 #include "point3D.h"
+#include "effect3D.h"
 
 #include "zebragame.h"
 //============================================
@@ -243,6 +244,10 @@ void CToy::Update(void)
 		pos += m_Move;
 		m_Timecnt ++;
 		CSceneX::SetPosition(pos);
+
+		//エフェクト
+		CEffect3D::Create( pos, D3DXVECTOR2( 20.0f, 20.0f), CEffect3D::TYPE_MARU, RED(1.0f));
+
 		if(m_Timecnt == 99)
 		{
 			m_bZebra = false;

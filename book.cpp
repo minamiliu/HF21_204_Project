@@ -20,6 +20,7 @@
 #include "input.h"
 #include "zebragame.h"
 #include "putbook.h"
+#include "effect3D.h"
 //============================================
 // マクロ定義
 //============================================
@@ -268,6 +269,10 @@ void CBook::Update(void)
 		pos += m_Move;
 		m_Timecnt ++;
 		CSceneX::SetPosition(pos);
+
+		//エフェクト
+		CEffect3D::Create( pos, D3DXVECTOR2( 20.0f, 20.0f), CEffect3D::TYPE_MARU, GREEN(1.0f));
+
 		if(m_Timecnt == 99)
 		{
 			m_bZebra = false;

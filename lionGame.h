@@ -29,6 +29,7 @@ class CCubeX;
 class CScore;
 class CTime;
 class CEffectBG;
+class CChange;
 //============================================
 //構造体定義
 //============================================
@@ -54,19 +55,20 @@ public:
 	
 	//静的
 	static CScore *GetScore(void);
+	static CPlayerX *GetPlayer(void);
 	static HRESULT LoadAll(void);
 protected:
 	void CreateStageLiu(void);
 	void CreateStageUsukura(void);
 private:
 
-	CTime *m_pTime;
+	STATE m_state;
 	int m_nCntState;	//状態のカウンター
 
+	CChange *m_pChange;
 	CEffectBG *m_pEffectBG;
-	CPlayerX *m_pPlayer;
-	
-	STATE m_state;
+	CTime *m_pTime;
+	static CPlayerX *m_pPlayer;
 	static CScore *m_pScore;
 };
 

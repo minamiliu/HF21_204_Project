@@ -49,6 +49,7 @@ public:
 	static int GetTrashGameCnt(void);
 	void SetState(STATE state);
 	static STATE GetState(void);
+	static HRESULT LoadAll(void);
 private:
 	static CTrash *m_pTrash;
 	static CScene2D *m_pTrashBox;
