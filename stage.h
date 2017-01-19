@@ -36,6 +36,7 @@ public:
 		MASU_GORIRA,
 		MASU_ZEBRA,
 		MASU_LION,
+		MASU_GOAL,
 		MASU_MAX
 	}MASU_TYPE;
 	CStage();

@@ -49,6 +49,7 @@ public:
 		MODE_STAGE_START,	//移動中のステージ画面　スタートから
 		MODE_STAGE_GORIRA,	//移動中のステージ画面　ゴリラから
 		MODE_STAGE_ZEBRA,	//移動中のステージ画面　シマウマから
+		MODE_STAGE_LION,	//移動中のステージ画面　ライオンから
 		MODE_MAX,	//最大値
 	} MODE;
 

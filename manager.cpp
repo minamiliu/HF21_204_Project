@@ -366,6 +366,9 @@ void CManager::SceneChange(void)
 	case MODE_STAGE_ZEBRA:
 		m_pSceneManager = new CStage(CStage::MASU_ZEBRA);
 		break;
+	case MODE_STAGE_LION:
+		m_pSceneManager = new CStage(CStage::MASU_LION);
+		break;
 	}
 	
 	//Ÿ‚ÌƒV[ƒ“‚Í‚È‚µ‚É‚·‚é
