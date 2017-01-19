@@ -28,6 +28,7 @@
 #include "toybox.h"
 #include "book.h"
 #include "meshWall.h"
+#include "putbook.h"
 //============================================
 // マクロ定義
 //============================================
@@ -93,6 +94,8 @@ HRESULT CZebraGame::Init(void)
 		//オブジェクトの生成(Xfile)
 		CBook::Create( D3DXVECTOR3( 5.0f*varX-350.0f, 10.0f, 5.0f*varZ-240.0f), D3DXVECTOR3( 0.0f,D3DXToRadian(30*varR), 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), 5.0f);
 	}
+	CPutBook::Load();
+	
 	
 	//オブジェクトの生成(2Dポリゴン)
 	//タイム

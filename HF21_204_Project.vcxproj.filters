@@ -191,8 +191,8 @@
     </ClCompile>
     <ClCompile Include="mousePick.cpp">
       <Filter>ソース ファイル</Filter>
-    </ClCompile>    
-	<ClCompile Include="stage.cpp">
+    </ClCompile>
+    <ClCompile Include="stage.cpp">
       <Filter>ソース ファイル\stage</Filter>
     </ClCompile>
     <ClCompile Include="stagePlayer.cpp">
@@ -211,6 +211,12 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="book.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="titleObj.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="putbook.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -384,6 +390,21 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="book.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="collision.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="debugproc.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="number.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="titleObj.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="putbook.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

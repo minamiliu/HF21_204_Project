@@ -17,8 +17,9 @@
 #include "renderer.h"
 #include "mousePick.h"
 #include "point3D.h"
-
+#include "input.h"
 #include "zebragame.h"
+#include "putbook.h"
 //============================================
 // マクロ定義
 //============================================
@@ -71,7 +72,7 @@ HRESULT CBook::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float spe
 {
 	
 	CSceneX::Init( pos, rot, scl);
-
+	
 	BindXfile(m_nNumber%4);
 	SetObjType(OBJTYPE_BOOK); ;
 	m_bPicked = false;
@@ -81,7 +82,9 @@ HRESULT CBook::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float spe
 	m_oldpos = D3DXVECTOR3(0.0f,0.0f,0.0f);
 	m_bBack = false;
 	m_Timecnt = 0;
+	m_nID = m_nNumber;
 	m_nNumber++;
+	
 	return S_OK;
 }
 
@@ -109,16 +112,16 @@ HRESULT CBook::Load(void)
 		LPCSTR strFileName;
 		switch( cntType)
 		{
-			case TYPE_ROBOT:
+			case TYPE_GREEN:
 			strFileName = MODEL_BOOK_GREEN;
 			break;
-			case TYPE_BLOCK:
+			case TYPE_RED:
 			strFileName = MODEL_BOOK_RED;
 			break;
-			case TYPE_CAR:
+			case TYPE_YELLOW:
 			strFileName = MODEL_BOOK_YELLOW;
 			break;
-			case TYPE_BEAR:
+			case TYPE_BLUE:
 			strFileName = MODEL_BOOK_BLUE;
 			break;
 		}
@@ -205,8 +208,10 @@ void CBook::Update(void)
 					D3DXVECTOR3 Cursorpos;
 					Cursorpos = ((CPoint3D*)pScene)->Get3DPosition();
 					
-					Cursorpos.y = 20.0f;
-					pos = Cursorpos;
+					
+					pos.x = Cursorpos.x;
+					pos.z = Cursorpos.z;
+
 					if(pos.x <= -400.0f)
 					{
 						pos.x = -400.0f;
@@ -217,7 +222,25 @@ void CBook::Update(void)
 					}
 					if(pos.z >= 400.0f)
 					{
+						D3DXVECTOR3 move ;
+						CInputMouse *pInputMouse;
+						pInputMouse = CManager::GetInputMouse();
+						move.x = pInputMouse ->GetMouseAxisX();
+						move.y = pInputMouse ->GetMouseAxisY();
+						
+						/*POINT po;
+						GetCursorPos(&po);
+						pos.y = -po.y+300.0f;*/
+						//Cursorpos = ((CPoint3D*)pScene)->Get3DPosition();
+						pos.x += move.x;
+						pos.y -= move.y;
+
 						pos.z = 400.0f;
+						
+					}
+					else 
+					{
+						pos.y = 20.0f;
 					}
 					CSceneX::SetPosition(pos);
 					return;
@@ -251,6 +274,8 @@ void CBook::Update(void)
 			m_bPicked = false;
 			m_Timecnt = 0;
 			CZebraGame::PutObj(false);
+			CPutBook::Create( D3DXVECTOR3(0.0f, 10.0f, 0.0f), D3DXVECTOR3( 0.0f,0.0f, 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), m_nID%4);
+
 			Uninit();
 		}
 	}
@@ -264,10 +289,10 @@ void CBook::Update(void)
 		}
 		//間違い
 		if( pos.y <= 0.0f&&
-			     pos.x > Toyboxpos.x - 50.0f 
-			  && pos.x < Toyboxpos.x + 50.0f 
-			  && pos.z > Toyboxpos.z - 50.0f  
-			  && pos.z < Toyboxpos.z + 50.0f 
+			     pos.x > Toyboxpos.x - 150.0f 
+			  && pos.x < Toyboxpos.x + 150.0f 
+			  && pos.z > Toyboxpos.z - 150.0f  
+			  && pos.z < Toyboxpos.z + 150.0f 
 			)
 		{
 			//現在位置と箱の位置から、速度を算出
@@ -278,14 +303,15 @@ void CBook::Update(void)
 		}
 		//正解
 		
-		if( pos.y <= 0.0f&&
-			     pos.x > Bookboxpos.x - 100.0f 
-			  && pos.x < Bookboxpos.x + 100.0f 
-			  && pos.z > Bookboxpos.z - 50.0f  
-			  && pos.z < Bookboxpos.z + 50.0f 
+		if(      pos.x > Bookboxpos.x - 120.0f 
+			  && pos.x < Bookboxpos.x + 120.0f 
+			  && pos.z > Bookboxpos.z - 70.0f  
+			  && pos.z < Bookboxpos.z + 70.0f 
 			)
 		{
 			CZebraGame::PutObj(false);
+			CPutBook::Create( D3DXVECTOR3(0.0f, 10.0f, 0.0f), D3DXVECTOR3( 0.0f,0.0f, 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), m_nID%4);
+
 			Uninit();
 		}
 	}
