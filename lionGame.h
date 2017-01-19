@@ -19,7 +19,7 @@
 //マクロ定義
 //============================================
 #define MAX_WALL (5)
-#define MAX_CUBE (20)
+#define MAX_CUBE (100)
 //============================================
 //前方宣言
 //============================================
@@ -55,7 +55,9 @@ public:
 	//静的
 	static CScore *GetScore(void);
 	static HRESULT LoadAll(void);
-
+protected:
+	void CreateStageLiu(void);
+	void CreateStageUsukura(void);
 private:
 
 	CTime *m_pTime;

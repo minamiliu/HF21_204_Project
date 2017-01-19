@@ -79,6 +79,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="billboard.cpp" />
+    <ClCompile Include="book.cpp" />
     <ClCompile Include="bullet2D.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="change.cpp" />
@@ -92,8 +93,8 @@
     <ClCompile Include="foodIcon.cpp" />
     <ClCompile Include="getScore.cpp" />
     <ClCompile Include="gorira.cpp" />
-    <ClCompile Include="limbX.cpp" />
     <ClCompile Include="input.cpp" />
+    <ClCompile Include="limbX.cpp" />
     <ClCompile Include="light.cpp" />
     <ClCompile Include="lion.cpp" />
     <ClCompile Include="lionGame.cpp" />
@@ -107,8 +108,6 @@
     <ClCompile Include="mousePick.cpp" />
     <ClCompile Include="number.cpp" />
     <ClCompile Include="partX.cpp" />
-    <ClCompile Include="trashGameExplosion.cpp" />
-    <ClCompile Include="trashPlayer.cpp" />
     <ClCompile Include="player2D.cpp" />
     <ClCompile Include="playerX.cpp" />
     <ClCompile Include="Point2D.cpp" />
@@ -129,20 +128,26 @@
     <ClCompile Include="title.cpp" />
     <ClCompile Include="titleObj.cpp" />
     <ClCompile Include="toy.cpp" />
+    <ClCompile Include="toybox.cpp" />
     <ClCompile Include="trajectory.cpp" />
     <ClCompile Include="trash.cpp" />
     <ClCompile Include="trashBox.cpp" />
     <ClCompile Include="trashGame.cpp" />
+    <ClCompile Include="trashGameResult.cpp" />
+    <ClCompile Include="trashGameExplosion.cpp" />
+    <ClCompile Include="trashPlayer.cpp" />
     <ClCompile Include="zebra.cpp" />
     <ClCompile Include="zebragame.cpp" />
-    <ClCompile Include="trashGameResult.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="billboard.h" />
+    <ClInclude Include="book.h" />
     <ClInclude Include="bullet2D.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="change.h" />
     <ClInclude Include="cubeX.h" />
+    <ClInclude Include="collision.h" />
+    <ClInclude Include="debugproc.h" />
     <ClInclude Include="effectBG.h" />
     <ClInclude Include="enemyX.h" />
     <ClInclude Include="fade.h" />
@@ -163,6 +168,7 @@
     <ClInclude Include="meshWall.h" />
     <ClInclude Include="message.h" />
     <ClInclude Include="mousePick.h" />
+    <ClInclude Include="number.h" />
     <ClInclude Include="partX.h" />
     <ClInclude Include="trashGameExplosion.h" />
     <ClInclude Include="trashPlayer.h" />
@@ -186,13 +192,14 @@
     <ClInclude Include="title.h" />
     <ClInclude Include="titleObj.h" />
     <ClInclude Include="toy.h" />
+    <ClInclude Include="toybox.h" />
     <ClInclude Include="trajectory.h" />
     <ClInclude Include="trash.h" />
     <ClInclude Include="trashBox.h" />
     <ClInclude Include="trashGame.h" />
+    <ClInclude Include="trashGameResult.h" />
     <ClInclude Include="zebra.h" />
     <ClInclude Include="zebragame.h" />
-    <ClInclude Include="trashGameResult.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

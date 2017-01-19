@@ -18,14 +18,14 @@
 //============================================
 //マクロ定義
 //============================================
-
+#define MAX_WALL (5)
 //============================================
 //前方宣言
 //============================================
 class CZebra;
 class CZebraBox;
 class CScene2D;
-class CScore;
+class CMeshWall;
 //============================================
 //構造体定義
 //============================================
@@ -42,11 +42,16 @@ public:
 	void Update(void);
 	void Draw(void);
 	static void SetZebraPointer(CScene2D *pZebra);
-	static CScore *GetScoreP(void);
+	static void PutObj(bool toy);
+	
+
 private:
 	static CScene2D *m_pZebra;
 	CScene2D *m_pZebraBox;
-	static CScore *m_score;
+	static int m_PutToy;
+	static int m_PutBook;
+	CMeshWall *m_pMeshWall[MAX_WALL];
+	int m_nNumWall;
 };
 
 #endif

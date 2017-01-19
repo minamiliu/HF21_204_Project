@@ -200,11 +200,17 @@
     </ClCompile>
     <ClCompile Include="stageBg.cpp">
       <Filter>ソース ファイル\stage</Filter>
-    </ClCompile>  </ItemGroup>
+    </ClCompile>
     <ClCompile Include="message.cpp">
       <Filter>ソース ファイル\TrashGame</Filter>
     </ClCompile>
     <ClCompile Include="change.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="toybox.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="book.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -367,11 +373,17 @@
     </ClInclude>
     <ClInclude Include="stageBg.h">
       <Filter>ヘッダー ファイル\stage</Filter>
-    </ClInclude>  </ItemGroup>
+    </ClInclude>
     <ClInclude Include="message.h">
       <Filter>ヘッダー ファイル\TrashGame</Filter>
     </ClInclude>
     <ClInclude Include="change.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="toybox.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="book.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

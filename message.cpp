@@ -51,7 +51,10 @@ CMessage::~CMessage()
 
 HRESULT CMessage::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
+
 	CScene2D::Init(pos, size);
+	SetObjType( OBJTYPE_L_ITEM);
+
 	return S_OK;
 }
 

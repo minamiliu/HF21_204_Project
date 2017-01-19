@@ -80,7 +80,6 @@ HRESULT CSceneX::LoadXfile(LPCSTR strFileName)
 	LPDIRECT3DDEVICE9 pDevice;
 	pDevice = CManager::GetRenderer()->GetDevice();
 
-	
 	// モデルに関する変数の初期化							
 	m_pTexture = NULL;		// テクスチャへのポインタ
 	m_pD3DXMesh = NULL;		// メッシュ情報へのポインタ

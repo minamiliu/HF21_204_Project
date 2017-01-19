@@ -11,7 +11,7 @@
 //インクルードファイル
 //============================================
 #include "main.h"
-#include "toy.h"
+#include "book.h"
 #include "debugproc.h"
 #include "manager.h"
 #include "renderer.h"
@@ -22,21 +22,21 @@
 //============================================
 // マクロ定義
 //============================================
-#define MODEL_BOOK    "data/MODEL/book.x"
-#define MODEL_TOY_CAR "data/MODEL/cube200.x"
-#define MODEL_TOY_ROBOT "data/MODEL/robot.x"
-#define MODEL_FILENAME "data/MODEL/player.x"
+#define MODEL_BOOK_GREEN "data/MODEL/book_green.x"
+#define MODEL_BOOK_BLUE "data/MODEL/book_blue.x"
+#define MODEL_BOOK_RED "data/MODEL/book_red.x"
+#define MODEL_BOOK_YELLOW "data/MODEL/book_yellow.x"
 #define VALUE_ROTATE	(D3DX_PI * 0.1f) 	// 回転量
 
 //============================================
 // 静的メンバ変数の初期化
 //============================================
-LPDIRECT3DTEXTURE9	CToy::m_pTexture[] ={};
-LPD3DXMESH			CToy::m_pD3DXMesh[]={};			// メッシュ情報へのポインタ
-LPD3DXBUFFER		CToy::m_pD3DXBuffMat	[]={};		// マテリアル情報へのポインタ
-DWORD				CToy::m_nNumMat		[]={};					// マテリアル情報の数
-//HRESULT CToy::LoadXfile(LPCSTR strFileName, int nCnt);
-int CToy::m_nNumber = 0;
+LPDIRECT3DTEXTURE9	CBook::m_pTexture[] ={};
+LPD3DXMESH			CBook::m_pD3DXMesh[]={};			// メッシュ情報へのポインタ
+LPD3DXBUFFER		CBook::m_pD3DXBuffMat	[]={};		// マテリアル情報へのポインタ
+DWORD				CBook::m_nNumMat		[]={};					// マテリアル情報の数
+//HRESULT CBook::LoadXfile(LPCSTR strFileName, int nCnt);
+int CBook::m_nNumber = 0;
 //=============================================================================
 // 構造体定義
 //=============================================================================
@@ -44,13 +44,13 @@ int CToy::m_nNumber = 0;
 //=============================================================================
 // 静的メンバ変数
 //============================================================================
-D3DXVECTOR3 CToy::Toyboxpos = D3DXVECTOR3(0.0f,0.0f,0.0f);
-D3DXVECTOR3 CToy::Bookboxpos = D3DXVECTOR3(0.0f,0.0f,0.0f);
+D3DXVECTOR3 CBook::Toyboxpos = D3DXVECTOR3(0.0f,0.0f,0.0f);
+D3DXVECTOR3 CBook::Bookboxpos = D3DXVECTOR3(0.0f,0.0f,0.0f);
 
 //=============================================================================
 //コンストラクタ
 //=============================================================================
-CToy::CToy()
+CBook::CBook()
 {
 	GetBoxpos();
 }
@@ -58,7 +58,7 @@ CToy::CToy()
 //=============================================================================
 //デストラクタ
 //=============================================================================
-CToy::~CToy()
+CBook::~CBook()
 {
 	
 }
@@ -67,12 +67,13 @@ CToy::~CToy()
 //=============================================================================
 //
 //=============================================================================
-HRESULT CToy::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float speed)
+HRESULT CBook::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float speed)
 {
-	CSceneX::Init( pos, rot, scl);
 	
+	CSceneX::Init( pos, rot, scl);
+
 	BindXfile(m_nNumber%4);
-	SetObjType(OBJTYPE_TOY); ;
+	SetObjType(OBJTYPE_BOOK); ;
 	m_bPicked = false;
 	m_bZebra= false;
 	m_Move = D3DXVECTOR3(0.0f,0.0f,0.0f);
@@ -80,14 +81,14 @@ HRESULT CToy::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float spee
 	m_oldpos = D3DXVECTOR3(0.0f,0.0f,0.0f);
 	m_bBack = false;
 	m_Timecnt = 0;
-	m_nNumber ++;
+	m_nNumber++;
 	return S_OK;
 }
 
 //=============================================================================
 //xファイルの設定
 //=============================================================================
-void CToy::BindXfile(int type)	
+void CBook::BindXfile(int type)	
 {
 	CSceneX::BindXfile( m_pTexture	[type],
 					 m_pD3DXMesh	[type],	
@@ -98,27 +99,27 @@ void CToy::BindXfile(int type)
 //=============================================================================
 //XFILEのロード
 //=============================================================================
-HRESULT CToy::Load(void)
+HRESULT CBook::Load(void)
 {
 	LPDIRECT3DDEVICE9 pDevice;
 	pDevice = CManager::GetRenderer()->GetDevice();
 
-	for(int cntType = 0; cntType < TOYTYPE_MAX; cntType++)
+	for(int cntType = 0; cntType < BOOKTYPE_MAX; cntType++)
 	{
 		LPCSTR strFileName;
 		switch( cntType)
 		{
 			case TYPE_ROBOT:
-			strFileName = MODEL_TOY_ROBOT;
+			strFileName = MODEL_BOOK_GREEN;
 			break;
 			case TYPE_BLOCK:
-			strFileName = MODEL_TOY_ROBOT;
+			strFileName = MODEL_BOOK_RED;
 			break;
 			case TYPE_CAR:
-			strFileName = MODEL_TOY_ROBOT;
+			strFileName = MODEL_BOOK_YELLOW;
 			break;
 			case TYPE_BEAR:
-			strFileName = MODEL_TOY_ROBOT;
+			strFileName = MODEL_BOOK_BLUE;
 			break;
 		}
 
@@ -152,7 +153,7 @@ HRESULT CToy::Load(void)
 //=============================================================================
 //クリックされたとき
 //=============================================================================
-void CToy::ChangePicked(bool pick, bool zebra)	
+void CBook::ChangePicked(bool pick, bool zebra)	
 {
 	D3DXVECTOR3 pos;
 	pos = CSceneX::GetPosition();
@@ -165,7 +166,7 @@ void CToy::ChangePicked(bool pick, bool zebra)
 	if(m_bPicked == true && m_bZebra == true)
 	{
 		//現在位置と箱の位置から、速度を算出
-		m_Move = Toyboxpos-pos;
+		m_Move = Bookboxpos-pos;
 		m_Move.y = 500.0f;
 		m_Move = m_Move/100.0f;
 	}
@@ -173,7 +174,7 @@ void CToy::ChangePicked(bool pick, bool zebra)
 //=============================================================================
 //
 //=============================================================================
-void CToy::Uninit(void)
+void CBook::Uninit(void)
 {
 	CSceneX::Uninit();
 }
@@ -181,12 +182,13 @@ void CToy::Uninit(void)
 //=============================================================================
 //
 //=============================================================================
-void CToy::Update(void)
+void CBook::Update(void)
 {
 	D3DXVECTOR3 pos;
 	pos = CSceneX::GetPosition();
 	
-	CDebugProc::Print("\nトイの場所.x.y.z:%f,%f,%f",pos.x,pos.y,pos.z);
+	
+	CDebugProc::Print("\n本の場所.x.y.z:%f,%f,%f",pos.x,pos.y,pos.z);
 	if(m_bPicked == true && m_bZebra == false)
 	{
 		//カーソルの位置を取得
@@ -248,7 +250,7 @@ void CToy::Update(void)
 			m_bZebra = false;
 			m_bPicked = false;
 			m_Timecnt = 0;
-			CZebraGame::PutObj(true);
+			CZebraGame::PutObj(false);
 			Uninit();
 		}
 	}
@@ -262,10 +264,10 @@ void CToy::Update(void)
 		}
 		//間違い
 		if( pos.y <= 0.0f&&
-			     pos.x > Bookboxpos.x - 50.0f 
-			  && pos.x < Bookboxpos.x + 50.0f 
-			  && pos.z > Bookboxpos.z - 50.0f  
-			  && pos.z < Bookboxpos.z + 50.0f 
+			     pos.x > Toyboxpos.x - 50.0f 
+			  && pos.x < Toyboxpos.x + 50.0f 
+			  && pos.z > Toyboxpos.z - 50.0f  
+			  && pos.z < Toyboxpos.z + 50.0f 
 			)
 		{
 			//現在位置と箱の位置から、速度を算出
@@ -277,13 +279,13 @@ void CToy::Update(void)
 		//正解
 		
 		if( pos.y <= 0.0f&&
-			     pos.x > Toyboxpos.x - 50.0f 
-			  && pos.x < Toyboxpos.x + 50.0f 
-			  && pos.z > Toyboxpos.z - 50.0f  
-			  && pos.z < Toyboxpos.z + 50.0f 
+			     pos.x > Bookboxpos.x - 100.0f 
+			  && pos.x < Bookboxpos.x + 100.0f 
+			  && pos.z > Bookboxpos.z - 50.0f  
+			  && pos.z < Bookboxpos.z + 50.0f 
 			)
 		{
-			CZebraGame::PutObj(true);
+			CZebraGame::PutObj(false);
 			Uninit();
 		}
 	}
@@ -293,7 +295,7 @@ void CToy::Update(void)
 //=============================================================================
 //
 //=============================================================================
-void CToy::Draw(void)
+void CBook::Draw(void)
 {
 	CSceneX::Draw();
 }
@@ -301,10 +303,10 @@ void CToy::Draw(void)
 //=============================================================================
 //
 //=============================================================================
-CToy *CToy::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float speed)
+CBook *CBook::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float speed)
 {
-	CToy *pToy;
-	pToy = new CToy;
+	CBook *pToy;
+	pToy = new CBook;
 	pToy->Init(pos, rot, scl, speed);
 
 	return pToy;
@@ -313,7 +315,7 @@ CToy *CToy::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float spee
 //=============================================================================
 ////箱の位置を取得
 //=============================================================================
-void CToy::GetBoxpos(void)
+void CBook::GetBoxpos(void)
 {
 	for(int Cnt=0; Cnt<MAX_SCENE ; Cnt++)
 	{
