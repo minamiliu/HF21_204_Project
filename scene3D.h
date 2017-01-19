@@ -53,6 +53,7 @@ public:
 	D3DXVECTOR3 GetPosition(void);
 	D3DXVECTOR3 GetSize(void);
 	void SetPosition(D3DXVECTOR3 pos);
+	void SetColor(const D3DXCOLOR &col); //êFÇïœçX
 	
 protected:
 	virtual bool HitCheck( D3DXVECTOR3 tNowPos, D3DXVECTOR3 tNextPos, D3DXVECTOR3 *wall_nor, D3DXVECTOR3 *HitPoint);

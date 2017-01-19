@@ -32,6 +32,7 @@
 #include "meshDome.h"
 #include "effectBG.h"
 #include "limbX.h"
+#include "effect3D.h"
 
 //============================================
 // マクロ定義
@@ -69,8 +70,8 @@ HRESULT CLionGame::Init(void)
 	m_pCamera->Init();
 
 	//ステージ設計
-	//CreateStageLiu();
-	CreateStageUsukura();
+	CreateStageLiu();
+	//CreateStageUsukura();
 
 
 
@@ -101,7 +102,7 @@ void CLionGame::Update()
 	}
 
 	//時間になったら、変身する
-	if(m_pTime->GetTime() == 95 && m_state == STATE_NORMAL)
+	if(m_pTime->GetTime() == 99 && m_state == STATE_NORMAL)
 	{
 		m_pTime->StopTime();
 		m_pEffectBG = CEffectBG::Create( D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f), D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT/2, 0.0f));
@@ -164,6 +165,7 @@ HRESULT CLionGame::LoadAll(void)
 	CShadow::Load();
 	CEnemyX::Load();
 	CFood::Load();
+	CEffect3D::Load();
 
 	return S_OK;
 }

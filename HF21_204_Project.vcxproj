@@ -86,6 +86,7 @@
     <ClCompile Include="cubeX.cpp" />
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="debugproc.cpp" />
+    <ClCompile Include="effect3D.cpp" />
     <ClCompile Include="effectBG.cpp" />
     <ClCompile Include="enemyX.cpp" />
     <ClCompile Include="fade.cpp" />
@@ -148,6 +149,7 @@
     <ClInclude Include="cubeX.h" />
     <ClInclude Include="collision.h" />
     <ClInclude Include="debugproc.h" />
+    <ClInclude Include="effect3D.h" />
     <ClInclude Include="effectBG.h" />
     <ClInclude Include="enemyX.h" />
     <ClInclude Include="fade.h" />

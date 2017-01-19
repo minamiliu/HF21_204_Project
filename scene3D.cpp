@@ -454,3 +454,37 @@ void CScene3D::SetPosition(D3DXVECTOR3 pos)
 {
 	m_pos = pos;
 }
+//=============================================================================
+//色を変更
+//=============================================================================
+void CScene3D::SetColor(const D3DXCOLOR &col)
+{
+	{//頂点バッファの中身を埋める
+
+		VERTEX_3D *pVtx;
+
+		// 頂点データの範囲をロックし、頂点バッファへのポインタを取得
+		m_pVtxBuff->Lock( 0, 0, (void**)&pVtx, 0);
+
+		for(int nCntZ = 0; nCntZ < m_nNumBlockZ+1; nCntZ++)
+		{
+			for(int nCntX = 0; nCntX < m_nNumBlockX+1; nCntX++)
+			{
+				if( m_bUseYnotZ == false)
+				{
+					pVtx[0].vtx = D3DXVECTOR3( -m_fSizeBlockX*m_nNumBlockX/2 + nCntX*m_fSizeBlockX, 0.0f, m_fSizeBlockZ*m_nNumBlockZ/2 - nCntZ*m_fSizeBlockZ);
+				}
+				else
+				{
+					pVtx[0].vtx = D3DXVECTOR3( -m_fSizeBlockX*m_nNumBlockX/2 + nCntX*m_fSizeBlockX, m_fSizeBlockZ*m_nNumBlockZ/2 - nCntZ*m_fSizeBlockZ, 0.0f);
+				}
+				pVtx[0].col = col;
+				pVtx++;
+			}
+		}
+
+
+		// 頂点データをアンロックする
+		m_pVtxBuff->Unlock();	
+	}
+}

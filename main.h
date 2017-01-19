@@ -42,7 +42,7 @@
 #define SYAN(alpha)								D3DCOLOR_COLORVALUE(0.0f,1.0f,1.0f,(alpha))
 #define MASENTA(alpha)							D3DCOLOR_COLORVALUE(1.0f,0.0f,1.0f,(alpha))
 #define YELLOW(alpha)							D3DCOLOR_COLORVALUE(1.0f,1.0f,0.0f,(alpha))
-#define D3DX_PINK(alpha)						D3DCOLOR_COLORVALUE(1.0f,0.5f,0.5f,(alpha))
+#define PINK(alpha)								D3DCOLOR_COLORVALUE(1.0f,0.5f,0.5f,(alpha))
 #define PURPLE(alpha)							D3DCOLOR_COLORVALUE(0.5f,0.5f,1.0f,(alpha))
 #define LIME(alpha)								D3DCOLOR_COLORVALUE(0.5f,1.0f,0.5f,(alpha))
 #define ORANGE(alpha)							D3DCOLOR_COLORVALUE(1.0f,0.5f,0.0f,(alpha))

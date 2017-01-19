@@ -15,7 +15,7 @@
 #include "renderer.h"
 #include "food.h"
 #include "foodIcon.h"
-
+#include "effect3D.h"
 //============================================
 // ƒ}ƒNƒ’è‹`
 //============================================
@@ -115,6 +115,8 @@ void CFood::Update(void)
 			m_fTurn += m_fAngle; 
 			pos.x = m_posInit.x + 30.0f * sinf( m_fTurn); 
 			pos.z = m_posInit.z + 30.0f * cosf( m_fTurn);
+
+			CEffect3D::Create(this->GetPosition(), D3DXVECTOR2( 20.0f, 20.0f), CEffect3D::TYPE_MARU, PINK(1.0f));
 
 			this->SetPosition(pos);
 		}
