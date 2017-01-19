@@ -19,6 +19,8 @@
 CScene *CScene::m_apScene[MAX_SCENE] = {};
 int CScene::m_nNumScene = 0;
 
+CScene *CScene::m_apEffect[MAX_SCENE] = {};
+int CScene::m_nNumEffect = 0;
 //============================================
 // マクロ定義
 //============================================
@@ -34,6 +36,7 @@ int CScene::m_nNumScene = 0;
 //============================================
 CScene::CScene()
 {
+	m_layer = LAYER_SCENE;
 	for(int nCntScene = 0; nCntScene < MAX_SCENE; nCntScene++)
 	{
 		if(m_apScene[nCntScene] == NULL)
@@ -41,6 +44,21 @@ CScene::CScene()
 			m_apScene[nCntScene] = this;
 			m_nID = nCntScene;
 			m_nNumScene++;
+			break;
+		}
+	}
+}
+
+CScene::CScene(LAYER layer)
+{
+	m_layer = layer;
+	for(int nCntScene = 0; nCntScene < MAX_SCENE; nCntScene++)
+	{
+		if(m_apEffect[nCntScene] == NULL)
+		{
+			m_apEffect[nCntScene] = this;
+			m_nID = nCntScene;
+			m_nNumEffect++;
 			break;
 		}
 	}
@@ -65,7 +83,15 @@ void CScene::UpdateAll(void)
 		{
 			m_apScene[nCntScene]->Update();
 		}
-	}	
+	}
+
+	for(int nCntScene = 0; nCntScene < MAX_SCENE; nCntScene++)
+	{
+		if(m_apEffect[nCntScene] != NULL)
+		{
+			m_apEffect[nCntScene]->Update();
+		}
+	}
 }
 
 //============================================
@@ -78,6 +104,14 @@ void CScene::DrawAll(void)
 		if(m_apScene[nCntScene] != NULL)
 		{
 			m_apScene[nCntScene]->Draw();
+		}
+	}
+
+	for(int nCntScene = 0; nCntScene < MAX_SCENE; nCntScene++)
+	{
+		if(m_apEffect[nCntScene] != NULL)
+		{
+			m_apEffect[nCntScene]->Draw();
 		}
 	}	
 }
@@ -93,7 +127,15 @@ void CScene::ReleaseAll(void)
 		{
 			m_apScene[nCntScene]->Uninit();
 		}
-	}	
+	}
+
+	for(int nCntScene = 0; nCntScene < MAX_SCENE; nCntScene++)
+	{
+		if(m_apEffect[nCntScene] != NULL)
+		{
+			m_apEffect[nCntScene]->Uninit();
+		}
+	}
 }
 
 //============================================
@@ -101,25 +143,45 @@ void CScene::ReleaseAll(void)
 //============================================
 void CScene::Release(void)
 {
-	if(m_apScene[m_nID] != NULL)
+	switch(m_layer)
 	{
-		int nID = m_nID;
-		delete m_apScene[nID];
-		m_apScene[nID] = NULL;
-		m_nNumScene--;
+	case LAYER_SCENE:
+		if(m_apScene[m_nID] != NULL)
+		{
+			int nID = m_nID;
+			delete m_apScene[nID];
+			m_apScene[nID] = NULL;
+			m_nNumScene--;
+		}
+		break;
+	case LAYER_EFFECT:
+		if(m_apEffect[m_nID] != NULL)
+		{
+			int nID = m_nID;
+			delete m_apEffect[nID];
+			m_apEffect[nID] = NULL;
+			m_nNumEffect--;
+		}
+		break;
 	}	
 }
-
-void CScene::SetObjType(OBJTYPE type)
-{
-	m_objType = type;
-}
-
+//============================================
+//Sceneのポインターを取得
+//============================================
 CScene *CScene::GetScene(int nIdxScene)
 {
 	return m_apScene[nIdxScene];
 }
-
+//============================================
+//タイプを設定
+//============================================
+void CScene::SetObjType(OBJTYPE type)
+{
+	m_objType = type;
+}
+//============================================
+//タイプを取得
+//============================================
 CScene::OBJTYPE CScene::GetObjType(void)
 {
 	return m_objType;

@@ -42,7 +42,16 @@ public:
 		OBJTYPE_BOOKBOX,
 		OBJTYPE_MAX
 	}OBJTYPE;
+
+	typedef enum
+	{
+		LAYER_SCENE = 0,
+		LAYER_EFFECT,
+		LAYER_MAX
+	}LAYER;
+
 	CScene();
+	CScene(LAYER layer);
 	virtual ~CScene();
 
 	virtual HRESULT Init(void){ return S_OK;};
@@ -71,6 +80,10 @@ private:
 	static int m_nNumScene;
 	int m_nID;
 	OBJTYPE m_objType;
+
+	static CScene *m_apEffect[MAX_SCENE];
+	static int m_nNumEffect;
+	LAYER m_layer;
 };
 
 #endif

@@ -23,6 +23,7 @@ class CBillBoard : public CScene3D
 public:
 
 	CBillBoard();
+	CBillBoard(LAYER layer);
 	virtual ~CBillBoard();
 
 	HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR2 size);

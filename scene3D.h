@@ -37,6 +37,7 @@ class CScene3D : public CScene
 public:
 
 	CScene3D();
+	CScene3D(LAYER layer);
 	virtual ~CScene3D();
 
 	virtual HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ, bool bUseYnotZ);
