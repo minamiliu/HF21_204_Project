@@ -45,6 +45,7 @@ private:
 	static int changeCnt;
 	static bool m_bState;
 	static bool m_bAnimalPlayerFlag;
+	static LPCSTR m_StrAnimalPlayerFileName;
 };
 
 #endif

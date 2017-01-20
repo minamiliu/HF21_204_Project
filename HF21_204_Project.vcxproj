@@ -82,6 +82,7 @@
     <ClCompile Include="bullet2D.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="change.cpp" />
+    <ClCompile Include="changeTex.cpp" />
     <ClCompile Include="cubeX.cpp" />
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="debugproc.cpp" />
@@ -138,6 +139,7 @@
     <ClInclude Include="bullet2D.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="change.h" />
+    <ClInclude Include="changeTex.h" />
     <ClInclude Include="cubeX.h" />
     <ClInclude Include="effectBG.h" />
     <ClInclude Include="enemyX.h" />
