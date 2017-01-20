@@ -1,6 +1,6 @@
 /*******************************************************************************
 * タイトル:		ゴリラ
-* プログラム名:	stageBg.cpp
+* プログラム名:	timeBg.cpp
 * 作成者:		小林玲雄
 * 作成日:		2016/12/03
 ********************************************************************************
@@ -11,14 +11,15 @@
 /*******************************************************************************
 * インクルードファイル
 *******************************************************************************/
-#include "stageBg.h"
+#include "timeBg.h"
 #include "manager.h"
 #include "scene2D.h"
-
+#include "sun.h"
 /*******************************************************************************
 * マクロ定義
 *******************************************************************************/
-#define STAGEBG_TEX_NAME	"data/TEXTURE/ステージ用/草原2.png"
+#define TIMEBG_TEX_NAME1	"data/TEXTURE/ステージ用/stageBg.png"
+#define TIMEBG_TEX_NAME2	"data/TEXTURE/ステージ用/stageBg2.png"
 #define ANIM_PAT_X (4)
 #define ANIM_PAT_Y (1)
 #define ANIM_CANGE_FRAME (20)
@@ -39,11 +40,11 @@
 //*****************************************************************************
 // 静的
 //*****************************************************************************
-bool CStageBg::m_bScl = false;
+bool CTimeBg::m_bScl = false;
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-CStageBg :: CStageBg()
+CTimeBg :: CTimeBg()
 {
 	m_time = 0;
 	m_animPat = 0;
@@ -52,22 +53,32 @@ CStageBg :: CStageBg()
 //=============================================================================
 // デストラクタ
 //=============================================================================
-CStageBg :: ~CStageBg()
+CTimeBg :: ~CTimeBg()
 {
 }
-CStageBg* CStageBg::Create(D3DXVECTOR3 pos,D3DXVECTOR3 size)
+/*nTypeについて*/
+//0の場合は画面上部の背景
+//1の場合は画面下部に被さる薄暗い画像
+CTimeBg* CTimeBg::Create(D3DXVECTOR3 pos,D3DXVECTOR3 size,int animPat,int ntype)
 {
-	CStageBg *pStageBg;
-	pStageBg = new CStageBg;
-	pStageBg->Init(pos,size);
-	
-	pStageBg->Load(STAGEBG_TEX_NAME);
-	return pStageBg;
+	CTimeBg *pTimeBg;
+	pTimeBg = new CTimeBg;
+	pTimeBg->Init(pos,size,animPat);
+	switch(ntype)
+	{
+	case 0:
+	pTimeBg->Load(TIMEBG_TEX_NAME1);
+	break;
+	case 1:
+	pTimeBg->Load(TIMEBG_TEX_NAME2);
+	break;
+	}
+	return pTimeBg;
 }
 //=============================================================================
 // ポリゴンの初期化処理
 //=============================================================================
-HRESULT CStageBg :: Init(void)
+HRESULT CTimeBg :: Init(void)
 {
 	CScene2D::Init();
 
@@ -77,46 +88,50 @@ HRESULT CStageBg :: Init(void)
 //=============================================================================
 // ポリゴンの初期化処理(オーバーロード)
 //=============================================================================
-HRESULT CStageBg :: Init(D3DXVECTOR3 pos,D3DXVECTOR3 size)
+HRESULT CTimeBg :: Init(D3DXVECTOR3 pos,D3DXVECTOR3 size,int animPat)
 {
 	CScene2D::Init(pos,size);
 
+	m_animPat = animPat;
+	
 	CScene2D::SetTexture(ANIM_PAT_X,ANIM_PAT_Y,m_animPat);
-
 	return S_OK;
 }
 //=============================================================================
 // ポリゴンの終了処理
 //=============================================================================
-void CStageBg :: Uninit(void)
+void CTimeBg :: Uninit(void)
 {
 	CScene2D::Uninit();
 }
 //=============================================================================
 // ポリゴンの更新処理
 //=============================================================================
-void CStageBg :: Update(void)
+void CTimeBg :: Update(void)
 {
-	D3DXVECTOR3 posStageBg = GetPosition();
-	D3DXVECTOR3 sizeStageBg = GetSize();
-	m_time++;
+	D3DXVECTOR3 posTimeBg = GetPosition();
+	D3DXVECTOR3 sizeTimeBg = GetSize();
+
 	if(m_bScl == true)
 	{
-		CScene2D::Scl(0.001,CScene2D::SCL_RIGHT);
+		m_time++;
+		if(m_time <=60)
+		{
+			CScene2D::Scl(0.25/60,CScene2D::SCL_RIGHT);
+		}
 	}
 
-
-	this->CStageBg::SetPosition(posStageBg);
+	this->CTimeBg::SetPosition(posTimeBg);
 }
 //=============================================================================
 // ポリゴンの描画処理
 //=============================================================================
-void CStageBg :: Draw(void)
+void CTimeBg :: Draw(void)
 {
 	CScene2D::Draw();
 }
 
-void CStageBg::SetScl(bool bScl)
+void CTimeBg::SetScl(bool bScl)
 {
 	m_bScl = bScl;
 }

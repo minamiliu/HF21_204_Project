@@ -1,6 +1,6 @@
 /*******************************************************************************
 * タイトル:		ゴリラ
-* プログラム名:	stageBg.cpp
+* プログラム名:	sun.cpp
 * 作成者:		小林玲雄
 * 作成日:		2016/12/03
 ********************************************************************************
@@ -11,17 +11,18 @@
 /*******************************************************************************
 * インクルードファイル
 *******************************************************************************/
-#include "stageBg.h"
+#include "sun.h"
 #include "manager.h"
+#include "renderer.h"
 #include "scene2D.h"
-
+#include "stageBg.h"
 /*******************************************************************************
 * マクロ定義
 *******************************************************************************/
-#define STAGEBG_TEX_NAME	"data/TEXTURE/ステージ用/草原2.png"
-#define ANIM_PAT_X (4)
+#define SUN_TEX_NAME	"data/TEXTURE/ステージ用/sun2.png"
+#define ANIM_PAT_X (2)
 #define ANIM_PAT_Y (1)
-#define ANIM_CANGE_FRAME (20)
+#define ANIM_CANGE_FRAME (15)
 /*******************************************************************************
 * クラス定義
 *******************************************************************************/
@@ -32,6 +33,9 @@
 #define NUM_POLYGON		(2)			// ポリゴン数
 // 頂点フォーマット( 頂点座標[2D] / 頂点カラー / テクスチャ座標 )
 #define	FVF_VERTEX_2D	(D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1)
+
+
+#define MOVE_TIME (60)
 //*****************************************************************************
 // 構造体定義
 //*****************************************************************************
@@ -39,35 +43,39 @@
 //*****************************************************************************
 // 静的
 //*****************************************************************************
-bool CStageBg::m_bScl = false;
+
+bool CSun::m_bMove = false;
+D3DXVECTOR3 CSun::center = D3DXVECTOR3(SCREEN_WIDTH/2,SCREEN_HEIGHT,0);
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-CStageBg :: CStageBg()
+CSun :: CSun()
 {
 	m_time = 0;
 	m_animPat = 0;
-	
+	m_animCnt = 0;
+	m_fRot = 0.0f;
 }
 //=============================================================================
 // デストラクタ
 //=============================================================================
-CStageBg :: ~CStageBg()
+CSun :: ~CSun()
 {
 }
-CStageBg* CStageBg::Create(D3DXVECTOR3 pos,D3DXVECTOR3 size)
+CSun* CSun::Create(D3DXVECTOR3 pos,D3DXVECTOR3 size,float fRot)
 {
-	CStageBg *pStageBg;
-	pStageBg = new CStageBg;
-	pStageBg->Init(pos,size);
+	CSun *pSun;
+	pSun = new CSun;
+	pSun->Init(pos,size,fRot);
 	
-	pStageBg->Load(STAGEBG_TEX_NAME);
-	return pStageBg;
+	pSun->Load(SUN_TEX_NAME);
+
+	return pSun;
 }
 //=============================================================================
 // ポリゴンの初期化処理
 //=============================================================================
-HRESULT CStageBg :: Init(void)
+HRESULT CSun :: Init(void)
 {
 	CScene2D::Init();
 
@@ -77,46 +85,63 @@ HRESULT CStageBg :: Init(void)
 //=============================================================================
 // ポリゴンの初期化処理(オーバーロード)
 //=============================================================================
-HRESULT CStageBg :: Init(D3DXVECTOR3 pos,D3DXVECTOR3 size)
+HRESULT CSun :: Init(D3DXVECTOR3 pos,D3DXVECTOR3 size,float fRot)
 {
 	CScene2D::Init(pos,size);
 
 	CScene2D::SetTexture(ANIM_PAT_X,ANIM_PAT_Y,m_animPat);
+
+	m_fRot = fRot;
+	
+	D3DXVECTOR3 posSun = GetPosition();
+	posSun.x = center.x + SCREEN_WIDTH/2 * cosf(D3DXToRadian(fRot));
+	posSun.y = center.y + SCREEN_WIDTH/2 * sinf(D3DXToRadian(fRot));
+	this->CSun::SetPosition(posSun);
 
 	return S_OK;
 }
 //=============================================================================
 // ポリゴンの終了処理
 //=============================================================================
-void CStageBg :: Uninit(void)
+void CSun :: Uninit(void)
 {
 	CScene2D::Uninit();
 }
 //=============================================================================
 // ポリゴンの更新処理
 //=============================================================================
-void CStageBg :: Update(void)
+void CSun :: Update(void)
 {
-	D3DXVECTOR3 posStageBg = GetPosition();
-	D3DXVECTOR3 sizeStageBg = GetSize();
+	D3DXVECTOR3 posSun = GetPosition();
+	D3DXVECTOR3 sizeSun = GetSize();
+
 	m_time++;
-	if(m_bScl == true)
+	m_animCnt++;
+	//m_fRot 0.1 = 7.5度?
+	if(m_time > 60)
 	{
-		CScene2D::Scl(0.001,CScene2D::SCL_RIGHT);
+		if(m_time<120)
+		{
+			m_fRot+=(0.4f/60);
+		}
 	}
 
+	if(m_animCnt % ANIM_CANGE_FRAME == 0)
+	{
+		m_animPat++;
+	}
 
-	this->CStageBg::SetPosition(posStageBg);
+	CScene2D::SetTexture(ANIM_PAT_X,ANIM_PAT_Y,m_animPat);
+
+	posSun.x = center.x + SCREEN_WIDTH/2 * cosf(m_fRot);
+	posSun.y = center.y + SCREEN_WIDTH/2 * sinf(m_fRot);
+	
+	this->CSun::SetPosition(posSun);
 }
 //=============================================================================
 // ポリゴンの描画処理
 //=============================================================================
-void CStageBg :: Draw(void)
+void CSun :: Draw(void)
 {
 	CScene2D::Draw();
-}
-
-void CStageBg::SetScl(bool bScl)
-{
-	m_bScl = bScl;
 }
