@@ -84,8 +84,8 @@ HRESULT CResult::Init(void)
 	m_resultCnt = 0;
 	//スコア取得
 	m_nTrashGameScore = CManager::LoadScore(MODE_TRASHGAME);
-	m_nZebraGameScore = 500;
-	m_nLionGameScore = 100;
+	m_nZebraGameScore = 2000;
+	m_nLionGameScore = 2000;
 	//目標値
 	m_nTargetScore[0] = m_nTrashGameScore;
 	m_nTargetScore[1] = m_nZebraGameScore;
@@ -178,7 +178,23 @@ void CResult::Update()
 	else if(m_pZebraGameScore != NULL && m_nZebraGameScore == 0)
 	{
 		//ランク表示
-		m_pRank[1] = CScene2D::Create(D3DXVECTOR3(1100, 360.0f+20, 0.0f),D3DXVECTOR3(380.0f, 380.0f, 0.0f),TEXTURE_RANK_B);
+		if(m_nTargetScore[1] >= ZEBRAGAME_SCORE_RANK_S)
+		{//ランクS
+			m_pRank[1] = CScene2D::Create(D3DXVECTOR3(1100, 360.0f, 0.0f),D3DXVECTOR3(270.0f, 270.0f, 0.0f),TEXTURE_RANK_S);
+			m_pRank[1]->SetColor(YELLOW(1.0f));
+		}
+		else if(m_nTargetScore[1] >= ZEBRAGAME_SCORE_RANK_A && m_nTargetScore[1] < ZEBRAGAME_SCORE_RANK_S)
+		{//ランクA
+			m_pRank[1] = CScene2D::Create(D3DXVECTOR3(1100, 380.0f, 0.0f),D3DXVECTOR3(380.0f, 380.0f, 0.0f),TEXTURE_RANK_A);
+		}
+		else if(m_nTargetScore[1] >= ZEBRAGAME_SCORE_RANK_B && m_nTargetScore[1] < ZEBRAGAME_SCORE_RANK_A)
+		{//ランクB
+			m_pRank[1] = CScene2D::Create(D3DXVECTOR3(1100, 380.0f, 0.0f),D3DXVECTOR3(380.0f, 380.0f, 0.0f),TEXTURE_RANK_B);
+		}
+		else if(m_nTargetScore[1] >= ZEBRAGAME_SCORE_RANK_C && m_nTargetScore[1] < ZEBRAGAME_SCORE_RANK_B)
+		{//ランクC
+			m_pRank[1] = CScene2D::Create(D3DXVECTOR3(1100, 380.0f, 0.0f),D3DXVECTOR3(380.0f, 380.0f, 0.0f),TEXTURE_RANK_C);
+		}
 		m_nZebraGameScore -= 100000;
 	}
 	//スコア加算（3つ目）
@@ -198,7 +214,23 @@ void CResult::Update()
 	else if(m_pLionGameScore != NULL && m_nLionGameScore == 0)
 	{
 		//ランク表示
-		m_pRank[2] = CScene2D::Create(D3DXVECTOR3(1100, 560.0f+20, 0.0f),D3DXVECTOR3(380.0f,380.0f, 0.0f),TEXTURE_RANK_A);
+		if(m_nTargetScore[2] >= LIONGAME_SCORE_RANK_S)
+		{//ランクS
+			m_pRank[2] = CScene2D::Create(D3DXVECTOR3(1100, 560.0f, 0.0f),D3DXVECTOR3(270.0f, 270.0f, 0.0f),TEXTURE_RANK_S);
+			m_pRank[2]->SetColor(YELLOW(1.0f));
+		}
+		else if(m_nTargetScore[2] >= ZEBRAGAME_SCORE_RANK_A && m_nTargetScore[2] < LIONGAME_SCORE_RANK_S)
+		{//ランクA
+			m_pRank[2] = CScene2D::Create(D3DXVECTOR3(1100, 580.0f, 0.0f),D3DXVECTOR3(380.0f, 380.0f, 0.0f),TEXTURE_RANK_A);
+		}
+		else if(m_nTargetScore[2] >= ZEBRAGAME_SCORE_RANK_B && m_nTargetScore[2] < LIONGAME_SCORE_RANK_A)
+		{//ランクB
+			m_pRank[2] = CScene2D::Create(D3DXVECTOR3(1100, 580.0f, 0.0f),D3DXVECTOR3(380.0f, 380.0f, 0.0f),TEXTURE_RANK_B);
+		}
+		else if(m_nTargetScore[2] >= ZEBRAGAME_SCORE_RANK_C && m_nTargetScore[2] < LIONGAME_SCORE_RANK_B)
+		{//ランクC
+			m_pRank[2] = CScene2D::Create(D3DXVECTOR3(1100, 580.0f, 0.0f),D3DXVECTOR3(380.0f, 380.0f, 0.0f),TEXTURE_RANK_C);
+		}
 		m_nLionGameScore -= 100000;
 	}
 	//ランク表示（サイズ変更）
@@ -214,16 +246,29 @@ void CResult::Update()
 		}
 	}
 	
-	if(m_pRank[1] != NULL && m_pRank[1]->GetSize().x > 300)
+	if(m_pRank[1] != NULL)
 	{
-		m_pRank[1]->SetSize(D3DXVECTOR3(m_pRank[1]->GetSize().x-2,m_pRank[1]->GetSize().y-2,0.0));
+		if(m_nTargetScore[1] >= ZEBRAGAME_SCORE_RANK_S && m_pRank[1]->GetSize().x > 150)
+		{
+			m_pRank[1]->SetSize(D3DXVECTOR3(m_pRank[1]->GetSize().x-3,m_pRank[1]->GetSize().y-3,0.0));
+		}
+		else if(m_pRank[1]->GetSize().x > 300)
+		{
+			m_pRank[1]->SetSize(D3DXVECTOR3(m_pRank[1]->GetSize().x-2,m_pRank[1]->GetSize().y-2,0.0));
+		}
 	}
 	
-	if(m_pRank[2] != NULL && m_pRank[2]->GetSize().x > 300)
+	if(m_pRank[2] != NULL )
 	{
-		m_pRank[2]->SetSize(D3DXVECTOR3(m_pRank[2]->GetSize().x-2,m_pRank[2]->GetSize().y-2,0.0));
+		if(m_nTargetScore[2] >= ZEBRAGAME_SCORE_RANK_S && m_pRank[2]->GetSize().x > 150)
+		{
+			m_pRank[2]->SetSize(D3DXVECTOR3(m_pRank[2]->GetSize().x-3,m_pRank[2]->GetSize().y-3,0.0));
+		}
+		else if(m_pRank[2]->GetSize().x > 300)
+		{
+			m_pRank[2]->SetSize(D3DXVECTOR3(m_pRank[2]->GetSize().x-2,m_pRank[2]->GetSize().y-2,0.0));
+		}
 	}
-
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
 
 #ifdef _DEBUG

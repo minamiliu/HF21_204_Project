@@ -89,7 +89,7 @@ void CChange::Uninit(void)
 {
 	pExplosion = NULL;
 
-	pAnimalPlayer->Uninit();
+	//pAnimalPlayer->Uninit();
 	pAnimalPlayer = NULL;
 
 	pEffect->Uninit();
@@ -148,6 +148,10 @@ void CChange::Update(void)
 		if(animalPlayerPos.x  <= -100)
 		{
 			m_bState = false;
+			if(pAnimalPlayer != NULL)
+			{
+				pAnimalPlayer->Uninit();
+			}
 		}
 	}
 }
