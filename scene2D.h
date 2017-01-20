@@ -41,6 +41,7 @@ class CScene2D : public CScene
 public:
 
 	CScene2D();
+	CScene2D(LAYER layer);
 	virtual ~CScene2D();
 
 	HRESULT Init(void);

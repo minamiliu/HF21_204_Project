@@ -35,6 +35,13 @@ CScene2D::CScene2D()
 	m_pos = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);			// ポリゴンの位置
 	m_bLoadTexture = false;
 }
+CScene2D::CScene2D(LAYER layer) : CScene(layer)
+{
+	m_pTexture = NULL;		// テクスチャへのポインタ
+	m_pVtxBuff = NULL;		// 頂点バッファへのポインタ
+	m_pos = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);			// ポリゴンの位置
+	m_bLoadTexture = false;
+}
 
 //=============================================================================
 //デストラクタ

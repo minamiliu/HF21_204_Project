@@ -34,7 +34,7 @@
 //=============================================================================
 //コンストラクタ
 //=============================================================================
-CTrashGameExplosion::CTrashGameExplosion()
+CTrashGameExplosion::CTrashGameExplosion() : CScene2D(LAYER_EFFECT)
 {
 
 }

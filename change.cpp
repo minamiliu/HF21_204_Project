@@ -69,7 +69,7 @@ CChange::~CChange()
 
 HRESULT CChange::Init( LPCSTR strPlayerFileName, LPCSTR strAnimalFileName, LPCSTR strAnimalPlayerFileName)
 {
-	pEffect = CEffectBG::Create( D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f), D3DXVECTOR3(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f));	
+	pEffect = CEffectBG::Create( D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f), D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT/2, 0.0f));	
 	//pAnimalPlayer = CChangeTex::Create(D3DXVECTOR3(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f),D3DXVECTOR3(300,300,0),strAnimalPlayerFileName);
 	pPlayer = CChangeTex::Create(D3DXVECTOR3(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f),D3DXVECTOR3(300,300,0),strPlayerFileName);
 	pAnimal = CChangeTex::Create(D3DXVECTOR3(SCREEN_WIDTH+100, SCREEN_HEIGHT/2, 0.0f),D3DXVECTOR3(300,300,0),strAnimalFileName);
@@ -89,7 +89,7 @@ void CChange::Uninit(void)
 {
 	pExplosion = NULL;
 
-	pAnimalPlayer->Uninit();
+	//pAnimalPlayer->Uninit();
 	pAnimalPlayer = NULL;
 
 	pEffect->Uninit();
@@ -148,6 +148,10 @@ void CChange::Update(void)
 		if(animalPlayerPos.x  <= -100)
 		{
 			m_bState = false;
+			if(pAnimalPlayer != NULL)
+			{
+				pAnimalPlayer->Uninit();
+			}
 		}
 	}
 }
