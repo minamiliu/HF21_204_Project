@@ -41,12 +41,14 @@
 #define TEXTURE_LION	"data/TEXTURE/lion.png"
 #define TEXTURE_LIONMOM "data/TEXTURE/lionMom.png"
 #define TEXTURE_MOM		"data/TEXTURE/player000.png"
-
+#define TEXTURE_MLT		"data/TEXTURE/かける.png"
 //============================================
 // 静的メンバー変数の初期化
 //============================================
 CScore *CLionGame::m_pScore = NULL;
 CPlayerX *CLionGame::m_pPlayer = NULL;
+CScene2D *pTextureMlt = NULL;
+CScore *pTextureHd = NULL;
 //=============================================================================
 //コンストラクタ
 //=============================================================================
@@ -82,6 +84,9 @@ HRESULT CLionGame::Init(void)
 	CreateStageLiu();
 	//CreateStageUsukura();
 
+	pTextureMlt = NULL;
+	pTextureHd = NULL;
+	m_nGameCnt = 0;
 	return S_OK;
 }
 //=============================================================================
@@ -101,6 +106,8 @@ void CLionGame::Update()
 {
 	//入力などの更新、各シーンのUpdateの最初に呼び出す
 	CManager::Update();
+
+	m_nGameCnt++;
 
 	//時間になったら、変身する
 	if(m_pTime->GetTime() == 55 && m_state == STATE_NORMAL)
@@ -134,9 +141,62 @@ void CLionGame::Update()
 	}
 
 	//Game Clear or Time Up
-	if(m_pPlayer->GetState() == CPlayerX::STATE_GOAL)
+	if(m_pPlayer->GetState() == CPlayerX::STATE_GOAL || m_pTime->GetTime() <= 59)
 	{
-		SetNextScene( MODE_STAGE_LION);
+		if(m_pTime->GetTimeFlag() == true)
+		{
+			m_pTime->StopTime();
+		}
+		D3DXVECTOR3 timePos = m_pTime->GetPosition();
+		D3DXVECTOR3 scorePos = m_pScore->GetPosition();
+		if(timePos.y <= 300 && scorePos.y <= 400 )
+		{
+	//		//スコア
+	//m_pScore = CScore::Create( D3DXVECTOR3(150, 100.0f, 0.0f), D3DXVECTOR3( 300, 50.0f, 0.0f), 6, RED(1.0f)); 
+
+	////タイム     timePos != D3DXVECTOR3(SCREEN_WIDTH/2,300,0) || scorePos != D3DXVECTOR3(SCREEN_WIDTH/2,400,0)
+	//m_pTime = CTime::Create( D3DXVECTOR3(SCREEN_WIDTH/2, 100.0f, 0.0f), D3DXVECTOR3(150, 100.0f, 0.0f), 2, 99, true, BLUE(1.0f));
+
+
+
+			scorePos.x += (SCREEN_WIDTH/2 - 150)/100;
+			scorePos.y += (400 - 100)/100;
+			m_pScore->SetPosition(scorePos);
+			timePos.x += 0;
+			timePos.y += (300 - 100)/120;
+			m_pTime->SetPosition(timePos);
+		}
+		else
+		{
+			if(pTextureMlt == NULL && pTextureHd == NULL)
+			{
+				pTextureMlt = CScene2D::Create(D3DXVECTOR3(SCREEN_WIDTH/2 + 150,230,0),D3DXVECTOR3(200,200,0),TEXTURE_MLT);
+				pTextureHd = CScore::Create(D3DXVECTOR3(SCREEN_WIDTH/2 + 250,220,0),D3DXVECTOR3(100,100,0),3,YELLOW(1.0));
+				pTextureHd->SetScore(100);
+				m_nGameCnt = 0;
+			}
+			if(m_nGameCnt >= 60 && m_nGameCnt % 10 == 0)
+			{
+				if(m_pTime->GetScore() != 0)
+				{
+					int time = m_pTime->GetScore();
+					time--;
+					m_pTime->SetScore(time);
+					int score = m_pScore->GetScore();
+					score+=100;
+					m_pScore->SetScore(score);
+				}
+			}
+		}
+		//timePos.x+=10;
+		//timePos.y+=10;
+		//m_pTime->SetPosition(timePos);
+
+		//m_pTime->SetPosition(D3DXVECTOR3(SCREEN_WIDTH/2,300,0));
+		//m_pScore->SetPosition(D3DXVECTOR3(SCREEN_WIDTH/2,400,0));
+
+
+		//SetNextScene( MODE_STAGE_LION);
 	}
 
 #ifdef _DEBUG

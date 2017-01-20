@@ -65,6 +65,9 @@ private:
 	int m_nValue;			//スコア
 	D3DXVECTOR3 m_pos;
 	D3DXVECTOR3 m_size;
+	//number関連
+	D3DXVECTOR3 m_rightPos;
+	D3DXVECTOR3 m_ketaSize;
 };
 
 #endif

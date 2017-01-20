@@ -70,6 +70,7 @@ private:
 	CTime *m_pTime;
 	static CPlayerX *m_pPlayer;
 	static CScore *m_pScore;
+	int m_nGameCnt;
 };
 
 #endif

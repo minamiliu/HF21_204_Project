@@ -39,6 +39,7 @@ public:
 	bool TimeUp(void);
 	void StopTime(void);
 	int GetTime(void);
+	bool GetTimeFlag(void);
 private:
 	int m_nCntFrame;
 	int m_nTime;
