@@ -33,7 +33,7 @@
 //============================================
 // 静的メンバー変数の初期化
 //============================================
-CEnemyX::MOTION *CEnemyX::m_pMotionPara = NULL;
+CEnemyX::MOTION		*CEnemyX::m_pMotionPara[TYPE_MAX] = {};
 LPDIRECT3DTEXTURE9	CEnemyX::m_pTexture		[TYPE_MAX] = {};		// テクスチャへのポインタ
 LPD3DXMESH			CEnemyX::m_pD3DXMesh	[TYPE_MAX] = {};		// メッシュ情報へのポインタ
 LPD3DXBUFFER		CEnemyX::m_pD3DXBuffMat	[TYPE_MAX] = {};		// マテリアル情報へのポインタ
@@ -80,8 +80,8 @@ HRESULT CEnemyX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl)
 	//モーション関連
 	m_nCntMotion = 0;
 	m_nMotionNow = 0;
-	m_front = m_pMotionPara[0].front / m_pMotionPara[0].nFrame;
-	m_rotTurn = m_pMotionPara[0].rotY / m_pMotionPara[0].nFrame;
+	m_front = m_pMotionPara[TYPE_000][0].front / m_pMotionPara[TYPE_000][0].nFrame;
+	m_rotTurn = m_pMotionPara[TYPE_000][0].rotY / m_pMotionPara[TYPE_000][0].nFrame;
 
 	//手足
 	m_pLimb[0] = CLimbX::Create( pos, rot, scl, CLimbX::TYPE_L_HAND);
@@ -130,8 +130,8 @@ void CEnemyX::Update(void)
 			m_nMotionNow = 0;
 			m_nCntMotion = 0;
 			m_state = STATE_NORMAL;
-			m_front = m_pMotionPara[0].front / m_pMotionPara[0].nFrame;
-			m_rotTurn = m_pMotionPara[0].rotY / m_pMotionPara[0].nFrame;
+			m_front = m_pMotionPara[TYPE_000][0].front / m_pMotionPara[TYPE_000][0].nFrame;
+			m_rotTurn = m_pMotionPara[TYPE_000][0].rotY / m_pMotionPara[TYPE_000][0].nFrame;
 			
 		}
 		else
@@ -314,11 +314,11 @@ void CEnemyX::UpdateMotion(void)
 
 	//モーション更新処理
 	m_nCntMotion++;
-	if( m_nCntMotion >= m_pMotionPara[m_nMotionNow].nFrame)
+	if( m_nCntMotion >= m_pMotionPara[TYPE_000][m_nMotionNow].nFrame)
 	{
 		m_nMotionNow = (m_nMotionNow + 1) % MAX_MOTION;
-		m_front = m_pMotionPara[m_nMotionNow].front / m_pMotionPara[m_nMotionNow].nFrame;
-		m_rotTurn = m_pMotionPara[m_nMotionNow].rotY / m_pMotionPara[m_nMotionNow].nFrame;
+		m_front = m_pMotionPara[TYPE_000][m_nMotionNow].front / m_pMotionPara[TYPE_000][m_nMotionNow].nFrame;
+		m_rotTurn = m_pMotionPara[TYPE_000][m_nMotionNow].rotY / m_pMotionPara[TYPE_000][m_nMotionNow].nFrame;
 		m_nCntMotion = 0;
 	}
 
@@ -351,23 +351,23 @@ CEnemyX::STATE CEnemyX::GetState(void)
 //=============================================================================
 HRESULT CEnemyX::LoadMotion(void)
 {
-	m_pMotionPara = new MOTION[MAX_MOTION];
+	m_pMotionPara[TYPE_000] = new MOTION[MAX_MOTION];
 
-	m_pMotionPara[0].nFrame = 60;
-	m_pMotionPara[0].front = D3DXVECTOR3( 100.0f, 0.0f, 0.0f);
-	m_pMotionPara[0].rotY = 0.0f;
+	m_pMotionPara[TYPE_000][0].nFrame = 120;
+	m_pMotionPara[TYPE_000][0].front = D3DXVECTOR3( 200.0f, 0.0f, 0.0f);
+	m_pMotionPara[TYPE_000][0].rotY = 0.0f;
 	
-	m_pMotionPara[1].nFrame = 30;
-	m_pMotionPara[1].front = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
-	m_pMotionPara[1].rotY = D3DX_PI;
+	m_pMotionPara[TYPE_000][1].nFrame = 30;
+	m_pMotionPara[TYPE_000][1].front = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
+	m_pMotionPara[TYPE_000][1].rotY = D3DX_PI;
 
-	m_pMotionPara[2].nFrame = 60;
-	m_pMotionPara[2].front = D3DXVECTOR3( -100.0f, 0.0f, 0.0f);
-	m_pMotionPara[2].rotY = 0.0f;
+	m_pMotionPara[TYPE_000][2].nFrame = 160;
+	m_pMotionPara[TYPE_000][2].front = D3DXVECTOR3( -200.0f, 0.0f, 0.0f);
+	m_pMotionPara[TYPE_000][2].rotY = 0.0f;
 
-	m_pMotionPara[3].nFrame = 30;
-	m_pMotionPara[3].front = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
-	m_pMotionPara[3].rotY = D3DX_PI;
+	m_pMotionPara[TYPE_000][3].nFrame = 30;
+	m_pMotionPara[TYPE_000][3].front = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
+	m_pMotionPara[TYPE_000][3].rotY = D3DX_PI;
 
 	return S_OK;
 }

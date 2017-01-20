@@ -240,7 +240,7 @@ void CBook::Update(void)
 					}
 					else 
 					{
-						pos.y = 20.0f;
+						pos.y = 30.0f;
 					}
 					CSceneX::SetPosition(pos);
 					return;

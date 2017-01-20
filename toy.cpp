@@ -203,7 +203,7 @@ void CToy::Update(void)
 					D3DXVECTOR3 Cursorpos;
 					Cursorpos = ((CPoint3D*)pScene)->Get3DPosition();
 					
-					Cursorpos.y = 20.0f;
+					Cursorpos.y = 30.0f;
 					pos = Cursorpos;
 					if(pos.x <= -400.0f)
 					{

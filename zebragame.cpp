@@ -38,6 +38,7 @@
 //============================================
 int CZebraGame::m_PutToy = 0;
 int CZebraGame::m_PutBook = 0;
+CPoint3D *CZebraGame:: m_pPoint3D= NULL;
 //============================================
 //コンストラクタ
 //============================================
@@ -65,7 +66,7 @@ HRESULT CZebraGame::Init(void)
 	m_pMeshWall[m_nNumWall++] = CMeshWall::Create( D3DXVECTOR3( 450.0f, 100.0f, 200.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(90.0f), 0.0f), 10, 10, 100.0f, 100.0f);
 
 	//カメラの位置
-	CManager::GetCamera() ->SetPosV(D3DXVECTOR3(0.0f,300.0f,-500.0f));
+	CManager::GetCamera() ->SetPosV(D3DXVECTOR3(0.0f,300.0f,-550.0f));
 	CManager::GetCamera() ->SetPosR(D3DXVECTOR3(0.0f,0.0f,400.0f));
 	//乱数
 	unsigned int now = (unsigned int)time( 0 );
@@ -81,7 +82,7 @@ HRESULT CZebraGame::Init(void)
 		varZ = rand() % 101 ;
 		varR = rand() % 101 ;
 		//オブジェクトの生成(Xfile)
-		CToy::Create( D3DXVECTOR3( 5.0f*varX-350.0f, 10.0f, 5.0f*varZ-240.0f), D3DXVECTOR3( 0.0f,D3DXToRadian(30*varR), 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), 5.0f);
+		CToy::Create( D3DXVECTOR3( 5.0f*varX-350.0f, 10.0f, 5.0f*varZ-300.0f), D3DXVECTOR3( 0.0f,D3DXToRadian(30*varR), 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), 5.0f);
 	}
 
 
@@ -92,7 +93,7 @@ HRESULT CZebraGame::Init(void)
 		varZ = rand() % 101 ;
 		varR = rand() % 101 ;
 		//オブジェクトの生成(Xfile)
-		CBook::Create( D3DXVECTOR3( 5.0f*varX-350.0f, 10.0f, 5.0f*varZ-240.0f), D3DXVECTOR3( 0.0f,D3DXToRadian(30*varR), 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), 5.0f);
+		CBook::Create( D3DXVECTOR3( 5.0f*varX-350.0f, 10.0f, 5.0f*varZ-300.0f), D3DXVECTOR3( 0.0f,D3DXToRadian(30*varR), 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), 5.0f);
 	}
 	CPutBook::Load();
 	
@@ -101,7 +102,7 @@ HRESULT CZebraGame::Init(void)
 	//タイム
 	CTime::Create(D3DXVECTOR3(600, 50.0f, 0.0f),D3DXVECTOR3(100, 100.0f, 0.0f),3,0,false,D3DXCOLOR(255,255,255,255));
 	//オブジェクトの生成(2Dポリゴン)
-	CPoint3D::Create( D3DXVECTOR3( 300.0f, 500.0f, 0.0f), D3DXVECTOR3( 20.0f, 20.0f, 0.0f),0);
+	m_pPoint3D = CPoint3D::Create( D3DXVECTOR3( 300.0f, 500.0f, 0.0f), D3DXVECTOR3( 60.0f, 60.0f, 0.0f),0);
 	return S_OK;
 }
 
@@ -140,7 +141,7 @@ void CZebraGame :: PutObj(bool toy)
 	}
 	if( m_PutToy + m_PutBook == 20)
 	{
-		CPoint3D::ChangeZebra();
+		m_pPoint3D -> ChangeZebra();
 	}
 	if (m_PutToy + m_PutBook == MAX_TOY + MAX_BOOK)
 	{

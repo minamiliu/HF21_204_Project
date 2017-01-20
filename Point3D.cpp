@@ -22,8 +22,12 @@
 // マクロ定義
 //============================================
 #define GRAVITY_POINT (0.98f)
-#define TEXTURENAME "data/TEXTURE/player000.png"
-#define	TEX_PATTERN_DIVIDE_X		(2)								// アニメーションパターンのテクスチャ内での分割数(Ｘ方向)
+#define TEXTURENAME "data/TEXTURE/hand.png"
+//#define TEXTURENAME "data/TEXTURE/throwingGorilla.png"
+
+#define TEXTURENAMEZ "data/TEXTURE/zebrahand.png"
+
+#define	TEX_PATTERN_DIVIDE_X		(4)								// アニメーションパターンのテクスチャ内での分割数(Ｘ方向)
 #define	TEX_PATTERN_DIVIDE_Y		(1)								// アニメーションパターンのテクスチャ内での分割数(Ｙ方向)
 
 #define	TEX_PATTERN_SIZE_X			(1.0f/TEX_PATTERN_DIVIDE_X)								// １パターンのテクスチャサイズ(Ｘ方向)(1.0f/X方向分割数)
@@ -102,7 +106,16 @@ void CPoint3D::Update(void)
 	
 	if(CManager::GetInputMouse()->GetMouseLeftTrigger())
 	{
-		CScene2D::ChangeTextureAnime(1,D3DXVECTOR2(TEX_PATTERN_SIZE_X,TEX_PATTERN_SIZE_Y),D3DXVECTOR2(2,1));
+		if(m_zebra == false)
+		{
+			CScene2D::ChangeTextureAnime(1,D3DXVECTOR2(TEX_PATTERN_SIZE_X,TEX_PATTERN_SIZE_Y),D3DXVECTOR2(4,1));
+		}
+		if(m_zebra == true)
+		{
+			CScene2D::ChangeTextureAnime(3,D3DXVECTOR2(TEX_PATTERN_SIZE_X,TEX_PATTERN_SIZE_Y),D3DXVECTOR2(4,1));
+		}
+
+		
 		//トイの場所取得
 		for(int Cnt=0; Cnt<MAX_SCENE ; Cnt++)
 		{
@@ -115,14 +128,14 @@ void CPoint3D::Update(void)
 				if(type == CScene::OBJTYPE_TOY )
 				{
 					D3DXVECTOR3 PosToy;
-					D3DXVECTOR3 SizeToy = D3DXVECTOR3(50,50,50);
+					D3DXVECTOR3 SizeToy = D3DXVECTOR3(100,100,100);
 					PosToy = pScene ->GetPosition();
 
 					//当たった
-					if(	   m_3Dpos.x > PosToy.x - SizeToy.x/2.0f 
-						&& m_3Dpos.x < PosToy.x + SizeToy.x/2.0f 
-						&& m_3Dpos.z > PosToy.z - SizeToy.z/2.0f  
-						&& m_3Dpos.z < PosToy.z + SizeToy.z/2.0f 
+					if(	   m_3Dpos.x-50.0f  > PosToy.x - SizeToy.x/2.0f 
+						&& m_3Dpos.x-50.0f  < PosToy.x + SizeToy.x/2.0f 
+						&& m_3Dpos.z+50.0f  > PosToy.z - SizeToy.z/2.0f  
+						&& m_3Dpos.z+50.0f  < PosToy.z + SizeToy.z/2.0f 
 						)
 					{
 						pScenePick = pScene;
@@ -135,7 +148,7 @@ void CPoint3D::Update(void)
 				if(type == CScene::OBJTYPE_BOOK )
 				{
 					D3DXVECTOR3 PosToy;
-					D3DXVECTOR3 SizeToy = D3DXVECTOR3(50,50,50);
+					D3DXVECTOR3 SizeToy = D3DXVECTOR3(100,100,100);
 					PosToy = pScene ->GetPosition();
 
 					//当たった
@@ -159,8 +172,14 @@ void CPoint3D::Update(void)
 	}
 	if(CManager::GetInputMouse()->GetMouseLeftRelease())
 	{
-		
-		CScene2D::ChangeTextureAnime(1,D3DXVECTOR2(TEX_PATTERN_SIZE_X,TEX_PATTERN_SIZE_Y),D3DXVECTOR2(1,1));
+		if(m_zebra == false)
+		{
+			CScene2D::ChangeTextureAnime(0,D3DXVECTOR2(TEX_PATTERN_SIZE_X,TEX_PATTERN_SIZE_Y),D3DXVECTOR2(4,1));
+		}
+		if(m_zebra == true)
+		{
+			CScene2D::ChangeTextureAnime(2,D3DXVECTOR2(TEX_PATTERN_SIZE_X,TEX_PATTERN_SIZE_Y),D3DXVECTOR2(4,1));
+		}
 			if(pScenePick != NULL)
 			{
 	
@@ -222,5 +241,10 @@ D3DXVECTOR3 CPoint3D::Get3DPosition(void)
 //=============================================================================
 void CPoint3D::ChangeZebra(void)
 {
+	//CScene2D::Load(TEXTURENAMEZ);
 	m_zebra = !m_zebra;
+	
+	CScene2D::ChangeTextureAnime(2,D3DXVECTOR2(TEX_PATTERN_SIZE_X,TEX_PATTERN_SIZE_Y),D3DXVECTOR2(4,1));
+		
+			
 }
