@@ -17,6 +17,7 @@
 #include "trashGameExplosion.h"
 #include "effectBG.h"
 #include "scene2D.h"
+#include "changeTex.h"
 //============================================
 // マクロ定義
 //============================================
@@ -35,13 +36,14 @@
 //=============================================================================
 CScene2D *CChange::m_pChamgeBg = NULL;
 CTrashGameExplosion *pExplosion = NULL;
-CScene2D *pPlayer = NULL;
-CScene2D *pAnimal = NULL;
-CScene2D *pAnimalPlayer = NULL;
+CChangeTex *pPlayer = NULL;
+CChangeTex *pAnimal = NULL;
+CChangeTex *pAnimalPlayer = NULL;
 bool CChange::m_bAnimalPlayerFlag = false;
 bool CChange::m_bState = true;
 int CChange::changeCnt = 0;
 CEffectBG *pEffect = NULL;
+LPCSTR CChange::m_StrAnimalPlayerFileName;
 //=============================================================================
 //コンストラクタ
 //=============================================================================
@@ -67,17 +69,16 @@ CChange::~CChange()
 
 HRESULT CChange::Init( LPCSTR strPlayerFileName, LPCSTR strAnimalFileName, LPCSTR strAnimalPlayerFileName)
 {
-	//pChamgeBg = CScene2D::Create(D3DXVECTOR3(),D3DXVECTOR3(),TEXTURE_BG);
-	pEffect = CEffectBG::Create( D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f), D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT/2, 0.0f));
-	//CExplosion::Create();
-	pAnimalPlayer = CScene2D::Create(D3DXVECTOR3(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f),D3DXVECTOR3(300,300,0),strAnimalPlayerFileName);
-	pPlayer = CScene2D::Create(D3DXVECTOR3(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f),D3DXVECTOR3(300,300,0),strPlayerFileName);
-	pAnimal = CScene2D::Create(D3DXVECTOR3(SCREEN_WIDTH+100, SCREEN_HEIGHT/2, 0.0f),D3DXVECTOR3(300,300,0),strAnimalFileName);
+	pEffect = CEffectBG::Create( D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f), D3DXVECTOR3(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f));	
+	//pAnimalPlayer = CChangeTex::Create(D3DXVECTOR3(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f),D3DXVECTOR3(300,300,0),strAnimalPlayerFileName);
+	pPlayer = CChangeTex::Create(D3DXVECTOR3(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f),D3DXVECTOR3(300,300,0),strPlayerFileName);
+	pAnimal = CChangeTex::Create(D3DXVECTOR3(SCREEN_WIDTH+100, SCREEN_HEIGHT/2, 0.0f),D3DXVECTOR3(300,300,0),strAnimalFileName);
 	
 	changeCnt = 0;
 	m_bState = true;
 	m_bAnimalPlayerFlag = false;
-
+	pAnimalPlayer = NULL;
+	m_StrAnimalPlayerFileName = strAnimalPlayerFileName;
 	return S_OK;
 }
 
@@ -118,6 +119,8 @@ void CChange::Update(void)
 		D3DXVECTOR3 playerPos = pPlayer->GetPosition();
 		if(pos.x <= playerPos.x)
 		{
+			pPlayer->Uninit();
+			pPlayer = NULL;
 			pAnimal->Uninit();
 			pAnimal = NULL;
 			pExplosion = CTrashGameExplosion::Create(D3DXVECTOR3(SCREEN_WIDTH/2,SCREEN_HEIGHT/2, 0.0f), D3DXVECTOR3( 400.0f, 400.0f, 0.0f));
@@ -131,10 +134,9 @@ void CChange::Update(void)
 	{
 		if(changeCnt == 8 * 10)
 		{
-			pPlayer->Uninit();
-			pPlayer = NULL;
 			m_bAnimalPlayerFlag = true;
 			//pAnimalPlayer = CScene2D::Create(D3DXVECTOR3(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f),D3DXVECTOR3(100,100,0),);
+			pAnimalPlayer = CChangeTex::Create(D3DXVECTOR3(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f),D3DXVECTOR3(300,300,0),m_StrAnimalPlayerFileName);
 		}
 	}
 
@@ -146,7 +148,6 @@ void CChange::Update(void)
 		if(animalPlayerPos.x  <= -100)
 		{
 			m_bState = false;
-
 		}
 	}
 }
