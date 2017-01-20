@@ -87,6 +87,9 @@ CTrashGame::~CTrashGame()
 
 HRESULT CTrashGame::Init(void)
 { 
+	//ゲームデータをロード
+	LoadAll();
+	//カメラの初期化
 	m_pCamera->Init();
 	//ゲーム起動時のマウスを位置を取ってしまうため、強制的に画面中央へ
 	SetCursorPos(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);

@@ -20,7 +20,7 @@
 //============================================
 // É}ÉNÉçíËã`
 //============================================
-#define TEXTURE_BG "data/TEXTURE/resultBG01.jpg"
+#define TEXTURE_BG "data/TEXTURE/resultBG.jpg"
 #define TEXTURE_RANK_C "data/TEXTURE/rankC.png"
 #define TEXTURE_RANK_A "data/TEXTURE/rankA.png"
 #define TEXTURE_RANK_B "data/TEXTURE/rankB.png"

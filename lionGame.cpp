@@ -68,6 +68,9 @@ CLionGame::~CLionGame()
 //=============================================================================
 HRESULT CLionGame::Init(void)
 {
+	//ゲームデータをロード
+	LoadAll();
+
 	//変数の初期化
 	m_state = STATE_NORMAL;
 	m_nCntState = 0;

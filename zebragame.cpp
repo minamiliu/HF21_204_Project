@@ -53,6 +53,9 @@ CZebraGame::~CZebraGame()
 
 HRESULT CZebraGame::Init(void)
 {
+	//ゲームデータをロード
+	LoadAll();
+
 	//カメラの位置
 	m_pCamera->Init();
 	m_pCamera->SetPosV(D3DXVECTOR3(0.0f,300.0f,-500.0f));
