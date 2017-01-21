@@ -148,3 +148,8 @@ void CTime::StopTime(void)
 	else if(m_useFlag == false)
 		m_useFlag = true;
 }
+
+bool CTime::GetTimeFlag(void)
+{
+	return m_useFlag;
+}

@@ -75,17 +75,17 @@ HRESULT CScore::Init(D3DXVECTOR3 numberPos, D3DXVECTOR3 numberSize, int maxKeta,
 	m_ppPolygon = new CNumber*[maxKeta];
 
 	//スタート位置(右)と桁サイズの計算
-	D3DXVECTOR3 rightPos = numberPos;
-	D3DXVECTOR3 ketaSize = numberSize;
-	ketaSize.x /= maxKeta;
-	rightPos.x = numberPos.x + ketaSize.x * (maxKeta - 1) / 2.0f;
+	m_rightPos = numberPos;
+	m_ketaSize = numberSize;
+	m_ketaSize.x /= maxKeta;
+	m_rightPos.x = numberPos.x + m_ketaSize.x * (maxKeta - 1) / 2.0f;
 	
 	//桁分のNumberの生成
-	D3DXVECTOR3 tmpPos = rightPos;
+	D3DXVECTOR3 tmpPos = m_rightPos;
 	for(int cntKeta = 0; cntKeta < m_nMaxKeta; cntKeta++)
 	{
-		m_ppPolygon[cntKeta] = CNumber::Create( tmpPos , ketaSize, D3DXVECTOR2( TEX_PATTERN_SIZE_X, TEX_PATTERN_SIZE_Y));
-		tmpPos.x -= ketaSize.x;
+		m_ppPolygon[cntKeta] = CNumber::Create( tmpPos , m_ketaSize, D3DXVECTOR2( TEX_PATTERN_SIZE_X, TEX_PATTERN_SIZE_Y));
+		tmpPos.x -= m_ketaSize.x;
 	}
 
 	//色を設定
@@ -138,10 +138,21 @@ void CScore::Update(void)
 //=============================================================================
 void CScore::Draw(void)
 {
+	LPDIRECT3DDEVICE9 pDevice;
+	pDevice = CManager::GetRenderer()->GetDevice();
+
+	//αテスト
+	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+	pDevice->SetRenderState(D3DRS_ALPHAREF, 0);
+	pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+
 	for(int nKeta = 0; nKeta < m_nMaxKeta; nKeta++)
 	{
 		m_ppPolygon[nKeta]->Draw();
 	}
+
+	// αテストを無効に
+	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 }
 
 //=============================================================================
@@ -268,6 +279,15 @@ D3DXVECTOR3 CScore::GetSize(void)
 void CScore::SetPosition(D3DXVECTOR3 pos)
 {
 	m_pos = pos;
+	m_rightPos.x = pos.x + m_ketaSize.x * (m_nMaxKeta - 1) / 2.0f;
+	m_rightPos.y = pos.y;
+	//桁分のNumberの生成
+	D3DXVECTOR3 tmpPos = m_rightPos;
+	for(int cntKeta = 0; cntKeta < m_nMaxKeta; cntKeta++)
+	{
+		m_ppPolygon[cntKeta]->SetPosition(tmpPos);
+		tmpPos.x -= m_ketaSize.x;
+	}
 }
 //=============================================================================
 //点数を取得
@@ -276,3 +296,5 @@ int CScore::GetScore(void)
 {
 	return m_nValue;
 }
+
+
