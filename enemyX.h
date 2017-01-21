@@ -80,7 +80,7 @@ private:
 	static DWORD				m_nNumMat		[TYPE_MAX];		// マテリアル情報の数	
 
 	//モーション関係
-	static MOTION *m_pMotionPara;
+	static MOTION *m_pMotionPara[TYPE_MAX];
 	int m_nCntMotion;
 	int m_nMotionNow;
 

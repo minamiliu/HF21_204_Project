@@ -39,7 +39,8 @@ public:
 	static CPoint3D *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size);
 	static CPoint3D *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, HWND hwnd);
 	D3DXVECTOR3 Get3DPosition(void);
-	static void CPoint3D::ChangeZebra(void);
+	 void CPoint3D::ChangeZebra(void);
+	
 private:
 	D3DXVECTOR3 m_startPos;//ベクトルの始点
 	D3DXVECTOR3 m_endPos;//ベクトルの終点

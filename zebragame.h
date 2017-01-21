@@ -26,6 +26,7 @@ class CZebra;
 class CZebraBox;
 class CScene2D;
 class CMeshWall;
+class CPoint3D;
 //============================================
 //ç\ë¢ëÃíËã`
 //============================================
@@ -48,6 +49,7 @@ public:
 private:
 	static CScene2D *m_pZebra;
 	CScene2D *m_pZebraBox;
+	static CPoint3D *m_pPoint3D;
 	static int m_PutToy;
 	static int m_PutBook;
 	CMeshWall *m_pMeshWall[MAX_WALL];
