@@ -29,6 +29,10 @@
 #include "book.h"
 #include "meshWall.h"
 #include "putbook.h"
+#include "effectBoom.h"
+#include "mousePick.h"
+#include "effect3D.h"
+
 //============================================
 // マクロ定義
 //============================================
@@ -102,6 +106,7 @@ HRESULT CZebraGame::Init(void)
 	CTime::Create(D3DXVECTOR3(600, 50.0f, 0.0f),D3DXVECTOR3(100, 100.0f, 0.0f),3,0,false,D3DXCOLOR(255,255,255,255));
 	//オブジェクトの生成(2Dポリゴン)
 	CPoint3D::Create( D3DXVECTOR3( 300.0f, 500.0f, 0.0f), D3DXVECTOR3( 20.0f, 20.0f, 0.0f),0);
+
 	return S_OK;
 }
 
@@ -121,6 +126,16 @@ void CZebraGame::Update()
 	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN))
 	{
 		SetNextScene( MODE_STAGE_ZEBRA);
+	}
+
+	POINT mPos;
+	GetCursorPos(&mPos);
+	D3DXVECTOR3 pos = CMousePick::GetWorldPos(mPos);
+	
+	CInputMouse *pInputMouse = CManager::GetInputMouse();
+	if( pInputMouse->GetMouseLeftTrigger())
+	{
+		CEffectBoom::Create( pos, D3DXVECTOR3(100, 20, 100), 5);
 	}
 #endif
 
@@ -161,6 +176,7 @@ HRESULT CZebraGame::LoadAll(void)
 	CPutBook::Load();
 	CToy::Load();
 	CBook::Load();
+	CEffect3D::Load();
 
 	return S_OK;
 }

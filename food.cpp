@@ -121,7 +121,7 @@ void CFood::Update(void)
 			pos.z = CLionGame::GetPlayer()->GetPosition().z + 30.0f * cosf( m_fTurn);
 
 			//エフェクト
-			CEffect3D::Create(this->GetPosition(), D3DXVECTOR2( 20.0f, 20.0f), CEffect3D::TYPE_MARU, LIME(1.0f));
+			CEffect3D::Create(this->GetPosition(), D3DXVECTOR2( 20.0f, 20.0f), CEffect3D::TYPE_MARU, LIME(1.0f), 0.02f);
 			
 			this->SetPosition(pos);
 		}

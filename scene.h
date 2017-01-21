@@ -14,6 +14,7 @@
 //マクロ定義
 //============================================
 #define MAX_SCENE	(100)
+#define MAX_EFFECT	(500)
 
 //============================================
 //構造体定義
@@ -81,7 +82,7 @@ private:
 	int m_nID;
 	OBJTYPE m_objType;
 
-	static CScene *m_apEffect[MAX_SCENE];
+	static CScene *m_apEffect[MAX_EFFECT];
 	static int m_nNumEffect;
 	LAYER m_layer;
 };

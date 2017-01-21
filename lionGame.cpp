@@ -34,6 +34,8 @@
 #include "limbX.h"
 #include "effect3D.h"
 #include "change.h"
+#include "mousePick.h"
+#include "effectBoom.h"
 
 //============================================
 // マクロ定義
@@ -138,6 +140,7 @@ void CLionGame::Update()
 	{
 		SetNextScene( MODE_STAGE_LION);
 	}
+
 
 #ifdef _DEBUG
 	//スキップシーン

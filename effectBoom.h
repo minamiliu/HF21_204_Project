@@ -1,61 +1,60 @@
 //============================================
 //
 // タイトル:	 未来創造展チーム204
-// プログラム名: effect3D.h
+// プログラム名: effectBoom.h
 // 作成者:		 HAL東京ゲーム学科　劉南宏
-// 作成日:       2017/01/19
+// 作成日:       2017/01/20
 //
 //============================================
 
-#ifndef _EFFECT3D_H_
-#define _EFFECT3D_H_
+#ifndef _EFFECTBOOM_H_
+#define _EFFECTBOOM_H_
 
 //============================================
 //インクルードファイル
 //============================================
-#include "billboard.h"
+#include "scene.h"
 
 //============================================
 //マクロ定義
 //============================================
-
+#define MAX_EFFECT (14)
 //============================================
 //前方宣言
 //============================================
+class CEffect3D;
 
 //============================================
 //構造体定義
 //============================================
-class CEffect3D : public CBillBoard
+class CEffectBoom : public CScene
 {
 public:
-	typedef enum 
-	{
-		TYPE_MARU = 0,
-		TYPE_MAX,
-	}TYPE;
 
-	CEffect3D();
-	virtual ~CEffect3D();
+	CEffectBoom();
+	virtual ~CEffectBoom();
 
-	HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR2 size, TYPE type, const D3DXCOLOR &col, float fPercent);
+	HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR3 size, float speed);
 	void Uninit(void);
 	void Update(void);
 	void Draw(void);
+	
+	D3DXVECTOR3 GetPosition(void);
+	D3DXVECTOR3 GetSize(void);
+	void SetPosition(D3DXVECTOR3 pos);
 
-	static CEffect3D *Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, TYPE type, const D3DXCOLOR &col, float fPercent);
-	static HRESULT Load(void);
-	static void Unload(void);
+	static CEffectBoom *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, float speed);
 
 private:
-	static LPDIRECT3DTEXTURE9 m_pTexture[TYPE_MAX];
+	float m_fSpeed;
+	D3DXVECTOR3 m_pos;
+	D3DXVECTOR3 m_size;
 
-	TYPE m_type;
-	D3DXCOLOR m_col;
-	float m_fPercent;
+	D3DXVECTOR3 m_posNow[MAX_EFFECT];
+	D3DXVECTOR3 m_posGoal[MAX_EFFECT];
+	D3DXVECTOR3 m_front[MAX_EFFECT];
 
-	//static D3DXCOLOR m_paraColor[];
-	//static int m_nColorID;
+	static D3DXCOLOR m_paraColor[];
 };
 
 #endif

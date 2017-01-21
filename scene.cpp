@@ -19,7 +19,7 @@
 CScene *CScene::m_apScene[MAX_SCENE] = {};
 int CScene::m_nNumScene = 0;
 
-CScene *CScene::m_apEffect[MAX_SCENE] = {};
+CScene *CScene::m_apEffect[MAX_EFFECT] = {};
 int CScene::m_nNumEffect = 0;
 //============================================
 // É}ÉNÉçíËã`
@@ -52,7 +52,7 @@ CScene::CScene()
 CScene::CScene(LAYER layer)
 {
 	m_layer = layer;
-	for(int nCntScene = 0; nCntScene < MAX_SCENE; nCntScene++)
+	for(int nCntScene = 0; nCntScene < MAX_EFFECT; nCntScene++)
 	{
 		if(m_apEffect[nCntScene] == NULL)
 		{
@@ -85,7 +85,7 @@ void CScene::UpdateAll(void)
 		}
 	}
 
-	for(int nCntScene = 0; nCntScene < MAX_SCENE; nCntScene++)
+	for(int nCntScene = 0; nCntScene < MAX_EFFECT; nCntScene++)
 	{
 		if(m_apEffect[nCntScene] != NULL)
 		{
@@ -107,7 +107,7 @@ void CScene::DrawAll(void)
 		}
 	}
 
-	for(int nCntScene = 0; nCntScene < MAX_SCENE; nCntScene++)
+	for(int nCntScene = 0; nCntScene < MAX_EFFECT; nCntScene++)
 	{
 		if(m_apEffect[nCntScene] != NULL)
 		{
@@ -129,7 +129,7 @@ void CScene::ReleaseAll(void)
 		}
 	}
 
-	for(int nCntScene = 0; nCntScene < MAX_SCENE; nCntScene++)
+	for(int nCntScene = 0; nCntScene < MAX_EFFECT; nCntScene++)
 	{
 		if(m_apEffect[nCntScene] != NULL)
 		{

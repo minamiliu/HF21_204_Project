@@ -246,7 +246,7 @@ void CToy::Update(void)
 		CSceneX::SetPosition(pos);
 
 		//エフェクト
-		CEffect3D::Create( pos, D3DXVECTOR2( 20.0f, 20.0f), CEffect3D::TYPE_MARU, RED(1.0f));
+		CEffect3D::Create( pos, D3DXVECTOR2( 20.0f, 20.0f), CEffect3D::TYPE_MARU, GREEN(1.0f), 0.02f);
 
 		if(m_Timecnt == 99)
 		{

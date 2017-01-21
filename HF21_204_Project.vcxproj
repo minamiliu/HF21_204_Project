@@ -90,6 +90,7 @@
     <ClCompile Include="debugproc.cpp" />
     <ClCompile Include="effect3D.cpp" />
     <ClCompile Include="effectBG.cpp" />
+    <ClCompile Include="effectBoom.cpp" />
     <ClCompile Include="enemyX.cpp" />
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="food.cpp" />
@@ -157,6 +158,7 @@
     <ClInclude Include="debugproc.h" />
     <ClInclude Include="effect3D.h" />
     <ClInclude Include="effectBG.h" />
+    <ClInclude Include="effectBoom.h" />
     <ClInclude Include="enemyX.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="food.h" />
