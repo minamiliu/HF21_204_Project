@@ -130,7 +130,9 @@
     <ClCompile Include="stage.cpp" />
     <ClCompile Include="stageBg.cpp" />
     <ClCompile Include="stagePlayer.cpp" />
+    <ClCompile Include="sun.cpp" />
     <ClCompile Include="time.cpp" />
+    <ClCompile Include="timeBg.cpp" />
     <ClCompile Include="title.cpp" />
     <ClCompile Include="titleObj.cpp" />
     <ClCompile Include="toy.cpp" />
@@ -200,7 +202,9 @@
     <ClInclude Include="stage.h" />
     <ClInclude Include="stageBg.h" />
     <ClInclude Include="stagePlayer.h" />
+    <ClInclude Include="sun.h" />
     <ClInclude Include="time.h" />
+    <ClInclude Include="timeBg.h" />
     <ClInclude Include="title.h" />
     <ClInclude Include="titleObj.h" />
     <ClInclude Include="toy.h" />

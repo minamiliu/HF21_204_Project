@@ -15,6 +15,7 @@
 #include "manager.h"
 #include "scene2D.h"
 #include "stageBg.h"
+#include "timeBg.h"
 /*******************************************************************************
 * マクロ定義
 *******************************************************************************/
@@ -134,6 +135,7 @@ void CStagePlayer :: Update(void)
 		}
 		//m_animPat = m_work%3;//静止時の横のアニメーション数
 		CStageBg::SetScl(false);
+		CTimeBg::SetScl(false);
 		break;
 	case STATE_MOVE:
 		if(m_time < MOVE_TIME)
@@ -146,6 +148,7 @@ void CStagePlayer :: Update(void)
 		}
 		//m_animPat = 9+m_work%3;//静止時の横のアニメーション数 + 移動時のアニメーション数
 		CStageBg::SetScl(true);
+		CTimeBg::SetScl(true);
 		break;
 	}
 	m_animPat = m_work%4;
