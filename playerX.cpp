@@ -176,23 +176,25 @@ void CPlayerX::Update(void)
 			m_fSpeed -= m_fSpeed * 0.05f;
 		}
 		break;
+
+	case STATE_UPGRADE:
 	case STATE_GOAL:
-		//nothing
+		
+		m_front = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
 		break;
-	default:
+
+	case STATE_NORMAL:
+	case STATE_LION:
 		//前進ベクトルの更新
 		CalcFront();
 		break;
 	}
-
 
 	//座標更新処理
 	if( isCollision() == false)
 	{
 		SetPosition( this->GetPosition() + m_front);
 	}
-
-
 	//手足
 	for(int cntLimb = 0; cntLimb < MAX_LIMB; cntLimb++)
 	{

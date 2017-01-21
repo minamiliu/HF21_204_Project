@@ -18,7 +18,7 @@
 #include "mousePick.h"
 #include "point3D.h"
 #include "effect3D.h"
-
+#include "score.h"
 #include "zebragame.h"
 //============================================
 // É}ÉNÉçíËã`
@@ -280,7 +280,6 @@ void CToy::Update(void)
 			m_bBack = true;
 		}
 		//ê≥â
-		
 		if( pos.y <= 0.0f&&
 			     pos.x > Toyboxpos.x - 150.0f 
 			  && pos.x < Toyboxpos.x + 150.0f 
@@ -288,6 +287,7 @@ void CToy::Update(void)
 			  && pos.z < Toyboxpos.z + 150.0f 
 			)
 		{
+			CZebraGame::GetScore()->AddScore(100);
 			CZebraGame::PutObj(true);
 			Uninit();
 		}

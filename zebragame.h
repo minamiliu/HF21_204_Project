@@ -27,6 +27,7 @@ class CZebraBox;
 class CScene2D;
 class CMeshWall;
 class CPoint3D;
+class CScore;
 //============================================
 //ç\ë¢ëÃíËã`
 //============================================
@@ -45,6 +46,7 @@ public:
 	static void SetZebraPointer(CScene2D *pZebra);
 	static void PutObj(bool toy);
 	static HRESULT LoadAll(void);
+	static CScore *GetScore(void);
 
 private:
 	static CScene2D *m_pZebra;
@@ -54,6 +56,7 @@ private:
 	static int m_PutBook;
 	CMeshWall *m_pMeshWall[MAX_WALL];
 	int m_nNumWall;
+	static CScore *m_pScore;
 };
 
 #endif

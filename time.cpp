@@ -107,11 +107,11 @@ void CTime::Draw(void)
 	CScore::Draw();
 }
 
-CTime *CTime::Create(D3DXVECTOR3 numberPos, D3DXVECTOR3 numberSize, int maxKeta, int startTime, bool bCountDown, const D3DXCOLOR &col)
+CTime *CTime::Create(D3DXVECTOR3 pos, D3DXVECTOR3 numberSize, int maxKeta, int startTime, bool bCountDown, const D3DXCOLOR &col)
 {
 	CTime *pTime;
 	pTime = new CTime;
-	pTime->Init(numberPos, numberSize, maxKeta, startTime, bCountDown, col);
+	pTime->Init(pos, numberSize, maxKeta, startTime, bCountDown, col);
 
 	//テクスチャの読み込み
 	pTime->Load();

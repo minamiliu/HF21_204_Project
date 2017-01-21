@@ -58,9 +58,9 @@ CResult::CResult() : CManager(MODE_RESULT)
 	m_pRank[0] = NULL;
 	m_pRank[1] = NULL;
 	m_pRank[2] = NULL;
-	m_nTrashGameScore = 300;
-	m_nZebraGameScore = 500;
-	m_nLionGameScore = 100;
+	m_nTrashGameScore = 999;
+	m_nZebraGameScore = 999;
+	m_nLionGameScore = 999;
 }
 
 CResult::~CResult()

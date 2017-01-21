@@ -43,6 +43,7 @@
 int CZebraGame::m_PutToy = 0;
 int CZebraGame::m_PutBook = 0;
 CPoint3D *CZebraGame:: m_pPoint3D= NULL;
+CScore *CZebraGame::m_pScore = NULL;
 //============================================
 //コンストラクタ
 //============================================
@@ -108,7 +109,11 @@ HRESULT CZebraGame::Init(void)
 	
 	//オブジェクトの生成(2Dポリゴン)
 	//タイム
-	CTime::Create(D3DXVECTOR3(600, 50.0f, 0.0f),D3DXVECTOR3(100, 100.0f, 0.0f),3,0,false,D3DXCOLOR(255,255,255,255));
+	CTime::Create(D3DXVECTOR3(600, 50.0f, 0.0f),D3DXVECTOR3(100, 100.0f, 0.0f), 3, 0, false,D3DXCOLOR(255,255,255,255));
+
+	//スコア
+	m_pScore = CScore::Create( D3DXVECTOR3( 150.0f, 30.0f, 0.0f), D3DXVECTOR3( 300, 50.0f, 0.0f), 6, RED(1.0f)); 
+
 	//オブジェクトの生成(2Dポリゴン)
 	m_pPoint3D = CPoint3D::Create( D3DXVECTOR3( 300.0f, 500.0f, 0.0f), D3DXVECTOR3( 60.0f, 60.0f, 0.0f),0);
 
@@ -117,6 +122,9 @@ HRESULT CZebraGame::Init(void)
 
 void CZebraGame::Uninit()
 {
+	//点数を保存
+	CManager::SaveScore( MODE_ZEBRAGAME, m_pScore->GetValue());
+
 	CManager::Uninit();
 }
 
@@ -170,6 +178,13 @@ void CZebraGame :: PutObj(bool toy)
 	{
 		SetNextScene( MODE_STAGE_ZEBRA);
 	}
+}
+//=============================================================================
+//
+//=============================================================================
+CScore *CZebraGame::GetScore(void)
+{
+	return m_pScore;
 }
 //=============================================================================
 //ゲームが立ち上がるとき、一回のみ全部ロードする

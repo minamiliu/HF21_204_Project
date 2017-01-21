@@ -89,7 +89,7 @@ HRESULT CEffectBoom::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size, float speed)
 //=============================================================================
 void CEffectBoom::Uninit(void)
 {
-	//２重管理のないように
+	//２重管理のないように注意
 
 	//オブジェクトの破棄
 	Release();
@@ -103,7 +103,7 @@ void CEffectBoom::Update(void)
 {
 	bool bGoal = false;
 
-	//２重管理のないように
+	//２重管理のないように注意
 	for(int cntEffect = 0; cntEffect < MAX_EFFECT; cntEffect++)
 	{
 		//エフェクト
@@ -125,7 +125,7 @@ void CEffectBoom::Update(void)
 //=============================================================================
 void CEffectBoom::Draw(void)
 {
-	//２重管理のないように
+	//２重管理のないように注意
 }
 
 //=============================================================================

@@ -63,22 +63,22 @@ HRESULT CScore::Init(void)
 {
 	return S_OK;
 }
-HRESULT CScore::Init(D3DXVECTOR3 numberPos, D3DXVECTOR3 numberSize, int maxKeta, const D3DXCOLOR &col)
+HRESULT CScore::Init(D3DXVECTOR3 centerPos, D3DXVECTOR3 centerSize, int maxKeta, const D3DXCOLOR &col)
 {
 	//初期値を設定
 	m_nMaxKeta = maxKeta;
 	m_nValue = 0;
-	m_pos = numberPos;
-	m_size = numberSize;
+	m_pos = centerPos;
+	m_size = centerSize;
 
 	//Numberポインター配列の生成
 	m_ppPolygon = new CNumber*[maxKeta];
 
 	//スタート位置(右)と桁サイズの計算
-	m_rightPos = numberPos;
-	m_ketaSize = numberSize;
+	m_rightPos = centerPos;
+	m_ketaSize = centerSize;
 	m_ketaSize.x /= maxKeta;
-	m_rightPos.x = numberPos.x + m_ketaSize.x * (maxKeta - 1) / 2.0f;
+	m_rightPos.x = centerPos.x + m_ketaSize.x * (maxKeta - 1) / 2.0f;
 	
 	//桁分のNumberの生成
 	D3DXVECTOR3 tmpPos = m_rightPos;
@@ -289,10 +289,22 @@ void CScore::SetPosition(D3DXVECTOR3 pos)
 		tmpPos.x -= m_ketaSize.x;
 	}
 }
+void CScore::SetSize(D3DXVECTOR3 centerSize)
+{
+	m_size = centerSize;
+	m_ketaSize = centerSize;
+	m_ketaSize.x /= m_nMaxKeta;
+
+	//桁分のNumberの生成
+	for(int cntKeta = 0; cntKeta < m_nMaxKeta; cntKeta++)
+	{
+		m_ppPolygon[cntKeta]->SetSize(m_ketaSize);
+	}
+}
 //=============================================================================
 //点数を取得
 //=============================================================================
-int CScore::GetScore(void)
+int CScore::GetValue(void)
 {
 	return m_nValue;
 }

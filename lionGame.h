@@ -42,6 +42,8 @@ public:
 		STATE_NORMAL = 0,
 		STATE_UPGRADE,
 		STATE_LION,
+		STATE_BONUS,
+		STATE_FINISH,
 		STATE_MAX,
 	}STATE;
 
@@ -60,13 +62,13 @@ public:
 protected:
 	void CreateStageLiu(void);
 	void CreateStageUsukura(void);
+	void CalcBonus(void);
 private:
 
 	STATE m_state;
 	int m_nCntState;	//状態のカウンター
 
-	CChange *m_pChange;
-	CEffectBG *m_pEffectBG;
+	CChange *m_pChange; //変身
 	CTime *m_pTime;
 	static CPlayerX *m_pPlayer;
 	static CScore *m_pScore;

@@ -128,7 +128,7 @@ HRESULT CTrashGame::Init(void)
 void CTrashGame::Uninit()
 {
 	//“_”‚ð•Û‘¶
-	CManager::SaveScore( MODE_TRASHGAME, m_pScore->GetScore());
+	CManager::SaveScore( MODE_TRASHGAME, m_pScore->GetValue());
 
 	CManager::Uninit();
 }
@@ -193,7 +193,7 @@ void CTrashGame::Update()
 					else
 					{//Š®‘S‚É“ü‚Á‚Ä‚é
 						//Å‰‚É“ü‚Á‚½‚Æ‚«‚ÉŽžŠÔ‚ð“®‚©‚·
-						if(m_pScore->GetScore() == 0)
+						if(m_pScore->GetValue() == 0)
 						{
 							pTime->StopTime();
 							CMessage::Create(D3DXVECTOR3(SCREEN_WIDTH + 100,100,0),D3DXVECTOR3(250,250,0),TEXTURE_START);

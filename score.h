@@ -49,7 +49,8 @@ public:
 	void SetScore(int score); //数字をそのまま表示する
 	void SetColor(const D3DXCOLOR &col); //全桁の色を一気に変更
 	void AddScore(int score); //得点を上げる
-	int GetScore(void);
+	int GetValue(void);
+	void SetSize(D3DXVECTOR3 size);
 
 protected:
 	void BindAllTexture(void);

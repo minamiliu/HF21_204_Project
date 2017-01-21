@@ -21,6 +21,7 @@
 #include "zebragame.h"
 #include "putbook.h"
 #include "effect3D.h"
+#include "score.h"
 //============================================
 // É}ÉNÉçíËã`
 //============================================
@@ -314,6 +315,7 @@ void CBook::Update(void)
 			  && pos.z < Bookboxpos.z + 70.0f 
 			)
 		{
+			CZebraGame::GetScore()->AddScore(100);
 			CZebraGame::PutObj(false);
 			CPutBook::Create( D3DXVECTOR3(0.0f, 10.0f, 0.0f), D3DXVECTOR3( 0.0f,0.0f, 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), m_nID%4);
 
