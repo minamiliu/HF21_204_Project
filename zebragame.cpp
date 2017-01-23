@@ -57,7 +57,7 @@ HRESULT CZebraGame::Init(void)
 	m_pCamera->Init();
 
 	//オブジェクトの生成(3Dポリゴン)
-	CScene3D::Create( D3DXVECTOR3( 0.0f,- 10.0f, 0.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 10, 10, 100.0f, 100.0f, false);
+	CScene3D::Create( D3DXVECTOR3( 0.0f,- 10.0f, 0.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 5, 5, 200.0f, 200.0f, false);
 	//ウォール
 	CMeshWall::Load();
 	m_nNumWall = 0;
@@ -90,10 +90,10 @@ HRESULT CZebraGame::Init(void)
 	for(int nCnt = 0 ; nCnt < MAX_BOOK ;nCnt++)
 	{
 		varX = rand() % 101 ;
-		varZ = rand() % 101 ;
+		varZ = rand() % 71 ;
 		varR = rand() % 101 ;
 		//オブジェクトの生成(Xfile)
-		CBook::Create( D3DXVECTOR3( 5.0f*varX-350.0f, 10.0f, 5.0f*varZ-300.0f), D3DXVECTOR3( 0.0f,D3DXToRadian(30*varR), 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), 5.0f);
+		CBook::Create( D3DXVECTOR3( 5.0f*varX-350.0f, 10.0f, 5.0f*varZ-250.0f), D3DXVECTOR3( 0.0f,D3DXToRadian(30*varR), 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), 5.0f);
 	}
 	CPutBook::Load();
 	
