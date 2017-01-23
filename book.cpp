@@ -22,6 +22,7 @@
 #include "putbook.h"
 #include "effect3D.h"
 #include "score.h"
+#include "effectBoom.h"
 //============================================
 // マクロ定義
 //============================================
@@ -318,6 +319,9 @@ void CBook::Update(void)
 			CZebraGame::GetScore()->AddScore(100);
 			CZebraGame::PutObj(false);
 			CPutBook::Create( D3DXVECTOR3(0.0f, 10.0f, 0.0f), D3DXVECTOR3( 0.0f,0.0f, 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), m_nID%4);
+
+			//エフェクト
+			CEffectBoom::Create( pos, D3DXVECTOR3( 200, 200, 200), 5);
 
 			Uninit();
 		}

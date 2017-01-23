@@ -19,6 +19,7 @@
 #include "stageBg.h"
 #include "timeBg.h"
 #include "sun.h"
+#include "score.h"
 //============================================
 // マクロ定義
 //============================================
@@ -176,13 +177,20 @@ HRESULT CStage::Init(void)
 
 	//ゴミ捨てゲーム
 	CScene2D::Create( pos[MASU_GORIRA], D3DXVECTOR3(300, 300, 0.0f) * MASU_ROTATE, TEXTURE_GORIRA_MASU);
+	m_pScore = CScore::Create( pos[MASU_GORIRA] + D3DXVECTOR3( 0.0f, 50.0f, 0.0f), D3DXVECTOR3( 240, 40.0f, 0.0f), 6, GREEN(1.0f));
+	m_pScore->SetScore(CManager::LoadScore(MODE_TRASHGAME));
 	//CScene2D::Create( D3DXVECTOR3( SCREEN_WIDTH*2/5, SCREEN_HEIGHT*2/4-120, 0.0f), D3DXVECTOR3(200, 120, 0.0f), TEXTURE_GOMIBOX);
 	//CScene2D::Create( D3DXVECTOR3( SCREEN_WIDTH*2/5-50, SCREEN_HEIGHT*2/4-170, 0.0f), D3DXVECTOR3(70, 50, 0.0f), TEXTURE_GOMI);
 
 	//片付けゲーム
 	CScene2D::Create( pos[MASU_ZEBRA], D3DXVECTOR3(300, 300, 0.0f) * MASU_ROTATE, TEXTURE_ZEBRA_MASU);
+	m_pScore = CScore::Create( pos[MASU_ZEBRA] + D3DXVECTOR3( 0.0f, 50.0f, 0.0f), D3DXVECTOR3( 240, 40.0f, 0.0f), 6, GREEN(1.0f));
+	m_pScore->SetScore(CManager::LoadScore(MODE_ZEBRAGAME));
+
 	//買い物ゲーム
 	CScene2D::Create( pos[MASU_LION], D3DXVECTOR3(300, 300, 0.0f) * MASU_ROTATE, TEXTURE_LION_MASU);
+	m_pScore = CScore::Create( pos[MASU_LION] + D3DXVECTOR3( 0.0f, 50.0f, 0.0f), D3DXVECTOR3( 240, 40.0f, 0.0f), 6, GREEN(1.0f));
+	m_pScore->SetScore(CManager::LoadScore(MODE_LIONGAME));
 
 	//ゴール
 	CScene2D::Create( pos[MASU_GOAL], D3DXVECTOR3(300, 120, 0.0f), TEXTURE_GOAL);

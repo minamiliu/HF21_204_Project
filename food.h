@@ -77,11 +77,12 @@ private:
 
 	CFoodIcon *m_pIcon;
 	TYPE m_type;
-	static bool bClear[TYPE_MAX];
 	D3DXVECTOR3 m_posInit;
 	float m_fAngle;
 	float m_fTurn;
 	float m_fMoveY;
+
+	static bool bClear[TYPE_MAX];
 
 	//èÛë‘
 	STATE m_state;
