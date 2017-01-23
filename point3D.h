@@ -20,6 +20,11 @@
 //============================================
 
 //============================================
+//前方宣言
+//============================================
+class CChange;
+
+//============================================
 //構造体定義
 //============================================
 
@@ -39,7 +44,7 @@ public:
 	static CPoint3D *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size);
 	static CPoint3D *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, HWND hwnd);
 	D3DXVECTOR3 Get3DPosition(void);
-	 void CPoint3D::ChangeZebra(void);
+	void CPoint3D::ChangeZebra(void);
 	
 private:
 	D3DXVECTOR3 m_startPos;//ベクトルの始点
@@ -48,6 +53,7 @@ private:
 	D3DXVECTOR3 m_3Dpos;
 	HWND m_hwnd;
 	static bool m_zebra;
+	CChange *m_pChange; //変身
 };
 
 #endif

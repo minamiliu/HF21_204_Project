@@ -136,7 +136,7 @@ void CChange::Update(void)
 		{
 			m_bAnimalPlayerFlag = true;
 			//pAnimalPlayer = CScene2D::Create(D3DXVECTOR3(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f),D3DXVECTOR3(100,100,0),);
-			pAnimalPlayer = CChangeTex::Create(D3DXVECTOR3(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f),D3DXVECTOR3(300,300,0),m_StrAnimalPlayerFileName);
+			pAnimalPlayer = CChangeTex::Create(D3DXVECTOR3(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f),D3DXVECTOR3(160,300,0),m_StrAnimalPlayerFileName);
 		}
 	}
 

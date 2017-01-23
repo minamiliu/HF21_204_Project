@@ -32,6 +32,7 @@
 #include "effectBoom.h"
 #include "mousePick.h"
 #include "effect3D.h"
+#include "change.h"
 
 //============================================
 // マクロ定義
@@ -40,8 +41,11 @@
 #define TIME_SIZE	D3DXVECTOR3( 140, 70.0f, 0.0f)
 #define SCORE_POS	D3DXVECTOR3( 150.0f, 30.0f, 0.0f)
 #define SCORE_SIZE	D3DXVECTOR3( 300, 50.0f, 0.0f)
-#define TEXTURE_MLT		"data/TEXTURE/かける.png"
 
+#define TEXTURE_ZEBRA		"data/TEXTURE/zebra.png"
+#define TEXTURE_ZEBRAMOM	"data/TEXTURE/zebraMom.png"
+#define TEXTURE_MOM			"data/TEXTURE/player000.png"
+#define TEXTURE_MLT			"data/TEXTURE/かける.png"
 //============================================
 // 静的メンバー変数の初期化
 //============================================
@@ -146,7 +150,40 @@ void CZebraGame::Update()
 	switch( m_state)
 	{
 	case STATE_NORMAL:
+		//全部のアイテムを箱に入れたら
 		if (m_PutToy + m_PutBook == MAX_TOY + MAX_BOOK)
+		{
+			m_state = STATE_BONUS;
+		}
+
+		//時間になったら、20個取ったら、変身する
+		if(m_pTime->GetTime() == 10 || m_PutToy + m_PutBook == 20)
+		{
+			m_pTime->StopTime();
+			m_state = STATE_UPGRADE;
+			m_pChange = CChange::Create(TEXTURE_MOM, TEXTURE_ZEBRA, TEXTURE_ZEBRAMOM); //変身演出
+		}
+		break;
+
+	case STATE_UPGRADE:
+		if( m_pChange->GetState() == false)
+		{
+			m_pChange->Uninit();
+			m_state = STATE_ZEBRA;
+			m_pTime->StopTime();
+			m_pPoint3D->ChangeZebra(); //本当の変身する瞬間
+		}
+		break;
+
+	case STATE_ZEBRA:
+		//全部のアイテムを箱に入れたら
+		if (m_PutToy + m_PutBook == MAX_TOY + MAX_BOOK)
+		{
+			m_state = STATE_BONUS;
+		}
+
+		//Time Up
+		if(m_pTime->TimeUp())
 		{
 			m_state = STATE_BONUS;
 		}
@@ -205,10 +242,6 @@ void CZebraGame :: PutObj(bool toy)
 	if(toy == false)
 	{
 		m_PutBook++;
-	}
-	if( m_PutToy + m_PutBook == 20)
-	{
-		m_pPoint3D -> ChangeZebra();
 	}
 }
 //=============================================================================

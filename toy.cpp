@@ -263,6 +263,7 @@ void CToy::Update(void)
 			CEffectBoom::Create( pos, D3DXVECTOR3( 200, 200, 200), 5);
 
 			Uninit();
+			return;
 		}
 	}
 	else if(m_bPicked == false && m_bPicked == false)
@@ -302,6 +303,7 @@ void CToy::Update(void)
 			CEffectBoom::Create( pos, D3DXVECTOR3( 200, 200, 200), 5);
 
 			Uninit();
+			return;
 		}
 	}
 	

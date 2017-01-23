@@ -30,6 +30,7 @@ class CPoint3D;
 class CScore;
 class CTime;
 class CScene2D;
+class CChange;
 //============================================
 //ç\ë¢ëÃíËã`
 //============================================
@@ -40,6 +41,8 @@ public:
 	typedef enum 
 	{
 		STATE_NORMAL = 0,
+		STATE_UPGRADE,
+		STATE_ZEBRA,
 		STATE_BONUS,
 		STATE_FINISH,
 		STATE_MAX,
@@ -68,6 +71,7 @@ private:
 	static CScore *m_pScore;
 	static CTime *m_pTime;
 	STATE m_state;
+	CChange *m_pChange; //ïœêg
 
 	int m_nGameCnt;
 	CScene2D *m_pTextureMlt;

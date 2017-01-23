@@ -18,6 +18,7 @@
 #include "mousePick.h"
 #include "toy.h"
 #include "book.h"
+#include "change.h"
 //============================================
 // マクロ定義
 //============================================
@@ -190,11 +191,14 @@ void CPoint3D::Update(void)
 			}
 		
 	}
+
+#ifdef _DEBUG
 	if(CManager::GetInputMouse()->GetMouseRightTrigger())
 	{
 		ChangeZebra();
-
 	}
+#endif
+
 	if(m_zebra == true)
 	{
 		CDebugProc::Print("\nゼブラ");
@@ -242,7 +246,7 @@ D3DXVECTOR3 CPoint3D::Get3DPosition(void)
 void CPoint3D::ChangeZebra(void)
 {
 	//CScene2D::Load(TEXTURENAMEZ);
-	m_zebra = !m_zebra;
+	m_zebra = true;
 	
 	CScene2D::ChangeTextureAnime(2,D3DXVECTOR2(TEX_PATTERN_SIZE_X,TEX_PATTERN_SIZE_Y),D3DXVECTOR2(4,1));
 		

@@ -22,12 +22,12 @@ public:
 	typedef enum
 	{
 		SOUND_LABEL_BGM000 = 0,			// BGM
-		SOUND_LABEL_BGM001,				// BGM
-		SOUND_LABEL_BGM002,				// BGM
-		SOUND_LABEL_SE_SHOT000,			// íeî≠éÀâπ
-		SOUND_LABEL_SE_HIT000,			// è’ìÀâπ
-		SOUND_LABEL_SE_HIT001,			// è’ìÀâπ
-		SOUND_LABEL_SE_EXPLOSION000,	// îöî≠âπ
+		//SOUND_LABEL_BGM001,				// BGM
+		//SOUND_LABEL_BGM002,				// BGM
+		//SOUND_LABEL_SE_SHOT000,			// íeî≠éÀâπ
+		//SOUND_LABEL_SE_HIT000,			// è’ìÀâπ
+		//SOUND_LABEL_SE_HIT001,			// è’ìÀâπ
+		//SOUND_LABEL_SE_EXPLOSION000,	// îöî≠âπ
 		SOUND_LABEL_MAX
 	} SOUND_LABEL;
 

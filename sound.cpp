@@ -12,12 +12,12 @@
 CSound::PARAM CSound::m_aParam[CSound::SOUND_LABEL_MAX] =
 {
 	{"data/BGM/bgm000.wav", -1},		// BGM
-	{"data/BGM/bgm001.wav", -1},		// BGM
-	{"data/BGM/bgm002.wav", -1},		// BGM
-	{"data/SE/shot000.wav", 0},			// ’e”­ŽË‰¹
-	{"data/SE/hit000.wav", 0},			// ’e”­ŽË‰¹
-	{"data/SE/hit001.wav", 0},			// ’e”­ŽË‰¹
-	{"data/SE/explosion000.wav", 0},	// ”š”­‰¹
+	//{"data/BGM/bgm001.wav", -1},		// BGM
+	//{"data/BGM/bgm002.wav", -1},		// BGM
+	//{"data/SE/shot000.wav", 0},			// ’e”­ŽË‰¹
+	//{"data/SE/hit000.wav", 0},			// ’e”­ŽË‰¹
+	//{"data/SE/hit001.wav", 0},			// ’e”­ŽË‰¹
+	//{"data/SE/explosion000.wav", 0},	// ”š”­‰¹
 };
 
 //=============================================================================

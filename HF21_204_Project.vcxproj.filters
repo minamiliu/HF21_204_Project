@@ -31,6 +31,12 @@
     <Filter Include="ヘッダー ファイル\stage">
       <UniqueIdentifier>{a03336f3-8b45-409f-b61a-bd039b525c6b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\zebra">
+      <UniqueIdentifier>{006be5fa-596a-46d8-b0f1-0163992f61cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\zebra">
+      <UniqueIdentifier>{d44a7fe6-80ba-4455-b04d-68b216706651}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -96,16 +102,7 @@
     <ClCompile Include="Point2D.cpp">
       <Filter>ソース ファイル\TrashGame</Filter>
     </ClCompile>
-    <ClCompile Include="toy.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="collision.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="zebragame.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Point3D.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="meshWall.cpp">
@@ -207,19 +204,10 @@
     <ClCompile Include="change.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="toybox.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="book.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="titleObj.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="effect3D.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="putbook.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="bg.cpp">
@@ -242,6 +230,24 @@
     </ClCompile>
     <ClCompile Include="text.cpp">
       <Filter>ソース ファイル\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="zebragame.cpp">
+      <Filter>ソース ファイル\zebra</Filter>
+    </ClCompile>
+    <ClCompile Include="toy.cpp">
+      <Filter>ソース ファイル\zebra</Filter>
+    </ClCompile>
+    <ClCompile Include="book.cpp">
+      <Filter>ソース ファイル\zebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Point3D.cpp">
+      <Filter>ソース ファイル\zebra</Filter>
+    </ClCompile>
+    <ClCompile Include="putbook.cpp">
+      <Filter>ソース ファイル\zebra</Filter>
+    </ClCompile>
+    <ClCompile Include="toybox.cpp">
+      <Filter>ソース ファイル\zebra</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -318,15 +324,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="enemyX.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="zebragame.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="toy.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="point3D.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="trajectory.h">
@@ -410,12 +407,6 @@
     <ClInclude Include="change.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="toybox.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="book.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="collision.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -429,9 +420,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="effect3D.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="putbook.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="bg.h">
@@ -454,6 +442,24 @@
     </ClInclude>
     <ClInclude Include="text.h">
       <Filter>ヘッダー ファイル\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="book.h">
+      <Filter>ヘッダー ファイル\zebra</Filter>
+    </ClInclude>
+    <ClInclude Include="zebragame.h">
+      <Filter>ヘッダー ファイル\zebra</Filter>
+    </ClInclude>
+    <ClInclude Include="toybox.h">
+      <Filter>ヘッダー ファイル\zebra</Filter>
+    </ClInclude>
+    <ClInclude Include="toy.h">
+      <Filter>ヘッダー ファイル\zebra</Filter>
+    </ClInclude>
+    <ClInclude Include="putbook.h">
+      <Filter>ヘッダー ファイル\zebra</Filter>
+    </ClInclude>
+    <ClInclude Include="point3D.h">
+      <Filter>ヘッダー ファイル\zebra</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
