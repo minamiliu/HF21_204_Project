@@ -19,6 +19,7 @@
 #include "stageBg.h"
 #include "timeBg.h"
 #include "sun.h"
+#include "text.h"
 //============================================
 // マクロ定義
 //============================================
@@ -40,6 +41,12 @@
 #define ROAD_ROTATE2	(55)
 #define ROAD2_TYOUSEI	(-5)
 #define PLAYER_POS_TYOUSEI (40)
+
+#define TEXT_SIZE_X_GORIRA	(79.59)
+#define TEXT_SIZE_X_ZEBRA	(91.35)
+#define TEXT_SIZE_X_LION	(95.62)
+#define TEXT_SIZE_Y			(2.82)
+#define TEXT_ROTATE			(50)
 //============================================
 // 静的メンバー変数の初期化
 //============================================
@@ -55,10 +62,10 @@ D3DXVECTOR3 CStage::pos[MASU_MAX] =
 	//D3DXVECTOR3( SCREEN_WIDTH*5/6, SCREEN_HEIGHT*3/4, 0.0f)	//ゴール位置
 
 	//倒したZの形ver
-	D3DXVECTOR3( SCREEN_WIDTH*1/6, SCREEN_HEIGHT-100, 0.0f),//スタート位置
-	D3DXVECTOR3( SCREEN_WIDTH*1/6+100, SCREEN_HEIGHT-300, 0.0f),//ゴミ捨て
-	D3DXVECTOR3( SCREEN_WIDTH*3/6, SCREEN_HEIGHT-300, 0.0f),//片付け
-	D3DXVECTOR3( SCREEN_WIDTH*5/6-100, SCREEN_HEIGHT-300, 0.0f),//買い物
+	D3DXVECTOR3( SCREEN_WIDTH*1/6, SCREEN_HEIGHT-200, 0.0f),//スタート位置
+	D3DXVECTOR3( SCREEN_WIDTH*1/6+100, SCREEN_HEIGHT-350, 0.0f),//ゴミ捨て
+	D3DXVECTOR3( SCREEN_WIDTH*3/6, SCREEN_HEIGHT-350, 0.0f),//片付け
+	D3DXVECTOR3( SCREEN_WIDTH*5/6-100, SCREEN_HEIGHT-350, 0.0f),//買い物
 	D3DXVECTOR3( SCREEN_WIDTH*5/6, SCREEN_HEIGHT-500, 0.0f)	//ゴール位置
 
 };
@@ -193,18 +200,30 @@ HRESULT CStage::Init(void)
 							D3DXVECTOR3(pos[MASU_GORIRA].x,pos[MASU_GORIRA].y-PLAYER_POS_TYOUSEI,0),//ゴール位置
 							D3DXVECTOR3(100, 100, 0.0f)
 						);
+		CText::Create(	D3DXVECTOR3(SCREEN_WIDTH/2,SCREEN_HEIGHT-(TEXT_SIZE_Y*TEXT_ROTATE/2),0),
+						D3DXVECTOR3(TEXT_SIZE_X_GORIRA*TEXT_ROTATE,TEXT_SIZE_Y*TEXT_ROTATE,0),
+						0,
+						0);
 		break;
 	case MASU_GORIRA:
 		CStagePlayer::Create(	D3DXVECTOR3(pos[MASU_GORIRA].x,pos[MASU_GORIRA].y-PLAYER_POS_TYOUSEI,0),//スタート位置
 							D3DXVECTOR3(pos[MASU_ZEBRA].x,pos[MASU_ZEBRA].y-PLAYER_POS_TYOUSEI,0),//ゴール位置
 							D3DXVECTOR3(100, 100, 0.0f)
 						);
+		CText::Create(	D3DXVECTOR3(SCREEN_WIDTH/2,SCREEN_HEIGHT-(TEXT_SIZE_Y*TEXT_ROTATE/2),0),
+						D3DXVECTOR3(TEXT_SIZE_X_ZEBRA*TEXT_ROTATE,TEXT_SIZE_Y*TEXT_ROTATE,0),
+						0,
+						1);
 		break;
 	case MASU_ZEBRA:
 		CStagePlayer::Create(	D3DXVECTOR3(pos[MASU_ZEBRA].x,pos[MASU_ZEBRA].y-PLAYER_POS_TYOUSEI,0),//スタート位置
 							D3DXVECTOR3(pos[MASU_LION].x,pos[MASU_LION].y-PLAYER_POS_TYOUSEI,0),//ゴール位置
 							D3DXVECTOR3(100, 100, 0.0f)
 						);
+		CText::Create(	D3DXVECTOR3(SCREEN_WIDTH/2,SCREEN_HEIGHT-(TEXT_SIZE_Y*TEXT_ROTATE/2),0),
+						D3DXVECTOR3(TEXT_SIZE_X_LION*TEXT_ROTATE,TEXT_SIZE_Y*TEXT_ROTATE,0),
+						0,
+						2);
 		break;
 	case MASU_LION:
 		CStagePlayer::Create(	D3DXVECTOR3(pos[MASU_LION].x,pos[MASU_LION].y-PLAYER_POS_TYOUSEI,0),//スタート位置
