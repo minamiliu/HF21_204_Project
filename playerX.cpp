@@ -93,6 +93,7 @@ HRESULT CPlayerX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float 
 
 	m_state = STATE_NORMAL;
 	m_nCntState = 0;
+	m_nNumFoodGet = 0; //集めた食材の数
 
 	//手足
 	m_pLimb[0] = CLimbX::Create( pos, rot, scl, CLimbX::TYPE_L_HAND);
@@ -557,9 +558,7 @@ bool CPlayerX::isCollision(void)
 					//食材ゲット
 					pFood->SetClear();
 					pFood->SetState( CFood::STATE_FLYING, 120);
-
-					//食材の破棄
-					//pFood->Uninit();
+					m_nNumFoodGet++;
 
 					//スコア
 					CLionGame::GetScore()->AddScore(100);
@@ -796,4 +795,11 @@ void CPlayerX::Unload(void)
 void CPlayerX::BindXfile(TYPE type)
 {
 	((CSceneX*)this)->BindXfile( m_pTexture[type], m_pD3DXMesh[type], m_pD3DXBuffMat[type], m_nNumMat[type]);
+}
+//=============================================================================
+//プレイヤーがゲットした食材の数を取得
+//=============================================================================
+int CPlayerX::GetFoodNum(void)
+{
+	return m_nNumFoodGet;
 }

@@ -14,6 +14,7 @@
 //É}ÉNÉçíËã`
 //============================================
 #define MAX_SCENE	(100)
+#define MAX_CHANGE	(10)
 #define MAX_EFFECT	(500)
 
 //============================================
@@ -48,6 +49,7 @@ public:
 	{
 		LAYER_SCENE = 0,
 		LAYER_EFFECT,
+		LAYER_CHANGE,
 		LAYER_MAX
 	}LAYER;
 
@@ -76,15 +78,18 @@ protected:
 	void Release(void);
 
 private:
+	int m_nID;
+	OBJTYPE m_objType;
+	LAYER m_layer;
 
 	static CScene *m_apScene[MAX_SCENE];
 	static int m_nNumScene;
-	int m_nID;
-	OBJTYPE m_objType;
 
 	static CScene *m_apEffect[MAX_EFFECT];
 	static int m_nNumEffect;
-	LAYER m_layer;
+
+	static CScene *m_apChange[MAX_CHANGE];
+	static int m_nNumChange;
 };
 
 #endif

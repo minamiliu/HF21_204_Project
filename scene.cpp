@@ -21,6 +21,9 @@ int CScene::m_nNumScene = 0;
 
 CScene *CScene::m_apEffect[MAX_EFFECT] = {};
 int CScene::m_nNumEffect = 0;
+
+CScene *CScene::m_apChange[MAX_CHANGE] = {};
+int CScene::m_nNumChange = 0;
 //============================================
 // É}ÉNÉçíËã`
 //============================================
@@ -52,16 +55,34 @@ CScene::CScene()
 CScene::CScene(LAYER layer)
 {
 	m_layer = layer;
-	for(int nCntScene = 0; nCntScene < MAX_EFFECT; nCntScene++)
+	switch(layer)
 	{
-		if(m_apEffect[nCntScene] == NULL)
+	case LAYER_EFFECT:
+		for(int nCntScene = 0; nCntScene < MAX_EFFECT; nCntScene++)
 		{
-			m_apEffect[nCntScene] = this;
-			m_nID = nCntScene;
-			m_nNumEffect++;
-			break;
+			if(m_apEffect[nCntScene] == NULL)
+			{
+				m_apEffect[nCntScene] = this;
+				m_nID = nCntScene;
+				m_nNumEffect++;
+				break;
+			}
 		}
+		break;
+	case LAYER_CHANGE:
+		for(int nCntScene = 0; nCntScene < MAX_CHANGE; nCntScene++)
+		{
+			if(m_apChange[nCntScene] == NULL)
+			{
+				m_apChange[nCntScene] = this;
+				m_nID = nCntScene;
+				m_nNumChange++;
+				break;
+			}
+		}
+		break;
 	}
+
 }
 
 //============================================
@@ -92,6 +113,14 @@ void CScene::UpdateAll(void)
 			m_apEffect[nCntScene]->Update();
 		}
 	}
+
+	for(int nCntScene = 0; nCntScene < MAX_CHANGE; nCntScene++)
+	{
+		if(m_apChange[nCntScene] != NULL)
+		{
+			m_apChange[nCntScene]->Update();
+		}
+	}
 }
 
 //============================================
@@ -114,6 +143,14 @@ void CScene::DrawAll(void)
 			m_apEffect[nCntScene]->Draw();
 		}
 	}	
+
+	for(int nCntScene = 0; nCntScene < MAX_CHANGE; nCntScene++)
+	{
+		if(m_apChange[nCntScene] != NULL)
+		{
+			m_apChange[nCntScene]->Draw();
+		}
+	}
 }
 
 //============================================
@@ -134,6 +171,14 @@ void CScene::ReleaseAll(void)
 		if(m_apEffect[nCntScene] != NULL)
 		{
 			m_apEffect[nCntScene]->Uninit();
+		}
+	}
+
+	for(int nCntScene = 0; nCntScene < MAX_CHANGE; nCntScene++)
+	{
+		if(m_apChange[nCntScene] != NULL)
+		{
+			m_apChange[nCntScene]->Uninit();
 		}
 	}
 }
@@ -161,6 +206,15 @@ void CScene::Release(void)
 			delete m_apEffect[nID];
 			m_apEffect[nID] = NULL;
 			m_nNumEffect--;
+		}
+		break;
+	case LAYER_CHANGE:
+		if(m_apChange[m_nID] != NULL)
+		{
+			int nID = m_nID;
+			delete m_apChange[nID];
+			m_apChange[nID] = NULL;
+			m_nNumChange--;
 		}
 		break;
 	}	

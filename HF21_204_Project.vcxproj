@@ -127,6 +127,7 @@
     <ClCompile Include="score.cpp" />
     <ClCompile Include="shadow.cpp" />
     <ClCompile Include="sound.cpp" />
+    <ClCompile Include="staffX.cpp" />
     <ClCompile Include="stage.cpp" />
     <ClCompile Include="stageBg.cpp" />
     <ClCompile Include="stagePlayer.cpp" />
@@ -185,6 +186,7 @@
     <ClInclude Include="number.h" />
     <ClInclude Include="partX.h" />
     <ClInclude Include="putbook.h" />
+    <ClInclude Include="staffX.h" />
     <ClInclude Include="trashGameExplosion.h" />
     <ClInclude Include="trashPlayer.h" />
     <ClInclude Include="player2D.h" />

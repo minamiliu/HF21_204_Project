@@ -36,6 +36,7 @@
 #include "change.h"
 #include "mousePick.h"
 #include "effectBoom.h"
+#include "staffX.h"
 
 //============================================
 // マクロ定義
@@ -99,7 +100,6 @@ HRESULT CLionGame::Init(void)
 	//プレイヤー
 	m_pPlayer = CPlayerX::Create( D3DXVECTOR3( 50.0f, 60.0f, 50.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 2.0f, 2.0f, 2.0f), 0.03f, CPlayerX::TYPE_HUMAN);
 
-
 	m_pTextureMlt = NULL;
 	m_pTextureHd = NULL;
 	m_nGameCnt = 0;
@@ -133,8 +133,8 @@ void CLionGame::Update()
 	switch( m_state)
 	{
 	case STATE_NORMAL:
-		//時間になったら、変身する
-		if(m_pTime->GetTime() == 10)
+		//時間になったら、食材を７個集めたら、変身する
+		if(m_pTime->GetTime() == 10 || m_pPlayer->GetFoodNum() == 7)
 		{
 			m_pTime->StopTime();
 			m_pChange = CChange::Create(TEXTURE_MOM, TEXTURE_LION, TEXTURE_LIONMOM);
@@ -225,6 +225,7 @@ HRESULT CLionGame::LoadAll(void)
 	CEnemyX::Load();
 	CFood::Load();
 	CEffect3D::Load();
+	CStaffX::Load();
 
 	return S_OK;
 }
@@ -312,16 +313,19 @@ void CLionGame::CreateStageUsukura(void)
 	CMeshDome::Create( D3DXVECTOR3( 1050.0f, 0.0f,1500.0f), D3DXVECTOR3( D3DX_PI, 0.0f, 0.0f), 2000.0f, 8, 8);
 
 	//床
-	CScene3D::Create( D3DXVECTOR3( 1050.0f, 0.0f,1500.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 21, 30, 100.0f, 100.0f, false);
+	CMeshField::Create( D3DXVECTOR3( 1050.0f, 0.0f, 1500.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 21, 30, 100.0f, 100.0f, CMeshField::TYPE_GREEN);
+
+	//天井
+	CMeshRoof::Create( D3DXVECTOR3( 1050.0f, 400.0f, 1500.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 21, 30, 100.0f, 100.0f, CMeshRoof::TYPE_WHITE);
 
 	//ウォール
-	CMeshWall::Create( D3DXVECTOR3( 1050.0f, 100.0f, 3000.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 21, 4, 100.0f, 100.0f);
-	CMeshWall::Create( D3DXVECTOR3( 1050.0f, 100.0f, 0.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(180.0f), 0.0f), 21, 4, 100.0f, 100.0f);
-	CMeshWall::Create( D3DXVECTOR3( 2100.0f, 100.0f, 1500.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(90.0f), 0.0f), 30, 4, 100.0f, 100.0f);
-	CMeshWall::Create( D3DXVECTOR3( 0.0f, 100.0f, 1500.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(-90.0f), 0.0f), 30, 4, 100.0f, 100.0f);
+	CMeshWall::Create( D3DXVECTOR3( 1050.0f, 200.0f, 3000.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 21, 4, 100.0f, 100.0f);
+	CMeshWall::Create( D3DXVECTOR3( 1050.0f, 200.0f, 0.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(180.0f), 0.0f), 21, 4, 100.0f, 100.0f);
+	CMeshWall::Create( D3DXVECTOR3( 2100.0f, 200.0f, 1500.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(90.0f), 0.0f), 30, 4, 100.0f, 100.0f);
+	CMeshWall::Create( D3DXVECTOR3( 0.0f, 200.0f, 1500.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(-90.0f), 0.0f), 30, 4, 100.0f, 100.0f);
 	
 	
-	//一番奥 ６個
+	//棚
 	for(int nCnt = 0 ; nCnt < 4 ; nCnt++)
 	{
 		CCubeX::Create( D3DXVECTOR3( 450.0f + (400 * nCnt), 50.0f, 800.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 100.0f, 100.0f, 400.0f), CCubeX::TYPE_1X4);
@@ -332,9 +336,13 @@ void CLionGame::CreateStageUsukura(void)
 	CCubeX::Create( D3DXVECTOR3( 700.0f , 50.0f, 350.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(90.0f), 0.0f), D3DXVECTOR3( 400.0f, 100.0f, 100.0f), CCubeX::TYPE_1X4);
 	CCubeX::Create( D3DXVECTOR3( 1100.0f , 50.0f, 350.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(90.0f), 0.0f), D3DXVECTOR3( 400.0f, 100.0f, 100.0f), CCubeX::TYPE_1X4);
 
-	//レジ　５個
+	//レジ　
 	CCubeX::Create( D3DXVECTOR3( 1950.0f, 50.0f, 300.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(180.0f), 0.0f), D3DXVECTOR3( 100.0f, 100.0f, 100.0f), CCubeX::TYPE_1X1);
 	CCubeX::Create( D3DXVECTOR3( 1750.0f, 50.0f, 300.0f), D3DXVECTOR3( 0.0f,D3DXToRadian(180.0f), 0.0f), D3DXVECTOR3( 100.0f, 100.0f, 100.0f), CCubeX::TYPE_1X1);
+
+	//staff
+	CStaffX::Create( D3DXVECTOR3( 1975.0f, 60.0f, 300.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 2.0f, 2.0f, 2.0f), CStaffX::TYPE_000);
+	CStaffX::Create( D3DXVECTOR3( 1775.0f, 60.0f, 300.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 2.0f, 2.0f, 2.0f), CStaffX::TYPE_000);
 
 	//敵
 	CEnemyX::Create( D3DXVECTOR3(150, 60.0f, 1350.0f), D3DXVECTOR3( 0.0f, D3DX_PI/2, 0.0f), D3DXVECTOR3( 2.0f, 2.0f, 2.0f), CEnemyX::TYPE_000);

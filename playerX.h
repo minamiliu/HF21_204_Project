@@ -59,6 +59,7 @@ public:
 
 	void SetState(STATE state);
 	STATE GetState(void);
+	int GetFoodNum(void);
 	void BindXfile(TYPE type);
 	D3DXVECTOR3 GetFront(void);
 
@@ -95,6 +96,8 @@ private:
 	CShadow *m_pShadow;			//‰e
 
 	CLimbX *m_pLimb[MAX_LIMB];	//è‘«x4
+	
+	int m_nNumFoodGet; //W‚ß‚½HŞ‚Ì”
 };
 
 #endif

@@ -103,12 +103,12 @@ HRESULT CTrashGame::Init(void)
 	//ゴミ
 	m_pTrash = CTrash::Create(D3DXVECTOR3(200.0f, 400.0f, 0.0f), D3DXVECTOR3(200.0f, 200.0f, 0.0f),TEXTURE_TRASH,CScene::OBJTYPE_TRASH);
 	//スコア
-	m_pScore = CScore::Create(D3DXVECTOR3(150, 50.0f, 0.0f), D3DXVECTOR3(300.0f, 50.0f, 0.0f), 6, BLUE(1.0f));
+	m_pScore = CScore::Create( D3DXVECTOR3( 150.0f, 30.0f, 0.0f), D3DXVECTOR3( 300, 50.0f, 0.0f), 6, RED(1.0f)); 
 	//ゴミ箱
 	//m_pTrashBox = CScene2D::Create(D3DXVECTOR3(1000.0f, 500.0f, 0.0f), D3DXVECTOR3(800.0f, 600.0f, 0.0f),TEXTURE_TRASHBOX);
 	m_pTrashBox = CScene2D::Create(D3DXVECTOR3(1100.0f, 350.0f, 0.0f), D3DXVECTOR3(700.0f, 300.0f, 0.0f),TEXTURE_TRASHBOX);
 	//タイム
-	pTime = CTime::Create(D3DXVECTOR3(600, 50.0f, 0.0f),D3DXVECTOR3(100, 100.0f, 0.0f),3,12,true,D3DXCOLOR(255,255,255,255));
+	pTime = CTime::Create( D3DXVECTOR3(SCREEN_WIDTH/2, 100.0f, 0.0f), D3DXVECTOR3(140, 70.0f, 0.0f), 2, 60, true, BLUE(1.0f));
 	pTime->StopTime();
 	//マウスの位置を得る
 	CPoint2D::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), D3DXVECTOR3(0.0f,0.0f,0.0f),0);
