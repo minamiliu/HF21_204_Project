@@ -20,7 +20,7 @@
 #include "effect3D.h"
 #include "score.h"
 #include "zebragame.h"
-
+#include "effectBoom.h"
 //============================================
 // マクロ定義
 //============================================
@@ -171,6 +171,9 @@ void CToy::ChangePicked(bool pick, bool zebra)
 		m_Move.y = 500.0f;
 		m_Move = m_Move/100.0f;
 	}
+
+	//エフェクト
+	CEffectBoom::Create( pos, D3DXVECTOR3(100, 20, 100), 5);
 }
 //=============================================================================
 //
@@ -255,6 +258,10 @@ void CToy::Update(void)
 			m_bPicked = false;
 			m_Timecnt = 0;
 			CZebraGame::PutObj(true);
+
+			//エフェクト
+			CEffectBoom::Create( pos, D3DXVECTOR3( 200, 200, 200), 5);
+
 			Uninit();
 		}
 	}
@@ -290,6 +297,10 @@ void CToy::Update(void)
 		{
 			CZebraGame::GetScore()->AddScore(100);
 			CZebraGame::PutObj(true);
+
+			//エフェクト
+			CEffectBoom::Create( pos, D3DXVECTOR3( 200, 200, 200), 5);
+
 			Uninit();
 		}
 	}

@@ -30,6 +30,7 @@ class CScore;
 class CTime;
 class CEffectBG;
 class CChange;
+class CScene2D;
 //============================================
 //ç\ë¢ëÃíËã`
 //============================================
@@ -72,7 +73,10 @@ private:
 	CTime *m_pTime;
 	static CPlayerX *m_pPlayer;
 	static CScore *m_pScore;
+
 	int m_nGameCnt;
+	CScene2D *m_pTextureMlt;
+	CScore *m_pTextureHd;
 };
 
 #endif

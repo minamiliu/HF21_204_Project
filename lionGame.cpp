@@ -54,8 +54,6 @@
 //============================================
 CScore *CLionGame::m_pScore = NULL;
 CPlayerX *CLionGame::m_pPlayer = NULL;
-CScene2D *pTextureMlt = NULL;
-CScore *pTextureHd = NULL;
 //=============================================================================
 //コンストラクタ
 //=============================================================================
@@ -63,6 +61,8 @@ CLionGame::CLionGame() : CManager(MODE_LIONGAME)
 {
 	m_pTime = NULL;
 	m_pChange = NULL;
+	m_pTextureMlt = NULL;
+	m_pTextureHd = NULL;
 }
 //=============================================================================
 //デストラクタ
@@ -100,8 +100,8 @@ HRESULT CLionGame::Init(void)
 	m_pPlayer = CPlayerX::Create( D3DXVECTOR3( 50.0f, 60.0f, 50.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 2.0f, 2.0f, 2.0f), 0.03f, CPlayerX::TYPE_HUMAN);
 
 
-	pTextureMlt = NULL;
-	pTextureHd = NULL;
+	m_pTextureMlt = NULL;
+	m_pTextureHd = NULL;
 	m_nGameCnt = 0;
 	return S_OK;
 }
@@ -302,6 +302,9 @@ void CLionGame::CreateStageLiu(void)
 	CFood::Create(D3DXVECTOR3(1000.0f, 50.0f, 1100.0f), D3DXVECTOR2(100.0f, 100.0f), CFood::TYPE_CARROT);
 	CFood::Create(D3DXVECTOR3(1300.0f, 50.0f, 1100.0f), D3DXVECTOR2(100.0f, 100.0f), CFood::TYPE_TOMATO);
 }
+//=============================================================================
+//
+//=============================================================================
 void CLionGame::CreateStageUsukura(void)
 {
 	//ドーム
@@ -362,6 +365,9 @@ void CLionGame::CreateStageUsukura(void)
 	CFood::Create(D3DXVECTOR3( 250.0f, 50.0f, 1050.0f), D3DXVECTOR2(100.0f, 100.0f), CFood::TYPE_CARROT);
 	CFood::Create(D3DXVECTOR3( 750.0f, 50.0f, 1650.0f), D3DXVECTOR2(100.0f, 100.0f), CFood::TYPE_TOMATO);
 }
+//=============================================================================
+//余ったタイムの計算
+//=============================================================================
 void CLionGame::CalcBonus(void)
 {
 	if(m_pTime->GetTimeFlag() == true)
@@ -408,11 +414,11 @@ void CLionGame::CalcBonus(void)
 	if(bMove == false)
 	{
 		// X100
-		if(pTextureMlt == NULL && pTextureHd == NULL)
+		if(m_pTextureMlt == NULL && m_pTextureHd == NULL)
 		{
-			pTextureMlt = CScene2D::Create(D3DXVECTOR3(SCREEN_WIDTH/2 + 150,200,0),D3DXVECTOR3(100,100,0),TEXTURE_MLT);
-			pTextureHd = CScore::Create(D3DXVECTOR3(SCREEN_WIDTH/2 + 250,200,0),D3DXVECTOR3(100,100,0),3,YELLOW(1.0));
-			pTextureHd->SetScore(100);
+			m_pTextureMlt = CScene2D::Create(D3DXVECTOR3(SCREEN_WIDTH/2 + 150,200,0),D3DXVECTOR3(100,100,0),TEXTURE_MLT);
+			m_pTextureHd = CScore::Create(D3DXVECTOR3(SCREEN_WIDTH/2 + 250,200,0),D3DXVECTOR3(100,100,0),3,YELLOW(1.0));
+			m_pTextureHd->SetScore(100);
 			m_nGameCnt = 0;
 		}
 		else

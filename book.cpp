@@ -176,6 +176,9 @@ void CBook::ChangePicked(bool pick, bool zebra)
 		m_Move.y = 500.0f;
 		m_Move = m_Move/100.0f;
 	}
+
+	//エフェクト
+	CEffectBoom::Create( pos, D3DXVECTOR3(100, 20, 100), 5);
 }
 //=============================================================================
 //
@@ -282,6 +285,9 @@ void CBook::Update(void)
 			m_Timecnt = 0;
 			CZebraGame::PutObj(false);
 			CPutBook::Create( D3DXVECTOR3(0.0f, 10.0f, 0.0f), D3DXVECTOR3( 0.0f,0.0f, 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), m_nID%4);
+
+			//エフェクト
+			CEffectBoom::Create( pos, D3DXVECTOR3( 200, 200, 200), 5);
 
 			Uninit();
 		}

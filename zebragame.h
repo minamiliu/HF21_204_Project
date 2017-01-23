@@ -28,6 +28,8 @@ class CScene2D;
 class CMeshWall;
 class CPoint3D;
 class CScore;
+class CTime;
+class CScene2D;
 //============================================
 //ç\ë¢ëÃíËã`
 //============================================
@@ -35,6 +37,13 @@ class CScore;
 class CZebraGame : public CManager
 {
 public:
+	typedef enum 
+	{
+		STATE_NORMAL = 0,
+		STATE_BONUS,
+		STATE_FINISH,
+		STATE_MAX,
+	}STATE;
 
 	CZebraGame();
 	virtual ~CZebraGame();
@@ -48,15 +57,22 @@ public:
 	static HRESULT LoadAll(void);
 	static CScore *GetScore(void);
 
+protected:
+	void CalcBonus(void);
+
 private:
 	static CScene2D *m_pZebra;
-	CScene2D *m_pZebraBox;
 	static CPoint3D *m_pPoint3D;
 	static int m_PutToy;
 	static int m_PutBook;
-	CMeshWall *m_pMeshWall[MAX_WALL];
-	int m_nNumWall;
 	static CScore *m_pScore;
+	static CTime *m_pTime;
+	STATE m_state;
+
+	int m_nGameCnt;
+	CScene2D *m_pTextureMlt;
+	CScore *m_pTextureHd;
+
 };
 
 #endif
