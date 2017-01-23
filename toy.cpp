@@ -22,10 +22,10 @@
 //============================================
 // É}ÉNÉçíËã`
 //============================================
-#define MODEL_BOOK    "data/MODEL/book.x"
-#define MODEL_TOY_CAR "data/MODEL/cube200.x"
+#define MODEL_TOY_BEAR    "data/MODEL/kuma.x"
+#define MODEL_TOY_CAR "data/MODEL/toy_car.x"
 #define MODEL_TOY_ROBOT "data/MODEL/robot.x"
-#define MODEL_FILENAME "data/MODEL/player.x"
+#define MODEL_TOY_BLOCK "data/MODEL/block.x"
 #define VALUE_ROTATE	(D3DX_PI * 0.1f) 	// âÒì]ó 
 
 //============================================
@@ -112,13 +112,13 @@ HRESULT CToy::Load(void)
 			strFileName = MODEL_TOY_ROBOT;
 			break;
 			case TYPE_BLOCK:
-			strFileName = MODEL_TOY_ROBOT;
+			strFileName = MODEL_TOY_BLOCK;
 			break;
 			case TYPE_CAR:
-			strFileName = MODEL_TOY_ROBOT;
+			strFileName = MODEL_TOY_CAR;
 			break;
 			case TYPE_BEAR:
-			strFileName = MODEL_TOY_ROBOT;
+			strFileName = MODEL_TOY_BEAR;
 			break;
 		}
 
