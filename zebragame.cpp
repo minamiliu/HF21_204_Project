@@ -89,10 +89,10 @@ HRESULT CZebraGame::Init(void)
 	for(int nCnt = 0 ; nCnt < MAX_TOY ;nCnt++)
 	{
 		varX = rand() % 101 ;
-		varZ = rand() % 101 ;
+		varZ = rand() % 71 ;
 		varR = rand() % 101 ;
 		//オブジェクトの生成(Xfile)
-		CToy::Create( D3DXVECTOR3( 5.0f*varX-350.0f, 10.0f, 5.0f*varZ-300.0f), D3DXVECTOR3( 0.0f,D3DXToRadian(30*varR), 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), 5.0f);
+		CToy::Create( D3DXVECTOR3( 5.0f*varX-350.0f, 10.0f, 5.0f*varZ-250.0f), D3DXVECTOR3( 0.0f,D3DXToRadian(30*varR), 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), 5.0f);
 	}
 
 
