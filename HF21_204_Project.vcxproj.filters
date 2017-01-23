@@ -240,6 +240,9 @@
     <ClCompile Include="timeBg.cpp">
       <Filter>ソース ファイル\stage</Filter>
     </ClCompile>
+    <ClCompile Include="text.cpp">
+      <Filter>ソース ファイル\stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -447,6 +450,9 @@
       <Filter>ヘッダー ファイル\stage</Filter>
     </ClInclude>
     <ClInclude Include="timeBg.h">
+      <Filter>ヘッダー ファイル\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="text.h">
       <Filter>ヘッダー ファイル\stage</Filter>
     </ClInclude>
   </ItemGroup>

@@ -20,6 +20,8 @@
 #include "timeBg.h"
 #include "sun.h"
 #include "score.h"
+#include "text.h"
+
 //============================================
 // マクロ定義
 //============================================
@@ -41,6 +43,12 @@
 #define ROAD_ROTATE2	(55)
 #define ROAD2_TYOUSEI	(-5)
 #define PLAYER_POS_TYOUSEI (40)
+
+#define TEXT_SIZE_X_GORIRA	(79.59)
+#define TEXT_SIZE_X_ZEBRA	(91.35)
+#define TEXT_SIZE_X_LION	(95.62)
+#define TEXT_SIZE_Y			(2.82)
+#define TEXT_ROTATE			(50)
 //============================================
 // 静的メンバー変数の初期化
 //============================================
@@ -56,10 +64,10 @@ D3DXVECTOR3 CStage::pos[MASU_MAX] =
 	//D3DXVECTOR3( SCREEN_WIDTH*5/6, SCREEN_HEIGHT*3/4, 0.0f)	//ゴール位置
 
 	//倒したZの形ver
-	D3DXVECTOR3( SCREEN_WIDTH*1/6, SCREEN_HEIGHT-100, 0.0f),//スタート位置
-	D3DXVECTOR3( SCREEN_WIDTH*1/6+100, SCREEN_HEIGHT-300, 0.0f),//ゴミ捨て
-	D3DXVECTOR3( SCREEN_WIDTH*3/6, SCREEN_HEIGHT-300, 0.0f),//片付け
-	D3DXVECTOR3( SCREEN_WIDTH*5/6-100, SCREEN_HEIGHT-300, 0.0f),//買い物
+	D3DXVECTOR3( SCREEN_WIDTH*1/6, SCREEN_HEIGHT-200, 0.0f),//スタート位置
+	D3DXVECTOR3( SCREEN_WIDTH*1/6+100, SCREEN_HEIGHT-350, 0.0f),//ゴミ捨て
+	D3DXVECTOR3( SCREEN_WIDTH*3/6, SCREEN_HEIGHT-350, 0.0f),//片付け
+	D3DXVECTOR3( SCREEN_WIDTH*5/6-100, SCREEN_HEIGHT-350, 0.0f),//買い物
 	D3DXVECTOR3( SCREEN_WIDTH*5/6, SCREEN_HEIGHT-500, 0.0f)	//ゴール位置
 
 };
@@ -177,20 +185,14 @@ HRESULT CStage::Init(void)
 
 	//ゴミ捨てゲーム
 	CScene2D::Create( pos[MASU_GORIRA], D3DXVECTOR3(300, 300, 0.0f) * MASU_ROTATE, TEXTURE_GORIRA_MASU);
-	m_pScore = CScore::Create( pos[MASU_GORIRA] + D3DXVECTOR3( 0.0f, 50.0f, 0.0f), D3DXVECTOR3( 240, 40.0f, 0.0f), 6, GREEN(1.0f));
-	m_pScore->SetScore(CManager::LoadScore(MODE_TRASHGAME));
 	//CScene2D::Create( D3DXVECTOR3( SCREEN_WIDTH*2/5, SCREEN_HEIGHT*2/4-120, 0.0f), D3DXVECTOR3(200, 120, 0.0f), TEXTURE_GOMIBOX);
 	//CScene2D::Create( D3DXVECTOR3( SCREEN_WIDTH*2/5-50, SCREEN_HEIGHT*2/4-170, 0.0f), D3DXVECTOR3(70, 50, 0.0f), TEXTURE_GOMI);
 
 	//片付けゲーム
 	CScene2D::Create( pos[MASU_ZEBRA], D3DXVECTOR3(300, 300, 0.0f) * MASU_ROTATE, TEXTURE_ZEBRA_MASU);
-	m_pScore = CScore::Create( pos[MASU_ZEBRA] + D3DXVECTOR3( 0.0f, 50.0f, 0.0f), D3DXVECTOR3( 240, 40.0f, 0.0f), 6, GREEN(1.0f));
-	m_pScore->SetScore(CManager::LoadScore(MODE_ZEBRAGAME));
 
 	//買い物ゲーム
 	CScene2D::Create( pos[MASU_LION], D3DXVECTOR3(300, 300, 0.0f) * MASU_ROTATE, TEXTURE_LION_MASU);
-	m_pScore = CScore::Create( pos[MASU_LION] + D3DXVECTOR3( 0.0f, 50.0f, 0.0f), D3DXVECTOR3( 240, 40.0f, 0.0f), 6, GREEN(1.0f));
-	m_pScore->SetScore(CManager::LoadScore(MODE_LIONGAME));
 
 	//ゴール
 	CScene2D::Create( pos[MASU_GOAL], D3DXVECTOR3(300, 120, 0.0f), TEXTURE_GOAL);
@@ -201,24 +203,57 @@ HRESULT CStage::Init(void)
 							D3DXVECTOR3(pos[MASU_GORIRA].x,pos[MASU_GORIRA].y-PLAYER_POS_TYOUSEI,0),//ゴール位置
 							D3DXVECTOR3(100, 100, 0.0f)
 						);
+		CText::Create(	D3DXVECTOR3(SCREEN_WIDTH/2,SCREEN_HEIGHT-(TEXT_SIZE_Y*TEXT_ROTATE/2),0),
+						D3DXVECTOR3(TEXT_SIZE_X_GORIRA*TEXT_ROTATE,TEXT_SIZE_Y*TEXT_ROTATE,0),
+						0,
+						0);
+
 		break;
 	case MASU_GORIRA:
 		CStagePlayer::Create(	D3DXVECTOR3(pos[MASU_GORIRA].x,pos[MASU_GORIRA].y-PLAYER_POS_TYOUSEI,0),//スタート位置
 							D3DXVECTOR3(pos[MASU_ZEBRA].x,pos[MASU_ZEBRA].y-PLAYER_POS_TYOUSEI,0),//ゴール位置
 							D3DXVECTOR3(100, 100, 0.0f)
 						);
+		CText::Create(	D3DXVECTOR3(SCREEN_WIDTH/2,SCREEN_HEIGHT-(TEXT_SIZE_Y*TEXT_ROTATE/2),0),
+						D3DXVECTOR3(TEXT_SIZE_X_ZEBRA*TEXT_ROTATE,TEXT_SIZE_Y*TEXT_ROTATE,0),
+						0,
+						1);
+		//スコア
+		m_pScore = CScore::Create( pos[MASU_GORIRA] + D3DXVECTOR3( 0.0f, 50.0f, 0.0f), D3DXVECTOR3( 240, 40.0f, 0.0f), 6, BLUE(1.0f));
+		m_pScore->SetScore(CManager::LoadScore(MODE_TRASHGAME));
 		break;
 	case MASU_ZEBRA:
 		CStagePlayer::Create(	D3DXVECTOR3(pos[MASU_ZEBRA].x,pos[MASU_ZEBRA].y-PLAYER_POS_TYOUSEI,0),//スタート位置
 							D3DXVECTOR3(pos[MASU_LION].x,pos[MASU_LION].y-PLAYER_POS_TYOUSEI,0),//ゴール位置
 							D3DXVECTOR3(100, 100, 0.0f)
 						);
+		CText::Create(	D3DXVECTOR3(SCREEN_WIDTH/2,SCREEN_HEIGHT-(TEXT_SIZE_Y*TEXT_ROTATE/2),0),
+						D3DXVECTOR3(TEXT_SIZE_X_LION*TEXT_ROTATE,TEXT_SIZE_Y*TEXT_ROTATE,0),
+						0,
+						2);
+
+		//スコア
+		m_pScore = CScore::Create( pos[MASU_GORIRA] + D3DXVECTOR3( 0.0f, 50.0f, 0.0f), D3DXVECTOR3( 240, 40.0f, 0.0f), 6, BLUE(1.0f));
+		m_pScore->SetScore(CManager::LoadScore(MODE_TRASHGAME));
+		//スコア
+		m_pScore = CScore::Create( pos[MASU_ZEBRA] + D3DXVECTOR3( 0.0f, 50.0f, 0.0f), D3DXVECTOR3( 240, 40.0f, 0.0f), 6, BLUE(1.0f));
+		m_pScore->SetScore(CManager::LoadScore(MODE_ZEBRAGAME));
+
 		break;
 	case MASU_LION:
 		CStagePlayer::Create(	D3DXVECTOR3(pos[MASU_LION].x,pos[MASU_LION].y-PLAYER_POS_TYOUSEI,0),//スタート位置
 							D3DXVECTOR3(pos[MASU_GOAL].x,pos[MASU_GOAL].y-PLAYER_POS_TYOUSEI,0),//ゴール位置
 							D3DXVECTOR3(100, 100, 0.0f)
 						);
+		//スコア
+		m_pScore = CScore::Create( pos[MASU_GORIRA] + D3DXVECTOR3( 0.0f, 50.0f, 0.0f), D3DXVECTOR3( 240, 40.0f, 0.0f), 6, BLUE(1.0f));
+		m_pScore->SetScore(CManager::LoadScore(MODE_TRASHGAME));
+		//スコア
+		m_pScore = CScore::Create( pos[MASU_ZEBRA] + D3DXVECTOR3( 0.0f, 50.0f, 0.0f), D3DXVECTOR3( 240, 40.0f, 0.0f), 6, BLUE(1.0f));
+		m_pScore->SetScore(CManager::LoadScore(MODE_ZEBRAGAME));
+		//スコア
+		m_pScore = CScore::Create( pos[MASU_LION] + D3DXVECTOR3( 0.0f, 50.0f, 0.0f), D3DXVECTOR3( 240, 40.0f, 0.0f), 6, BLUE(1.0f));
+		m_pScore->SetScore(CManager::LoadScore(MODE_LIONGAME));
 		break;
 	}
 

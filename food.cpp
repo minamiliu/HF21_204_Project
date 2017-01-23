@@ -68,7 +68,7 @@ HRESULT CFood::Init(D3DXVECTOR3 pos, D3DXVECTOR2 size, TYPE type)
 
 	//èâä˙èÛë‘
 	m_type = type;
-	bClear[type] = false;
+	bClear[type] = true;
 	m_state = STATE_NORMAL;
 	m_nCntState = 0;
 	m_posInit = pos;
