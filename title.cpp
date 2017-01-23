@@ -67,8 +67,8 @@ HRESULT CTitle::Init(void)
 	CTitleObj::Create(CTitleObj::TITLE_START,D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_HEIGHT*6/7, 0.0f),D3DXVECTOR3(0, 0, 0.0f), D3DXVECTOR3(13.7* LOGO_ROTATE/3, 3 * LOGO_ROTATE/3, 0.0f));
 
 	//BGM
-	//CSound *pSound = CManager::GetSound();
-	//pSound->Play(CSound::SOUND_LABEL_BGM000);
+	CSound *pSound = CManager::GetSound();
+	pSound->Play(CSound::SOUND_LABEL_BGM000);
 
 	return S_OK;
 }

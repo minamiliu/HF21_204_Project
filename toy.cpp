@@ -73,6 +73,7 @@ HRESULT CToy::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float spee
 {
 	CSceneX::Init( pos, rot, scl);
 	
+	m_nNumber = 0;
 	BindXfile(m_nNumber%4);
 	SetObjType(OBJTYPE_TOY); ;
 	m_bPicked = false;
@@ -334,23 +335,26 @@ CToy *CToy::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float spee
 //=============================================================================
 void CToy::GetBoxpos(void)
 {
-	for(int Cnt=0; Cnt<MAX_SCENE ; Cnt++)
+	if(Bookboxpos == D3DXVECTOR3(0,0,0) || Bookboxpos == D3DXVECTOR3(0,0,0))
 	{
-		CScene *pScene;
-		pScene = CScene::GetScene(Cnt);
-		if(pScene != NULL)
+		for(int Cnt=0; Cnt<MAX_SCENE ; Cnt++)
 		{
-			CScene::OBJTYPE type;
-			type = pScene -> GetObjType();
-			if(type == CScene::OBJTYPE_TOYBOX)
+			CScene *pScene;
+			pScene = CScene::GetScene(Cnt);
+			if(pScene != NULL)
 			{
-				Toyboxpos = pScene -> GetPosition();
+				CScene::OBJTYPE type;
+				type = pScene -> GetObjType();
+				if(type == CScene::OBJTYPE_TOYBOX)
+				{
+					Toyboxpos = pScene -> GetPosition();
+				}
+				type = pScene -> GetObjType();
+				if(type == CScene::OBJTYPE_BOOKBOX)
+				{
+					Bookboxpos = pScene -> GetPosition();
+				}
 			}
-			type = pScene -> GetObjType();
-			if(type == CScene::OBJTYPE_BOOKBOX)
-			{
-				Bookboxpos = pScene -> GetPosition();
-			}
-		}
-	}	
+		}		
+	}
 }

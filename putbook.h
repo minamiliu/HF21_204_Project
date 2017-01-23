@@ -51,14 +51,14 @@ public:
 
 	//static CPutBook *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float speed);
 	static CPutBook *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, int type);
+	static void InitPubBookPos(void);
+
+	static int m_nNumber;
 private:
 	static LPDIRECT3DTEXTURE9	m_pTexture		[MAX_BOOKTYPE];		// テクスチャへのポインタ
 	static LPD3DXMESH			m_pD3DXMesh		[MAX_BOOKTYPE];		// メッシュ情報へのポインタ
 	static LPD3DXBUFFER			m_pD3DXBuffMat	[MAX_BOOKTYPE];		// マテリアル情報へのポインタ
 	static DWORD				m_nNumMat		[MAX_BOOKTYPE];		// マテリアル情報の数
-	
-	static int m_nNumber;
-	
 	
 	int m_Timecnt;
 	

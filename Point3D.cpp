@@ -73,7 +73,7 @@ HRESULT CPoint3D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size,HWND hwnd)
 	m_endPos = D3DXVECTOR3(0.0f,0.0f,0.0f);
 	m_speed = D3DXVECTOR3(0.0f,0.0f,0.0f);
 
-	//m_zebra = false;
+	m_zebra = false;
 	return S_OK;
 }
 

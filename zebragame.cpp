@@ -74,6 +74,11 @@ HRESULT CZebraGame::Init(void)
 
 	//変数の初期化
 	m_state = STATE_NORMAL;
+	m_PutToy = 0;
+	m_PutBook = 0;
+	CToy::m_nNumber = 0;
+	CBook::m_nNumber = 0;
+	CPutBook::m_nNumber = 0;
 
 	//カメラの位置
 	m_pCamera->Init();
@@ -99,6 +104,8 @@ HRESULT CZebraGame::Init(void)
 	//オブジェクトの生成(3D)
 	CBookBox::Create(D3DXVECTOR3(300.0f,0.0f,370.0f) , D3DXVECTOR3( 0.0f, 0.0f, 0.0f),CBookBox::TYPE_TOYBOX);
 	CBookBox::Create(D3DXVECTOR3(-300.0f,0.0f,370.0f) , D3DXVECTOR3( 0.0f,D3DXToRadian(90.0f), 0.0f),CBookBox::TYPE_BOOKBOX);
+
+	//toy
 	for(int nCnt = 0 ; nCnt < MAX_TOY ;nCnt++)
 	{
 		varX = rand() % 101 ;
@@ -108,7 +115,7 @@ HRESULT CZebraGame::Init(void)
 		CToy::Create( D3DXVECTOR3( 5.0f*varX-350.0f, 10.0f, 5.0f*varZ-250.0f), D3DXVECTOR3( 0.0f,D3DXToRadian(30*varR), 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), 5.0f);
 	}
 
-
+	//book
 	for(int nCnt = 0 ; nCnt < MAX_BOOK ;nCnt++)
 	{
 		varX = rand() % 101 ;
@@ -117,6 +124,9 @@ HRESULT CZebraGame::Init(void)
 		//オブジェクトの生成(Xfile)
 		CBook::Create( D3DXVECTOR3( 5.0f*varX-350.0f, 10.0f, 5.0f*varZ-250.0f), D3DXVECTOR3( 0.0f,D3DXToRadian(30*varR), 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), 5.0f);
 	}
+
+	//putbook init
+	CPutBook::InitPubBookPos();
 
 	
 	

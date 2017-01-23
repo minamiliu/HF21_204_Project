@@ -272,7 +272,8 @@ void CStage::Update()
 
 
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
-	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN))
+	CInputMouse *pInputMouse = CManager::GetInputMouse();
+	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN) || pInputMouse->GetMouseLeftTrigger())
 	{
 		switch(m_stageNow)
 		{

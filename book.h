@@ -50,6 +50,8 @@ public:
 
 	void CBook::ChangePicked(bool pick, bool zebra);
 	void GetBoxpos(void);
+
+	static int m_nNumber;
 private:
 	static LPDIRECT3DTEXTURE9	m_pTexture		[MAX_BOOKTYPE];		// テクスチャへのポインタ
 	static LPD3DXMESH			m_pD3DXMesh		[MAX_BOOKTYPE];		// メッシュ情報へのポインタ
@@ -59,12 +61,12 @@ private:
 	bool m_bZebra;
 	bool m_bBack;
 	int m_nID;
-	static int m_nNumber;
+	
 	D3DXVECTOR3 m_Move;
 	float m_gravity;
 	int m_Timecnt;
 	D3DXVECTOR3 m_oldpos;
-	static int m_Puttoy;
+	
 	static D3DXVECTOR3 Toyboxpos;
 	static D3DXVECTOR3 Bookboxpos;
 
