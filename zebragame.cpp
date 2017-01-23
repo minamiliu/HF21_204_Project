@@ -77,7 +77,7 @@ HRESULT CZebraGame::Init(void)
 	m_pCamera->SetPosR(D3DXVECTOR3(0.0f,0.0f,400.0f));
 
 	//床
-	CMeshField::Create( D3DXVECTOR3( 0.0f,- 10.0f, 0.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 10, 10, 100.0f, 100.0f, CMeshField::TYPE_GREEN);
+	CMeshField::Create( D3DXVECTOR3( 0.0f,- 10.0f, 0.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 5, 5, 200.0f, 200.0f, CMeshField::TYPE_WOOD);
 
 	//ウォール
 	CMeshWall::Create( D3DXVECTOR3( 0.0f, 100.0f, 450.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 10, 10, 100.0f, 100.0f);
@@ -108,10 +108,10 @@ HRESULT CZebraGame::Init(void)
 	for(int nCnt = 0 ; nCnt < MAX_BOOK ;nCnt++)
 	{
 		varX = rand() % 101 ;
-		varZ = rand() % 101 ;
+		varZ = rand() % 71 ;
 		varR = rand() % 101 ;
 		//オブジェクトの生成(Xfile)
-		CBook::Create( D3DXVECTOR3( 5.0f*varX-350.0f, 10.0f, 5.0f*varZ-300.0f), D3DXVECTOR3( 0.0f,D3DXToRadian(30*varR), 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), 5.0f);
+		CBook::Create( D3DXVECTOR3( 5.0f*varX-350.0f, 10.0f, 5.0f*varZ-250.0f), D3DXVECTOR3( 0.0f,D3DXToRadian(30*varR), 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), 5.0f);
 	}
 
 	
