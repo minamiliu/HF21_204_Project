@@ -30,6 +30,7 @@ public:
 	{
 		TYPE_GREEN = 0,
 		TYPE_WHITE,
+		TYPE_WOOD,
 		TYPE_MAX,
 	}TYPE;
 

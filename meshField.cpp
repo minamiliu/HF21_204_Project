@@ -21,6 +21,7 @@
 
 #define TEXTURE_GREEN "data/TEXTURE/field000.jpg"
 #define TEXTURE_WHITE "data/TEXTURE/field001.jpg"
+#define TEXTURE_WOOD "data/TEXTURE/field03.png"
 
 
 //============================================
@@ -109,6 +110,10 @@ HRESULT CMeshField::Load(void)
 
 		case TYPE_WHITE:
 			strFileName = TEXTURE_WHITE;
+			break;
+
+		case TYPE_WOOD:
+			strFileName = TEXTURE_WOOD;
 			break;
 		}
 
