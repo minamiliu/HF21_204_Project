@@ -162,6 +162,10 @@ void CToy::ChangePicked(bool pick, bool zebra)
 	if(pick == true)
 	{
 		m_oldpos = pos;
+
+		//SE
+		CSound *pSound = CManager::GetSound();
+		pSound->Play(CSound::SOUND_LABEL_SE_PICK);
 	}
 	m_bPicked = pick;
 	m_bZebra = zebra ;
@@ -269,6 +273,10 @@ void CToy::Update(void)
 
 			CZebraGame::GetScore()->AddScore(100);
 
+			//SE
+			CSound *pSound = CManager::GetSound();
+			pSound->Play(CSound::SOUND_LABEL_SE_ITEM_GET);
+
 			Uninit();
 			return;
 		}
@@ -280,6 +288,10 @@ void CToy::Update(void)
 		{
 			pos.y -= 3.0f;
 			CSceneX::SetPosition(pos);
+
+			//SE
+			CSound *pSound = CManager::GetSound();
+			pSound->Play(CSound::SOUND_LABEL_SE_PUT);
 		}
 		//間違い
 		if( pos.y <= 0.0f&&
@@ -294,6 +306,10 @@ void CToy::Update(void)
 			m_Move.y = 250.0f;
 			m_Move = m_Move/50.0f;
 			m_bBack = true;
+
+			//SE
+			CSound *pSound = CManager::GetSound();
+			pSound->Play(CSound::SOUND_LABEL_SE_WRONG);
 		}
 		//正解
 		if( pos.y <= 0.0f&&
@@ -308,6 +324,10 @@ void CToy::Update(void)
 
 			//エフェクト
 			CEffectBoom::Create( pos, D3DXVECTOR3( 200, 200, 200), 5);
+
+			//SE
+			CSound *pSound = CManager::GetSound();
+			pSound->Play(CSound::SOUND_LABEL_SE_ITEM_GET);
 
 			Uninit();
 			return;

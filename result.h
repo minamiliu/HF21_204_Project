@@ -42,6 +42,7 @@ public:
 
 private:
 	int m_resultCnt;
+	int m_nCntCoin;
 	static CScore *m_pTrashGameScore;
 	static CScore *m_pZebraGameScore;
 	static CScore *m_pLionGameScore;

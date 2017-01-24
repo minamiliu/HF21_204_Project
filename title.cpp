@@ -78,6 +78,7 @@ void CTitle::Uninit()
 	//BGM
 	CSound *pSound = CManager::GetSound();
 	pSound->Stop(CSound::SOUND_LABEL_BGM_TITLE);
+	//pSound->Stop();
 
 	CManager::Uninit();
 }

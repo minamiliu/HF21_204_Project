@@ -42,6 +42,7 @@
 #define PLAYER_RADIUS	(15.0f)
 #define FOOD_RADIUS		(30.0f)
 #define CAMERA_DISTANCE	(200.0f)
+#define PLAYER_POSY		(60.0f)
 //=============================================================================
 // 構造体定義
 //=============================================================================
@@ -83,6 +84,7 @@ CPlayerX::~CPlayerX()
 //=============================================================================
 HRESULT CPlayerX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float speed)
 {
+	pos.y = PLAYER_POSY; //プレイヤーの高さを固定する
 	CSceneX::Init( pos, rot, scl);
 
 	m_isGoAhead = false;
@@ -170,7 +172,7 @@ void CPlayerX::Update(void)
 			m_state = STATE_NORMAL;
 			m_front = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
 			D3DXVECTOR3 tPos = this->GetPosition();
-			tPos.y = 60.0f;
+			tPos.y = PLAYER_POSY;
 			this->SetPosition( tPos);
 		}
 		else
@@ -184,7 +186,7 @@ void CPlayerX::Update(void)
 
 	case STATE_UPGRADE:
 	case STATE_GOAL:
-		
+	case STATE_FINISH:	
 		m_front = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
 		break;
 
@@ -507,6 +509,10 @@ void CPlayerX::SetState(STATE state)
 		m_pLimb[2]->BindXfile(CLimbX::TYPE_LION_L_FOOT);
 		m_pLimb[3]->BindXfile(CLimbX::TYPE_LION_R_FOOT);
 		
+		//位置調整
+		D3DXVECTOR3 pos = this->GetPosition();
+		pos.y = PLAYER_POSY;
+		this->SetPosition(pos);
 		break;
 	}
 }

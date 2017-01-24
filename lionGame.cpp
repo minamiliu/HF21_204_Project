@@ -123,7 +123,7 @@ void CLionGame::Uninit()
 	CManager::SaveScore( MODE_LIONGAME, m_pScore->GetValue());
 
 	//BGM
-	m_pSound->Stop(CSound::SOUND_LABEL_BGM_LION);
+	m_pSound->Stop();
 
 	CManager::Uninit();
 }
@@ -136,8 +136,12 @@ void CLionGame::Update()
 	CManager::Update();
 
 	//Game Clear or Time Up
-	if(m_state != STATE_FINISH && m_pPlayer->GetState() == CPlayerX::STATE_GOAL)
+	if( m_pPlayer->GetState() == CPlayerX::STATE_GOAL)
 	{
+		//SE
+		m_pSound->Play(CSound::SOUND_LABEL_SE_WHISTLE);
+
+		m_pPlayer->SetState(CPlayerX::STATE_FINISH);
 		m_state = STATE_BONUS;
 	}
 
@@ -146,12 +150,17 @@ void CLionGame::Update()
 	{
 	case STATE_NORMAL:
 		//時間になったら、食材を７個集めたら、変身する
-		if(m_pTime->GetTime() == 10 || m_pPlayer->GetFoodNum() == 7)
+		if(m_pTime->GetTime() == 15 || m_pPlayer->GetFoodNum() == 7)
 		{
 			m_pTime->StopTime();
 			m_pChange = CChange::Create(TEXTURE_MOM, TEXTURE_LION, TEXTURE_LIONMOM);
 			m_state = STATE_UPGRADE;
 			m_pPlayer->SetState(CPlayerX::STATE_UPGRADE); //変身ing
+
+			//BGM
+			CSound *pSound = CManager::GetSound();
+			pSound->Play(CSound::SOUND_LABEL_BGM_CHANGE);
+			pSound->Stop(CSound::SOUND_LABEL_BGM_LION);
 		}
 		break;
 	case STATE_LION:
@@ -184,13 +193,11 @@ void CLionGame::Update()
 		break;
 
 	case STATE_FINISH:
-		//SE
-		m_pSound->Play(CSound::SOUND_LABEL_SE_WHISTLE);
 		SetNextScene( MODE_STAGE_LION);
 		break;
 	}
 
-
+#ifdef _DEBUG
 	//スキップシーン
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
 	CInputMouse *pInputMouse = CManager::GetInputMouse();
@@ -199,6 +206,7 @@ void CLionGame::Update()
 		SetNextScene( MODE_STAGE_LION);
 		//m_state = STATE_BONUS;
 	}
+#endif
 
 	//シーンが切り替えるところ、各シーンのUpdateの最後に置いとく
 	CManager::SceneChange();

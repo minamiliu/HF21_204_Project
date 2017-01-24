@@ -55,6 +55,8 @@ CChange::CChange()
 	pPlayer = NULL;
 	pAnimal = NULL;
 	pAnimalPlayer = NULL;
+	pExplosion = NULL;
+	pEffect = NULL;
 }
 
 //=============================================================================
@@ -82,9 +84,9 @@ HRESULT CChange::Init( LPCSTR strPlayerFileName, LPCSTR strAnimalFileName, LPCST
 	pAnimalPlayer = NULL;
 	m_StrAnimalPlayerFileName = strAnimalPlayerFileName;
 
-	//SE
-	CSound *pSound = CManager::GetSound();
-	pSound->Play(CSound::SOUND_LABEL_SE_CHANGE);
+	//BGM
+	//CSound *pSound = CManager::GetSound();
+	//pSound->Play(CSound::SOUND_LABEL_BGM_CHANGE);
 	return S_OK;
 }
 
@@ -93,13 +95,14 @@ HRESULT CChange::Init( LPCSTR strPlayerFileName, LPCSTR strAnimalFileName, LPCST
 //=============================================================================
 void CChange::Uninit(void)
 {
-	pExplosion = NULL;
-
-	//pAnimalPlayer->Uninit();
-	pAnimalPlayer = NULL;
-
+	//背景
 	pEffect->Uninit();
 	pEffect = NULL;
+
+	//BGM
+	//CSound *pSound = CManager::GetSound();
+	//pSound->Stop(CSound::SOUND_LABEL_BGM_CHANGE);
+
 	//オブジェクトの破棄
 	Release();
 }

@@ -210,7 +210,15 @@ void CManager::DrawAll(void)
 void CManager::Release(void)
 {
 	//オブジェクトの破棄
-	CScene::ReleaseAll();
+	//CScene::ReleaseAll();
+
+	//自己解放
+	if(m_pSceneManager != NULL)
+	{
+		m_pSceneManager->Uninit();
+		delete m_pSceneManager;
+		m_pSceneManager = NULL;
+	}
 
 	//ライトの破棄
 	CLight::ReleaseAll();
@@ -253,15 +261,6 @@ void CManager::Release(void)
 		m_pRenderer->Uninit();
 		delete m_pRenderer;
 		m_pRenderer = NULL;
-	}
-
-	//自己解放
-	if(m_pSceneManager != NULL)
-	{
-		m_pSceneManager->Uninit();
-		delete m_pSceneManager;
-		m_pSceneManager = NULL;
-		return;
 	}
 
 }

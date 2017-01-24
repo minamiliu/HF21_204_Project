@@ -13,9 +13,11 @@ CSound::PARAM CSound::m_aParam[CSound::SOUND_LABEL_MAX] =
 {
 	{"data/BGM/野生の証明.wav", -1},	//TITLE BGM
 	{"data/BGM/jailbreak.wav", -1},		//gorilla bgm
-	{"data/BGM/nameless_hearts.wav", -1}, //zebra BGM
-	{"data/BGM/Shopping.wav", -1}, //lion BGM 
+	{"data/BGM/zebra02.wav", -1}, //zebra BGM
+	{"data/BGM/The_Market.wav", -1}, //lion BGM 
 	{"data/BGM/result.wav", -1}, //result BGM
+	{"data/BGM/field01.wav", -1}, //遷移 BGM
+	{"data/BGM/hennshinn02.wav", -1}, //変身
 	{"data/SE/ライオンの鳴き声.wav", 0}, // title start 
 	{"data/SE/次のシーン_2.wav", 0},			//キャラ移動
 	{"data/SE/butukaru.wav", 0},	//hit by trashbox
@@ -25,7 +27,9 @@ CSound::PARAM CSound::m_aParam[CSound::SOUND_LABEL_MAX] =
 	{"data/SE/判子を押す.wav", 0},	//判子を押す
 	{"data/SE/びっくりマーク.wav", 0},	//びっくりマーク
 	{"data/SE/itemGet.wav", 0},	//itemGet
-	{"data/SE/change.wav", 0},	//変身
+	{"data/SE/pick02.wav", 0},	//pick
+	{"data/SE/put.wav", 0},	//put
+	{"data/SE/beep01.wav", 0},	//wrong
 };
 
 //=============================================================================

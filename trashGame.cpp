@@ -54,6 +54,7 @@
 #define	TEX_PATTERN_SIZE_Y			(1.0f / TEX_PATTERN_DIVIDE_Y)					// １パターンのテクスチャサイズ(Ｙ方向)(1.0f/Y方向分割数)
 #define	NUM_ANIM_PATTERN			(TEX_PATTERN_DIVIDE_X * TEX_PATTERN_DIVIDE_Y)	// アニメーションのパターン数(X方向分割数×Y方向分割数)
 #define	TIME_CHANGE_PATTERN			(10)											// アニメーションの切り替わるタイミング(フレーム数)
+#define TIME_TO_CHANGE	(15)
 //============================================
 // 静的メンバー変数の初期化
 //============================================
@@ -138,7 +139,7 @@ void CTrashGame::Uninit()
 
 	//BGM
 	CSound *pSound = CManager::GetSound();
-	pSound->Stop(CSound::SOUND_LABEL_BGM_GORILLA);
+	pSound->Stop();
 
 	CManager::Uninit();
 }
@@ -274,7 +275,7 @@ void CTrashGame::Update()
 		}
 	}
 	//変身直前
-	if(pTime->GetTime() == 11)
+	if(pTime->GetTime() == TIME_TO_CHANGE + 1)
 	{
 		pAnimPlayer->SetColor(RED(1.0));
 		if(pExplosion == NULL)
@@ -289,7 +290,7 @@ void CTrashGame::Update()
 	
 
 	//残り時間が１０になったら
-	if(pTime->GetTime() == 15)
+	if(pTime->GetTime() == TIME_TO_CHANGE)
 	{
 		pAnimPlayer->SetColor(WHITE(1.0));
 		//playerのポインタを取る
@@ -315,6 +316,11 @@ void CTrashGame::Update()
 			pTime->StopTime();
 			SetState(STATE_CHANGE);
 			pChange = CChange::Create(TEXTURENAME,GORILLA_GORILLA,STAND_GORILLA);
+
+			//BGM
+			CSound *pSound = CManager::GetSound();
+			pSound->Play(CSound::SOUND_LABEL_BGM_CHANGE);
+			pSound->Stop(CSound::SOUND_LABEL_BGM_GORILLA);
 
 			//pAnimPlayer->Uninit();
 			//pAnimPlayer = NULL;
@@ -394,7 +400,7 @@ void CTrashGame::Update()
 		SetNextScene( MODE_STAGE_GORIRA);
 
 	}
-
+#ifdef _DEBUG
 	//スキップシーン
 	pInputKeyboard = CManager::GetInputKeyboard();
 	CInputMouse *pInputMouse = CManager::GetInputMouse();
@@ -403,7 +409,6 @@ void CTrashGame::Update()
 		SetNextScene( MODE_STAGE_GORIRA);
 	}
 
-#ifdef _DEBUG
 	//シーンの切り替え
 	if( pInputKeyboard->GetKeyTrigger(DIK_E))
 	{

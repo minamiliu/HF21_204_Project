@@ -159,7 +159,7 @@ void CZebraGame::Uninit()
 	CManager::SaveScore( MODE_ZEBRAGAME, m_pScore->GetValue());
 
 	//BGM
-	m_pSound->Stop(CSound::SOUND_LABEL_BGM_ZEBRA);
+	m_pSound->Stop();
 
 	CManager::Uninit();
 }
@@ -185,6 +185,11 @@ void CZebraGame::Update()
 			m_pTime->StopTime();
 			m_state = STATE_UPGRADE;
 			m_pChange = CChange::Create(TEXTURE_MOM, TEXTURE_ZEBRA, TEXTURE_ZEBRAMOM); //変身演出
+
+			//BGM
+			CSound *pSound = CManager::GetSound();
+			pSound->Play(CSound::SOUND_LABEL_BGM_CHANGE);
+			pSound->Stop(CSound::SOUND_LABEL_BGM_ZEBRA);
 		}
 		break;
 
@@ -199,17 +204,15 @@ void CZebraGame::Update()
 		break;
 
 	case STATE_ZEBRA:
-		//全部のアイテムを箱に入れたら
-		if (m_PutToy + m_PutBook == MAX_TOY + MAX_BOOK)
+		//全部のアイテムを箱に入れたら or Time Up
+		if (m_PutToy + m_PutBook == MAX_TOY + MAX_BOOK || m_pTime->TimeUp())
 		{
 			m_state = STATE_BONUS;
+
+			//SE
+			m_pSound->Play(CSound::SOUND_LABEL_SE_WHISTLE);
 		}
 
-		//Time Up
-		if(m_pTime->TimeUp())
-		{
-			m_state = STATE_BONUS;
-		}
 		break;
 
 	case STATE_BONUS:
@@ -225,13 +228,12 @@ void CZebraGame::Update()
 		break;
 
 	case STATE_FINISH:
-		//SE
-		m_pSound->Play(CSound::SOUND_LABEL_SE_WHISTLE);
+		//遷移
 		SetNextScene( MODE_STAGE_ZEBRA);
 		break;
 	}
 
-
+#ifdef _DEBUG
 	//スキップシーン
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
 	CInputMouse *pInputMouse = CManager::GetInputMouse();
@@ -239,6 +241,7 @@ void CZebraGame::Update()
 	{
 		SetNextScene( MODE_STAGE_ZEBRA);
 	}
+#endif
 
 	//シーンが切り替えるところ、各シーンのUpdateの最後に置いとく
 	CManager::SceneChange();

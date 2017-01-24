@@ -52,6 +52,7 @@ CScene2D *CResult::m_pRank[3];
 CResult::CResult() : CManager(MODE_RESULT)
 {
 	m_resultCnt = 0;
+	m_nCntCoin = 0;
 	m_pTrashGameScore = NULL;
 	m_pZebraGameScore = NULL;
 	m_pLionGameScore = NULL;
@@ -140,15 +141,22 @@ void CResult::Update()
 			//60Fで目標値に到達するようにスコア加算
 			m_pTrashGameScore->AddScore(m_nTargetScore[0]/60);
 			m_nTrashGameScore-=m_nTargetScore[0]/60;
-
-			//SE
-			m_pSound->Play(CSound::SOUND_LABEL_SE_COIN_GET);
+			m_nCntCoin++;
+			if(m_nCntCoin % 5 == 0)
+			{
+				//SE
+				m_pSound->Play(CSound::SOUND_LABEL_SE_COIN_GET);	
+			}
 		}
 		else if(m_nTrashGameScore < 0 && m_nTrashGameScore > -10000)
 		{
 			//スコア調整
 			m_pTrashGameScore->SetScore(m_nTargetScore[0]);
 			m_nTrashGameScore = 0;
+		}
+		else if(m_nTrashGameScore == 0)
+		{
+			m_nCntCoin = 0;
 		}
 	}
 	else if(m_pTrashGameScore != NULL && m_nTrashGameScore == 0)
@@ -171,7 +179,9 @@ void CResult::Update()
 		{//ランクC
 			m_pRank[0] = CScene2D::Create(D3DXVECTOR3(1100, 180.0f, 0.0f),D3DXVECTOR3(380.0f, 380.0f, 0.0f),TEXTURE_RANK_C);
 		}
-		
+
+		//SE
+		m_pSound->Play(CSound::SOUND_LABEL_SE_STAMP);		
 
 		m_nTrashGameScore -= 100000;
 	}
@@ -183,14 +193,21 @@ void CResult::Update()
 			//60Fで目標値に到達するようにスコア加算
 			m_pZebraGameScore->AddScore(m_nTargetScore[1]/60);
 			m_nZebraGameScore-=m_nTargetScore[1]/60;
-
-			//SE
-			m_pSound->Play(CSound::SOUND_LABEL_SE_COIN_GET);
+			m_nCntCoin++;
+			if(m_nCntCoin % 5 == 0)
+			{
+				//SE
+				m_pSound->Play(CSound::SOUND_LABEL_SE_COIN_GET);	
+			}
 		}
 		else if(m_nZebraGameScore < 0 && m_nZebraGameScore > -10000)
 		{//スコア調整
 			m_pZebraGameScore->SetScore(m_nTargetScore[1]);
 			m_nZebraGameScore = 0;
+		}
+		else if(m_nZebraGameScore == 0)
+		{
+			m_nCntCoin = 0;
 		}
 	}
 	else if(m_pZebraGameScore != NULL && m_nZebraGameScore == 0)
@@ -213,6 +230,10 @@ void CResult::Update()
 		{//ランクC
 			m_pRank[1] = CScene2D::Create(D3DXVECTOR3(1100, 380.0f, 0.0f),D3DXVECTOR3(380.0f, 380.0f, 0.0f),TEXTURE_RANK_C);
 		}
+
+		//SE
+		m_pSound->Play(CSound::SOUND_LABEL_SE_STAMP);
+
 		m_nZebraGameScore -= 100000;
 	}
 	//スコア加算（3つ目）
@@ -222,14 +243,21 @@ void CResult::Update()
 		{
 			m_pLionGameScore->AddScore(m_nTargetScore[2]/60);
 			m_nLionGameScore-=m_nTargetScore[2]/60;
-
-			//SE
-			m_pSound->Play(CSound::SOUND_LABEL_SE_COIN_GET);
+			m_nCntCoin++;
+			if(m_nCntCoin % 5 == 0)
+			{
+				//SE
+				m_pSound->Play(CSound::SOUND_LABEL_SE_COIN_GET);	
+			}
 		}
 		else if(m_nLionGameScore < 0 && m_nLionGameScore > -10000)
 		{//スコア調整
 			m_pLionGameScore->SetScore(m_nTargetScore[2]);
 			m_nLionGameScore = 0;
+		}
+		else if(m_nLionGameScore == 0)
+		{
+			m_nCntCoin = 0;
 		}
 	}
 	else if(m_pLionGameScore != NULL && m_nLionGameScore == 0)
@@ -252,6 +280,10 @@ void CResult::Update()
 		{//ランクC
 			m_pRank[2] = CScene2D::Create(D3DXVECTOR3(1100, 580.0f, 0.0f),D3DXVECTOR3(380.0f, 380.0f, 0.0f),TEXTURE_RANK_C);
 		}
+
+		//SE
+		m_pSound->Play(CSound::SOUND_LABEL_SE_STAMP);
+
 		m_nLionGameScore -= 100000;
 	}
 	//ランク表示（サイズ変更）

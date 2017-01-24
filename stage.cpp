@@ -97,7 +97,9 @@ HRESULT CStage::Init(void)
 	//”wŒi
 	//CScene2D::Create( D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f), D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f), TEXTURE_BG);
 
-
+	//BGM	
+	CSound *pSound = CManager::GetSound();
+	pSound->Play(CSound::SOUND_LABEL_BGM_STAGE);
 
 	switch(m_stageNow)
 	{
@@ -262,6 +264,9 @@ HRESULT CStage::Init(void)
 
 void CStage::Uninit()
 {
+	CSound *pSound = CManager::GetSound();
+	pSound->Stop(CSound::SOUND_LABEL_BGM_STAGE);
+
 	CManager::Uninit();
 }
 
@@ -276,7 +281,7 @@ void CStage::Update()
 	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN) || pInputMouse->GetMouseLeftTrigger())
 	{
 
-		//BGM
+		//SE
 		CSound *pSound = CManager::GetSound();
 		pSound->Play(CSound::SOUND_LABEL_SE_CHARAMOVE);
 		switch(m_stageNow)
