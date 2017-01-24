@@ -68,13 +68,17 @@ HRESULT CTitle::Init(void)
 
 	//BGM
 	CSound *pSound = CManager::GetSound();
-	pSound->Play(CSound::SOUND_LABEL_BGM000);
+	pSound->Play(CSound::SOUND_LABEL_BGM_TITLE);
 
 	return S_OK;
 }
 
 void CTitle::Uninit()
 {
+	//BGM
+	CSound *pSound = CManager::GetSound();
+	pSound->Stop(CSound::SOUND_LABEL_BGM_TITLE);
+
 	CManager::Uninit();
 }
 

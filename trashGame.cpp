@@ -31,6 +31,7 @@
 #include "trashGameExplosion.h"
 #include "message.h"
 #include "change.h"
+#include "sound.h"
 //============================================
 // マクロ定義
 //============================================
@@ -122,6 +123,11 @@ HRESULT CTrashGame::Init(void)
 	pExplosion = NULL;
 	bMessageFlag = false;
 	m_state = STATE_MAX;
+
+	//BGM
+	CSound *pSound = CManager::GetSound();
+	pSound->Play(CSound::SOUND_LABEL_BGM_GORILLA);
+
 	return S_OK;
 }
 
@@ -129,6 +135,10 @@ void CTrashGame::Uninit()
 {
 	//点数を保存
 	CManager::SaveScore( MODE_TRASHGAME, m_pScore->GetValue());
+
+	//BGM
+	CSound *pSound = CManager::GetSound();
+	pSound->Stop(CSound::SOUND_LABEL_BGM_GORILLA);
 
 	CManager::Uninit();
 }

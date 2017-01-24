@@ -16,7 +16,7 @@
 #include "scene2D.h"
 #include "score.h"
 #include "bg.h"
-
+#include "sound.h"
 //============================================
 // ƒ}ƒNƒ’è‹`
 //============================================
@@ -94,11 +94,19 @@ HRESULT CResult::Init(void)
 	m_nTargetScore[1] = m_nZebraGameScore;
 	m_nTargetScore[2] = m_nLionGameScore;
 
+	//BGM
+	CSound *pSound = CManager::GetSound();
+	pSound->Play(CSound::SOUND_LABEL_BGM_RESULT);
+
 	return S_OK;
 }
 
 void CResult::Uninit()
 {
+	//BGM
+	CSound *pSound = CManager::GetSound();
+	pSound->Stop(CSound::SOUND_LABEL_BGM_RESULT);
+
 	CManager::Uninit();
 }
 

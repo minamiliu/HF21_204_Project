@@ -37,7 +37,7 @@
 #include "mousePick.h"
 #include "effectBoom.h"
 #include "staffX.h"
-
+#include "sound.h"
 //============================================
 // マクロ定義
 //============================================
@@ -103,6 +103,11 @@ HRESULT CLionGame::Init(void)
 	m_pTextureMlt = NULL;
 	m_pTextureHd = NULL;
 	m_nGameCnt = 0;
+
+	//BGM
+	CSound *pSound = CManager::GetSound();
+	pSound->Play(CSound::SOUND_LABEL_BGM_LION);
+
 	return S_OK;
 }
 //=============================================================================
@@ -112,6 +117,10 @@ void CLionGame::Uninit()
 {
 	//点数を保存
 	CManager::SaveScore( MODE_LIONGAME, m_pScore->GetValue());
+
+	//BGM
+	CSound *pSound = CManager::GetSound();
+	pSound->Stop(CSound::SOUND_LABEL_BGM_LION);
 
 	CManager::Uninit();
 }

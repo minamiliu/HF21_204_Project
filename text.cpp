@@ -21,7 +21,7 @@
 #define TEXT_TEX_GORIRA	"data/TEXTURE/ステージ用/ゴリラ説明文.png"
 #define TEXT_TEX_ZEBRA	"data/TEXTURE/ステージ用/シマウマ説明文.png"
 #define TEXT_TEX_LION	"data/TEXTURE/ステージ用/ライオン説明文.png"
-#define ANIM_PAT_X (1)
+#define ANIM_PAT_X (2)
 #define ANIM_PAT_Y (1)
 #define ANIM_CANGE_FRAME (20)
 /*******************************************************************************
@@ -49,7 +49,7 @@ CText :: CText()
 {
 	m_time = 0;
 	m_animPat = 0;
-	
+	m_bScl = false;
 }
 //=============================================================================
 // デストラクタ

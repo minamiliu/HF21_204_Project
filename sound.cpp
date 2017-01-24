@@ -11,10 +11,12 @@
 //*****************************************************************************
 CSound::PARAM CSound::m_aParam[CSound::SOUND_LABEL_MAX] =
 {
-	{"data/BGM/bgm000.wav", -1},		// BGM
-	//{"data/BGM/bgm001.wav", -1},		// BGM
-	//{"data/BGM/bgm002.wav", -1},		// BGM
-	//{"data/SE/shot000.wav", 0},			// ’e”­Ë‰¹
+	{"data/BGM/–ì¶‚ÌØ–¾.wav", -1},	//TITLE BGM
+	{"data/BGM/jailbreak.wav", -1},		//gorilla bgm
+	{"data/BGM/nameless_hearts.wav", -1}, //zebra BGM
+	{"data/BGM/Shopping.wav", -1}, //lion BGM 
+	{"data/BGM/result.wav", -1}, //result BGM
+	//{"data/BGM/Ÿ‚ÌƒV[ƒ“_2.wav", 0},	// ‘JˆÚƒLƒƒƒ‰ˆÚ“®
 	//{"data/SE/hit000.wav", 0},			// ’e”­Ë‰¹
 	//{"data/SE/hit001.wav", 0},			// ’e”­Ë‰¹
 	//{"data/SE/explosion000.wav", 0},	// ”š”­‰¹

@@ -44,9 +44,9 @@
 #define ROAD2_TYOUSEI	(-5)
 #define PLAYER_POS_TYOUSEI (40)
 
-#define TEXT_SIZE_X_GORIRA	(79.59)
-#define TEXT_SIZE_X_ZEBRA	(91.35)
-#define TEXT_SIZE_X_LION	(95.62)
+#define TEXT_SIZE_X_GORIRA	(50)
+#define TEXT_SIZE_X_ZEBRA	(50)
+#define TEXT_SIZE_X_LION	(50)
 #define TEXT_SIZE_Y			(2.82)
 #define TEXT_ROTATE			(50)
 //============================================
@@ -205,7 +205,7 @@ HRESULT CStage::Init(void)
 						);
 		CText::Create(	D3DXVECTOR3(SCREEN_WIDTH/2,SCREEN_HEIGHT-(TEXT_SIZE_Y*TEXT_ROTATE/2),0),
 						D3DXVECTOR3(TEXT_SIZE_X_GORIRA*TEXT_ROTATE,TEXT_SIZE_Y*TEXT_ROTATE,0),
-						0,
+						1,
 						0);
 
 		break;
@@ -216,7 +216,7 @@ HRESULT CStage::Init(void)
 						);
 		CText::Create(	D3DXVECTOR3(SCREEN_WIDTH/2,SCREEN_HEIGHT-(TEXT_SIZE_Y*TEXT_ROTATE/2),0),
 						D3DXVECTOR3(TEXT_SIZE_X_ZEBRA*TEXT_ROTATE,TEXT_SIZE_Y*TEXT_ROTATE,0),
-						0,
+						1,
 						1);
 		//スコア
 		m_pScore = CScore::Create( pos[MASU_GORIRA] + D3DXVECTOR3( 0.0f, 50.0f, 0.0f), D3DXVECTOR3( 240, 40.0f, 0.0f), 6, BLUE(1.0f));
@@ -229,7 +229,7 @@ HRESULT CStage::Init(void)
 						);
 		CText::Create(	D3DXVECTOR3(SCREEN_WIDTH/2,SCREEN_HEIGHT-(TEXT_SIZE_Y*TEXT_ROTATE/2),0),
 						D3DXVECTOR3(TEXT_SIZE_X_LION*TEXT_ROTATE,TEXT_SIZE_Y*TEXT_ROTATE,0),
-						0,
+						1,
 						2);
 
 		//スコア

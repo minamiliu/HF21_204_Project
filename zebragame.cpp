@@ -33,7 +33,7 @@
 #include "mousePick.h"
 #include "effect3D.h"
 #include "change.h"
-
+#include "sound.h"
 //============================================
 // マクロ定義
 //============================================
@@ -143,6 +143,10 @@ HRESULT CZebraGame::Init(void)
 	//オブジェクトの生成(2Dポリゴン)
 	m_pPoint3D = CPoint3D::Create( D3DXVECTOR3( 300.0f, 500.0f, 0.0f), D3DXVECTOR3( 60.0f, 60.0f, 0.0f),0);
 
+	//BGM
+	CSound *pSound = CManager::GetSound();
+	pSound->Play(CSound::SOUND_LABEL_BGM_ZEBRA);
+
 	return S_OK;
 }
 
@@ -150,6 +154,10 @@ void CZebraGame::Uninit()
 {
 	//点数を保存
 	CManager::SaveScore( MODE_ZEBRAGAME, m_pScore->GetValue());
+
+	//BGM
+	CSound *pSound = CManager::GetSound();
+	pSound->Stop(CSound::SOUND_LABEL_BGM_ZEBRA);
 
 	CManager::Uninit();
 }

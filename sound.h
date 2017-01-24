@@ -21,9 +21,11 @@ public:
 	// サウンドファイル
 	typedef enum
 	{
-		SOUND_LABEL_BGM000 = 0,			// BGM
-		//SOUND_LABEL_BGM001,				// BGM
-		//SOUND_LABEL_BGM002,				// BGM
+		SOUND_LABEL_BGM_TITLE = 0,			// BGM
+		SOUND_LABEL_BGM_GORILLA,			// BGM
+		SOUND_LABEL_BGM_ZEBRA,				// BGM
+		SOUND_LABEL_BGM_LION,				// BGM
+		SOUND_LABEL_BGM_RESULT,				// BGM
 		//SOUND_LABEL_SE_SHOT000,			// 弾発射音
 		//SOUND_LABEL_SE_HIT000,			// 衝突音
 		//SOUND_LABEL_SE_HIT001,			// 衝突音
