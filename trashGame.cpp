@@ -377,13 +377,16 @@ void CTrashGame::Update()
 		SetNextScene( MODE_STAGE_GORIRA);
 
 	}
-#ifdef _DEBUG
-	//シーンの切り替え
-	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN))
+
+	//スキップシーン
+	pInputKeyboard = CManager::GetInputKeyboard();
+	CInputMouse *pInputMouse = CManager::GetInputMouse();
+	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN) || pInputMouse->GetMouseCenterTrigger())
 	{
 		SetNextScene( MODE_STAGE_GORIRA);
 	}
 
+#ifdef _DEBUG
 	//シーンの切り替え
 	if( pInputKeyboard->GetKeyTrigger(DIK_E))
 	{

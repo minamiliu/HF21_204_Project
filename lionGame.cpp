@@ -177,14 +177,14 @@ void CLionGame::Update()
 	}
 
 
-#ifdef _DEBUG
 	//スキップシーン
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
-	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN))
+	CInputMouse *pInputMouse = CManager::GetInputMouse();
+	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN) || pInputMouse->GetMouseCenterTrigger())
 	{
 		SetNextScene( MODE_STAGE_LION);
+		//m_state = STATE_BONUS;
 	}
-#endif
 
 	//シーンが切り替えるところ、各シーンのUpdateの最後に置いとく
 	CManager::SceneChange();

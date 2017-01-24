@@ -34,9 +34,13 @@
 #define MODEL_FILENAME_BODY			"data/MODEL/mom_body.x"
 #define MODEL_FILENAME_LION_BODY	"data/MODEL/lionMom_body.x"
 
-#define VALUE_ROTATE	(1.0f) 	// ‰ñ“]—Ê
+#define VALUE_ROTATE	(3.0f) 	// ‰ñ“]—Ê
+#define DIVIDE_ROTATE	(5.0f)
+#define MAX_SPEED		(5.0f)
+#define BACK_SPEED		(-2.0f)
 
 #define PLAYER_RADIUS	(15.0f)
+#define FOOD_RADIUS		(30.0f)
 #define CAMERA_DISTANCE	(200.0f)
 //=============================================================================
 // \‘¢‘Ì’è‹`
@@ -247,6 +251,9 @@ void CPlayerX::UpdateRot(void)
 	//‰ñ“]Šµ«
 	m_rotAngle.y *= 0.999f;
 
+	//–ˆ‰ñ‚Ì‰ñ“]—Ê
+	m_rotAngle = Get2RotDiffAngle(rotPlayer, m_rotTarget);
+
 	//ŽŸ‚Ì‰ñ“]ˆÊ’u‚É“ž’…‚µ‚½‚ç
 	float diff = fabsf(rotPlayer.y - m_rotTarget.y);
 	if( diff > D3DX_PI)
@@ -254,7 +261,7 @@ void CPlayerX::UpdateRot(void)
 		diff -= D3DX_PI*2;
 	}
 
-	if(diff < VALUE_ROTATE)
+	if(diff <= D3DXToRadian(VALUE_ROTATE) / 5.0f)
 	{
 		rotPlayer.y = m_rotTarget.y;
 		m_rotAngle.y = 0;
@@ -406,15 +413,15 @@ bool CPlayerX::isMouseUse(void)
 		}
 		m_isGoBack = true;
 	}
-	else if(pInputMouse->GetMouseLeftPress() )
+	else if(pInputMouse->GetMouseLeftPress() ) //‘O
 	{
 		m_isGoAhead = true;
 	}
-	else if(pInputMouse->GetMouseRightPress() )
+	else if(pInputMouse->GetMouseRightPress() ) //Œã
 	{
 		m_isGoBack = true;
 	}
-	else if(pInputMouse->GetMouseAxisX() < -nDeadZone )
+	else if(pInputMouse->GetMouseAxisX() < -nDeadZone ) //¶
 	{
 		m_rotTarget.y = rotPlayer.y + D3DXToRadian(-VALUE_ROTATE);
 		if( m_rotTarget.y < -D3DX_PI)
@@ -423,7 +430,7 @@ bool CPlayerX::isMouseUse(void)
 		}
 		return true;
 	}
-	else if(pInputMouse->GetMouseAxisX() > nDeadZone )
+	else if(pInputMouse->GetMouseAxisX() > nDeadZone ) //‰E
 	{
 		m_rotTarget.y = rotPlayer.y + D3DXToRadian(VALUE_ROTATE);
 		if( m_rotTarget.y > D3DX_PI)
@@ -445,18 +452,19 @@ void CPlayerX::CalcFront(void)
 	if(m_isGoAhead == true)
 	{
 		m_fSpeed += m_fAccel;
-		if( m_fSpeed > 10.0f)
+		if( m_fSpeed > MAX_SPEED)
 		{
-			m_fSpeed = 10.0f;
+			m_fSpeed = MAX_SPEED;
 		}
 	}
 	else if(m_isGoBack == true)
 	{
-		m_fSpeed -= m_fAccel;
+		//m_fSpeed += m_fAccel;
+		m_fSpeed = BACK_SPEED;
 
-		if( m_fSpeed < -10.0f)
+		if( m_fSpeed < -MAX_SPEED)
 		{
-			m_fSpeed = -10.0f;
+			m_fSpeed = -MAX_SPEED;
 		}
 	}
 	else
@@ -467,7 +475,7 @@ void CPlayerX::CalcFront(void)
 
 
 	//‰ñ“]‚µ‚Ä‚¢‚È‚¢Žž
-	if( m_rotAngle.y == 0)
+	//if( m_rotAngle.y == 0)
 	{
 		//ˆÚ“®
 		m_front.x = m_fSpeed * sinf( rotPlayer.y);
@@ -549,7 +557,7 @@ bool CPlayerX::isCollision(void)
 				D3DXVECTOR3 posFood;
 				posFood = pFood->GetPosition();
 
-				if (pFood->GetState() == CFood::STATE_NORMAL && CCollision::HitCheckCircleXZ(posPlayer, PLAYER_RADIUS, posFood, 15.0f))
+				if (pFood->GetState() == CFood::STATE_NORMAL && CCollision::HitCheckCircleXZ(posPlayer, PLAYER_RADIUS, posFood, FOOD_RADIUS))
 				{
 					//ƒAƒCƒRƒ“‚ÌF‚ð•Ï‚¦‚é
 					CFoodIcon *pFoodIcon = pFood->GetIcon();
@@ -802,4 +810,38 @@ void CPlayerX::BindXfile(TYPE type)
 int CPlayerX::GetFoodNum(void)
 {
 	return m_nNumFoodGet;
+}
+//=============================================================================
+// ‰ñ“]Šp“x‚ðŽæ“¾
+//=============================================================================
+D3DXVECTOR3 CPlayerX::Get2RotDiffAngle( D3DXVECTOR3 rot, D3DXVECTOR3 rotTarget)
+{
+	float tAngle[3];
+	D3DXVECTOR3 re;
+
+	tAngle[0] = rotTarget.x - rot.x;
+	tAngle[1] = rotTarget.y - rot.y;
+	tAngle[2] = rotTarget.z - rot.z;
+
+	for(int cntXYZ = 0; cntXYZ < 3; cntXYZ++)
+	{
+		if(tAngle[cntXYZ] > D3DX_PI)
+		{
+			tAngle[cntXYZ] -= 2 * D3DX_PI;
+		}
+		if(tAngle[cntXYZ] < -D3DX_PI)
+		{
+			tAngle[cntXYZ] += 2 * D3DX_PI;
+		}		
+
+		tAngle[cntXYZ] = tAngle[cntXYZ] / DIVIDE_ROTATE;
+		//tAngle[cntXYZ] = tAngle[cntXYZ] / fabsf(tAngle[cntXYZ]);
+
+	}
+
+	re.x = tAngle[0];
+	re.y = tAngle[1];
+	re.z = tAngle[2];
+
+	return re;
 }

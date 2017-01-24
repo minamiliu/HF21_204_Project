@@ -73,7 +73,6 @@ HRESULT CToy::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float spee
 {
 	CSceneX::Init( pos, rot, scl);
 	
-	m_nNumber = 0;
 	BindXfile(m_nNumber%4);
 	SetObjType(OBJTYPE_TOY); ;
 	m_bPicked = false;

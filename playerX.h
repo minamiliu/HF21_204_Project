@@ -74,6 +74,7 @@ protected:
 	bool isKeyUse(int nUp, int nDown, int nLeft, int nRight);
 	bool isMouseUse(void);
 	bool isCollision(void);
+	D3DXVECTOR3 Get2RotDiffAngle( D3DXVECTOR3 rot, D3DXVECTOR3 rotTarget);
 
 private:
 	static LPDIRECT3DTEXTURE9	m_pTexture		[TYPE_MAX];		// テクスチャへのポインタ

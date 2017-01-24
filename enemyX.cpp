@@ -205,7 +205,7 @@ D3DXVECTOR3 CEnemyX::Get2RotDiffAngle( D3DXVECTOR3 rot, D3DXVECTOR3 rotTarget)
 			tAngle[cntXYZ] += 2 * D3DX_PI;
 		}		
 
-//		tAngle[cntXYZ] = tAngle[cntXYZ] / DIVIDE_ROTATE;
+		//tAngle[cntXYZ] = tAngle[cntXYZ] / DIVIDE_ROTATE;
 		tAngle[cntXYZ] = tAngle[cntXYZ] / fabsf(tAngle[cntXYZ]);
 
 	}

@@ -79,6 +79,9 @@ HRESULT CZebraGame::Init(void)
 	CToy::m_nNumber = 0;
 	CBook::m_nNumber = 0;
 	CPutBook::m_nNumber = 0;
+	m_pTextureMlt = NULL;
+	m_pTextureHd = NULL;
+	m_nGameCnt = 0;
 
 	//カメラの位置
 	m_pCamera->Init();
@@ -216,24 +219,13 @@ void CZebraGame::Update()
 	}
 
 
-#ifdef _DEBUG
 	//スキップシーン
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
-	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN))
+	CInputMouse *pInputMouse = CManager::GetInputMouse();
+	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN) || pInputMouse->GetMouseCenterTrigger())
 	{
 		SetNextScene( MODE_STAGE_ZEBRA);
 	}
-
-	//POINT mPos;
-	//GetCursorPos(&mPos);
-	//D3DXVECTOR3 pos = CMousePick::GetWorldPos(mPos);
-	//
-	//CInputMouse *pInputMouse = CManager::GetInputMouse();
-	//if( pInputMouse->GetMouseLeftTrigger())
-	//{
-	//	CEffectBoom::Create( pos, D3DXVECTOR3(100, 20, 100), 5);
-	//}
-#endif
 
 	//シーンが切り替えるところ、各シーンのUpdateの最後に置いとく
 	CManager::SceneChange();
