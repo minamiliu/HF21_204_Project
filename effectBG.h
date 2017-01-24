@@ -34,7 +34,11 @@ public:
 	void Uninit(void);
 	void Update(void);
 	void Draw(void);
+
+	static HRESULT Load(void);
+	static void Unload(void);
 private:
+	static LPDIRECT3DTEXTURE9 m_pTexture;
 	int m_nCntFrame;
 	int m_animPat;
 };

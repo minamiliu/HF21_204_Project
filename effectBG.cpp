@@ -15,6 +15,7 @@
 *******************************************************************************/
 #include "effectBG.h"
 #include "manager.h"
+#include "renderer.h"
 #include "scene2D.h"
 
 /*******************************************************************************
@@ -38,7 +39,7 @@
 //*****************************************************************************
 // 静的
 //*****************************************************************************
-
+LPDIRECT3DTEXTURE9 CEffectBG::m_pTexture = NULL;
 //=============================================================================
 // コンストラクタ
 //=============================================================================
@@ -60,7 +61,8 @@ CEffectBG* CEffectBG::Create(D3DXVECTOR3 pos,D3DXVECTOR3 size)
 	pEffect = new CEffectBG;
 	pEffect->Init(pos,size);
 	
-	pEffect->Load(BG_TEX_NAME);
+	//テクスチャの割り当て
+	pEffect->BindTexture(m_pTexture);
 
 	return pEffect;
 }
@@ -112,4 +114,33 @@ void CEffectBG :: Update(void)
 void CEffectBG :: Draw(void)
 {
 	CScene2D::Draw();
+}
+//=============================================================================
+//テクスチャのロード
+//=============================================================================
+HRESULT CEffectBG::Load(void)
+{
+	if (m_pTexture == NULL)
+	{
+		LPDIRECT3DDEVICE9 pDevice;
+		pDevice = CManager::GetRenderer()->GetDevice();
+
+		// テクスチャの読み込み
+		D3DXCreateTextureFromFile(pDevice, BG_TEX_NAME, &m_pTexture);
+	}
+
+	return S_OK;
+}
+
+//=============================================================================
+//テクスチャのアンロード
+//=============================================================================
+void CEffectBG::Unload(void)
+{
+	//テクスチャの破棄
+	if (m_pTexture != NULL)
+	{
+		m_pTexture->Release();
+		m_pTexture = NULL;
+	}
 }

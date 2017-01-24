@@ -25,23 +25,24 @@
 // 静的メンバー変数の初期化
 //============================================
 LPDIRECT3DTEXTURE9 CEffect3D::m_pTexture[TYPE_MAX] = {};
-//int CEffect3D::m_nColorID = 0;
-//D3DXCOLOR CEffect3D::m_paraColor[] =
-//{
-//	RED(1.0f),
-//	ORANGE(1.0f),
-//	YELLOW(1.0f),
-//	GREEN(1.0f),
-//	SYAN(1.0f),	
-//	BLUE(1.0f),	
-//	MASENTA(1.0f),
-//};
+int CEffect3D::m_nColorID = 0;
+D3DXCOLOR CEffect3D::m_paraColor[] =
+{
+	RED(1.0f),
+	ORANGE(1.0f),
+	YELLOW(1.0f),
+	GREEN(1.0f),
+	SYAN(1.0f),	
+	BLUE(1.0f),	
+	MASENTA(1.0f),
+};
 
 //=============================================================================
 //コンストラクタ
 //=============================================================================
 CEffect3D::CEffect3D() : CBillBoard( LAYER_EFFECT)
 {
+	bRainbow = false;
 }
 
 //=============================================================================
@@ -66,9 +67,19 @@ HRESULT CEffect3D::Init(D3DXVECTOR3 pos, D3DXVECTOR2 size, TYPE type, const D3DX
 	m_fPercent = fPercent;
 	m_col = col;
 
-	//m_col = m_paraColor[m_nColorID];
-	//this->SetColor(m_col);
-	//m_nColorID = (m_nColorID + 1) % 7;
+	return S_OK;
+}
+HRESULT CEffect3D::Init(D3DXVECTOR3 pos, D3DXVECTOR2 size, float fPercent, bool bRainbow)
+{
+	CBillBoard::Init( pos, size);
+
+	//初期状態
+	m_type = TYPE_MARU;
+	m_fPercent = fPercent;
+
+	m_col = m_paraColor[m_nColorID];
+	this->SetColor(m_col);
+	m_nColorID = (m_nColorID + 1) % 7;
 
 	return S_OK;
 }
@@ -147,6 +158,18 @@ CEffect3D *CEffect3D::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, TYPE type, const
 
 	//テクスチャの割り当て
 	pEffect->BindTexture( m_pTexture[type]);
+
+	return pEffect;
+}
+CEffect3D *CEffect3D::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, float fPercent, bool bRainbow)
+{
+	CEffect3D *pEffect;
+	pEffect = new CEffect3D;
+
+	pEffect->Init(pos, size, fPercent, bRainbow);
+
+	//テクスチャの割り当て
+	pEffect->BindTexture( m_pTexture[TYPE_MARU]);
 
 	return pEffect;
 }

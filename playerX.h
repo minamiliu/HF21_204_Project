@@ -100,6 +100,8 @@ private:
 	CLimbX *m_pLimb[MAX_LIMB];	//è‘«x4
 	
 	int m_nNumFoodGet; //W‚ß‚½HŞ‚Ì”
+	D3DXVECTOR3 m_posSuper;
+	float m_fTurn;
 };
 
 #endif

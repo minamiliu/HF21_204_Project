@@ -42,9 +42,6 @@
 #define SCORE_POS	D3DXVECTOR3( 150.0f, 30.0f, 0.0f)
 #define SCORE_SIZE	D3DXVECTOR3( 300, 50.0f, 0.0f)
 
-#define TEXTURE_ZEBRA		"data/TEXTURE/zebra.png"
-#define TEXTURE_ZEBRAMOM	"data/TEXTURE/zebraMom.png"
-#define TEXTURE_MOM			"data/TEXTURE/player000.png"
 #define TEXTURE_MLT			"data/TEXTURE/かける.png"
 //============================================
 // 静的メンバー変数の初期化
@@ -184,7 +181,7 @@ void CZebraGame::Update()
 		{
 			m_pTime->StopTime();
 			m_state = STATE_UPGRADE;
-			m_pChange = CChange::Create(TEXTURE_MOM, TEXTURE_ZEBRA, TEXTURE_ZEBRAMOM); //変身演出
+			m_pChange = CChange::Create(CChange::MODE_ZEBRA); //変身演出
 
 			//BGM
 			CSound *pSound = CManager::GetSound();
@@ -280,7 +277,7 @@ HRESULT CZebraGame::LoadAll(void)
 	CToy::Load();
 	CBook::Load();
 	CEffect3D::Load();
-
+	CChange::Load();
 	return S_OK;
 }
 //=============================================================================

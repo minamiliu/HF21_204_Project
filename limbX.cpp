@@ -14,7 +14,7 @@
 #include "limbX.h"
 #include "renderer.h"
 #include "manager.h"
-
+#include "effect3D.h"
 //============================================
 // É}ÉNÉçíËã`
 //============================================
@@ -116,7 +116,6 @@ HRESULT CLimbX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, TYPE typ
 	m_type = type;
 	m_nCntFrame = 0;
 	m_rotXTurn = m_pMotionPara[m_nMotionNow].rotX / m_pMotionPara[m_nMotionNow].nFrame;
-	
 
 	return S_OK;
 }

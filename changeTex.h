@@ -34,7 +34,7 @@ public:
 	void Update(void);
 	void Draw(void);
 	
-	static CChangeTex *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, LPCSTR strFileName);
+	static CChangeTex *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, LPDIRECT3DTEXTURE9 pTexture);
 private:
 
 };

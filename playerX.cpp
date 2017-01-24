@@ -28,6 +28,8 @@
 #include "cubeX.h"
 #include "enemyX.h"
 #include "sound.h"
+#include "effectBoom.h"
+#include "effect3D.h"
 //============================================
 // マクロ定義
 //============================================
@@ -92,6 +94,8 @@ HRESULT CPlayerX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float 
 	
 	m_fSpeed = 0.0f;
 	m_fAccel = speed;
+	m_posSuper = pos;
+	m_fTurn = 0.0f;
 
 	m_front = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
 	m_rotTarget = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
@@ -191,9 +195,39 @@ void CPlayerX::Update(void)
 		break;
 
 	case STATE_NORMAL:
+		//前進ベクトルの更新
+		CalcFront();
+		break;
 	case STATE_LION:
 		//前進ベクトルの更新
 		CalcFront();
+
+		//右手
+		D3DXVECTOR3 tPos;
+		tPos = this->GetPosition();
+		tPos.x =  this->GetPosition().x + 5.0f * sinf(this->GetRot().y + D3DX_PI / 2.0f);
+		tPos.z =  this->GetPosition().z + 5.0f * cosf(this->GetRot().y + D3DX_PI / 2.0f);
+		
+		m_fTurn += 0.1f;
+		m_posSuper.x = tPos.x + 20.0f * sinf( m_fTurn); 
+		m_posSuper.z = tPos.z + 20.0f * cosf( m_fTurn);
+		m_posSuper.y = 0.0f;
+
+		//エフェクト
+		CEffect3D::Create( m_posSuper, D3DXVECTOR2( 5.0f, 5.0f), 0.02f, true);
+
+		//左手
+		tPos = this->GetPosition();
+		tPos.x =  this->GetPosition().x + 5.0f * sinf(this->GetRot().y - D3DX_PI / 2.0f);
+		tPos.z =  this->GetPosition().z + 5.0f * cosf(this->GetRot().y - D3DX_PI / 2.0f);
+		
+		m_fTurn += 0.1f;
+		m_posSuper.x = tPos.x + 20.0f * sinf( m_fTurn); 
+		m_posSuper.z = tPos.z + 20.0f * cosf( m_fTurn);
+		m_posSuper.y = 0.0f;
+
+		//エフェクト
+		CEffect3D::Create( m_posSuper, D3DXVECTOR2( 5.0f, 5.0f), 0.02f, true);
 		break;
 	}
 

@@ -25,6 +25,17 @@
 //============================================
 #define TEXTURE_BG "data/TEXTURE/effectBG.png"
 
+#define TEXTURE_MOM			"data/TEXTURE/player000.png"
+
+#define TEXTURE_LION		"data/TEXTURE/lion.png"
+#define TEXTURE_LIONMOM		"data/TEXTURE/lionMom.png"
+
+#define TEXTURE_ZEBRA		"data/TEXTURE/zebra.png"
+#define TEXTURE_ZEBRAMOM	"data/TEXTURE/zebraMom.png"
+
+#define TEXTURE_GORILLA		"data/TEXTURE/ゴリラ.png"
+#define TEXTURE_GORILLAMOM	"data/TEXTURE/ゴリラ(立ち絵).png"
+
 #define	TEX_PATTERN_DIVIDE_X		(8)												// アニメーションパターンのテクスチャ内での分割数(Ｘ方向)
 #define	TEX_PATTERN_DIVIDE_Y		(1)												// アニメーションパターンのテクスチャ内での分割数(Ｙ方向)
 #define	TEX_PATTERN_SIZE_X			(1.0f / TEX_PATTERN_DIVIDE_X)					// １パターンのテクスチャサイズ(Ｘ方向)(1.0f/X方向分割数)
@@ -45,7 +56,8 @@ bool CChange::m_bAnimalPlayerFlag = false;
 bool CChange::m_bState = true;
 int CChange::changeCnt = 0;
 CEffectBG *pEffect = NULL;
-LPCSTR CChange::m_StrAnimalPlayerFileName;
+LPDIRECT3DTEXTURE9 CChange::m_pTexture[TYPE_MAX] = {};
+
 //=============================================================================
 //コンストラクタ
 //=============================================================================
@@ -71,18 +83,32 @@ CChange::~CChange()
 // ポリゴンの初期化処理
 //=============================================================================
 
-HRESULT CChange::Init( LPCSTR strPlayerFileName, LPCSTR strAnimalFileName, LPCSTR strAnimalPlayerFileName)
+HRESULT CChange::Init(MODE mode)
 {
-	pEffect = CEffectBG::Create( D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f), D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT/2, 0.0f));	
-	//pAnimalPlayer = CChangeTex::Create(D3DXVECTOR3(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f),D3DXVECTOR3(300,300,0),strAnimalPlayerFileName);
-	pPlayer = CChangeTex::Create(D3DXVECTOR3(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f),D3DXVECTOR3(300,300,0),strPlayerFileName);
-	pAnimal = CChangeTex::Create(D3DXVECTOR3(SCREEN_WIDTH+100, SCREEN_HEIGHT/2, 0.0f),D3DXVECTOR3(300,300,0),strAnimalFileName);
+	LPDIRECT3DTEXTURE9 pTextureA;
+
+	pEffect = CEffectBG::Create( D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f), D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT/2, 0.0f));
+
+	switch(mode)
+	{
+	case MODE_GORILLA:
+		pTextureA = m_pTexture[TYPE_G_ANIMAL];
+		break;
+	case MODE_ZEBRA:
+		pTextureA = m_pTexture[TYPE_Z_ANIMAL];
+		break;
+	case MODE_LION:
+		pTextureA = m_pTexture[TYPE_L_ANIMAL];
+		break;
+	}
+	pPlayer = CChangeTex::Create(D3DXVECTOR3(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f),D3DXVECTOR3(300,300,0), m_pTexture[TYPE_PLAYER]);
+	pAnimal = CChangeTex::Create(D3DXVECTOR3(SCREEN_WIDTH+100, SCREEN_HEIGHT/2, 0.0f),D3DXVECTOR3(300,300,0), pTextureA);
 	
 	changeCnt = 0;
 	m_bState = true;
 	m_bAnimalPlayerFlag = false;
 	pAnimalPlayer = NULL;
-	m_StrAnimalPlayerFileName = strAnimalPlayerFileName;
+	m_mode = mode;
 
 	//BGM
 	//CSound *pSound = CManager::GetSound();
@@ -144,7 +170,22 @@ void CChange::Update(void)
 		if(changeCnt == 8 * 10)
 		{
 			m_bAnimalPlayerFlag = true;
-			pAnimalPlayer = CChangeTex::Create(D3DXVECTOR3(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f),D3DXVECTOR3(160,300,0),m_StrAnimalPlayerFileName);
+
+			LPDIRECT3DTEXTURE9 pTextureS;
+			switch(m_mode)
+			{
+			case MODE_GORILLA:
+				pTextureS = m_pTexture[TYPE_G_SUPER];
+				break;
+			case MODE_ZEBRA:
+				pTextureS = m_pTexture[TYPE_Z_SUPER];
+				break;
+			case MODE_LION:
+				pTextureS = m_pTexture[TYPE_L_SUPER];
+				break;
+			}
+
+			pAnimalPlayer = CChangeTex::Create(D3DXVECTOR3(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f),D3DXVECTOR3(160,300,0), pTextureS);
 		}
 	}
 
@@ -175,11 +216,11 @@ void CChange::Draw(void)
 //=============================================================================
 // ポリゴンの生成処理
 //=============================================================================
-CChange *CChange::Create(LPCSTR strPlayerFileName, LPCSTR strAnimalFileName, LPCSTR strAnimalPlayerFileName)
+CChange *CChange::Create(MODE mode)
 {
 	CChange *pChange;
 	pChange = new CChange;
-	pChange->Init(strPlayerFileName, strAnimalFileName,strAnimalPlayerFileName);
+	pChange->Init(mode);
 	
 	return pChange;
 }
@@ -211,5 +252,78 @@ D3DXVECTOR3 CChange::GetSize(void)
 }
 void CChange::SetPosition(D3DXVECTOR3 pos)
 {
+	return;
+}
 
+//=============================================================================
+//テクスチャのロード
+//=============================================================================
+HRESULT CChange::Load(void)
+{
+	for (int cntType = 0; cntType < TYPE_MAX; cntType++)
+	{
+		LPCSTR strFileName;
+		switch (cntType)
+		{
+		case TYPE_PLAYER:
+			strFileName = TEXTURE_MOM;
+			break;
+
+		case TYPE_G_ANIMAL:
+			strFileName = TEXTURE_GORILLA;
+			break;
+
+		case TYPE_G_SUPER:
+			strFileName = TEXTURE_GORILLAMOM;
+			break;
+
+		case TYPE_Z_ANIMAL:
+			strFileName = TEXTURE_ZEBRA;
+			break;
+
+
+		case TYPE_Z_SUPER:
+			strFileName = TEXTURE_ZEBRAMOM;
+			break;
+
+		case TYPE_L_ANIMAL:
+			strFileName = TEXTURE_LION;
+			break;
+
+
+		case TYPE_L_SUPER:
+			strFileName = TEXTURE_LIONMOM;
+			break;
+		}
+
+		if (m_pTexture[cntType] == NULL)
+		{
+			LPDIRECT3DDEVICE9 pDevice;
+			pDevice = CManager::GetRenderer()->GetDevice();
+
+			// テクスチャの読み込み
+			D3DXCreateTextureFromFile(pDevice, strFileName, &m_pTexture[cntType]);
+		}
+	}
+
+	//背景をロード
+	CEffectBG::Load();
+
+	return S_OK;
+}
+	
+//=============================================================================
+//テクスチャのアンロード
+//=============================================================================
+void CChange::Unload(void)
+{
+	//テクスチャの破棄
+	for (int cntType = 0; cntType < TYPE_MAX; cntType++)
+	{
+		if (m_pTexture[cntType] != NULL)
+		{
+			m_pTexture[cntType]->Release();
+			m_pTexture[cntType] = NULL;
+		}
+	}
 }

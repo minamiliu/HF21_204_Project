@@ -39,11 +39,13 @@ public:
 	virtual ~CEffect3D();
 
 	HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR2 size, TYPE type, const D3DXCOLOR &col, float fPercent);
+	HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR2 size, float fPercent, bool bRainbow);
 	void Uninit(void);
 	void Update(void);
 	void Draw(void);
 
 	static CEffect3D *Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, TYPE type, const D3DXCOLOR &col, float fPercent);
+	static CEffect3D *Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, float fPercent, bool bRainbow);
 	static HRESULT Load(void);
 	static void Unload(void);
 
@@ -54,8 +56,9 @@ private:
 	D3DXCOLOR m_col;
 	float m_fPercent;
 
-	//static D3DXCOLOR m_paraColor[];
-	//static int m_nColorID;
+	bool bRainbow;
+	static D3DXCOLOR m_paraColor[];
+	static int m_nColorID;
 };
 
 #endif

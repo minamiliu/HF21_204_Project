@@ -41,9 +41,6 @@
 //============================================
 // マクロ定義
 //============================================
-#define TEXTURE_LION	"data/TEXTURE/lion.png"
-#define TEXTURE_LIONMOM "data/TEXTURE/lionMom.png"
-#define TEXTURE_MOM		"data/TEXTURE/player000.png"
 #define TEXTURE_MLT		"data/TEXTURE/かける.png"
 
 #define TIME_POS	D3DXVECTOR3(SCREEN_WIDTH/2, 100.0f, 0.0f)
@@ -153,7 +150,7 @@ void CLionGame::Update()
 		if(m_pTime->GetTime() == 15 || m_pPlayer->GetFoodNum() == 7)
 		{
 			m_pTime->StopTime();
-			m_pChange = CChange::Create(TEXTURE_MOM, TEXTURE_LION, TEXTURE_LIONMOM);
+			m_pChange = CChange::Create(CChange::MODE_LION);
 			m_state = STATE_UPGRADE;
 			m_pPlayer->SetState(CPlayerX::STATE_UPGRADE); //変身ing
 
@@ -248,7 +245,7 @@ HRESULT CLionGame::LoadAll(void)
 	CFood::Load();
 	CEffect3D::Load();
 	CStaffX::Load();
-
+	CChange::Load();
 	return S_OK;
 }
 //=============================================================================
@@ -381,6 +378,10 @@ void CLionGame::CreateStageUsukura(void)
 	CEnemyX::Create( D3DXVECTOR3(1250, 60.0f, 1250.0f), D3DXVECTOR3( 0.0f, D3DX_PI/2, 0.0f), D3DXVECTOR3( 2.0f, 2.0f, 2.0f), CEnemyX::TYPE_000);
 	CEnemyX::Create( D3DXVECTOR3(1750, 60.0f, 2450.0f), D3DXVECTOR3( 0.0f, D3DX_PI/2, 0.0f), D3DXVECTOR3( 2.0f, 2.0f, 2.0f), CEnemyX::TYPE_000);
 	CEnemyX::Create( D3DXVECTOR3(1750, 60.0f, 1250.0f), D3DXVECTOR3( 0.0f, D3DX_PI/2, 0.0f), D3DXVECTOR3( 2.0f, 2.0f, 2.0f), CEnemyX::TYPE_000);
+
+	CEnemyX::Create( D3DXVECTOR3(1800.0f, 60.0f, 400.0f), D3DXVECTOR3( 0.0f, D3DX_PI/2, 0.0f), D3DXVECTOR3( 2.0f, 2.0f, 2.0f), CEnemyX::TYPE_000);
+	CEnemyX::Create( D3DXVECTOR3(1650.0f, 60.0f, 550.0f), D3DXVECTOR3( 0.0f, D3DX_PI/2, 0.0f), D3DXVECTOR3( 2.0f, 2.0f, 2.0f), CEnemyX::TYPE_000);
+	CEnemyX::Create( D3DXVECTOR3(1900.0f, 60.0f, 650.0f), D3DXVECTOR3( 0.0f, D3DX_PI/2, 0.0f), D3DXVECTOR3( 2.0f, 2.0f, 2.0f), CEnemyX::TYPE_000);
 
 	//スーパーの食材
 	CFood::Create(D3DXVECTOR3( 1150.0f, 50.0f, 1950.0f), D3DXVECTOR2(100.0f, 100.0f), CFood::TYPE_CURRY);

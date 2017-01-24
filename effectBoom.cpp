@@ -73,7 +73,7 @@ HRESULT CEffectBoom::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size, float speed)
 		//Goal
 		m_posGoal[cntEffect].x = pos.x + m_size.x * cosf(fAngle * cntEffect);
 		m_posGoal[cntEffect].z = pos.z + m_size.z * sinf(fAngle * cntEffect);
-		m_posGoal[cntEffect].y = size.y;
+		m_posGoal[cntEffect].y = pos.y + size.y;
 
 		//front vector
 		D3DXVECTOR3 vec = m_posGoal[cntEffect] - pos;

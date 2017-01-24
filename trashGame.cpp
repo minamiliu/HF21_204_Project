@@ -44,8 +44,7 @@
 #define TEXTURE_PLAYER "data/TEXTURE/throwingMother.png"
 #define TEXTURE_START "data/TEXTURE/start.png"
 #define TEXTURE_FINISH "data/TEXTURE/finish.png"
-#define GORILLA_GORILLA "data/TEXTURE/ゴリラ.png"
-#define STAND_GORILLA "data/TEXTURE/ゴリラ(立ち絵).png"
+
 
 #define TEXTURE_EXPLOSION "data/TEXTURE/explosion000.png"
 #define	TEX_PATTERN_DIVIDE_X		(8)												// アニメーションパターンのテクスチャ内での分割数(Ｘ方向)
@@ -315,7 +314,7 @@ void CTrashGame::Update()
 		{
 			pTime->StopTime();
 			SetState(STATE_CHANGE);
-			pChange = CChange::Create(TEXTURENAME,GORILLA_GORILLA,STAND_GORILLA);
+			pChange = CChange::Create(CChange::MODE_GORILLA);
 
 			//BGM
 			CSound *pSound = CManager::GetSound();
@@ -451,6 +450,6 @@ HRESULT CTrashGame::LoadAll(void)
 	CTrash::Load();
 	CTrajectory::Load();
 	CTrashPlayer::Load();
-
+	CChange::Load();
 	return S_OK;
 }

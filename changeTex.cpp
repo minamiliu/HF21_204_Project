@@ -83,14 +83,14 @@ void CChangeTex::Draw(void)
 //=============================================================================
 // ポリゴンの生成処理
 //=============================================================================
-CChangeTex *CChangeTex::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, LPCSTR strFileName)
+CChangeTex *CChangeTex::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, LPDIRECT3DTEXTURE9 pTexture)
 {
 	CChangeTex *pChangeTex;
 	pChangeTex = new CChangeTex;
 	pChangeTex->Init(pos, size);
 
 	//テクスチャの読み込み
-	pChangeTex->Load( strFileName);
+	pChangeTex->BindTexture(pTexture);
 
 	return pChangeTex;
 }

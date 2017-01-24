@@ -77,6 +77,7 @@ private:
 	float m_rotXLocal;
 	D3DXVECTOR3 m_posLocal;
 	D3DXVECTOR3 m_rotLocal;
+
 };
 
 #endif
