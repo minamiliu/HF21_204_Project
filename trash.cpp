@@ -21,6 +21,7 @@
 #include "player2D.h"
 #include "trajectory.h"
 #include "renderer.h"
+#include "sound.h"
 //============================================
 // ƒ}ƒNƒ’è‹`
 //============================================
@@ -124,6 +125,9 @@ void CTrash::Update(void)
 		{
 			m_speed.y = -200;
 		}
+		//SE
+		CSound *pSound = CManager::GetSound();
+		pSound->Play(CSound::SOUND_LABEL_SE_KICK);
 	}
 
 	if(m_fallFlag == true)

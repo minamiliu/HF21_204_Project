@@ -21,7 +21,7 @@
 #include "sun.h"
 #include "score.h"
 #include "text.h"
-
+#include "sound.h"
 //============================================
 // ƒ}ƒNƒ’è‹`
 //============================================
@@ -275,6 +275,10 @@ void CStage::Update()
 	CInputMouse *pInputMouse = CManager::GetInputMouse();
 	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN) || pInputMouse->GetMouseLeftTrigger())
 	{
+
+		//BGM
+		CSound *pSound = CManager::GetSound();
+		pSound->Play(CSound::SOUND_LABEL_SE_CHARAMOVE);
 		switch(m_stageNow)
 		{
 		case MASU_START:

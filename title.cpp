@@ -87,12 +87,16 @@ void CTitle::Update()
 	//入力などの更新、各シーンのUpdateの最初に呼び出す
 	CManager::Update();
 
+	//SE
+	CSound *pSound = CManager::GetSound();
+
 	//シーンスキップ
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
 	CInputMouse *pInputMouse = CManager::GetInputMouse();
 	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN) || pInputMouse->GetMouseLeftTrigger())
 	{
 		SetNextScene( MODE_STAGE_START);
+		pSound->Play(CSound::SOUND_LABEL_SE_LIONSOUND);
 	}
 
 	//シーンが切り替えるところ、各シーンのUpdateの最後に置いとく

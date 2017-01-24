@@ -144,8 +144,11 @@ HRESULT CZebraGame::Init(void)
 	m_pPoint3D = CPoint3D::Create( D3DXVECTOR3( 300.0f, 500.0f, 0.0f), D3DXVECTOR3( 60.0f, 60.0f, 0.0f),0);
 
 	//BGM
-	CSound *pSound = CManager::GetSound();
-	pSound->Play(CSound::SOUND_LABEL_BGM_ZEBRA);
+	m_pSound = CManager::GetSound();
+	m_pSound->Play(CSound::SOUND_LABEL_BGM_ZEBRA);
+	
+	//SE
+	m_pSound->Play(CSound::SOUND_LABEL_SE_WHISTLE);
 
 	return S_OK;
 }
@@ -156,8 +159,7 @@ void CZebraGame::Uninit()
 	CManager::SaveScore( MODE_ZEBRAGAME, m_pScore->GetValue());
 
 	//BGM
-	CSound *pSound = CManager::GetSound();
-	pSound->Stop(CSound::SOUND_LABEL_BGM_ZEBRA);
+	m_pSound->Stop(CSound::SOUND_LABEL_BGM_ZEBRA);
 
 	CManager::Uninit();
 }
@@ -211,6 +213,7 @@ void CZebraGame::Update()
 		break;
 
 	case STATE_BONUS:
+
 		if( m_pTime->GetValue() > 0)
 		{
 			CalcBonus();
@@ -222,6 +225,8 @@ void CZebraGame::Update()
 		break;
 
 	case STATE_FINISH:
+		//SE
+		m_pSound->Play(CSound::SOUND_LABEL_SE_WHISTLE);
 		SetNextScene( MODE_STAGE_ZEBRA);
 		break;
 	}
@@ -338,6 +343,8 @@ void CZebraGame::CalcBonus(void)
 
 		if(m_nGameCnt % 10 == 0)
 		{
+			//SE
+			m_pSound->Play(CSound::SOUND_LABEL_SE_COIN_GET);
 			if(m_pTime->GetValue() > 0)
 			{
 				m_pTime->AddScore(-1);

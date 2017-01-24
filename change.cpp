@@ -18,6 +18,8 @@
 #include "effectBG.h"
 #include "scene2D.h"
 #include "changeTex.h"
+#include "sound.h"
+
 //============================================
 // ƒ}ƒNƒ’è‹`
 //============================================
@@ -79,6 +81,10 @@ HRESULT CChange::Init( LPCSTR strPlayerFileName, LPCSTR strAnimalFileName, LPCST
 	m_bAnimalPlayerFlag = false;
 	pAnimalPlayer = NULL;
 	m_StrAnimalPlayerFileName = strAnimalPlayerFileName;
+
+	//SE
+	CSound *pSound = CManager::GetSound();
+	pSound->Play(CSound::SOUND_LABEL_SE_CHANGE);
 	return S_OK;
 }
 

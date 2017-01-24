@@ -23,6 +23,7 @@
 #include "effect3D.h"
 #include "score.h"
 #include "effectBoom.h"
+#include "sound.h"
 //============================================
 // マクロ定義
 //============================================
@@ -175,6 +176,10 @@ void CBook::ChangePicked(bool pick, bool zebra)
 		m_Move = Bookboxpos-pos;
 		m_Move.y = 500.0f;
 		m_Move = m_Move/100.0f;
+
+		//SE
+		CSound *pSound = CManager::GetSound();
+		pSound->Play(CSound::SOUND_LABEL_SE_KICK);
 	}
 
 	//エフェクト
@@ -288,6 +293,8 @@ void CBook::Update(void)
 
 			//エフェクト
 			CEffectBoom::Create( pos, D3DXVECTOR3( 200, 200, 200), 5);
+			//score
+			CZebraGame::GetScore()->AddScore(100);
 
 			Uninit();
 		}

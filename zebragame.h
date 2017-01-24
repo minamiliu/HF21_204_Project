@@ -31,6 +31,7 @@ class CScore;
 class CTime;
 class CScene2D;
 class CChange;
+class CSound;
 //============================================
 //ç\ë¢ëÃíËã`
 //============================================
@@ -76,7 +77,7 @@ private:
 	int m_nGameCnt;
 	CScene2D *m_pTextureMlt;
 	CScore *m_pTextureHd;
-
+	CSound *m_pSound;
 };
 
 #endif

@@ -95,8 +95,8 @@ HRESULT CResult::Init(void)
 	m_nTargetScore[2] = m_nLionGameScore;
 
 	//BGM
-	CSound *pSound = CManager::GetSound();
-	pSound->Play(CSound::SOUND_LABEL_BGM_RESULT);
+	m_pSound = CManager::GetSound();
+	m_pSound->Play(CSound::SOUND_LABEL_BGM_RESULT);
 
 	return S_OK;
 }
@@ -104,8 +104,7 @@ HRESULT CResult::Init(void)
 void CResult::Uninit()
 {
 	//BGM
-	CSound *pSound = CManager::GetSound();
-	pSound->Stop(CSound::SOUND_LABEL_BGM_RESULT);
+	m_pSound->Stop(CSound::SOUND_LABEL_BGM_RESULT);
 
 	CManager::Uninit();
 }
@@ -141,6 +140,9 @@ void CResult::Update()
 			//60Fで目標値に到達するようにスコア加算
 			m_pTrashGameScore->AddScore(m_nTargetScore[0]/60);
 			m_nTrashGameScore-=m_nTargetScore[0]/60;
+
+			//SE
+			m_pSound->Play(CSound::SOUND_LABEL_SE_COIN_GET);
 		}
 		else if(m_nTrashGameScore < 0 && m_nTrashGameScore > -10000)
 		{
@@ -181,6 +183,9 @@ void CResult::Update()
 			//60Fで目標値に到達するようにスコア加算
 			m_pZebraGameScore->AddScore(m_nTargetScore[1]/60);
 			m_nZebraGameScore-=m_nTargetScore[1]/60;
+
+			//SE
+			m_pSound->Play(CSound::SOUND_LABEL_SE_COIN_GET);
 		}
 		else if(m_nZebraGameScore < 0 && m_nZebraGameScore > -10000)
 		{//スコア調整
@@ -217,6 +222,9 @@ void CResult::Update()
 		{
 			m_pLionGameScore->AddScore(m_nTargetScore[2]/60);
 			m_nLionGameScore-=m_nTargetScore[2]/60;
+
+			//SE
+			m_pSound->Play(CSound::SOUND_LABEL_SE_COIN_GET);
 		}
 		else if(m_nLionGameScore < 0 && m_nLionGameScore > -10000)
 		{//スコア調整

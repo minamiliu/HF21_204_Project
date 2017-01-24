@@ -64,6 +64,7 @@ CLionGame::CLionGame() : CManager(MODE_LIONGAME)
 	m_pChange = NULL;
 	m_pTextureMlt = NULL;
 	m_pTextureHd = NULL;
+	m_pSound = NULL;
 }
 //=============================================================================
 //デストラクタ
@@ -95,7 +96,7 @@ HRESULT CLionGame::Init(void)
 	m_pScore = CScore::Create( D3DXVECTOR3( 150.0f, 30.0f, 0.0f), D3DXVECTOR3( 300, 50.0f, 0.0f), 6, RED(1.0f)); 
 
 	//タイム
-	m_pTime = CTime::Create( D3DXVECTOR3(SCREEN_WIDTH/2, 100.0f, 0.0f), D3DXVECTOR3(140, 70.0f, 0.0f), 2, 60, true, BLUE(1.0f));
+	m_pTime = CTime::Create( D3DXVECTOR3(SCREEN_WIDTH/2, 100.0f, 0.0f), D3DXVECTOR3(140, 70.0f, 0.0f), 2, 90, true, BLUE(1.0f));
 
 	//プレイヤー
 	m_pPlayer = CPlayerX::Create( D3DXVECTOR3( 50.0f, 60.0f, 50.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 2.0f, 2.0f, 2.0f), 0.03f, CPlayerX::TYPE_HUMAN);
@@ -105,8 +106,11 @@ HRESULT CLionGame::Init(void)
 	m_nGameCnt = 0;
 
 	//BGM
-	CSound *pSound = CManager::GetSound();
-	pSound->Play(CSound::SOUND_LABEL_BGM_LION);
+	m_pSound = CManager::GetSound();
+	m_pSound->Play(CSound::SOUND_LABEL_BGM_LION);
+
+	//SE
+	m_pSound->Play(CSound::SOUND_LABEL_SE_WHISTLE);
 
 	return S_OK;
 }
@@ -119,8 +123,7 @@ void CLionGame::Uninit()
 	CManager::SaveScore( MODE_LIONGAME, m_pScore->GetValue());
 
 	//BGM
-	CSound *pSound = CManager::GetSound();
-	pSound->Stop(CSound::SOUND_LABEL_BGM_LION);
+	m_pSound->Stop(CSound::SOUND_LABEL_BGM_LION);
 
 	CManager::Uninit();
 }
@@ -181,6 +184,8 @@ void CLionGame::Update()
 		break;
 
 	case STATE_FINISH:
+		//SE
+		m_pSound->Play(CSound::SOUND_LABEL_SE_WHISTLE);
 		SetNextScene( MODE_STAGE_LION);
 		break;
 	}
@@ -445,6 +450,8 @@ void CLionGame::CalcBonus(void)
 
 		if(m_nGameCnt % 10 == 0)
 		{
+			//SE
+			m_pSound->Play(CSound::SOUND_LABEL_SE_COIN_GET);
 			if(m_pTime->GetValue() > 0)
 			{
 				m_pTime->AddScore(-1);

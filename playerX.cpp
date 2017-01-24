@@ -27,7 +27,7 @@
 #include "meshWall.h"
 #include "cubeX.h"
 #include "enemyX.h"
-
+#include "sound.h"
 //============================================
 // マクロ定義
 //============================================
@@ -568,6 +568,10 @@ bool CPlayerX::isCollision(void)
 					pFood->SetState( CFood::STATE_FLYING, 120);
 					m_nNumFoodGet++;
 
+					//SE
+					CSound *pSound = CManager::GetSound();
+					pSound->Play(CSound::SOUND_LABEL_SE_ITEM_GET);
+
 					//スコア
 					CLionGame::GetScore()->AddScore(100);
 				}
@@ -581,6 +585,10 @@ bool CPlayerX::isCollision(void)
 
 				if( CCollision::HitCheckBall( posPlayer, PLAYER_RADIUS, posEnemy, PLAYER_RADIUS))
 				{
+					//SE
+					CSound *pSound = CManager::GetSound();
+					pSound->Play(CSound::SOUND_LABEL_SE_HITENEMY);
+
 					switch(m_state)
 					{
 					case STATE_NORMAL:

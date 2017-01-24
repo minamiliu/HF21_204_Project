@@ -21,6 +21,7 @@
 #include "score.h"
 #include "zebragame.h"
 #include "effectBoom.h"
+#include "sound.h"
 //============================================
 // マクロ定義
 //============================================
@@ -170,6 +171,10 @@ void CToy::ChangePicked(bool pick, bool zebra)
 		m_Move = Toyboxpos-pos;
 		m_Move.y = 500.0f;
 		m_Move = m_Move/100.0f;
+
+		//SE
+		CSound *pSound = CManager::GetSound();
+		pSound->Play(CSound::SOUND_LABEL_SE_KICK);
 	}
 
 	//エフェクト
@@ -261,6 +266,8 @@ void CToy::Update(void)
 
 			//エフェクト
 			CEffectBoom::Create( pos, D3DXVECTOR3( 200, 200, 200), 5);
+
+			CZebraGame::GetScore()->AddScore(100);
 
 			Uninit();
 			return;

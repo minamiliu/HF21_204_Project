@@ -16,10 +16,16 @@ CSound::PARAM CSound::m_aParam[CSound::SOUND_LABEL_MAX] =
 	{"data/BGM/nameless_hearts.wav", -1}, //zebra BGM
 	{"data/BGM/Shopping.wav", -1}, //lion BGM 
 	{"data/BGM/result.wav", -1}, //result BGM
-	//{"data/BGM/次のシーン_2.wav", 0},	// 遷移キャラ移動
-	//{"data/SE/hit000.wav", 0},			// 弾発射音
-	//{"data/SE/hit001.wav", 0},			// 弾発射音
-	//{"data/SE/explosion000.wav", 0},	// 爆発音
+	{"data/SE/ライオンの鳴き声.wav", 0}, // title start 
+	{"data/SE/次のシーン_2.wav", 0},			//キャラ移動
+	{"data/SE/butukaru.wav", 0},	//hit by trashbox
+	{"data/SE/hit000.wav", 0},	//hit by enemy 	
+	{"data/SE/whistle0101.wav", 0},	//口笛
+	{"data/SE/コイン獲得音.wav", 0},	//コイン獲得音 
+	{"data/SE/判子を押す.wav", 0},	//判子を押す
+	{"data/SE/びっくりマーク.wav", 0},	//びっくりマーク
+	{"data/SE/itemGet.wav", 0},	//itemGet
+	{"data/SE/change.wav", 0},	//変身
 };
 
 //=============================================================================

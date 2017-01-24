@@ -109,7 +109,7 @@ HRESULT CTrashGame::Init(void)
 	//m_pTrashBox = CScene2D::Create(D3DXVECTOR3(1000.0f, 500.0f, 0.0f), D3DXVECTOR3(800.0f, 600.0f, 0.0f),TEXTURE_TRASHBOX);
 	m_pTrashBox = CScene2D::Create(D3DXVECTOR3(1100.0f, 350.0f, 0.0f), D3DXVECTOR3(700.0f, 300.0f, 0.0f),TEXTURE_TRASHBOX);
 	//タイム
-	pTime = CTime::Create( D3DXVECTOR3(SCREEN_WIDTH/2, 100.0f, 0.0f), D3DXVECTOR3(140, 70.0f, 0.0f), 2, 60, true, BLUE(1.0f));
+	pTime = CTime::Create( D3DXVECTOR3(SCREEN_WIDTH/2, 100.0f, 0.0f), D3DXVECTOR3(140, 70.0f, 0.0f), 2, 45, true, BLUE(1.0f));
 	pTime->StopTime();
 	//マウスの位置を得る
 	CPoint2D::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), D3DXVECTOR3(0.0f,0.0f,0.0f),0);
@@ -199,6 +199,9 @@ void CTrashGame::Update()
 					{//外側の右端ではじく
 						((CTrash*)pScene)->ReverseMove();
 						CTrajectory::Create(D3DXVECTOR3(posTrash.x,posTrash.y,100.0f),D3DXVECTOR3(100,100,0.0f),CTrajectory::TJRTYPE_NORMAL,0.0);
+						//SE
+						CSound *pSound = CManager::GetSound();
+						pSound->Play(CSound::SOUND_LABEL_SE_HITBOX);
 					}
 					else
 					{//完全に入ってる
@@ -234,6 +237,9 @@ void CTrashGame::Update()
 						//オブジェクトの位置を画面外へ -> 画面外判定で消滅
 						pScene->SetPosition(D3DXVECTOR3(100.0f,1000.0f,0.0f));
 						
+						//SE
+						CSound *pSound = CManager::GetSound();
+						pSound->Play(CSound::SOUND_LABEL_SE_ITEM_GET);
 					}
 				}
 			}
@@ -281,12 +287,9 @@ void CTrashGame::Update()
 		}
 	}
 	
-	if(pTime->GetTime() <= 11 && pTime->GetTime() >= 10)
-	{
-		
-	}
+
 	//残り時間が１０になったら
-	if(pTime->GetTime() == 10)
+	if(pTime->GetTime() == 15)
 	{
 		pAnimPlayer->SetColor(WHITE(1.0));
 		//playerのポインタを取る
@@ -367,6 +370,10 @@ void CTrashGame::Update()
 		{
 			CMessage::Create(D3DXVECTOR3(SCREEN_WIDTH + 100,100,0),D3DXVECTOR3(200,200,0),TEXTURE_FINISH);
 			bMessageFlag = true;
+
+			//SE
+			CSound *pSound = CManager::GetSound();
+			pSound->Play(CSound::SOUND_LABEL_SE_WHISTLE);
 		}
 		for(int nCntScene = 0;nCntScene < MAX_SCENE;nCntScene++)
 		{
