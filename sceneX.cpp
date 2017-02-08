@@ -42,6 +42,7 @@ CSceneX::CSceneX()
 	m_scl = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);		// モデルの大きさ(スケール)
 
 	D3DXMatrixIdentity( &m_mtxWorld);
+	m_bLoadXfile = false;
 }
 
 //=============================================================================

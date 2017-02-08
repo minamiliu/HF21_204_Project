@@ -68,7 +68,6 @@ HRESULT CScene2D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 	// ポリゴンの情報を設置
 	m_pos = pos;
 	m_size = size;
-	m_bLoadTexture = false;
 
 	// 頂点バッファの生成
 	if(FAILED(pDevice->CreateVertexBuffer(
@@ -261,7 +260,7 @@ HRESULT CScene2D::Load(LPCSTR strFileName)
 		pDevice = CManager::GetRenderer()->GetDevice();
 
 		// テクスチャの読み込み
-		D3DXCreateTextureFromFile( pDevice, strFileName, &m_pTexture);
+		HRESULT result = D3DXCreateTextureFromFile( pDevice, strFileName, &m_pTexture);
 
 		// テクスチャの読み込みフラグ
 		m_bLoadTexture = true;

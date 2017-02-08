@@ -209,10 +209,10 @@ void CRenderer::Draw(void)
 
 #ifdef _DEBUG
 		// FPS表示
-		DrawFPS();
+		//DrawFPS();
 
 		//デバッグ情報表示
-		CDebugProc::Draw();
+		//CDebugProc::Draw();
 #endif
 		// Direct3Dによる描画の終了
 		m_pD3DDevice->EndScene();

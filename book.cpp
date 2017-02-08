@@ -305,6 +305,7 @@ void CBook::Update(void)
 			pSound->Play(CSound::SOUND_LABEL_SE_ITEM_GET);
 
 			Uninit();
+			return;
 		}
 	}
 	else if(m_bPicked == false && m_bPicked == false)
@@ -357,6 +358,7 @@ void CBook::Update(void)
 			pSound->Play(CSound::SOUND_LABEL_SE_ITEM_GET);
 
 			Uninit();
+			return;
 		}
 	}
 	

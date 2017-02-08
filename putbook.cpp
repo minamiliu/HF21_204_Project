@@ -217,6 +217,7 @@ CPutBook *CPutBook::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl,int
 void CPutBook::InitPubBookPos(void)
 {
 	for (int yoko = 0 ;yoko < 5 ; yoko++)
+
 	{
 		m_PutBookPos[yoko]		= D3DXVECTOR3(-380.0f+ (yoko*25.0f),235.0f,375);
 		m_PutBookPos[yoko + 5]  = D3DXVECTOR3(-380.0f+ (yoko*25.0f),150.0f,375);

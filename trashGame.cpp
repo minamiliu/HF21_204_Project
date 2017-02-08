@@ -403,7 +403,7 @@ void CTrashGame::Update()
 	//スキップシーン
 	pInputKeyboard = CManager::GetInputKeyboard();
 	CInputMouse *pInputMouse = CManager::GetInputMouse();
-	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN) || pInputMouse->GetMouseCenterTrigger())
+	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN))
 	{
 		SetNextScene( MODE_STAGE_GORIRA);
 	}

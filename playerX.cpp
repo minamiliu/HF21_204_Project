@@ -613,7 +613,7 @@ bool CPlayerX::isCollision(void)
 					pSound->Play(CSound::SOUND_LABEL_SE_ITEM_GET);
 
 					//ƒXƒRƒA
-					CLionGame::GetScore()->AddScore(100);
+					CLionGame::GetScore()->AddScore(300);
 				}
 			}
 

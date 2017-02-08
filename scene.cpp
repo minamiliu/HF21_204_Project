@@ -163,6 +163,7 @@ void CScene::ReleaseAll(void)
 		if(m_apScene[nCntScene] != NULL)
 		{
 			m_apScene[nCntScene]->Uninit();
+			m_apScene[nCntScene] = NULL;
 		}
 	}
 
@@ -171,6 +172,7 @@ void CScene::ReleaseAll(void)
 		if(m_apEffect[nCntScene] != NULL)
 		{
 			m_apEffect[nCntScene]->Uninit();
+			m_apEffect[nCntScene] = NULL;
 		}
 	}
 
@@ -179,6 +181,7 @@ void CScene::ReleaseAll(void)
 		if(m_apChange[nCntScene] != NULL)
 		{
 			m_apChange[nCntScene]->Uninit();
+			m_apChange[nCntScene] = NULL;
 		}
 	}
 }

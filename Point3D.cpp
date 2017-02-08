@@ -195,7 +195,7 @@ void CPoint3D::Update(void)
 #ifdef _DEBUG
 	if(CManager::GetInputMouse()->GetMouseRightTrigger())
 	{
-		ChangeZebra();
+	//	ChangeZebra();
 	}
 #endif
 
@@ -250,5 +250,12 @@ void CPoint3D::ChangeZebra(void)
 	
 	CScene2D::ChangeTextureAnime(2,D3DXVECTOR2(TEX_PATTERN_SIZE_X,TEX_PATTERN_SIZE_Y),D3DXVECTOR2(4,1));
 		
-			
+			if(pScenePick != NULL)
+			{
+	
+				((CToy*)pScenePick)->ChangePicked(false,m_zebra);
+				pScenePick = NULL;
+				return;
+	
+			}
 }
