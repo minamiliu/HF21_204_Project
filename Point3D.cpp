@@ -1,14 +1,14 @@
-//============================================
+ï»¿//============================================
 //
-// ƒ^ƒCƒgƒ‹:	 HF
-// ƒvƒƒOƒ‰ƒ€–¼: trash.cpp
-// ì¬Ò:		 HAL“Œ‹ƒQ[ƒ€Šw‰È@yamaga keisuke
-// ì¬“ú:       2016/11/10
+// ã‚¿ã‚¤ãƒˆãƒ«:	 HF
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å: trash.cpp
+// ä½œæˆè€…:		 HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€yamaga keisuke
+// ä½œæˆæ—¥:       2016/11/10
 //
 //============================================
 
 //============================================
-//ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+//ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //============================================
 #include "main.h"
 #include "manager.h"
@@ -20,7 +20,7 @@
 #include "book.h"
 #include "change.h"
 //============================================
-// ƒ}ƒNƒ’è‹`
+// ãƒã‚¯ãƒ­å®šç¾©
 //============================================
 #define GRAVITY_POINT (0.98f)
 #define TEXTURENAME "data/TEXTURE/hand.png"
@@ -28,21 +28,21 @@
 
 #define TEXTURENAMEZ "data/TEXTURE/zebrahand.png"
 
-#define	TEX_PATTERN_DIVIDE_X		(4)								// ƒAƒjƒ[ƒVƒ‡ƒ“ƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒ“à‚Å‚Ì•ªŠ„”(‚w•ûŒü)
-#define	TEX_PATTERN_DIVIDE_Y		(1)								// ƒAƒjƒ[ƒVƒ‡ƒ“ƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒ“à‚Å‚Ì•ªŠ„”(‚x•ûŒü)
+#define	TEX_PATTERN_DIVIDE_X		(4)								// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£å†…ã§ã®åˆ†å‰²æ•°(ï¼¸æ–¹å‘)
+#define	TEX_PATTERN_DIVIDE_Y		(1)								// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£å†…ã§ã®åˆ†å‰²æ•°(ï¼¹æ–¹å‘)
 
-#define	TEX_PATTERN_SIZE_X			(1.0f/TEX_PATTERN_DIVIDE_X)								// ‚Pƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒƒTƒCƒY(‚w•ûŒü)(1.0f/X•ûŒü•ªŠ„”)
-#define	TEX_PATTERN_SIZE_Y			(1.0f/TEX_PATTERN_DIVIDE_Y)								// ‚Pƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒƒTƒCƒY(‚x•ûŒü)(1.0f/Y•ûŒü•ªŠ„”)
+#define	TEX_PATTERN_SIZE_X			(1.0f/TEX_PATTERN_DIVIDE_X)								// ï¼‘ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µã‚¤ã‚º(ï¼¸æ–¹å‘)(1.0f/Xæ–¹å‘åˆ†å‰²æ•°)
+#define	TEX_PATTERN_SIZE_Y			(1.0f/TEX_PATTERN_DIVIDE_Y)								// ï¼‘ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µã‚¤ã‚º(ï¼¹æ–¹å‘)(1.0f/Yæ–¹å‘åˆ†å‰²æ•°)
 
 //=============================================================================
-// \‘¢‘Ì’è‹`
+// æ§‹é€ ä½“å®šç¾©
 //=============================================================================
 //bool PointFlag = false;
 CScene *pScenePick = NULL;
 
  bool CPoint3D::m_zebra = false;
 //=============================================================================
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CPoint3D::CPoint3D()
 {
@@ -50,7 +50,7 @@ CPoint3D::CPoint3D()
 }
 
 //=============================================================================
-//ƒfƒXƒgƒ‰ƒNƒ^
+//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CPoint3D::~CPoint3D()
 {
@@ -59,7 +59,7 @@ CPoint3D::~CPoint3D()
 
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚Ì‰Šú‰»ˆ—
+// ãƒãƒªã‚´ãƒ³ã®åˆæœŸåŒ–å‡¦ç†
 //=============================================================================
 
 HRESULT CPoint3D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size,HWND hwnd)
@@ -81,7 +81,7 @@ HRESULT CPoint3D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size,HWND hwnd)
 
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚ÌI—¹ˆ—
+// ãƒãƒªã‚´ãƒ³ã®çµ‚äº†å‡¦ç†
 //=============================================================================
 void CPoint3D::Uninit(void)
 {
@@ -90,11 +90,11 @@ void CPoint3D::Uninit(void)
 
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚ÌXVˆ—
+// ãƒãƒªã‚´ãƒ³ã®æ›´æ–°å‡¦ç†
 //=============================================================================
 void CPoint3D::Update(void)
 {
-	//// ƒ}ƒEƒXÀ•W‚Ìæ“¾
+	//// ãƒã‚¦ã‚¹åº§æ¨™ã®å–å¾—
 	POINT po;
 	GetCursorPos(&po);
 	
@@ -102,7 +102,7 @@ void CPoint3D::Update(void)
 	ShowCursor(FALSE);
 	D3DXVECTOR3 pos ;
 	m_3Dpos = CMousePick::GetWorldPos(po);
-	CDebugProc::Print("\nƒJ[ƒ\ƒ‹‚ÌêŠ3D.x.y.z:%f,%f,%f",m_3Dpos.x,m_3Dpos.y,m_3Dpos.z);
+	CDebugProc::Print("\nã‚«ãƒ¼ã‚½ãƒ«ã®å ´æ‰€3D.x.y.z:%f,%f,%f",m_3Dpos.x,m_3Dpos.y,m_3Dpos.z);
 	
 	
 	if(CManager::GetInputMouse()->GetMouseLeftTrigger())
@@ -117,7 +117,7 @@ void CPoint3D::Update(void)
 		}
 
 		
-		//ƒgƒC‚ÌêŠæ“¾
+		//ãƒˆã‚¤ã®å ´æ‰€å–å¾—
 		for(int Cnt=0; Cnt<MAX_SCENE ; Cnt++)
 		{
 			CScene *pScene ;
@@ -132,7 +132,7 @@ void CPoint3D::Update(void)
 					D3DXVECTOR3 SizeToy = D3DXVECTOR3(100,100,100);
 					PosToy = pScene ->GetPosition();
 
-					//“–‚½‚Á‚½
+					//å½“ãŸã£ãŸ
 					if(	   m_3Dpos.x-50.0f  > PosToy.x - SizeToy.x/2.0f 
 						&& m_3Dpos.x-50.0f  < PosToy.x + SizeToy.x/2.0f 
 						&& m_3Dpos.z+50.0f  > PosToy.z - SizeToy.z/2.0f  
@@ -152,7 +152,7 @@ void CPoint3D::Update(void)
 					D3DXVECTOR3 SizeToy = D3DXVECTOR3(100,100,100);
 					PosToy = pScene ->GetPosition();
 
-					//“–‚½‚Á‚½
+					//å½“ãŸã£ãŸ
 					if(	   m_3Dpos.x > PosToy.x - SizeToy.x/2.0f 
 						&& m_3Dpos.x < PosToy.x + SizeToy.x/2.0f 
 						&& m_3Dpos.z > PosToy.z - SizeToy.z/2.0f  
@@ -201,20 +201,20 @@ void CPoint3D::Update(void)
 
 	if(m_zebra == true)
 	{
-		CDebugProc::Print("\nƒ[ƒuƒ‰");
+		CDebugProc::Print("\nã‚¼ãƒ–ãƒ©");
 	}
 	pos.x = po.x;
 	pos.y = po.y;
 	CPoint3D::SetPosition(D3DXVECTOR3(pos.x,pos.y,0.0f));
 	CScene2D::Update();
 	float print = CManager::GetInputMouse()->GetMouseAxisX();
-	CDebugProc::Print("\nƒJ[ƒ\ƒ‹‚ÌêŠ.x.y:%f,%f",pos.x,pos.y);
+	CDebugProc::Print("\nã‚«ãƒ¼ã‚½ãƒ«ã®å ´æ‰€.x.y:%f,%f",pos.x,pos.y);
 	
 	
 }
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚Ì•`‰æˆ—
+// ãƒãƒªã‚´ãƒ³ã®æç”»å‡¦ç†
 //=============================================================================
 void CPoint3D::Draw(void)
 {
@@ -222,7 +222,7 @@ void CPoint3D::Draw(void)
 }
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚Ì¶¬ˆ—
+// ãƒãƒªã‚´ãƒ³ã®ç”Ÿæˆå‡¦ç†
 //=============================================================================
 CPoint3D *CPoint3D::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size,HWND hwnd)
 {
@@ -233,7 +233,7 @@ CPoint3D *CPoint3D::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size,HWND hwnd)
 	return pPoint3D;
 }
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚ÌÀ•Wæ“¾
+// ãƒãƒªã‚´ãƒ³ã®åº§æ¨™å–å¾—
 //=============================================================================
 D3DXVECTOR3 CPoint3D::Get3DPosition(void)
 {
@@ -241,7 +241,7 @@ D3DXVECTOR3 CPoint3D::Get3DPosition(void)
 }
 
 //=============================================================================
-//ƒ[ƒuƒ‰ƒ‚[ƒh
+//ã‚¼ãƒ–ãƒ©ãƒ¢ãƒ¼ãƒ‰
 //=============================================================================
 void CPoint3D::ChangeZebra(void)
 {

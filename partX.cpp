@@ -1,14 +1,14 @@
-//============================================
+ï»¿//============================================
 //
-// ƒ^ƒCƒgƒ‹:	 –¢—ˆ‘n‘¢“Wƒ`[ƒ€204
-// ƒvƒƒOƒ‰ƒ€–¼: partX.cpp
-// ì¬Ò:		 HAL“Œ‹ƒQ[ƒ€Šw‰È@—«“ìG
-// ì¬“ú:       2017/01/04
+// ã‚¿ã‚¤ãƒˆãƒ«:	 æœªæ¥å‰µé€ å±•ãƒãƒ¼ãƒ 204
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å: partX.cpp
+// ä½œæˆè€…:		 HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
+// ä½œæˆæ—¥:       2017/01/04
 //
 //============================================
 
 //============================================
-//ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+//ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //============================================
 #include "main.h"
 #include "partX.h"
@@ -17,7 +17,7 @@
 #include "playerX.h"
 
 //============================================
-// ƒ}ƒNƒ’è‹`
+// ãƒã‚¯ãƒ­å®šç¾©
 //============================================
 #define MODEL_FILENAME_L_HAND	"data/MODEL/mom_L_hand.x"
 #define MODEL_FILENAME_R_HAND	"data/MODEL/mom_R_hand.x"
@@ -26,33 +26,33 @@
 #define MAX_MOTION (2)
 
 //=============================================================================
-// \‘¢‘Ì’è‹`
+// æ§‹é€ ä½“å®šç¾©
 //=============================================================================
 
 //============================================
-// Ã“Iƒƒ“ƒo[•Ï”‚Ì‰Šú‰»
+// é™çš„ãƒ¡ãƒ³ãƒãƒ¼å¤‰æ•°ã®åˆæœŸåŒ–
 //============================================
 
 
 //=============================================================================
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CPartX::CPartX()
 {
-	m_pTexture = NULL;		// ƒeƒNƒXƒ`ƒƒ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	m_pD3DXMesh = NULL;		// ƒƒbƒVƒ…î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	m_pD3DXBuffMat = NULL;	// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	m_nNumMat = 0;			// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ì”
+	m_pTexture = NULL;		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	m_pD3DXMesh = NULL;		// ãƒ¡ãƒƒã‚·ãƒ¥æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	m_pD3DXBuffMat = NULL;	// ãƒãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	m_nNumMat = 0;			// ãƒãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã®æ•°
 
-	m_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		// ƒ‚ƒfƒ‹‚ÌˆÊ’u
-	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		// ƒ‚ƒfƒ‹‚ÌŒü‚«(‰ñ“])
-	m_scl = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		// ƒ‚ƒfƒ‹‚Ì‘å‚«‚³(ƒXƒP[ƒ‹)
+	m_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		// ãƒ¢ãƒ‡ãƒ«ã®ä½ç½®
+	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		// ãƒ¢ãƒ‡ãƒ«ã®å‘ã(å›è»¢)
+	m_scl = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		// ãƒ¢ãƒ‡ãƒ«ã®å¤§ãã•(ã‚¹ã‚±ãƒ¼ãƒ«)
 
 	D3DXMatrixIdentity(&m_mtxWorld);
 }
 
 //=============================================================================
-//ƒfƒXƒgƒ‰ƒNƒ^
+//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CPartX::~CPartX()
 {
@@ -61,16 +61,16 @@ CPartX::~CPartX()
 
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚Ì‰Šú‰»ˆ—
+// ãƒãƒªã‚´ãƒ³ã®åˆæœŸåŒ–å‡¦ç†
 //=============================================================================
 HRESULT CPartX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl)
 {
-	//ƒƒ“ƒo[•Ï”‚Ì‰Šú‰»
+	//ãƒ¡ãƒ³ãƒãƒ¼å¤‰æ•°ã®åˆæœŸåŒ–
 	m_pos = pos;
 	m_rot = rot;
 	m_scl = scl;
 
-	// Xƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İƒtƒ‰ƒO
+	// Xãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿ãƒ•ãƒ©ã‚°
 	m_bLoadXfile = false;
 
 
@@ -86,27 +86,27 @@ HRESULT CPartX::LoadXfile(LPCSTR strFileName)
 	pDevice = CManager::GetRenderer()->GetDevice();
 
 
-	// ƒ‚ƒfƒ‹‚ÉŠÖ‚·‚é•Ï”‚Ì‰Šú‰»							
-	m_pTexture = NULL;		// ƒeƒNƒXƒ`ƒƒ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	m_pD3DXMesh = NULL;		// ƒƒbƒVƒ…î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	m_pD3DXBuffMat = NULL;		// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	m_nNumMat = 0;			// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ì”
-							// Xƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
+	// ãƒ¢ãƒ‡ãƒ«ã«é–¢ã™ã‚‹å¤‰æ•°ã®åˆæœŸåŒ–							
+	m_pTexture = NULL;		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	m_pD3DXMesh = NULL;		// ãƒ¡ãƒƒã‚·ãƒ¥æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	m_pD3DXBuffMat = NULL;		// ãƒãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	m_nNumMat = 0;			// ãƒãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã®æ•°
+							// Xãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
 	if (FAILED(D3DXLoadMeshFromX(
-		strFileName,				// “Ç‚İ‚Şƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹–¼(Xƒtƒ@ƒCƒ‹)
-		D3DXMESH_SYSTEMMEM,			// ƒƒbƒVƒ…‚Ìì¬ƒIƒvƒVƒ‡ƒ“‚ğw’è
-		pDevice,					// IDirect3DDevice9ƒCƒ“ƒ^[ƒtƒFƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-		NULL,						// —×Ú«ƒf[ƒ^‚ğŠÜ‚Şƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-		&m_pD3DXBuffMat,		// ƒ}ƒeƒŠƒAƒ‹ƒf[ƒ^‚ğŠÜ‚Şƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-		NULL,						// ƒGƒtƒFƒNƒgƒCƒ“ƒXƒ^ƒ“ƒX‚Ì”z—ñ‚ğŠÜ‚Şƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-		&m_nNumMat,			// D3DXMATERIAL\‘¢‘Ì‚Ì”
-		&m_pD3DXMesh			// ID3DXMeshƒCƒ“ƒ^[ƒtƒFƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ÌƒAƒhƒŒƒX
+		strFileName,				// èª­ã¿è¾¼ã‚€ãƒ¢ãƒ‡ãƒ«ãƒ•ã‚¡ã‚¤ãƒ«å(Xãƒ•ã‚¡ã‚¤ãƒ«)
+		D3DXMESH_SYSTEMMEM,			// ãƒ¡ãƒƒã‚·ãƒ¥ã®ä½œæˆã‚ªãƒ—ã‚·ãƒ§ãƒ³ã‚’æŒ‡å®š
+		pDevice,					// IDirect3DDevice9ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+		NULL,						// éš£æ¥æ€§ãƒ‡ãƒ¼ã‚¿ã‚’å«ã‚€ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+		&m_pD3DXBuffMat,		// ãƒãƒ†ãƒªã‚¢ãƒ«ãƒ‡ãƒ¼ã‚¿ã‚’å«ã‚€ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+		NULL,						// ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®é…åˆ—ã‚’å«ã‚€ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+		&m_nNumMat,			// D3DXMATERIALæ§‹é€ ä½“ã®æ•°
+		&m_pD3DXMesh			// ID3DXMeshã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã®ã‚¢ãƒ‰ãƒ¬ã‚¹
 	)))
 	{
 		return E_FAIL;
 	}
 
-	// Xƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İƒtƒ‰ƒO
+	// Xãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿ãƒ•ãƒ©ã‚°
 	m_bLoadXfile = true;
 
 	return S_OK;
@@ -118,37 +118,37 @@ HRESULT CPartX::LoadXfile(LPCSTR strFileName)
 //=============================================================================
 void CPartX::Uninit(void)
 {
-	// ƒeƒNƒXƒ`ƒƒ‚ÌŠJ•ú
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®é–‹æ”¾
 	if (m_pTexture != NULL && m_bLoadXfile == true)
 	{
 		m_pTexture->Release();
 		m_pTexture = NULL;
 	}
 
-	// ƒƒbƒVƒ…‚ÌŠJ•ú
+	// ãƒ¡ãƒƒã‚·ãƒ¥ã®é–‹æ”¾
 	if (m_pD3DXMesh != NULL && m_bLoadXfile == true)
 	{
 		m_pD3DXMesh->Release();
 		m_pD3DXMesh = NULL;
 	}
-	// ƒ}ƒeƒŠƒAƒ‹‚ÌŠJ•ú
+	// ãƒãƒ†ãƒªã‚¢ãƒ«ã®é–‹æ”¾
 	if (m_pD3DXBuffMat != NULL && m_bLoadXfile == true)
 	{
 		m_pD3DXBuffMat->Release();
 		m_pD3DXBuffMat = NULL;
 	}
 
-	//ƒIƒuƒWƒFƒNƒg‚Ì”jŠü
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç ´æ£„
 	//Release();
 }
 //=============================================================================
-// Xƒtƒ@ƒCƒ‹‚ğŠ„‚è“–‚Ä‚é
+// Xãƒ•ã‚¡ã‚¤ãƒ«ã‚’å‰²ã‚Šå½“ã¦ã‚‹
 //=============================================================================
-void CPartX::BindXfile(LPDIRECT3DTEXTURE9	pTexture,		// ƒeƒNƒXƒ`ƒƒ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	LPD3DXMESH			pD3DXMesh,			// ƒƒbƒVƒ…î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	LPD3DXBUFFER		pD3DXBuffMat,		// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
+void CPartX::BindXfile(LPDIRECT3DTEXTURE9	pTexture,		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	LPD3DXMESH			pD3DXMesh,			// ãƒ¡ãƒƒã‚·ãƒ¥æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	LPD3DXBUFFER		pD3DXBuffMat,		// ãƒãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿
 	DWORD				nNumMat
-)					// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ì”
+)					// ãƒãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã®æ•°
 {
 	m_pTexture = pTexture;
 	m_pD3DXMesh = pD3DXMesh;
@@ -177,40 +177,40 @@ void CPartX::Draw(void)
 	D3DXMATERIAL *pD3DXMat;
 	D3DMATERIAL9 matDef;
 
-	// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚Ì‰Šú‰»
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒãƒˆãƒªãƒƒã‚¯ã‚¹ã®åˆæœŸåŒ–
 	D3DXMatrixIdentity(&m_mtxWorld);
 
-	// ƒXƒP[ƒ‹‚ğ”½‰f
+	// ã‚¹ã‚±ãƒ¼ãƒ«ã‚’åæ˜ 
 	D3DXMatrixScaling(&mtxScl, m_scl.x, m_scl.y, m_scl.z);
 	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxScl);
 
-	// ‰ñ“]‚ğ”½‰f
+	// å›è»¢ã‚’åæ˜ 
 	D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);
 	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxRot);
 
-	// ˆÚ“®‚ğ”½‰f
+	// ç§»å‹•ã‚’åæ˜ 
 	D3DXMatrixTranslation(&mtxTranslate, m_pos.x, m_pos.y, m_pos.z);
 	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxTranslate);
 
-	// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚Ìİ’è
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒãƒˆãƒªãƒƒã‚¯ã‚¹ã®è¨­å®š
 	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
 
-	// Œ»İ‚Ìƒ}ƒeƒŠƒAƒ‹‚ğæ“¾
+	// ç¾åœ¨ã®ãƒãƒ†ãƒªã‚¢ãƒ«ã‚’å–å¾—
 	pDevice->GetMaterial(&matDef);
 
-	// ƒ}ƒeƒŠƒAƒ‹î•ñ‚É‘Î‚·‚éƒ|ƒCƒ“ƒ^‚ğæ“¾
+	// ãƒãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã«å¯¾ã™ã‚‹ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 	pD3DXMat = (D3DXMATERIAL *)m_pD3DXBuffMat->GetBufferPointer();
 	for (int nCntMat = 0; nCntMat < (int)m_nNumMat; nCntMat++)
 	{
-		// ƒ}ƒeƒŠƒAƒ‹‚Ìİ’è
+		// ãƒãƒ†ãƒªã‚¢ãƒ«ã®è¨­å®š
 		pDevice->SetMaterial(&pD3DXMat[nCntMat].MatD3D);
-		// ƒeƒNƒXƒ`ƒƒ‚Ìİ’è
+		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®è¨­å®š
 		pDevice->SetTexture(0, m_pTexture);
-		// •`‰æ
+		// æç”»
 		m_pD3DXMesh->DrawSubset(nCntMat);
 	}
 
-	// ƒ}ƒeƒŠƒAƒ‹‚ğƒfƒtƒHƒ‹ƒg‚É–ß‚·
+	// ãƒãƒ†ãƒªã‚¢ãƒ«ã‚’ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã«æˆ»ã™
 	pDevice->SetMaterial(&matDef);
 }
 
@@ -223,7 +223,7 @@ CPartX *CPartX::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl)
 	pSceneX = new CPartX;
 	pSceneX->Init(pos, rot, scl);
 
-	//ƒ‚ƒfƒ‹‚ÍŠO‚Å“Ç‚İ‚Ş’ˆÓ
+	//ãƒ¢ãƒ‡ãƒ«ã¯å¤–ã§èª­ã¿è¾¼ã‚€æ³¨æ„
 
 	return pSceneX;
 }

@@ -1,14 +1,14 @@
-//============================================
+ï»¿//============================================
 //
-// ƒ^ƒCƒgƒ‹:	 –¢—ˆ‘n‘¢“Wƒ`[ƒ€204
-// ƒvƒƒOƒ‰ƒ€–¼: meshField.cpp
-// ì¬Ò:		 HAL“Œ‹ƒQ[ƒ€Šw‰È@—«“ìG
-// ì¬“ú:       2016/12/15
+// ã‚¿ã‚¤ãƒˆãƒ«:	 æœªæ¥å‰µé€ å±•ãƒãƒ¼ãƒ 204
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å: meshField.cpp
+// ä½œæˆè€…:		 HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
+// ä½œæˆæ—¥:       2016/12/15
 //
 //============================================
 
 //============================================
-//ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+//ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //============================================
 #include "main.h"
 #include "meshField.h"
@@ -16,7 +16,7 @@
 #include "manager.h"
 
 //============================================
-// ƒ}ƒNƒ’è‹`
+// ãƒã‚¯ãƒ­å®šç¾©
 //============================================
 
 #define TEXTURE_GREEN "data/TEXTURE/field000.jpg"
@@ -25,12 +25,12 @@
 
 
 //============================================
-// Ã“Iƒƒ“ƒo[•Ï”‚Ì‰Šú‰»
+// é™çš„ãƒ¡ãƒ³ãƒãƒ¼å¤‰æ•°ã®åˆæœŸåŒ–
 //============================================
 LPDIRECT3DTEXTURE9 CMeshField::m_pTexture[TYPE_MAX] = {};
 
 //=============================================================================
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CMeshField::CMeshField()
 {
@@ -38,7 +38,7 @@ CMeshField::CMeshField()
 }
 
 //=============================================================================
-//ƒfƒXƒgƒ‰ƒNƒ^
+//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CMeshField::~CMeshField()
 {
@@ -47,7 +47,7 @@ CMeshField::~CMeshField()
 
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚Ì‰Šú‰»ˆ—
+// ãƒãƒªã‚´ãƒ³ã®åˆæœŸåŒ–å‡¦ç†
 //=============================================================================
 
 HRESULT CMeshField::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ)
@@ -87,7 +87,7 @@ CMeshField *CMeshField::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX,
 
 	pMeshField->Init(pos, rot, nNumBlockX, nNumBlockZ, fSizeBlockX, fSizeBlockZ);
 
-	//ƒeƒNƒXƒ`ƒƒ‚ÌŠ„‚è“–‚Ä
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®å‰²ã‚Šå½“ã¦
 	pMeshField->BindTexture( m_pTexture[type]);
 
 	return pMeshField;
@@ -122,7 +122,7 @@ HRESULT CMeshField::Load(void)
 			LPDIRECT3DDEVICE9 pDevice;
 			pDevice = CManager::GetRenderer()->GetDevice();
 
-			// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ
+			// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
 			D3DXCreateTextureFromFile( pDevice, strFileName, &m_pTexture[cntType]);
 		}	
 	}
@@ -137,7 +137,7 @@ void CMeshField::Unload(void)
 {
 	for(int cntType = 0; cntType < TYPE_MAX; cntType++)
 	{
-		//ƒeƒNƒXƒ`ƒƒ‚Ì”jŠü
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ç ´æ£„
 		if( m_pTexture[cntType] != NULL)
 		{
 			m_pTexture[cntType]->Release();

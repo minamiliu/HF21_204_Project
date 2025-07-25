@@ -1,14 +1,14 @@
-//============================================
+﻿//============================================
 //
-// �^�C�g��:	 �����n���W�`�[��204
-// �v���O������: playerX.cpp
-// �쐬��:		 HAL�����Q�[���w�ȁ@����G
-// �쐬��:       2016/11/15
+// タイトル:	 未来創造展チーム204
+// プログラム名: playerX.cpp
+// 作成者:		 HAL東京ゲーム学科　劉南宏
+// 作成日:       2016/11/15
 //
 //============================================
 
 //============================================
-//�C���N���[�h�t�@�C��
+//インクルードファイル
 //============================================
 #include "main.h"
 #include "putbook.h"
@@ -20,35 +20,35 @@
 #include "input.h"
 #include "zebragame.h"
 //============================================
-// �}�N����`
+// マクロ定義
 //============================================
 #define MODEL_BOOK_GREEN "data/MODEL/book_green.x"
 #define MODEL_BOOK_BLUE "data/MODEL/book_blue.x"
 #define MODEL_BOOK_RED "data/MODEL/book_red.x"
 #define MODEL_BOOK_YELLOW "data/MODEL/book_yellow.x"
-#define VALUE_ROTATE	(D3DX_PI * 0.1f) 	// ��]��
+#define VALUE_ROTATE	(D3DX_PI * 0.1f) 	// 回転量
 
 //============================================
-// �ÓI�����o�ϐ��̏�����
+// 静的メンバ変数の初期化
 //============================================
 LPDIRECT3DTEXTURE9	CPutBook::m_pTexture[] ={};
-LPD3DXMESH			CPutBook::m_pD3DXMesh[]={};			// ���b�V�����ւ̃|�C���^
-LPD3DXBUFFER		CPutBook::m_pD3DXBuffMat	[]={};		// �}�e���A�����ւ̃|�C���^
-DWORD				CPutBook::m_nNumMat		[]={};					// �}�e���A�����̐�
+LPD3DXMESH			CPutBook::m_pD3DXMesh[]={};			// メッシュ情報へのポインタ
+LPD3DXBUFFER		CPutBook::m_pD3DXBuffMat	[]={};		// マテリアル情報へのポインタ
+DWORD				CPutBook::m_nNumMat		[]={};					// マテリアル情報の数
 
 int CPutBook::m_nNumber = 0;
 D3DXVECTOR3 CPutBook::m_PutBookPos[MAX_BOOK] = {};
 
 //=============================================================================
-// �\���̒�`
+// 構造体定義
 //=============================================================================
 
 //=============================================================================
-// �ÓI�����o�ϐ�
+// 静的メンバ変数
 //============================================================================
 
 //=============================================================================
-//�R���X�g���N�^
+//コンストラクタ
 //=============================================================================
 CPutBook::CPutBook()
 {
@@ -56,7 +56,7 @@ CPutBook::CPutBook()
 }
 
 //=============================================================================
-//�f�X�g���N�^
+//デストラクタ
 //=============================================================================
 CPutBook::~CPutBook()
 {
@@ -81,7 +81,7 @@ HRESULT CPutBook::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, int ty
 }
 
 //=============================================================================
-//x�t�@�C���̐ݒ�
+//xファイルの設定
 //=============================================================================
 void CPutBook::BindXfile(int type)	
 {
@@ -92,7 +92,7 @@ void CPutBook::BindXfile(int type)
 	);
 }
 //=============================================================================
-//XFILE�̃��[�h
+//XFILEのロード
 //=============================================================================
 HRESULT CPutBook::Load(void)
 {
@@ -124,16 +124,16 @@ HRESULT CPutBook::Load(void)
 			m_nNumMat[cntType] == 0
 			)
 		{
-			// X�t�@�C���̓ǂݍ���
+			// Xファイルの読み込み
 			if(FAILED(D3DXLoadMeshFromX(
-				strFileName,			// �ǂݍ��ރ��f���t�@�C����(X�t�@�C��)
-				D3DXMESH_SYSTEMMEM,		// ���b�V���̍쐬�I�v�V�������w��
-				pDevice,				// IDirect3DDevice9�C���^�[�t�F�C�X�ւ̃|�C���^
-				NULL,					// �אڐ��f�[�^���܂ރo�b�t�@�ւ̃|�C���^
-				&m_pD3DXBuffMat[cntType],	// �}�e���A���f�[�^���܂ރo�b�t�@�ւ̃|�C���^
-				NULL,					// �G�t�F�N�g�C���X�^���X�̔z����܂ރo�b�t�@�ւ̃|�C���^
-				&m_nNumMat[cntType],	// D3DXMATERIAL�\���̂̐�
-				&m_pD3DXMesh[cntType]	// ID3DXMesh�C���^�[�t�F�C�X�ւ̃|�C���^�̃A�h���X
+				strFileName,			// 読み込むモデルファイル名(Xファイル)
+				D3DXMESH_SYSTEMMEM,		// メッシュの作成オプションを指定
+				pDevice,				// IDirect3DDevice9インターフェイスへのポインタ
+				NULL,					// 隣接性データを含むバッファへのポインタ
+				&m_pD3DXBuffMat[cntType],	// マテリアルデータを含むバッファへのポインタ
+				NULL,					// エフェクトインスタンスの配列を含むバッファへのポインタ
+				&m_nNumMat[cntType],	// D3DXMATERIAL構造体の数
+				&m_pD3DXMesh[cntType]	// ID3DXMeshインターフェイスへのポインタのアドレス
 				)))
 			{
 				return E_FAIL;
@@ -189,7 +189,7 @@ void CPutBook::Update(void)
 		pos.y-=1.0f;
 	}
 	CSceneX::SetPosition(pos);
-	CDebugProc::Print("\n�{�̏ꏊ.x.y.z:%f,%f,%f",pos.x,pos.y,pos.z);
+	CDebugProc::Print("\n本の場所.x.y.z:%f,%f,%f",pos.x,pos.y,pos.z);
 	
 
 }

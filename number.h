@@ -1,9 +1,9 @@
-//============================================
+ï»¿//============================================
 //
-// ƒ^ƒCƒgƒ‹:	 –¢—ˆ‘n‘¢“Wƒ`[ƒ€204
-// ƒvƒƒOƒ‰ƒ€–¼: number.h
-// ì¬ŽÒ:		 HAL“Œ‹žƒQ[ƒ€Šw‰È@—«“ìG
-// ì¬“ú:       2016/10/21
+// ã‚¿ã‚¤ãƒˆãƒ«:	 æœªæ¥å‰µé€ å±•ãƒãƒ¼ãƒ 204
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å: number.h
+// ä½œæˆè€…:		 HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
+// ä½œæˆæ—¥:       2016/10/21
 //
 //============================================
 
@@ -11,12 +11,12 @@
 #define _NUMBER_H_
 
 //============================================
-//ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+//ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //============================================
 #include "scene2D.h"
 
 //============================================
-//ƒ}ƒNƒ’è‹`
+//ãƒžã‚¯ãƒ­å®šç¾©
 //============================================
 
 class CNumber
@@ -26,32 +26,32 @@ public:
 	CNumber();
 	virtual ~CNumber();
 
-	HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR3 size, D3DXVECTOR2 ptnSize);//ƒpƒ^[ƒ“‚Ì‚ ‚éƒeƒNƒXƒ`ƒƒê—p
+	HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR3 size, D3DXVECTOR2 ptnSize);//ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ã‚ã‚‹ãƒ†ã‚¯ã‚¹ãƒãƒ£å°‚ç”¨
 	void Uninit(void);
 	void Update(void);
 	void Draw(void);
 	
-	//ƒeƒNƒXƒ`ƒƒŠÖ˜A
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£é–¢é€£
 	void BindTexture( LPDIRECT3DTEXTURE9 pTexture);
-	void ChangeTextureAnime( int nPatternAnim, D3DXVECTOR2 ptnSize, D3DXVECTOR2 ptnDivide); //ƒAƒjƒ[ƒVƒ‡ƒ“
+	void ChangeTextureAnime( int nPatternAnim, D3DXVECTOR2 ptnSize, D3DXVECTOR2 ptnDivide); //ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
 
-	//’¸“_ƒf[ƒ^ŠÖ˜A
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿é–¢é€£
 	void SetPosition(D3DXVECTOR3 pos);
 	D3DXVECTOR3 GetPosition(void);
 	D3DXVECTOR3 GetSize(void);
-	void SetColor(const D3DXCOLOR &col); //F‚ð•ÏX
+	void SetColor(const D3DXCOLOR &col); //è‰²ã‚’å¤‰æ›´
 	void SetSize(D3DXVECTOR3 size);
 
 	static CNumber *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, D3DXVECTOR2 ptnSize);
 
 private:
 
-	LPDIRECT3DTEXTURE9 m_pTexture;			// ƒeƒNƒXƒ`ƒƒ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff;		// ’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	bool m_bLoadTexture;					// ƒeƒNƒXƒ`ƒƒ‚ð“Ç‚Ýž‚ñ‚¾‚©‚Ç‚¤‚©
+	LPDIRECT3DTEXTURE9 m_pTexture;			// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff;		// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	bool m_bLoadTexture;					// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’èª­ã¿è¾¼ã‚“ã ã‹ã©ã†ã‹
 
-	D3DXVECTOR3			m_pos;				// ƒ|ƒŠƒSƒ“‚ÌˆÊ’u
-	D3DXVECTOR3			m_size;				// ƒ|ƒŠƒSƒ“‚ÌƒTƒCƒY
+	D3DXVECTOR3			m_pos;				// ãƒãƒªã‚´ãƒ³ã®ä½ç½®
+	D3DXVECTOR3			m_size;				// ãƒãƒªã‚´ãƒ³ã®ã‚µã‚¤ã‚º
 };
 
 #endif

@@ -1,9 +1,9 @@
-//============================================
+ï»¿//============================================
 //
-// ƒ^ƒCƒgƒ‹:	 –¢—ˆ‘n‘¢“Wƒ`[ƒ€204
-// ƒvƒƒOƒ‰ƒ€–¼: camera.h
-// ì¬ŽÒ:		 HAL“Œ‹žƒQ[ƒ€Šw‰È@—«“ìG
-// ì¬“ú:       2016/11/10
+// ã‚¿ã‚¤ãƒˆãƒ«:	 æœªæ¥å‰µé€ å±•ãƒãƒ¼ãƒ 204
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å: camera.h
+// ä½œæˆè€…:		 HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
+// ä½œæˆæ—¥:       2016/11/10
 //
 //============================================
 
@@ -11,16 +11,16 @@
 #define _CAMERA_H_
 
 //============================================
-//ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+//ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //============================================
 #include "main.h"
 
 //============================================
-//ƒ}ƒNƒ’è‹`
+//ãƒžã‚¯ãƒ­å®šç¾©
 //============================================
 
 //============================================
-//\‘¢‘Ì’è‹`
+//æ§‹é€ ä½“å®šç¾©
 //============================================
 
 class CCamera
@@ -36,14 +36,14 @@ public:
 
 	void SetCamera(void);
 
-	D3DXVECTOR3 GetRot(void);		//Œü‚«
-	void SetRot(D3DXVECTOR3 rot);	//Œü‚«
+	D3DXVECTOR3 GetRot(void);		//å‘ã
+	void SetRot(D3DXVECTOR3 rot);	//å‘ã
 	
-	D3DXVECTOR3 GetPosR(void);		//’Ž‹“_
-	void SetPosR(D3DXVECTOR3 posR);	//’Ž‹“_
+	D3DXVECTOR3 GetPosR(void);		//æ³¨è¦–ç‚¹
+	void SetPosR(D3DXVECTOR3 posR);	//æ³¨è¦–ç‚¹
 	
-	D3DXVECTOR3 GetPosV(void);		//Ž‹“_
-	void SetPosV(D3DXVECTOR3 posV);	//Ž‹“_
+	D3DXVECTOR3 GetPosV(void);		//è¦–ç‚¹
+	void SetPosV(D3DXVECTOR3 posV);	//è¦–ç‚¹
 	
 	D3DXMATRIX *GetMtxView(void);
 	D3DXMATRIX *GetMtxProjection(void);
@@ -51,13 +51,13 @@ public:
 
 private:
 
-	D3DXVECTOR3 m_posV;			// Ž‹“_
-	D3DXVECTOR3 m_posR;			// ’Ž‹“_
-	D3DXVECTOR3 m_vecU;			// ã•ûŒüƒxƒNƒgƒ‹
-	D3DXVECTOR3 m_rot;			// Œü‚«i‰ñ“]Špj
-	float m_fDistance;			// Ž‹“_‚Æ’Ž‹“_‚Ì‹——£
-	D3DXMATRIX m_mtxProjection;	// ƒvƒƒWƒFƒNƒVƒ‡ƒ“ƒ}ƒgƒŠƒbƒNƒX
-	D3DXMATRIX m_mtxView;		// ƒrƒ…[ƒ}ƒgƒŠƒbƒNƒX
+	D3DXVECTOR3 m_posV;			// è¦–ç‚¹
+	D3DXVECTOR3 m_posR;			// æ³¨è¦–ç‚¹
+	D3DXVECTOR3 m_vecU;			// ä¸Šæ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«
+	D3DXVECTOR3 m_rot;			// å‘ãï¼ˆå›žè»¢è§’ï¼‰
+	float m_fDistance;			// è¦–ç‚¹ã¨æ³¨è¦–ç‚¹ã®è·é›¢
+	D3DXMATRIX m_mtxProjection;	// ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³ãƒžãƒˆãƒªãƒƒã‚¯ã‚¹
+	D3DXMATRIX m_mtxView;		// ãƒ“ãƒ¥ãƒ¼ãƒžãƒˆãƒªãƒƒã‚¯ã‚¹
 };
 
 #endif

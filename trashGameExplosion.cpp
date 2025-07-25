@@ -1,14 +1,14 @@
-//============================================
+ï»¿//============================================
 //
-// ƒ^ƒCƒgƒ‹:	 –¢—ˆ‘n‘¢“Wƒ`[ƒ€204
-// ƒvƒƒOƒ‰ƒ€–¼: player2D.cpp
-// ì¬ŽÒ:		 HAL“Œ‹žƒQ[ƒ€Šw‰È@—«“ìG
-// ì¬“ú:       2016/10/19
+// ã‚¿ã‚¤ãƒˆãƒ«:	 æœªæ¥å‰µé€ å±•ãƒãƒ¼ãƒ 204
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å: player2D.cpp
+// ä½œæˆè€…:		 HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
+// ä½œæˆæ—¥:       2016/10/19
 //
 //============================================
 
 //============================================
-//ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+//ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //============================================
 #include "main.h"
 #include "manager.h"
@@ -16,23 +16,23 @@
 #include "debugproc.h"
 
 //============================================
-// ƒ}ƒNƒ’è‹`
+// ãƒžã‚¯ãƒ­å®šç¾©
 //============================================
 
 #define TEXTURE_EXPLOSION "data/TEXTURE/explosion000.png"
-#define	TEX_PATTERN_DIVIDE_X		(8)												// ƒAƒjƒ[ƒVƒ‡ƒ“ƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒ“à‚Å‚Ì•ªŠ„”(‚w•ûŒü)
-#define	TEX_PATTERN_DIVIDE_Y		(1)												// ƒAƒjƒ[ƒVƒ‡ƒ“ƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒ“à‚Å‚Ì•ªŠ„”(‚x•ûŒü)
-#define	TEX_PATTERN_SIZE_X			(1.0f / TEX_PATTERN_DIVIDE_X)					// ‚Pƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒƒTƒCƒY(‚w•ûŒü)(1.0f/X•ûŒü•ªŠ„”)
-#define	TEX_PATTERN_SIZE_Y			(1.0f / TEX_PATTERN_DIVIDE_Y)					// ‚Pƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒƒTƒCƒY(‚x•ûŒü)(1.0f/Y•ûŒü•ªŠ„”)
-#define	NUM_ANIM_PATTERN			(TEX_PATTERN_DIVIDE_X * TEX_PATTERN_DIVIDE_Y)	// ƒAƒjƒ[ƒVƒ‡ƒ“‚Ìƒpƒ^[ƒ“”(X•ûŒü•ªŠ„”~Y•ûŒü•ªŠ„”)
-#define	TIME_CHANGE_PATTERN			(10)											// ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌØ‚è‘Ö‚í‚éƒ^ƒCƒ~ƒ“ƒO(ƒtƒŒ[ƒ€”)
+#define	TEX_PATTERN_DIVIDE_X		(8)												// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£å†…ã§ã®åˆ†å‰²æ•°(ï¼¸æ–¹å‘)
+#define	TEX_PATTERN_DIVIDE_Y		(1)												// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£å†…ã§ã®åˆ†å‰²æ•°(ï¼¹æ–¹å‘)
+#define	TEX_PATTERN_SIZE_X			(1.0f / TEX_PATTERN_DIVIDE_X)					// ï¼‘ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µã‚¤ã‚º(ï¼¸æ–¹å‘)(1.0f/Xæ–¹å‘åˆ†å‰²æ•°)
+#define	TEX_PATTERN_SIZE_Y			(1.0f / TEX_PATTERN_DIVIDE_Y)					// ï¼‘ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µã‚¤ã‚º(ï¼¹æ–¹å‘)(1.0f/Yæ–¹å‘åˆ†å‰²æ•°)
+#define	NUM_ANIM_PATTERN			(TEX_PATTERN_DIVIDE_X * TEX_PATTERN_DIVIDE_Y)	// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ãƒ‘ã‚¿ãƒ¼ãƒ³æ•°(Xæ–¹å‘åˆ†å‰²æ•°Ã—Yæ–¹å‘åˆ†å‰²æ•°)
+#define	TIME_CHANGE_PATTERN			(10)											// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®åˆ‡ã‚Šæ›¿ã‚ã‚‹ã‚¿ã‚¤ãƒŸãƒ³ã‚°(ãƒ•ãƒ¬ãƒ¼ãƒ æ•°)
 //============================================
 //=============================================================================
-// \‘¢‘Ì’è‹`
+// æ§‹é€ ä½“å®šç¾©
 //=============================================================================
 
 //=============================================================================
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CTrashGameExplosion::CTrashGameExplosion() : CScene2D(LAYER_CHANGE)
 {
@@ -40,7 +40,7 @@ CTrashGameExplosion::CTrashGameExplosion() : CScene2D(LAYER_CHANGE)
 }
 
 //=============================================================================
-//ƒfƒXƒgƒ‰ƒNƒ^
+//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CTrashGameExplosion::~CTrashGameExplosion()
 {
@@ -49,7 +49,7 @@ CTrashGameExplosion::~CTrashGameExplosion()
 
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚Ì‰Šú‰»ˆ—
+// ãƒãƒªã‚´ãƒ³ã®åˆæœŸåŒ–å‡¦ç†
 //=============================================================================
 
 HRESULT CTrashGameExplosion::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size)
@@ -65,7 +65,7 @@ HRESULT CTrashGameExplosion::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚ÌI—¹ˆ—
+// ãƒãƒªã‚´ãƒ³ã®çµ‚äº†å‡¦ç†
 //=============================================================================
 void CTrashGameExplosion::Uninit(void)
 {
@@ -74,24 +74,24 @@ void CTrashGameExplosion::Uninit(void)
 
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚ÌXVˆ—
+// ãƒãƒªã‚´ãƒ³ã®æ›´æ–°å‡¦ç†
 //=============================================================================
 void CTrashGameExplosion::Update(void)
 {
 	CScene2D::Update();
-	//”š”­ƒAƒjƒ[ƒVƒ‡ƒ“
+	//çˆ†ç™ºã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
 		m_nAnimCnt++;
 		if((m_nAnimCnt % TIME_CHANGE_PATTERN) == 0)
 		{
 			if( m_nPatternAnim == ( NUM_ANIM_PATTERN -1) )
 			{
-				//g_explosion[nCntExplosion].bUse = false;//–¢Žg—p‚É•ÏX
+				//g_explosion[nCntExplosion].bUse = false;//æœªä½¿ç”¨ã«å¤‰æ›´
 				//CScene2D::Uninit();
 				this->Uninit();
 				
 				return;
 			}
-			// ƒpƒ^[ƒ“‚ÌØ‚è‘Ö‚¦
+			// ãƒ‘ã‚¿ãƒ¼ãƒ³ã®åˆ‡ã‚Šæ›¿ãˆ
 			m_nPatternAnim = (m_nPatternAnim + 1) % NUM_ANIM_PATTERN;
 			ChangeTextureAnime(m_nPatternAnim, D3DXVECTOR2(TEX_PATTERN_SIZE_X,TEX_PATTERN_SIZE_Y),
 												D3DXVECTOR2(TEX_PATTERN_DIVIDE_X,TEX_PATTERN_DIVIDE_Y));
@@ -99,7 +99,7 @@ void CTrashGameExplosion::Update(void)
 }
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚Ì•`‰æˆ—
+// ãƒãƒªã‚´ãƒ³ã®æç”»å‡¦ç†
 //=============================================================================
 void CTrashGameExplosion::Draw(void)
 {
@@ -107,7 +107,7 @@ void CTrashGameExplosion::Draw(void)
 }
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚Ì¶¬ˆ—
+// ãƒãƒªã‚´ãƒ³ã®ç”Ÿæˆå‡¦ç†
 //=============================================================================
 CTrashGameExplosion *CTrashGameExplosion::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
@@ -115,7 +115,7 @@ CTrashGameExplosion *CTrashGameExplosion::Create(D3DXVECTOR3 pos, D3DXVECTOR3 si
 	pTrashBox2D = new CTrashGameExplosion;
 	pTrashBox2D->Init(pos, size);
 
-	//ƒeƒNƒXƒ`ƒƒ‚ÌŠ„‚è“–‚Ä
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®å‰²ã‚Šå½“ã¦
 	pTrashBox2D->Load( TEXTURE_EXPLOSION);
 	
 	return pTrashBox2D;

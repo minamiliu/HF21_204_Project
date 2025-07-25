@@ -1,14 +1,14 @@
-//============================================
+ï»¿//============================================
 //
-// ƒ^ƒCƒgƒ‹:	 –¢—ˆ‘n‘¢“Wƒ`[ƒ€204
-// ƒvƒƒOƒ‰ƒ€–¼: trajectory.cpp
-// ì¬Ò:		 HAL“Œ‹ƒQ[ƒ€Šw‰È@R‰ÆŒ[‰î
-// ì¬“ú:       2016/12/08
+// ã‚¿ã‚¤ãƒˆãƒ«:	 æœªæ¥å‰µé€ å±•ãƒãƒ¼ãƒ 204
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å: trajectory.cpp
+// ä½œæˆè€…:		 HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€å±±å®¶å•“ä»‹
+// ä½œæˆæ—¥:       2016/12/08
 //
 //============================================
 
 //============================================
-//ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+//ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //============================================
 #include "main.h"
 #include "manager.h"
@@ -17,19 +17,19 @@
 #include "trajectory.h"
 #include "renderer.h"
 //============================================
-// ƒ}ƒNƒ’è‹`
+// ãƒã‚¯ãƒ­å®šç¾©
 //============================================
 #define TEXTURE_TRAJECTORY "data/TEXTURE/maru.png"
 #define TEXTURE_EFFECT "data/TEXTURE/effect000.jpg"
-#define TEXTURE_GORILLA "data/TEXTURE/ƒSƒŠƒ‰.png"
+#define TEXTURE_GORILLA "data/TEXTURE/ã‚´ãƒªãƒ©.png"
 //=============================================================================
-// \‘¢‘Ì’è‹`
+// æ§‹é€ ä½“å®šç¾©
 //=============================================================================
 
 
 LPDIRECT3DTEXTURE9 CTrajectory::m_pTexture = NULL;
 //=============================================================================
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CTrajectory::CTrajectory()
 {
@@ -37,7 +37,7 @@ CTrajectory::CTrajectory()
 }
 
 //=============================================================================
-//ƒfƒXƒgƒ‰ƒNƒ^
+//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CTrajectory::~CTrajectory()
 {
@@ -46,7 +46,7 @@ CTrajectory::~CTrajectory()
 
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚Ì‰Šú‰»ˆ—
+// ãƒãƒªã‚´ãƒ³ã®åˆæœŸåŒ–å‡¦ç†
 //=============================================================================
 
 HRESULT CTrajectory::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size)
@@ -58,7 +58,7 @@ HRESULT CTrajectory::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 }
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚ÌI—¹ˆ—
+// ãƒãƒªã‚´ãƒ³ã®çµ‚äº†å‡¦ç†
 //=============================================================================
 void CTrajectory::Uninit(void)
 {
@@ -67,7 +67,7 @@ void CTrajectory::Uninit(void)
 
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚ÌXVˆ—
+// ãƒãƒªã‚´ãƒ³ã®æ›´æ–°å‡¦ç†
 //=============================================================================
 void CTrajectory::Update(void)
 {
@@ -89,42 +89,42 @@ void CTrajectory::Update(void)
 }
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚Ì•`‰æˆ—
+// ãƒãƒªã‚´ãƒ³ã®æç”»å‡¦ç†
 //=============================================================================
 void CTrajectory::Draw(void)
 {
 	LPDIRECT3DDEVICE9 pDevice;
 	pDevice = CManager::GetRenderer()->GetDevice();
-	//‰ÁZ‡¬
+	//åŠ ç®—åˆæˆ
 	pDevice->SetRenderState(D3DRS_BLENDOP,D3DBLENDOP_ADD);
 	pDevice->SetRenderState(D3DRS_SRCBLEND,D3DBLEND_SRCALPHA);
 	pDevice->SetRenderState(D3DRS_DESTBLEND,D3DBLEND_ONE);
 
 	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
-	pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);//Z”äŠr‚È‚µ
-	//ƒ¿ƒeƒXƒg
+	pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);//Zæ¯”è¼ƒãªã—
+	//Î±ãƒ†ã‚¹ãƒˆ
 	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE,TRUE);
 	pDevice->SetRenderState(D3DRS_ALPHAREF,254);
 	pDevice->SetRenderState(D3DRS_ALPHAFUNC,D3DCMP_GREATER);
-	// ƒ‰ƒCƒeƒBƒ“ƒOƒ‚[ƒh‚ğOFF
+	// ãƒ©ã‚¤ãƒ†ã‚£ãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰ã‚’OFF
 	pDevice->SetRenderState(D3DRS_LIGHTING,FALSE);
 
 	CScene2D::Draw();
 
-	// ƒ‰ƒCƒeƒBƒ“ƒOƒ‚[ƒh‚ğON
+	// ãƒ©ã‚¤ãƒ†ã‚£ãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰ã‚’ON
 	pDevice->SetRenderState(D3DRS_LIGHTING,TRUE);
 	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE,FALSE);
-	//ƒ¿ƒeƒXƒg‚ğ‚à‚Æ‚É–ß‚·
+	//Î±ãƒ†ã‚¹ãƒˆã‚’ã‚‚ã¨ã«æˆ»ã™
 	pDevice->SetRenderState(D3DRS_BLENDOP,D3DBLENDOP_ADD);
 	pDevice->SetRenderState(D3DRS_SRCBLEND,D3DBLEND_SRCALPHA);
 	pDevice->SetRenderState(D3DRS_DESTBLEND,D3DBLEND_INVSRCALPHA);
 
 	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
-	pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);//Z”äŠr‚ ‚è
+	pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);//Zæ¯”è¼ƒã‚ã‚Š
 }
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚Ì¶¬ˆ—
+// ãƒãƒªã‚´ãƒ³ã®ç”Ÿæˆå‡¦ç†
 //=============================================================================
 CTrajectory *CTrajectory::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size,TJRTYPE type,float angle)
 {
@@ -144,7 +144,7 @@ void CTrajectory::Load(void)
 		LPDIRECT3DDEVICE9 pDevice;
 		pDevice = CManager::GetRenderer()->GetDevice();
 
-		// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ
+		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
 		D3DXCreateTextureFromFile( pDevice, TEXTURE_EFFECT, &m_pTexture);
 	}
 }

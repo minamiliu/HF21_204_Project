@@ -1,9 +1,9 @@
-//============================================
+ï»¿//============================================
 //
-// ƒ^ƒCƒgƒ‹:	 –¢—ˆ‘n‘¢“Wƒ`[ƒ€204
-// ƒvƒƒOƒ‰ƒ€–¼: limbX.h
-// ì¬ŽÒ:		 HAL“Œ‹žƒQ[ƒ€Šw‰È@—«“ìG
-// ì¬“ú:       2017/01/16
+// ã‚¿ã‚¤ãƒˆãƒ«:	 æœªæ¥å‰µé€ å±•ãƒãƒ¼ãƒ 204
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å: limbX.h
+// ä½œæˆè€…:		 HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
+// ä½œæˆæ—¥:       2017/01/16
 //
 //============================================
 
@@ -11,16 +11,16 @@
 #define _LIMBX_H_
 
 //============================================
-//ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+//ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //============================================
 #include "partX.h"
 
 //============================================
-//ƒ}ƒNƒ’è‹`
+//ãƒžã‚¯ãƒ­å®šç¾©
 //============================================
 
 //============================================
-//\‘¢‘Ì’è‹`
+//æ§‹é€ ä½“å®šç¾©
 //============================================
 
 class CLimbX : public CPartX
@@ -61,15 +61,15 @@ public:
 
 private:
 
-	//•Ï”
-	static LPDIRECT3DTEXTURE9	m_pTexture		[TYPE_MAX];		// ƒeƒNƒXƒ`ƒƒ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	static LPD3DXMESH			m_pD3DXMesh		[TYPE_MAX];		// ƒƒbƒVƒ…î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	static LPD3DXBUFFER			m_pD3DXBuffMat	[TYPE_MAX];		// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	static DWORD				m_nNumMat		[TYPE_MAX];		// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ì”
+	//å¤‰æ•°
+	static LPDIRECT3DTEXTURE9	m_pTexture		[TYPE_MAX];		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	static LPD3DXMESH			m_pD3DXMesh		[TYPE_MAX];		// ãƒ¡ãƒƒã‚·ãƒ¥æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	static LPD3DXBUFFER			m_pD3DXBuffMat	[TYPE_MAX];		// ãƒžãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	static DWORD				m_nNumMat		[TYPE_MAX];		// ãƒžãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã®æ•°
 
 	TYPE m_type;
 
-	//ƒ‚[ƒVƒ‡ƒ“
+	//ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³
 	static MOTION *m_pMotionPara;
 	int m_nCntFrame;
 	int m_nMotionNow;

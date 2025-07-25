@@ -1,14 +1,14 @@
-//============================================
+ï»¿//============================================
 //
-// ƒ^ƒCƒgƒ‹:	 HF
-// ƒvƒƒOƒ‰ƒ€–¼: trash.cpp
-// ì¬Ò:		 HAL“Œ‹ƒQ[ƒ€Šw‰È@yamaga keisuke
-// ì¬“ú:       2016/11/10
+// ã‚¿ã‚¤ãƒˆãƒ«:	 HF
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å: trash.cpp
+// ä½œæˆè€…:		 HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€yamaga keisuke
+// ä½œæˆæ—¥:       2016/11/10
 //
 //============================================
 
 //============================================
-//ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+//ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //============================================
 #include "main.h"
 #include "manager.h"
@@ -23,9 +23,9 @@
 #include "renderer.h"
 #include "sound.h"
 //============================================
-// ƒ}ƒNƒ’è‹`
+// ãƒã‚¯ãƒ­å®šç¾©
 //============================================
-#define TEXTURE_TRASH "data/TEXTURE/ƒyƒbƒgƒ{ƒgƒ‹.png"
+#define TEXTURE_TRASH "data/TEXTURE/ãƒšãƒƒãƒˆãƒœãƒˆãƒ«.png"
 #define TEXTURE_BANANA "data/TEXTURE/banana.png"
 #define TEXTURE_PAPER "data/TEXTURE/paper.png"
 
@@ -33,16 +33,16 @@
 #define WEIGHT_COEFFICIENT_LIGHT (0.5f)
 #define WEIGHT_COEFFICIENT_HEAVY (3.0f)
 //=============================================================================
-// \‘¢‘Ì’è‹`
+// æ§‹é€ ä½“å®šç¾©
 //=============================================================================
 
 
-//Ã“Iƒƒ“ƒo•Ï”
+//é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
 int CTrash::m_cnt = 0;
 LPDIRECT3DTEXTURE9 CTrash::m_pTexture[] = {};
 
 //=============================================================================
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CTrash::CTrash()
 {
@@ -50,7 +50,7 @@ CTrash::CTrash()
 }
 
 //=============================================================================
-//ƒfƒXƒgƒ‰ƒNƒ^
+//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CTrash::~CTrash()
 {
@@ -58,7 +58,7 @@ CTrash::~CTrash()
 }
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚Ì‰Šú‰»ˆ—
+// ãƒãƒªã‚´ãƒ³ã®åˆæœŸåŒ–å‡¦ç†
 //=============================================================================
 HRESULT CTrash::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
@@ -68,12 +68,12 @@ HRESULT CTrash::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 	m_fallFlag = false;
 	m_cnt = 0;
 	m_apFlag = false;
-	//m_gravityCoefficient = 1.0;//1.0+rand()%4;//1.0~4.0‚Ìƒ‰ƒ“ƒ_ƒ€‚È’l
+	//m_gravityCoefficient = 1.0;//1.0+rand()%4;//1.0~4.0ã®ãƒ©ãƒ³ãƒ€ãƒ ãªå€¤
 	return S_OK;
 }
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚ÌI—¹ˆ—
+// ãƒãƒªã‚´ãƒ³ã®çµ‚äº†å‡¦ç†
 //=============================================================================
 void CTrash::Uninit(void)
 {
@@ -81,19 +81,19 @@ void CTrash::Uninit(void)
 }
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚ÌXVˆ—
+// ãƒãƒªã‚´ãƒ³ã®æ›´æ–°å‡¦ç†
 //=============================================================================
 void CTrash::Update(void)
 {
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
 	D3DXVECTOR3 posTrash = GetPosition();
 
-	CDebugProc::Print("\n·ˆÙ:%f",m_gravityCoefficient);
+	CDebugProc::Print("\nå·®ç•°:%f",m_gravityCoefficient);
 
 	
 	if(CManager::GetInputMouse()->GetMouseLeftPress() && m_fallFlag == false && CTrashGame::GetState() != CTrashGame::STATE_CHANGE)
 	{
-		//ƒ}ƒEƒX‚ÌˆÚ“®—Ê‚ğæ“¾
+		//ãƒã‚¦ã‚¹ã®ç§»å‹•é‡ã‚’å–å¾—
 		m_speed.x -= CManager::GetInputMouse()->GetMouseAxisX()/3;
 		switch(GetObjType())
 		{
@@ -112,11 +112,11 @@ void CTrash::Update(void)
 
 	if(CManager::GetInputMouse()->GetMouseLeftRelease() && m_fallFlag == false && CTrashGame::GetState() != CTrashGame::STATE_CHANGE)
 	{
-		//ƒ}ƒEƒX‚ğ˜b‚µ‚½‚ç—‰ºƒtƒ‰ƒO‚ğ‚n‚m
+		//ãƒã‚¦ã‚¹ã‚’è©±ã—ãŸã‚‰è½ä¸‹ãƒ•ãƒ©ã‚°ã‚’ï¼¯ï¼®
 		m_fallFlag = true;
-		//oŒ»ƒtƒ‰ƒO‚ğ‚n‚m
+		//å‡ºç¾ãƒ•ãƒ©ã‚°ã‚’ï¼¯ï¼®
 		m_apFlag = true;
-		//ˆÚ“®—Ê‚ÌÅ‘åiÅ¬j”ÍˆÍ‚ğİ’è
+		//ç§»å‹•é‡ã®æœ€å¤§ï¼ˆæœ€å°ï¼‰ç¯„å›²ã‚’è¨­å®š
 		if(m_speed.x > 200)
 		{
 			m_speed.x = 200;
@@ -133,24 +133,24 @@ void CTrash::Update(void)
 	if(m_fallFlag == true)
 	{
 
-		//‹OÕ¶¬
+		//è»Œè·¡ç”Ÿæˆ
 		if(CTrashGame::GetTrashGameCnt() % 5 == 0)
 		{
 			CTrajectory::Create(D3DXVECTOR3(posTrash.x,posTrash.y,100.0f),D3DXVECTOR3(50,50,0.0f),CTrajectory::TJRTYPE_NORMAL,0.0);
 		}
-		//•ú•¨üˆÚ“®
+		//æ”¾ç‰©ç·šç§»å‹•
 		posTrash.x += m_speed.x / 10;
 		m_speed.y -= GRAVITY_POINT * m_gravityCoefficient;
 		posTrash.y += -m_speed.y / 10;
 	}
 	if(m_apFlag == true && CTrashGame::GetState())
 	{
-		//oŒ»ƒ^ƒCƒ~ƒ“ƒO‚ğƒJƒEƒ“ƒg‚ÅŒv‚é
+		//å‡ºç¾ã‚¿ã‚¤ãƒŸãƒ³ã‚°ã‚’ã‚«ã‚¦ãƒ³ãƒˆã§è¨ˆã‚‹
 		m_cnt++;
 		if(m_cnt > 20)
 		{
-			//V‚µ‚¢ƒIƒuƒWƒFƒNƒg‚ğ¶¬
-			int nNum = rand()%3;//‚O`‚Q‚Ìƒ‰ƒ“ƒ_ƒ€‚È”
+			//æ–°ã—ã„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆ
+			int nNum = rand()%3;//ï¼ï½ï¼’ã®ãƒ©ãƒ³ãƒ€ãƒ ãªæ•°
 			CScene2D* pTrash;
 			if(nNum == 0)
 			{
@@ -197,21 +197,21 @@ void CTrash::Update(void)
 					pTrash = CTrash::Create(D3DXVECTOR3(300.0f, 370.0f, 0.0f), D3DXVECTOR3(150.0f, 150.0f, 0.0f),TEXTURE_PAPER,OBJTYPE_RIGHTTRASH);
 				}
 			}
-			//ƒJƒEƒ“ƒg‚ğƒŠƒZƒbƒg
+			//ã‚«ã‚¦ãƒ³ãƒˆã‚’ãƒªã‚»ãƒƒãƒˆ
 			m_cnt = 0;
-			//ˆê“x‚Ì“Š‚°‚Å‚Q‰ñˆÈãoŒ»‚µ‚È‚¢‚æ‚¤‚Éƒtƒ‰ƒO‚ğŠÇ—
+			//ä¸€åº¦ã®æŠ•ã’ã§ï¼’å›ä»¥ä¸Šå‡ºç¾ã—ãªã„ã‚ˆã†ã«ãƒ•ãƒ©ã‚°ã‚’ç®¡ç†
 			m_apFlag = false;
 		}
 	}
 	this->CTrash::SetPosition(posTrash);
 	
 	if(posTrash.y > SCREEN_HEIGHT || posTrash.x > SCREEN_WIDTH || posTrash.x < 0)
-	{//‰æ–ÊŠO”»’è
-		if(m_apFlag == true)//‚»‚Ì“Š‚°‚É‚æ‚Á‚ÄÄoŒ»‚µ‚Ä‚¢‚È‚¢‚È‚ç
+	{//ç”»é¢å¤–åˆ¤å®š
+		if(m_apFlag == true)//ãã®æŠ•ã’ã«ã‚ˆã£ã¦å†å‡ºç¾ã—ã¦ã„ãªã„ãªã‚‰
 		{
-			//¶¬
+			//ç”Ÿæˆ
 			CTrash* pTrash;
-			int nNum = rand()%3;//‚O`‚Q‚Ìƒ‰ƒ“ƒ_ƒ€‚È”
+			int nNum = rand()%3;//ï¼ï½ï¼’ã®ãƒ©ãƒ³ãƒ€ãƒ ãªæ•°
 			if(nNum == 0)
 			{
 				if(GetObjType() == OBJTYPE_TRASH)
@@ -258,12 +258,12 @@ void CTrash::Update(void)
 				}
 			}
 			CTrashGame::SetTrashPointer(pTrash);
-			//ÄoŒ»‚µ‚È‚¢‚æ‚¤‚ÉƒŠƒZƒbƒg
+			//å†å‡ºç¾ã—ãªã„ã‚ˆã†ã«ãƒªã‚»ãƒƒãƒˆ
 			m_cnt = 0;
 			m_apFlag = false;
 		}
 		m_fallFlag = false;
-		//”jŠü
+		//ç ´æ£„
 		this->Uninit();
 	}
 	
@@ -272,7 +272,7 @@ void CTrash::Update(void)
 }
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚Ì•`‰æˆ—
+// ãƒãƒªã‚´ãƒ³ã®æç”»å‡¦ç†
 //=============================================================================
 void CTrash::Draw(void)
 {
@@ -280,7 +280,7 @@ void CTrash::Draw(void)
 }
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚Ì¶¬ˆ—
+// ãƒãƒªã‚´ãƒ³ã®ç”Ÿæˆå‡¦ç†
 //=============================================================================
 CTrash *CTrash::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size,LPCSTR strFileName,OBJTYPE type)
 {
@@ -343,12 +343,12 @@ CTrash::TRASHTYPE CTrash::GetTrashType(void)
 {
 	return m_TrashType;
 }
-//ƒ^ƒCƒ€ƒAƒbƒv‚ÉŒÄ‚Ô
+//ã‚¿ã‚¤ãƒ ã‚¢ãƒƒãƒ—æ™‚ã«å‘¼ã¶
 void CTrash::TrashEnd(void)
 {
-	//—‰ºƒtƒ‰ƒO‚ğ‚n‚m
+	//è½ä¸‹ãƒ•ãƒ©ã‚°ã‚’ï¼¯ï¼®
 	m_fallFlag = true;
-	//oŒ»ƒtƒ‰ƒO‚ğOFF
+	//å‡ºç¾ãƒ•ãƒ©ã‚°ã‚’OFF
 	m_apFlag = false;
 }
 
@@ -374,7 +374,7 @@ void CTrash::Load(void)
 		{
 			LPDIRECT3DDEVICE9 pDevice;
 			pDevice = CManager::GetRenderer()->GetDevice();
-			// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ
+			// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
 			D3DXCreateTextureFromFile( pDevice, strFileName, &m_pTexture[cnt]);
 		}
 	}

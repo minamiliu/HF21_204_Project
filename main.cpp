@@ -1,6 +1,6 @@
-//=============================================================================
+ï»¿//=============================================================================
 //
-// ƒƒCƒ“ˆ— [main.cpp]
+// ãƒ¡ã‚¤ãƒ³å‡¦ç† [main.cpp]
 // Author : AKIRA TANAKA
 //
 //=============================================================================
@@ -8,26 +8,26 @@
 #include "manager.h"
 
 //*****************************************************************************
-// ƒ}ƒNƒ’è‹`
+// ãƒã‚¯ãƒ­å®šç¾©
 //*****************************************************************************
-#define CLASS_NAME		"AppClass"			// ƒEƒCƒ“ƒhƒE‚ÌƒNƒ‰ƒX–¼
-#define WINDOW_NAME		"–¢—ˆ‘n‘¢“Wƒ`[ƒ€204"	// ƒEƒCƒ“ƒhƒE‚ÌƒLƒƒƒvƒVƒ‡ƒ“–¼
+#define CLASS_NAME		"AppClass"			// ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã®ã‚¯ãƒ©ã‚¹å
+#define WINDOW_NAME		"æœªæ¥å‰µé€ å±•ãƒãƒ¼ãƒ 204"	// ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã®ã‚­ãƒ£ãƒ—ã‚·ãƒ§ãƒ³å
 
 //*****************************************************************************
-// ƒvƒƒgƒ^ƒCƒvéŒ¾
+// ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
 //*****************************************************************************
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 //*****************************************************************************
-// ƒOƒ[ƒoƒ‹•Ï”:
+// ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°:
 //*****************************************************************************
 
 #ifdef _DEBUG
-int		g_nCountFPS;			// FPSƒJƒEƒ“ƒ^
+int		g_nCountFPS;			// FPSã‚«ã‚¦ãƒ³ã‚¿
 #endif
 
 //=============================================================================
-// ƒƒCƒ“ŠÖ”
+// ãƒ¡ã‚¤ãƒ³é–¢æ•°
 //=============================================================================
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
@@ -54,13 +54,13 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	DWORD dwExecLastTime;
 	DWORD dwFPSLastTime;
 	
-	// ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX‚Ì“o˜^
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ©ã‚¹ã®ç™»éŒ²
 	RegisterClassEx(&wcex);
 
-	// w’è‚µ‚½ƒNƒ‰ƒCƒAƒ“ƒg—Ìˆæ‚ğŠm•Û‚·‚é‚½‚ß‚É•K—v‚ÈƒEƒBƒ“ƒhƒEÀ•W‚ğŒvZ
+	// æŒ‡å®šã—ãŸã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆé ˜åŸŸã‚’ç¢ºä¿ã™ã‚‹ãŸã‚ã«å¿…è¦ãªã‚¦ã‚£ãƒ³ãƒ‰ã‚¦åº§æ¨™ã‚’è¨ˆç®—
 	AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, false);
 
-	//// ƒEƒBƒ“ƒhƒE‚Ìì¬
+	//// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ä½œæˆ
 	//hWnd = CreateWindow(CLASS_NAME,
 	//					WINDOW_NAME,
 	//					WS_OVERLAPPEDWINDOW,
@@ -73,13 +73,13 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	//					hInstance,
 	//					NULL);
 
-	//ƒtƒ‹ƒXƒNƒŠ[ƒ“‚Ìì¬
-	{//‹U•¨‚Ìƒtƒ‹ƒXƒNƒŠ[ƒ“‚Ìİ’è
-		//ƒfƒXƒNƒgƒbƒv‚ÌƒTƒCƒY‚ğæ“¾
+	//ãƒ•ãƒ«ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã®ä½œæˆ
+	{//å½ç‰©ã®ãƒ•ãƒ«ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã®è¨­å®š
+		//ãƒ‡ã‚¹ã‚¯ãƒˆãƒƒãƒ—ã®ã‚µã‚¤ã‚ºã‚’å–å¾—
 		RECT rcWnd;
 		GetClientRect( GetDesktopWindow(), &rcWnd);
 
-		// ƒEƒBƒ“ƒhƒE‚Ìì¬
+		// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ä½œæˆ
 		hWnd = CreateWindowEx(0,
 							CLASS_NAME,
 							WINDOW_NAME,
@@ -94,34 +94,34 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 							NULL);
 	}
 
-	//ƒ}ƒl[ƒWƒƒ‚Ì¶¬
+	//ãƒãƒãƒ¼ã‚¸ãƒ£ã®ç”Ÿæˆ
 	CManager::Create( CManager::MODE_LOADING, hInstance, hWnd, true);
 
-	// •ª‰ğ”\‚ğİ’è
+	// åˆ†è§£èƒ½ã‚’è¨­å®š
 	timeBeginPeriod(1);
 
-	// ƒtƒŒ[ƒ€ƒJƒEƒ“ƒg‰Šú‰»
+	// ãƒ•ãƒ¬ãƒ¼ãƒ ã‚«ã‚¦ãƒ³ãƒˆåˆæœŸåŒ–
 	dwCurrentTime =
 	dwFrameCount = 0;
 	dwExecLastTime = 
 	dwFPSLastTime = timeGetTime();
 
-	// ƒEƒCƒ“ƒhƒE‚Ì•\¦
+	// ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã®è¡¨ç¤º
 	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
 	
-	// ƒƒbƒZ[ƒWƒ‹[ƒv
+	// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—
 	while(1)
 	{
         if(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
 			if(msg.message == WM_QUIT)
-			{// PostQuitMessage()‚ªŒÄ‚Î‚ê‚½‚çƒ‹[ƒvI—¹
+			{// PostQuitMessage()ãŒå‘¼ã°ã‚ŒãŸã‚‰ãƒ«ãƒ¼ãƒ—çµ‚äº†
 				break;
 			}
 			else
 			{
-				// ƒƒbƒZ[ƒW‚Ì–|–ó‚ÆƒfƒBƒXƒpƒbƒ`
+				// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®ç¿»è¨³ã¨ãƒ‡ã‚£ã‚¹ãƒ‘ãƒƒãƒ
 				TranslateMessage(&msg);
 				DispatchMessage(&msg);
 			}
@@ -129,7 +129,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		else
 		{
 			dwCurrentTime = timeGetTime();
-			if((dwCurrentTime - dwFPSLastTime) >= 500)	// 0.5•b‚²‚Æ‚ÉÀs
+			if((dwCurrentTime - dwFPSLastTime) >= 500)	// 0.5ç§’ã”ã¨ã«å®Ÿè¡Œ
 			{
 #ifdef _DEBUG
 				g_nCountFPS = dwFrameCount * 1000 / (dwCurrentTime - dwFPSLastTime);
@@ -142,10 +142,10 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 			{
 				dwExecLastTime = dwCurrentTime;
 
-				//ƒ}ƒl[ƒWƒƒ‚ÌXVˆ—
+				//ãƒãƒãƒ¼ã‚¸ãƒ£ã®æ›´æ–°å‡¦ç†
 				CManager::UpdateAll();
 
-				//ƒ}ƒl[ƒWƒƒ‚Ì•`‰æˆ—
+				//ãƒãƒãƒ¼ã‚¸ãƒ£ã®æç”»å‡¦ç†
 				CManager::DrawAll();
 
 				dwFrameCount++;
@@ -153,20 +153,20 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		}
 	}
 
-	//ƒ}ƒl[ƒWƒƒ‚Ì”jŠü
+	//ãƒãƒãƒ¼ã‚¸ãƒ£ã®ç ´æ£„
 	CManager::Release();
 
-	// ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX‚Ì“o˜^‚ğ‰ğœ
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ©ã‚¹ã®ç™»éŒ²ã‚’è§£é™¤
 	UnregisterClass(CLASS_NAME, wcex.hInstance);
 
-	// •ª‰ğ”\‚ğ–ß‚·
+	// åˆ†è§£èƒ½ã‚’æˆ»ã™
 	timeEndPeriod(1);
 
 	return (int)msg.wParam;
 }
 
 //=============================================================================
-// ƒvƒƒV[ƒWƒƒ
+// ãƒ—ãƒ­ã‚·ãƒ¼ã‚¸ãƒ£
 //=============================================================================
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -182,8 +182,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_KEYDOWN:
 		switch(wParam)
 		{
-		case VK_ESCAPE:					// [ESC]ƒL[‚ª‰Ÿ‚³‚ê‚½
-			DestroyWindow(hWnd);		// ƒEƒBƒ“ƒhƒE‚ğ”jŠü‚·‚é‚æ‚¤w¦‚·‚é
+		case VK_ESCAPE:					// [ESC]ã‚­ãƒ¼ãŒæŠ¼ã•ã‚ŒãŸ
+			DestroyWindow(hWnd);		// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’ç ´æ£„ã™ã‚‹ã‚ˆã†æŒ‡ç¤ºã™ã‚‹
 			break;
 		}
 		break;
@@ -196,7 +196,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 }
 
 //=============================================================================
-// FPS‚ğ“n‚·ŠÖ”
+// FPSã‚’æ¸¡ã™é–¢æ•°
 //=============================================================================
 #ifdef _DEBUG
 

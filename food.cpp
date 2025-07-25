@@ -1,14 +1,14 @@
-//============================================
+ï»¿//============================================
 //
-// ƒ^ƒCƒgƒ‹:	 –¢—ˆ‘n‘¢“Wƒ`[ƒ€204
-// ƒvƒƒOƒ‰ƒ€–¼: food.cpp
-// ì¬ŽÒ:		 HAL“Œ‹žƒQ[ƒ€Šw‰È@—«“ìG
-// ì¬“ú:       2016/11/10
+// ã‚¿ã‚¤ãƒˆãƒ«:	 æœªæ¥å‰µé€ å±•ãƒãƒ¼ãƒ 204
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å: food.cpp
+// ä½œæˆè€…:		 HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
+// ä½œæˆæ—¥:       2016/11/10
 //
 //============================================
 
 //============================================
-//ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+//ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //============================================
 #include "main.h"
 #include "manager.h"
@@ -19,7 +19,7 @@
 #include "lionGame.h"
 #include "playerX.h"
 //============================================
-// ƒ}ƒNƒ’è‹`
+// ãƒžã‚¯ãƒ­å®šç¾©
 //============================================
 #define TEXTURE_TOMATO	"data/TEXTURE/LionGame/tomato.png"
 #define TEXTURE_CARROT  "data/TEXTURE/LionGame/carrot.png"
@@ -36,12 +36,12 @@
 #define RATE_ALPHA		(0.005f)
 
 //============================================
-// Ã“Iƒƒ“ƒo[•Ï”‚Ì‰Šú‰»
+// é™çš„ãƒ¡ãƒ³ãƒãƒ¼å¤‰æ•°ã®åˆæœŸåŒ–
 //============================================
 LPDIRECT3DTEXTURE9 CFood::m_pTexture[TYPE_MAX] = {};
 bool CFood::bClear[TYPE_MAX] = {false};
 //=============================================================================
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CFood::CFood()
 {
@@ -49,7 +49,7 @@ CFood::CFood()
 }
 
 //=============================================================================
-//ƒfƒXƒgƒ‰ƒNƒ^
+//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CFood::~CFood()
 {
@@ -58,7 +58,7 @@ CFood::~CFood()
 
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚Ì‰Šú‰»ˆ—
+// ãƒãƒªã‚´ãƒ³ã®åˆæœŸåŒ–å‡¦ç†
 //=============================================================================
 
 HRESULT CFood::Init(D3DXVECTOR3 pos, D3DXVECTOR2 size, TYPE type)
@@ -66,7 +66,7 @@ HRESULT CFood::Init(D3DXVECTOR3 pos, D3DXVECTOR2 size, TYPE type)
 	CBillBoard::Init( pos, size);
 	SetObjType(OBJTYPE_L_FOOD);
 
-	//‰Šúó‘Ô
+	//åˆæœŸçŠ¶æ…‹
 	m_type = type;
 	bClear[type] = false;
 	m_state = STATE_NORMAL;
@@ -76,7 +76,7 @@ HRESULT CFood::Init(D3DXVECTOR3 pos, D3DXVECTOR2 size, TYPE type)
 	m_fTurn = 0.0f;
 	m_fMoveY = 0.0f;
 
-	//ƒAƒCƒRƒ“
+	//ã‚¢ã‚¤ã‚³ãƒ³
 	m_pIcon = CFoodIcon::Create(D3DXVECTOR3(100.0f, 100.0f, 0.0f), m_pTexture[type], (int)type);
 
 	return S_OK;
@@ -93,7 +93,7 @@ void CFood::Uninit(void)
 //=============================================================================
 void CFood::Update(void)
 {
-	//ó‘ÔXV
+	//çŠ¶æ…‹æ›´æ–°
 	switch( m_state)
 	{
 	case STATE_NORMAL:
@@ -103,24 +103,24 @@ void CFood::Update(void)
 		m_nCntState--;
 		if( m_nCntState <= 0)
 		{			
-			//HÞ‚Ì”jŠü
+			//é£Ÿæã®ç ´æ£„
 			this->Uninit();
 			return;
 		}
 		else
 		{
-			//À•W
+			//åº§æ¨™
 			D3DXVECTOR3 pos = this->GetPosition();
 			m_fMoveY += ACCEL_RISE_UP;
 			pos.y += m_fMoveY;
 			
-			//‰ñ“]
+			//å›žè»¢
 			m_fAngle += RATE_ALPHA;
 			m_fTurn += m_fAngle; 
 			pos.x = CLionGame::GetPlayer()->GetPosition().x + 30.0f * sinf( m_fTurn); 
 			pos.z = CLionGame::GetPlayer()->GetPosition().z + 30.0f * cosf( m_fTurn);
 
-			//ƒGƒtƒFƒNƒg
+			//ã‚¨ãƒ•ã‚§ã‚¯ãƒˆ
 			CEffect3D::Create(this->GetPosition(), D3DXVECTOR2( 20.0f, 20.0f), CEffect3D::TYPE_MARU, LIME(1.0f), 0.02f);
 			
 			this->SetPosition(pos);
@@ -145,13 +145,13 @@ CFood *CFood::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, TYPE type)
 
 	pFood->Init(pos, size, type);
 
-	//ƒeƒNƒXƒ`ƒƒ‚ÌŠ„‚è“–‚Ä
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®å‰²ã‚Šå½“ã¦
 	pFood->BindTexture( m_pTexture[type]);
 
 	return pFood;
 }
 //=============================================================================
-//ƒeƒNƒXƒ`ƒƒ‚Ìƒ[ƒh
+//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒ­ãƒ¼ãƒ‰
 //=============================================================================
 HRESULT CFood::Load(void)
 {
@@ -206,7 +206,7 @@ HRESULT CFood::Load(void)
 			LPDIRECT3DDEVICE9 pDevice;
 			pDevice = CManager::GetRenderer()->GetDevice();
 
-			// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚Ýž‚Ý
+			// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
 			D3DXCreateTextureFromFile(pDevice, strFileName, &m_pTexture[cntType]);
 		}
 	}
@@ -215,11 +215,11 @@ HRESULT CFood::Load(void)
 }
 
 //=============================================================================
-//ƒeƒNƒXƒ`ƒƒ‚ÌƒAƒ“ƒ[ƒh
+//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ã‚¢ãƒ³ãƒ­ãƒ¼ãƒ‰
 //=============================================================================
 void CFood::Unload(void)
 {
-	//ƒeƒNƒXƒ`ƒƒ‚Ì”jŠü
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ç ´æ£„
 	for (int cntType = 0; cntType < TYPE_MAX; cntType++)
 	{
 		if (m_pTexture[cntType] != NULL)
@@ -231,7 +231,7 @@ void CFood::Unload(void)
 }
 
 //=============================================================================
-//ƒAƒCƒRƒ“‚ÌŽæ“¾
+//ã‚¢ã‚¤ã‚³ãƒ³ã®å–å¾—
 //=============================================================================
 CFoodIcon* CFood::GetIcon(void)
 {
@@ -239,7 +239,7 @@ CFoodIcon* CFood::GetIcon(void)
 }
 
 //=============================================================================
-//HÞ‚ðƒQƒbƒg
+//é£Ÿæã‚’ã‚²ãƒƒãƒˆ
 //=============================================================================
 void CFood::SetClear(void)
 {
@@ -247,7 +247,7 @@ void CFood::SetClear(void)
 }
 
 //=============================================================================
-//HÞ‚ð‘S•”ƒQƒbƒg‚µ‚½‚©
+//é£Ÿæã‚’å…¨éƒ¨ã‚²ãƒƒãƒˆã—ãŸã‹
 //=============================================================================
 bool CFood::isAllClear(void)
 {
@@ -262,7 +262,7 @@ bool CFood::isAllClear(void)
 	return true;
 }
 //=============================================================================
-// ƒXƒe[ƒg‚ðÝ’è
+// ã‚¹ãƒ†ãƒ¼ãƒˆã‚’è¨­å®š
 //=============================================================================
 void CFood::SetState(STATE state, int nCntState)
 {
@@ -270,7 +270,7 @@ void CFood::SetState(STATE state, int nCntState)
 	m_nCntState = nCntState;
 }
 //=============================================================================
-// ƒXƒe[ƒg‚ðŽæ“¾
+// ã‚¹ãƒ†ãƒ¼ãƒˆã‚’å–å¾—
 //=============================================================================
 CFood::STATE CFood::GetState(void)
 {

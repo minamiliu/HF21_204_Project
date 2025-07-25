@@ -1,14 +1,14 @@
-//============================================
+ï»¿//============================================
 //
-// ƒ^ƒCƒgƒ‹:	 –¢—ˆ‘n‘¢“Wƒ`[ƒ€204
-// ƒvƒƒOƒ‰ƒ€–¼: getScore.cpp
-// ì¬ŽÒ:		 HAL“Œ‹žƒQ[ƒ€Šw‰È@ŽR‰ÆŒ[‰î
-// ì¬“ú:       2016/12/13
+// ã‚¿ã‚¤ãƒˆãƒ«:	 æœªæ¥å‰µé€ å±•ãƒãƒ¼ãƒ 204
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å: getScore.cpp
+// ä½œæˆè€…:		 HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€å±±å®¶å•“ä»‹
+// ä½œæˆæ—¥:       2016/12/13
 //
 //============================================
 
 //============================================
-//ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+//ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //============================================
 #include "main.h"
 #include "manager.h"
@@ -18,28 +18,28 @@
 #include "getScore.h"
 #include "scene.h"
 //============================================
-// ƒ}ƒNƒ’è‹`
+// ãƒžã‚¯ãƒ­å®šç¾©
 //============================================
 #define TEXTURENAME "data/TEXTURE/number001.png"
 
-#define	TEX_PATTERN_DIVIDE_X		(10)								// ƒAƒjƒ[ƒVƒ‡ƒ“ƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒ“à‚Å‚Ì•ªŠ„”(‚w•ûŒü)
-#define	TEX_PATTERN_DIVIDE_Y		(1)								// ƒAƒjƒ[ƒVƒ‡ƒ“ƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒ“à‚Å‚Ì•ªŠ„”(‚x•ûŒü)
-#define	TEX_PATTERN_SIZE_X			(1.0f/TEX_PATTERN_DIVIDE_X)		// ‚Pƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒƒTƒCƒY(‚w•ûŒü)(1.0f/X•ûŒü•ªŠ„”)
-#define	TEX_PATTERN_SIZE_Y			(1.0f/TEX_PATTERN_DIVIDE_Y)		// ‚Pƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒƒTƒCƒY(‚x•ûŒü)(1.0f/Y•ûŒü•ªŠ„”)
+#define	TEX_PATTERN_DIVIDE_X		(10)								// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£å†…ã§ã®åˆ†å‰²æ•°(ï¼¸æ–¹å‘)
+#define	TEX_PATTERN_DIVIDE_Y		(1)								// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£å†…ã§ã®åˆ†å‰²æ•°(ï¼¹æ–¹å‘)
+#define	TEX_PATTERN_SIZE_X			(1.0f/TEX_PATTERN_DIVIDE_X)		// ï¼‘ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µã‚¤ã‚º(ï¼¸æ–¹å‘)(1.0f/Xæ–¹å‘åˆ†å‰²æ•°)
+#define	TEX_PATTERN_SIZE_Y			(1.0f/TEX_PATTERN_DIVIDE_Y)		// ï¼‘ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µã‚¤ã‚º(ï¼¹æ–¹å‘)(1.0f/Yæ–¹å‘åˆ†å‰²æ•°)
 
-#define	NUM_ANIM_PATTERN			(TEX_PATTERN_DIVIDE_X*TEX_PATTERN_DIVIDE_Y)	// ƒAƒjƒ[ƒVƒ‡ƒ“‚Ìƒpƒ^[ƒ“”(X•ûŒü•ªŠ„”~Y•ûŒü•ªŠ„”)
-//#define	TIME_CHANGE_PATTERN			(5)								// ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌØ‚è‘Ö‚í‚éƒ^ƒCƒ~ƒ“ƒO(ƒtƒŒ[ƒ€”)
+#define	NUM_ANIM_PATTERN			(TEX_PATTERN_DIVIDE_X*TEX_PATTERN_DIVIDE_Y)	// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ãƒ‘ã‚¿ãƒ¼ãƒ³æ•°(Xæ–¹å‘åˆ†å‰²æ•°Ã—Yæ–¹å‘åˆ†å‰²æ•°)
+//#define	TIME_CHANGE_PATTERN			(5)								// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®åˆ‡ã‚Šæ›¿ã‚ã‚‹ã‚¿ã‚¤ãƒŸãƒ³ã‚°(ãƒ•ãƒ¬ãƒ¼ãƒ æ•°)
 
 //============================================
-// Ã“Iƒƒ“ƒo[•Ï”‚Ì‰Šú‰»
+// é™çš„ãƒ¡ãƒ³ãƒãƒ¼å¤‰æ•°ã®åˆæœŸåŒ–
 //============================================
 
 //=============================================================================
-// \‘¢‘Ì’è‹`
+// æ§‹é€ ä½“å®šç¾©
 //=============================================================================
 
 //=============================================================================
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CGetScore::CGetScore()
 {
@@ -48,7 +48,7 @@ CGetScore::CGetScore()
 }
 
 //=============================================================================
-//ƒfƒXƒgƒ‰ƒNƒ^
+//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CGetScore::~CGetScore()
 {
@@ -57,7 +57,7 @@ CGetScore::~CGetScore()
 
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚Ì‰Šú‰»ˆ—
+// ãƒãƒªã‚´ãƒ³ã®åˆæœŸåŒ–å‡¦ç†
 //=============================================================================
 HRESULT CGetScore::Init(void)
 {
@@ -65,22 +65,22 @@ HRESULT CGetScore::Init(void)
 }
 HRESULT CGetScore::Init(D3DXVECTOR3 numberPos, D3DXVECTOR3 numberSize, int maxKeta, const D3DXCOLOR &col)
 {
-	//‰Šú’l‚ðÝ’è
+	//åˆæœŸå€¤ã‚’è¨­å®š
 	m_nMaxKeta = maxKeta;
 	m_nValue = 0;
 	m_pos = numberPos;
 	m_size = numberSize;
 	m_nApCnt = 0;
-	//Numberƒ|ƒCƒ“ƒ^[”z—ñ‚Ì¶¬
+	//Numberãƒã‚¤ãƒ³ã‚¿ãƒ¼é…åˆ—ã®ç”Ÿæˆ
 	m_ppPolygon = new CNumber*[maxKeta];
 
-	//ƒXƒ^[ƒgˆÊ’u(‰E)‚ÆŒ…ƒTƒCƒY‚ÌŒvŽZ
+	//ã‚¹ã‚¿ãƒ¼ãƒˆä½ç½®(å³)ã¨æ¡ã‚µã‚¤ã‚ºã®è¨ˆç®—
 	D3DXVECTOR3 rightPos = numberPos;
 	D3DXVECTOR3 ketaSize = numberSize;
 	ketaSize.x /= maxKeta;
 	rightPos.x = numberPos.x + ketaSize.x * (maxKeta - 1) / 2.0f;
 	
-	//Œ…•ª‚ÌNumber‚Ì¶¬
+	//æ¡åˆ†ã®Numberã®ç”Ÿæˆ
 	D3DXVECTOR3 tmpPos = rightPos;
 	for(int cntKeta = 0; cntKeta < m_nMaxKeta; cntKeta++)
 	{
@@ -88,7 +88,7 @@ HRESULT CGetScore::Init(D3DXVECTOR3 numberPos, D3DXVECTOR3 numberSize, int maxKe
 		tmpPos.x -= ketaSize.x;
 	}
 
-	//F‚ðÝ’è
+	//è‰²ã‚’è¨­å®š
 	SetColor( col);
 
 	return S_OK;
@@ -98,29 +98,29 @@ HRESULT CGetScore::Init(D3DXVECTOR3 numberPos, D3DXVECTOR3 numberSize, int maxKe
 
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚ÌI—¹ˆ—
+// ãƒãƒªã‚´ãƒ³ã®çµ‚äº†å‡¦ç†
 //=============================================================================
 void CGetScore::Uninit(void)
 {
 	for(int cntKeta = 0; cntKeta < m_nMaxKeta; cntKeta++)
 	{
-		//”ŽšŒ…‚Ì”jŠü
+		//æ•°å­—æ¡ã®ç ´æ£„
 		m_ppPolygon[cntKeta]->Uninit();
 	}
 
 	delete[] m_ppPolygon;
 	m_ppPolygon = NULL;
 
-	//ƒeƒNƒXƒ`ƒƒ‚Ì”jŠü
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ç ´æ£„
 	this->Unload();
 	
-	//ƒIƒuƒWƒFƒNƒg‚Ì”jŠü
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç ´æ£„
 	Release();
 }
 
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚ÌXVˆ—
+// ãƒãƒªã‚´ãƒ³ã®æ›´æ–°å‡¦ç†
 //=============================================================================
 void CGetScore::Update(void)
 {
@@ -137,7 +137,7 @@ void CGetScore::Update(void)
 }
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚Ì•`‰æˆ—
+// ãƒãƒªã‚´ãƒ³ã®æç”»å‡¦ç†
 //=============================================================================
 void CGetScore::Draw(void)
 {
@@ -148,7 +148,7 @@ void CGetScore::Draw(void)
 }
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚Ì¶¬ˆ—
+// ãƒãƒªã‚´ãƒ³ã®ç”Ÿæˆå‡¦ç†
 //=============================================================================
 CGetScore *CGetScore::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, int maxKeta, const D3DXCOLOR &col)
 {
@@ -156,10 +156,10 @@ CGetScore *CGetScore::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, int maxKeta, con
 	pGetScore = new CGetScore;
 	pGetScore->Init(pos, size, maxKeta, col);
 
-	//ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚Ýž‚Ý
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
 	pGetScore->Load();
 
-	//Œ…•ª‚ÌƒeƒNƒXƒ`ƒƒ‚ÌŠ„‚è“–‚Ä
+	//æ¡åˆ†ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®å‰²ã‚Šå½“ã¦
 	pGetScore->BindAllTexture();
 	
 	return pGetScore;
@@ -175,7 +175,7 @@ HRESULT CGetScore::Load(void)
 		LPDIRECT3DDEVICE9 pDevice;
 		pDevice = CManager::GetRenderer()->GetDevice();
 
-		// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚Ýž‚Ý
+		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
 		D3DXCreateTextureFromFile( pDevice, TEXTURENAME, &m_pTexture);
 	}
 
@@ -187,7 +187,7 @@ HRESULT CGetScore::Load(void)
 //=============================================================================
 void CGetScore::Unload(void)
 {
-	//ƒeƒNƒXƒ`ƒƒ‚Ì”jŠü
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ç ´æ£„
 	if( m_pTexture != NULL)
 	{
 		m_pTexture->Release();
@@ -196,44 +196,44 @@ void CGetScore::Unload(void)
 }
 
 //=============================================================================
-//”Žš‚ð‚»‚Ì‚Ü‚Ü•\Ž¦‚·‚é
+//æ•°å­—ã‚’ãã®ã¾ã¾è¡¨ç¤ºã™ã‚‹
 //=============================================================================
 void CGetScore::SetScore(int score)
 {
 	int number;
 
-	//”ÍˆÍƒ`ƒFƒbƒN
+	//ç¯„å›²ãƒã‚§ãƒƒã‚¯
 	int maxGetScore = powf( 10.0f, m_nMaxKeta) -1;
 	if(score >  maxGetScore) score = maxGetScore;
 	else if(score < 0) score = 0;
 
-	//’l‚ðXV
+	//å€¤ã‚’æ›´æ–°
 	m_nValue = score;
 
 	for(int nKeta = 0; nKeta < m_nMaxKeta; nKeta++)
 	{
-		//ˆê”Ô‰E‚Ì”Žš‚ðŽæ‚é
+		//ä¸€ç•ªå³ã®æ•°å­—ã‚’å–ã‚‹
 		number = int(score % (int)powf( 10.0f, float(nKeta+1)) / powf( 10.0f, float(nKeta)));
 
-		//ƒeƒNƒXƒ`ƒƒ‚ð‚¸‚ç‚·
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ãšã‚‰ã™
 		m_ppPolygon[nKeta]->ChangeTextureAnime( number, D3DXVECTOR2( TEX_PATTERN_SIZE_X, TEX_PATTERN_SIZE_Y), D3DXVECTOR2( TEX_PATTERN_DIVIDE_X, TEX_PATTERN_DIVIDE_Y));
 	}
 }
 
 //=============================================================================
-//Œ…•ª‚ÌƒeƒNƒXƒ`ƒƒ‚ÌŠ„‚è“–‚Ä
+//æ¡åˆ†ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®å‰²ã‚Šå½“ã¦
 //=============================================================================
 void CGetScore::BindAllTexture(void)
 {
 	for(int cntKeta = 0; cntKeta < m_nMaxKeta; cntKeta++)
 	{
-		//ƒeƒNƒXƒ`ƒƒ‚ÌŠ„‚è“–‚Ä
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®å‰²ã‚Šå½“ã¦
 		m_ppPolygon[cntKeta]->BindTexture( m_pTexture);
 	}
 }
 
 //=============================================================================
-//‘SŒ…‚ÌF‚ðˆê‹C‚É•ÏX
+//å…¨æ¡ã®è‰²ã‚’ä¸€æ°—ã«å¤‰æ›´
 //=============================================================================
 void CGetScore::SetColor(const D3DXCOLOR &col)
 {
@@ -244,7 +244,7 @@ void CGetScore::SetColor(const D3DXCOLOR &col)
 }
 
 //=============================================================================
-//“¾“_‚ðã‚°‚é
+//å¾—ç‚¹ã‚’ä¸Šã’ã‚‹
 //=============================================================================
 void CGetScore::AddScore(int score)
 {
@@ -252,14 +252,14 @@ void CGetScore::AddScore(int score)
 	SetScore( m_nValue);
 }
 //=============================================================================
-//À•W‚ðŽæ“¾
+//åº§æ¨™ã‚’å–å¾—
 //=============================================================================
 D3DXVECTOR3 CGetScore::GetPosition(void)
 {
 	return m_pos;
 }
 //=============================================================================
-//ƒTƒCƒY‚ðŽæ“¾
+//ã‚µã‚¤ã‚ºã‚’å–å¾—
 //=============================================================================
 D3DXVECTOR3 CGetScore::GetSize(void)
 {

@@ -1,9 +1,9 @@
-//============================================
+ï»¿//============================================
 //
-// ƒ^ƒCƒgƒ‹:	 –¢—ˆ‘n‘¢“Wƒ`[ƒ€204
-// ƒvƒƒOƒ‰ƒ€–¼: getScore.h
-// ì¬Ò:		 HAL“Œ‹ƒQ[ƒ€Šw‰È@R‰ÆŒ[‰î
-// ì¬“ú:       2016/12/13
+// ã‚¿ã‚¤ãƒˆãƒ«:	 æœªæ¥å‰µé€ å±•ãƒãƒ¼ãƒ 204
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å: getScore.h
+// ä½œæˆè€…:		 HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€å±±å®¶å•“ä»‹
+// ä½œæˆæ—¥:       2016/12/13
 //
 //============================================
 
@@ -11,21 +11,21 @@
 #define _GETSCORE_H_
 
 //============================================
-//ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+//ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //============================================
 #include "scene.h"
 
 //============================================
-//ƒ}ƒNƒ’è‹`
+//ãƒã‚¯ãƒ­å®šç¾©
 //============================================
 
 //============================================
-//‘O•ûéŒ¾
+//å‰æ–¹å®£è¨€
 //============================================
 class CNumber;
 
 //============================================
-//\‘¢‘Ì’è‹`
+//æ§‹é€ ä½“å®šç¾©
 //============================================
 
 class CGetScore : public CScene
@@ -46,26 +46,26 @@ public:
 	D3DXVECTOR3 GetPosition(void);
 	D3DXVECTOR3 GetSize(void);
 	void SetPosition(D3DXVECTOR3 pos);
-	void SetScore(int score); //”š‚ğ‚»‚Ì‚Ü‚Ü•\¦‚·‚é
-	void SetColor(const D3DXCOLOR &col); //‘SŒ…‚ÌF‚ğˆê‹C‚É•ÏX
-	void AddScore(int score); //“¾“_‚ğã‚°‚é
+	void SetScore(int score); //æ•°å­—ã‚’ãã®ã¾ã¾è¡¨ç¤ºã™ã‚‹
+	void SetColor(const D3DXCOLOR &col); //å…¨æ¡ã®è‰²ã‚’ä¸€æ°—ã«å¤‰æ›´
+	void AddScore(int score); //å¾—ç‚¹ã‚’ä¸Šã’ã‚‹
 	void SetSize(D3DXVECTOR3 size);
 
 protected:
 	void BindAllTexture(void);
 
 private:
-	//ŠÖ”
+	//é–¢æ•°
 	void SetKetaTexture(const int keta, const int texNo);
 
-	//•Ï”
+	//å¤‰æ•°
 	LPDIRECT3DTEXTURE9 m_pTexture;
-	CNumber **m_ppPolygon;	//‘Œ…‚ğŠÇ—‚·‚éƒ|ƒCƒ“ƒ^[
-	int m_nMaxKeta;			//Œ…”
-	int m_nValue;			//ƒXƒRƒA
+	CNumber **m_ppPolygon;	//ç·æ¡ã‚’ç®¡ç†ã™ã‚‹ãƒã‚¤ãƒ³ã‚¿ãƒ¼
+	int m_nMaxKeta;			//æ¡æ•°
+	int m_nValue;			//ã‚¹ã‚³ã‚¢
 	D3DXVECTOR3 m_pos;
 	D3DXVECTOR3 m_size;
-	int m_nApCnt;//¶¬‚µ‚Ä‰½FŒo‚Á‚½‚©
+	int m_nApCnt;//ç”Ÿæˆã—ã¦ä½•FçµŒã£ãŸã‹
 };
 
 #endif

@@ -1,9 +1,9 @@
-//============================================
+ï»¿//============================================
 //
-// ƒ^ƒCƒgƒ‹:	 –¢—ˆ‘n‘¢“Wƒ`[ƒ€204
-// ƒvƒƒOƒ‰ƒ€–¼: manager.h
-// ì¬Ò:		 HAL“Œ‹ƒQ[ƒ€Šw‰È@—«“ìG
-// ì¬“ú:       2016/11/01
+// ã‚¿ã‚¤ãƒˆãƒ«:	 æœªæ¥å‰µé€ å±•ãƒãƒ¼ãƒ 204
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å: manager.h
+// ä½œæˆè€…:		 HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
+// ä½œæˆæ—¥:       2016/11/01
 //
 //============================================
 
@@ -11,11 +11,11 @@
 #define _MANAGER_H_
 
 //============================================
-//ƒ}ƒNƒ’è‹`
+//ãƒã‚¯ãƒ­å®šç¾©
 //============================================
 
 //============================================
-//‘O•ûéŒ¾
+//å‰æ–¹å®£è¨€
 //============================================
 class CRenderer;
 class CInputKeyboard;
@@ -24,7 +24,7 @@ class CCamera;
 class CSound;
 
 //============================================
-//\‘¢‘Ì’è‹`
+//æ§‹é€ ä½“å®šç¾©
 //============================================
 
 class CManager
@@ -33,24 +33,24 @@ public:
 	typedef enum
 	{
 		MODE_NONE = -1,
-		MODE_LOADING, // ƒ[ƒfƒBƒ“ƒO
-		MODE_LOGO, // ƒƒS•\¦
-		MODE_TITLE, // ƒ^ƒCƒgƒ‹
-		MODE_MANUAL, //ƒ}ƒjƒ…ƒAƒ‹
-		MODE_SELECT, // ƒZƒŒƒNƒg
-		MODE_LIONGAME, //ƒ‰ƒCƒIƒ“ƒQ[ƒ€
-		MODE_ZEBRAGAME,//ƒVƒ}ƒEƒ}ƒQ[ƒ€
-		MODE_TRASHGAME,//ƒSƒ~“Š‚°ƒQ[ƒ€
-		MODE_TRASHGAMERESULT,//ƒSƒ~“Š‚°ƒQ[ƒ€‚ÌƒŠƒUƒ‹ƒg
-		MODE_ENDING, // ƒGƒ“ƒfƒBƒ“ƒO
-		MODE_STAFFROLL, // ƒXƒ^ƒbƒtƒ[ƒ‹
-		MODE_RESULT, // ƒŠƒUƒ‹ƒg
-		MODE_QUIT, // I—¹
-		MODE_STAGE_START,	//ˆÚ“®’†‚ÌƒXƒe[ƒW‰æ–Ê@ƒXƒ^[ƒg‚©‚ç
-		MODE_STAGE_GORIRA,	//ˆÚ“®’†‚ÌƒXƒe[ƒW‰æ–Ê@ƒSƒŠƒ‰‚©‚ç
-		MODE_STAGE_ZEBRA,	//ˆÚ“®’†‚ÌƒXƒe[ƒW‰æ–Ê@ƒVƒ}ƒEƒ}‚©‚ç
-		MODE_STAGE_LION,	//ˆÚ“®’†‚ÌƒXƒe[ƒW‰æ–Ê@ƒ‰ƒCƒIƒ“‚©‚ç
-		MODE_MAX,	//Å‘å’l
+		MODE_LOADING, // ãƒ­ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°
+		MODE_LOGO, // ãƒ­ã‚´è¡¨ç¤º
+		MODE_TITLE, // ã‚¿ã‚¤ãƒˆãƒ«
+		MODE_MANUAL, //ãƒãƒ‹ãƒ¥ã‚¢ãƒ«
+		MODE_SELECT, // ã‚»ãƒ¬ã‚¯ãƒˆ
+		MODE_LIONGAME, //ãƒ©ã‚¤ã‚ªãƒ³ã‚²ãƒ¼ãƒ 
+		MODE_ZEBRAGAME,//ã‚·ãƒã‚¦ãƒã‚²ãƒ¼ãƒ 
+		MODE_TRASHGAME,//ã‚´ãƒŸæŠ•ã’ã‚²ãƒ¼ãƒ 
+		MODE_TRASHGAMERESULT,//ã‚´ãƒŸæŠ•ã’ã‚²ãƒ¼ãƒ ã®ãƒªã‚¶ãƒ«ãƒˆ
+		MODE_ENDING, // ã‚¨ãƒ³ãƒ‡ã‚£ãƒ³ã‚°
+		MODE_STAFFROLL, // ã‚¹ã‚¿ãƒƒãƒ•ãƒ­ãƒ¼ãƒ«
+		MODE_RESULT, // ãƒªã‚¶ãƒ«ãƒˆ
+		MODE_QUIT, // çµ‚äº†
+		MODE_STAGE_START,	//ç§»å‹•ä¸­ã®ã‚¹ãƒ†ãƒ¼ã‚¸ç”»é¢ã€€ã‚¹ã‚¿ãƒ¼ãƒˆã‹ã‚‰
+		MODE_STAGE_GORIRA,	//ç§»å‹•ä¸­ã®ã‚¹ãƒ†ãƒ¼ã‚¸ç”»é¢ã€€ã‚´ãƒªãƒ©ã‹ã‚‰
+		MODE_STAGE_ZEBRA,	//ç§»å‹•ä¸­ã®ã‚¹ãƒ†ãƒ¼ã‚¸ç”»é¢ã€€ã‚·ãƒã‚¦ãƒã‹ã‚‰
+		MODE_STAGE_LION,	//ç§»å‹•ä¸­ã®ã‚¹ãƒ†ãƒ¼ã‚¸ç”»é¢ã€€ãƒ©ã‚¤ã‚ªãƒ³ã‹ã‚‰
+		MODE_MAX,	//æœ€å¤§å€¤
 	} MODE;
 
 	CManager();
@@ -69,54 +69,54 @@ public:
 	static void DrawAll(void);
 	static void Release(void);
 
-	//ƒŒƒ“ƒ_ƒ‰[
+	//ãƒ¬ãƒ³ãƒ€ãƒ©ãƒ¼
 	static CRenderer *GetRenderer(void);
 
-	//“ü—Íˆ—
+	//å…¥åŠ›å‡¦ç†
 	static CInputKeyboard *GetInputKeyboard(void);
 	static CInputMouse *GetInputMouse(void);
 
-	//ƒTƒEƒ“ƒh
+	//ã‚µã‚¦ãƒ³ãƒ‰
 	static CSound *GetSound(void);
 
-	//ƒJƒƒ‰
+	//ã‚«ãƒ¡ãƒ©
 	static CCamera *GetCamera(void);
 
-	//‰æ–Ê‘JˆÚ
-	static void NextModeChange(void); //ƒtƒF[ƒh‚È‚µ
-	static void SetNextScene(MODE mode); //ƒtƒF[ƒh‚ ‚è
-	static void SceneChange(void); //ƒV[ƒ“‚ÌØ‚è‘Ö‚¦
+	//ç”»é¢é·ç§»
+	static void NextModeChange(void); //ãƒ•ã‚§ãƒ¼ãƒ‰ãªã—
+	static void SetNextScene(MODE mode); //ãƒ•ã‚§ãƒ¼ãƒ‰ã‚ã‚Š
+	static void SceneChange(void); //ã‚·ãƒ¼ãƒ³ã®åˆ‡ã‚Šæ›¿ãˆ
 
-	//ƒXƒRƒA•Û‘¶
+	//ã‚¹ã‚³ã‚¢ä¿å­˜
 	void SaveScore(MODE game,int score);
 	int LoadScore(MODE game);
 
-	//ƒ‚ƒfƒ‹‚âƒeƒNƒXƒ`ƒƒ‚ğˆê‹C‚Éƒ[ƒh‚·‚é
+	//ãƒ¢ãƒ‡ãƒ«ã‚„ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ä¸€æ°—ã«ãƒ­ãƒ¼ãƒ‰ã™ã‚‹
 	static HRESULT LoadAllGameData(void);
 
 protected:
-	//ƒJƒƒ‰
+	//ã‚«ãƒ¡ãƒ©
 	static CCamera *m_pCamera;
 
 private:
-	//ƒŒƒ“ƒ_ƒ‰[
+	//ãƒ¬ãƒ³ãƒ€ãƒ©ãƒ¼
 	static CRenderer *m_pRenderer;
 
-	//“ü—Íˆ—
+	//å…¥åŠ›å‡¦ç†
 	static CInputKeyboard *m_pInputKeyboard;
 	static CInputMouse *m_pInputMouse;
 
-	//ƒTƒEƒ“ƒh
+	//ã‚µã‚¦ãƒ³ãƒ‰
 	static CSound *m_pSound;
 
-	//‰æ–Ê‘JˆÚ
+	//ç”»é¢é·ç§»
 	static CManager *m_pSceneManager;
 	static MODE m_modeNow;
 	static MODE m_modeNext;
 
 	static HWND m_hWnd;
 
-	//ƒXƒRƒA•Û‘¶
+	//ã‚¹ã‚³ã‚¢ä¿å­˜
 	static int m_trashGameScore;
 	static int m_zebraGameScore;
 	static int m_lionGameScore;

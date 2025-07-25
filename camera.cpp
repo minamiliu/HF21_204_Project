@@ -1,14 +1,14 @@
-//============================================
+ï»¿//============================================
 //
-// ƒ^ƒCƒgƒ‹:	 –¢—ˆ‘n‘¢“Wƒ`[ƒ€204
-// ƒvƒƒOƒ‰ƒ€–¼: camera.cpp
-// ì¬ŽÒ:		 HAL“Œ‹žƒQ[ƒ€Šw‰È@—«“ìG
-// ì¬“ú:       2016/11/10
+// ã‚¿ã‚¤ãƒˆãƒ«:	 æœªæ¥å‰µé€ å±•ãƒãƒ¼ãƒ 204
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å: camera.cpp
+// ä½œæˆè€…:		 HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
+// ä½œæˆæ—¥:       2016/11/10
 //
 //============================================
 
 //============================================
-//ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+//ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //============================================
 #include "main.h"
 #include "camera.h"
@@ -17,30 +17,30 @@
 #include "playerX.h"
 
 //============================================
-// ƒ}ƒNƒ’è‹`
+// ãƒžã‚¯ãƒ­å®šç¾©
 //============================================
-#define	CAM_POS_V_X				(0.0f)					// ƒJƒƒ‰‚ÌŽ‹“_‰ŠúˆÊ’u(XÀ•W)
-#define	CAM_POS_V_Y				(100.0f)				// ƒJƒƒ‰‚ÌŽ‹“_‰ŠúˆÊ’u(YÀ•W)
-#define	CAM_POS_V_Z				(-300.0f)				// ƒJƒƒ‰‚ÌŽ‹“_‰ŠúˆÊ’u(ZÀ•W)
-#define	CAM_POS_R_X				(0.0f)					// ƒJƒƒ‰‚Ì’Ž‹“_‰ŠúˆÊ’u(XÀ•W)
-#define	CAM_POS_R_Y				(0.0f)					// ƒJƒƒ‰‚Ì’Ž‹“_‰ŠúˆÊ’u(YÀ•W)
-#define	CAM_POS_R_Z				(0.0f)					// ƒJƒƒ‰‚Ì’Ž‹“_‰ŠúˆÊ’u(ZÀ•W)
-#define	VIEW_ANGLE				(D3DXToRadian(60.0f))							// ƒrƒ…[•½–Ê‚ÌŽ‹–ìŠp
-#define	VIEW_ASPECT				((float)SCREEN_WIDTH / (float)SCREEN_HEIGHT)	// ƒrƒ…[•½–Ê‚ÌƒAƒXƒyƒNƒg”ä
-#define	VIEW_NEAR_Z				(30.f)											// ƒrƒ…[•½–Ê‚ÌNearZ’l
-#define	VIEW_FAR_Z				(4000.0f)										// ƒrƒ…[•½–Ê‚ÌFarZ’l
-#define	VALUE_MOVE_CAMERA		(2.0f)											// ƒJƒƒ‰‚ÌˆÚ“®—Ê
-#define	VALUE_ROTATE_CAMERA		(D3DX_PI * 0.01f)								// ƒJƒƒ‰‚Ì‰ñ“]—Ê
-#define	VALUE_ADJUST_DISTANCE	(2.0f)											// Ž‹“_‚Æ’Ž‹“_‚Ì‹——£’²®—Ê
+#define	CAM_POS_V_X				(0.0f)					// ã‚«ãƒ¡ãƒ©ã®è¦–ç‚¹åˆæœŸä½ç½®(Xåº§æ¨™)
+#define	CAM_POS_V_Y				(100.0f)				// ã‚«ãƒ¡ãƒ©ã®è¦–ç‚¹åˆæœŸä½ç½®(Yåº§æ¨™)
+#define	CAM_POS_V_Z				(-300.0f)				// ã‚«ãƒ¡ãƒ©ã®è¦–ç‚¹åˆæœŸä½ç½®(Zåº§æ¨™)
+#define	CAM_POS_R_X				(0.0f)					// ã‚«ãƒ¡ãƒ©ã®æ³¨è¦–ç‚¹åˆæœŸä½ç½®(Xåº§æ¨™)
+#define	CAM_POS_R_Y				(0.0f)					// ã‚«ãƒ¡ãƒ©ã®æ³¨è¦–ç‚¹åˆæœŸä½ç½®(Yåº§æ¨™)
+#define	CAM_POS_R_Z				(0.0f)					// ã‚«ãƒ¡ãƒ©ã®æ³¨è¦–ç‚¹åˆæœŸä½ç½®(Zåº§æ¨™)
+#define	VIEW_ANGLE				(D3DXToRadian(60.0f))							// ãƒ“ãƒ¥ãƒ¼å¹³é¢ã®è¦–é‡Žè§’
+#define	VIEW_ASPECT				((float)SCREEN_WIDTH / (float)SCREEN_HEIGHT)	// ãƒ“ãƒ¥ãƒ¼å¹³é¢ã®ã‚¢ã‚¹ãƒšã‚¯ãƒˆæ¯”
+#define	VIEW_NEAR_Z				(30.f)											// ãƒ“ãƒ¥ãƒ¼å¹³é¢ã®NearZå€¤
+#define	VIEW_FAR_Z				(4000.0f)										// ãƒ“ãƒ¥ãƒ¼å¹³é¢ã®FarZå€¤
+#define	VALUE_MOVE_CAMERA		(2.0f)											// ã‚«ãƒ¡ãƒ©ã®ç§»å‹•é‡
+#define	VALUE_ROTATE_CAMERA		(D3DX_PI * 0.01f)								// ã‚«ãƒ¡ãƒ©ã®å›žè»¢é‡
+#define	VALUE_ADJUST_DISTANCE	(2.0f)											// è¦–ç‚¹ã¨æ³¨è¦–ç‚¹ã®è·é›¢èª¿æ•´é‡
 
 #define CAM_ROT_X				(D3DXToRadian(22.0f))
 
 //=============================================================================
-// \‘¢‘Ì’è‹`
+// æ§‹é€ ä½“å®šç¾©
 //=============================================================================
 
 //=============================================================================
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CCamera::CCamera()
 {
@@ -48,7 +48,7 @@ CCamera::CCamera()
 }
 
 //=============================================================================
-//ƒfƒXƒgƒ‰ƒNƒ^
+//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CCamera::~CCamera()
 {
@@ -59,18 +59,18 @@ HRESULT CCamera::Init(void)
 {
 	float fVecX,fVecZ;
 
-	// Ž‹“_‰Šú‰»
+	// è¦–ç‚¹åˆæœŸåŒ–
 	m_posV = D3DXVECTOR3( CAM_POS_V_X, CAM_POS_V_Y, CAM_POS_V_Z);
-	// ’Ž‹“_‰Šú‰»
+	// æ³¨è¦–ç‚¹åˆæœŸåŒ–
 	m_posR = D3DXVECTOR3( CAM_POS_R_X, CAM_POS_R_Y, CAM_POS_R_Z);
-	// ã•ûŒüƒxƒNƒgƒ‹‰Šú‰»
+	// ä¸Šæ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«åˆæœŸåŒ–
 	m_vecU = D3DXVECTOR3( 0.0f, 1.0f, 0.0f);
-	// ƒJƒƒ‰Œü‚«i‰ñ“]Špj‚Ì‰Šú‰»
+	// ã‚«ãƒ¡ãƒ©å‘ãï¼ˆå›žè»¢è§’ï¼‰ã®åˆæœŸåŒ–
 	m_rot = D3DXVECTOR3( CAM_ROT_X, 0.0f, 0.0f);
-	// Ž‹“_‚Æ’Ž‹“_‚Ì‹——£‚ð‹‚ß‚é
-	fVecX = m_posV.x - m_posR.x;						// X•ûŒüiŽ‹“_[’Ž‹“_j
-	fVecZ = m_posV.z - m_posR.z;						// Z•ûŒüiŽ‹“_[’Ž‹“_j
-	// Ž‹“_‚Æ’Ž‹“_‚Ì‹——£
+	// è¦–ç‚¹ã¨æ³¨è¦–ç‚¹ã®è·é›¢ã‚’æ±‚ã‚ã‚‹
+	fVecX = m_posV.x - m_posR.x;						// Xæ–¹å‘ï¼ˆè¦–ç‚¹ãƒ¼æ³¨è¦–ç‚¹ï¼‰
+	fVecZ = m_posV.z - m_posR.z;						// Zæ–¹å‘ï¼ˆè¦–ç‚¹ãƒ¼æ³¨è¦–ç‚¹ï¼‰
+	// è¦–ç‚¹ã¨æ³¨è¦–ç‚¹ã®è·é›¢
 	m_fDistance = sqrtf(fVecX * fVecX + fVecZ * fVecZ);
 
 	return S_OK;
@@ -91,22 +91,22 @@ void CCamera::SetCamera(void)
 	LPDIRECT3DDEVICE9 pDevice;
 	pDevice = CManager::GetRenderer()->GetDevice();
 
-	// ƒrƒ…[ƒ}ƒgƒŠƒbƒNƒX‚Ì‰Šú‰»
+	// ãƒ“ãƒ¥ãƒ¼ãƒžãƒˆãƒªãƒƒã‚¯ã‚¹ã®åˆæœŸåŒ–
 	D3DXMatrixIdentity(&m_mtxView);
 	
-	// ƒrƒ…[ƒ}ƒgƒŠƒbƒNƒX‚Ìì¬
+	// ãƒ“ãƒ¥ãƒ¼ãƒžãƒˆãƒªãƒƒã‚¯ã‚¹ã®ä½œæˆ
 	D3DXMatrixLookAtLH( &m_mtxView, &m_posV, &m_posR, &m_vecU);
 	
-	// ƒrƒ…[ƒ}ƒgƒŠƒbƒNƒX‚ÌÝ’è
+	// ãƒ“ãƒ¥ãƒ¼ãƒžãƒˆãƒªãƒƒã‚¯ã‚¹ã®è¨­å®š
 	pDevice->SetTransform( D3DTS_VIEW, &m_mtxView);
 	
-	// ƒvƒƒWƒFƒNƒVƒ‡ƒ“ƒ}ƒgƒŠƒbƒNƒX‚Ì‰Šú‰»
+	// ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³ãƒžãƒˆãƒªãƒƒã‚¯ã‚¹ã®åˆæœŸåŒ–
 	D3DXMatrixIdentity( &m_mtxProjection);
 	
-	// ƒvƒƒWƒFƒNƒVƒ‡ƒ“ƒ}ƒgƒŠƒbƒNƒX‚Ìì¬
+	// ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³ãƒžãƒˆãƒªãƒƒã‚¯ã‚¹ã®ä½œæˆ
 	D3DXMatrixPerspectiveFovLH( &m_mtxProjection, VIEW_ANGLE, VIEW_ASPECT, VIEW_NEAR_Z, VIEW_FAR_Z);
 	
-	// ƒvƒƒWƒFƒNƒVƒ‡ƒ“ƒ}ƒgƒŠƒbƒNƒX‚ÌÝ’è(“§Ž‹•ÏŠ·‚ÌÝ’è)
+	// ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³ãƒžãƒˆãƒªãƒƒã‚¯ã‚¹ã®è¨­å®š(é€è¦–å¤‰æ›ã®è¨­å®š)
 	pDevice->SetTransform( D3DTS_PROJECTION, &m_mtxProjection);
 }
 

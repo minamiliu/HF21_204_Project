@@ -1,14 +1,14 @@
-//============================================
+ï»¿//============================================
 //
-// ƒ^ƒCƒgƒ‹:	 –¢—ˆ‘n‘¢“Wƒ`[ƒ€204
-// ƒvƒƒOƒ‰ƒ€–¼: result.cpp
-// ì¬Ò:		 HAL“Œ‹ƒQ[ƒ€Šw‰È@—«“ìG
-// ì¬“ú:       2016/11/17
+// ã‚¿ã‚¤ãƒˆãƒ«:	 æœªæ¥å‰µé€ å±•ãƒãƒ¼ãƒ 204
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å: result.cpp
+// ä½œæˆè€…:		 HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
+// ä½œæˆæ—¥:       2016/11/17
 //
 //============================================
 
 //============================================
-//ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+//ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //============================================
 #include "main.h"
 #include "result.h"
@@ -18,13 +18,13 @@
 #include "bg.h"
 #include "sound.h"
 //============================================
-// ƒ}ƒNƒ’è‹`
+// ãƒã‚¯ãƒ­å®šç¾©
 //============================================
 #define TEXTURE_BG "data/TEXTURE/resultBG.jpg"
 #define TEXTURE_RANK_C "data/TEXTURE/rankC.png"
 #define TEXTURE_RANK_A "data/TEXTURE/rankA.png"
 #define TEXTURE_RANK_B "data/TEXTURE/rankB.png"
-#define TEXTURE_RANK_S "data/TEXTURE/rankSƒTƒCƒY’²®.png"
+#define TEXTURE_RANK_S "data/TEXTURE/rankSã‚µã‚¤ã‚ºèª¿æ•´.png"
 #define TRASHGAME_SCORE_RANK_S (3000)
 #define TRASHGAME_SCORE_RANK_A (2000)
 #define TRASHGAME_SCORE_RANK_B (1000)
@@ -39,15 +39,15 @@
 #define LIONGAME_SCORE_RANK_C (0)
 
 //============================================
-// Ã“Iƒƒ“ƒo[•Ï”‚Ì‰Šú‰»
+// é™çš„ãƒ¡ãƒ³ãƒãƒ¼å¤‰æ•°ã®åˆæœŸåŒ–
 //============================================
 CScore *CResult::m_pTrashGameScore = NULL;
 CScore *CResult::m_pZebraGameScore = NULL;
 CScore *CResult::m_pLionGameScore = NULL;
-//ƒ‰ƒ“ƒN‚ÌƒeƒNƒXƒ`ƒƒ‚Ìƒ|ƒCƒ“ƒ^‚ğ“ü‚ê‚é•Ï”
+//ãƒ©ãƒ³ã‚¯ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å…¥ã‚Œã‚‹å¤‰æ•°
 CScene2D *CResult::m_pRank[3];
 //============================================
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //============================================
 CResult::CResult() : CManager(MODE_RESULT)
 {
@@ -71,10 +71,10 @@ CResult::~CResult()
 
 HRESULT CResult::Init(void)
 {
-	//ƒIƒuƒWƒFƒNƒg‚Ì¶¬(2Dƒ|ƒŠƒSƒ“)
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç”Ÿæˆ(2Dãƒãƒªã‚´ãƒ³)
 	//CScene2D::Create( D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f), D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f), TEXTURE_BG);
 
-	//”wŒi
+	//èƒŒæ™¯
 	CBg::Create( D3DXVECTOR3(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f), D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f), TEXTURE_BG, 0.001f);
 	
 	m_pTrashGameScore = NULL;
@@ -85,12 +85,12 @@ HRESULT CResult::Init(void)
 	m_pRank[2] = NULL;
 	m_resultCnt = 0;
 
-	//ƒXƒRƒAæ“¾
+	//ã‚¹ã‚³ã‚¢å–å¾—
 	m_nTrashGameScore = CManager::LoadScore(MODE_TRASHGAME);
 	m_nZebraGameScore = CManager::LoadScore(MODE_ZEBRAGAME);
 	m_nLionGameScore = CManager::LoadScore(MODE_LIONGAME);
 
-	//–Ú•W’l
+	//ç›®æ¨™å€¤
 	m_nTargetScore[0] = m_nTrashGameScore;
 	m_nTargetScore[1] = m_nZebraGameScore;
 	m_nTargetScore[2] = m_nLionGameScore;
@@ -112,16 +112,16 @@ void CResult::Uninit()
 
 void CResult::Update()
 {
-	//“ü—Í‚È‚Ç‚ÌXVAŠeƒV[ƒ“‚ÌUpdate‚ÌÅ‰‚ÉŒÄ‚Ño‚·
+	//å…¥åŠ›ãªã©ã®æ›´æ–°ã€å„ã‚·ãƒ¼ãƒ³ã®Updateã®æœ€åˆã«å‘¼ã³å‡ºã™
 	CManager::Update();
 
-	//ŠÔŒo‰ß‚ğ•\‚·‚½‚ß‚ÌƒJƒEƒ“ƒg
+	//æ™‚é–“çµŒéã‚’è¡¨ã™ãŸã‚ã®ã‚«ã‚¦ãƒ³ãƒˆ
 	m_resultCnt++;
 	
-	//ƒXƒRƒA‰ÁZ‚É‚U‚OFAƒ‰ƒ“ƒN•\¦‚É‚S‚OFg‚¤
+	//ã‚¹ã‚³ã‚¢åŠ ç®—ã«ï¼–ï¼Fã€ãƒ©ãƒ³ã‚¯è¡¨ç¤ºã«ï¼”ï¼Fä½¿ã†
 	if(m_resultCnt == 30)
 	{
-		//ƒXƒRƒA¶¬
+		//ã‚¹ã‚³ã‚¢ç”Ÿæˆ
 		m_pTrashGameScore = CScore::Create(D3DXVECTOR3(640, 160.0f, 0.0f), D3DXVECTOR3(600.0f, 100.0f, 0.0f), 6, YELLOW(1.0f));
 	}
 	else if(m_resultCnt == 30 + 60 + 1 + 40)
@@ -133,12 +133,12 @@ void CResult::Update()
 		m_pLionGameScore = CScore::Create(D3DXVECTOR3(640, 560.0f, 0.0f), D3DXVECTOR3(600.0f, 100.0f, 0.0f), 6, BLUE(1.0f));
 	}
 
-	//”’l‰ÁZ(ˆê”Ôã)
+	//æ•°å€¤åŠ ç®—(ä¸€ç•ªä¸Š)
 	if(m_pTrashGameScore != NULL && m_nTrashGameScore != 0)
 	{
 		if( m_nTrashGameScore > 0 )
 		{
-			//60F‚Å–Ú•W’l‚É“’B‚·‚é‚æ‚¤‚ÉƒXƒRƒA‰ÁZ
+			//60Fã§ç›®æ¨™å€¤ã«åˆ°é”ã™ã‚‹ã‚ˆã†ã«ã‚¹ã‚³ã‚¢åŠ ç®—
 			m_pTrashGameScore->AddScore(m_nTargetScore[0]/60);
 			m_nTrashGameScore-=m_nTargetScore[0]/60;
 			m_nCntCoin++;
@@ -150,7 +150,7 @@ void CResult::Update()
 		}
 		else if(m_nTrashGameScore < 0 && m_nTrashGameScore > -10000)
 		{
-			//ƒXƒRƒA’²®
+			//ã‚¹ã‚³ã‚¢èª¿æ•´
 			m_pTrashGameScore->SetScore(m_nTargetScore[0]);
 			m_nTrashGameScore = 0;
 		}
@@ -161,22 +161,22 @@ void CResult::Update()
 	}
 	else if(m_pTrashGameScore != NULL && m_nTrashGameScore == 0)
 	{
-		//ƒ‰ƒ“ƒN•\¦
+		//ãƒ©ãƒ³ã‚¯è¡¨ç¤º
 		if(m_nTargetScore[0] >= TRASHGAME_SCORE_RANK_S)
-		{//ƒ‰ƒ“ƒNS
+		{//ãƒ©ãƒ³ã‚¯S
 			m_pRank[0] = CScene2D::Create(D3DXVECTOR3(1100, 160.0f, 0.0f),D3DXVECTOR3(270.0f, 270.0f, 0.0f),TEXTURE_RANK_S);
 			m_pRank[0]->SetColor(YELLOW(1.0f));
 		}
 		else if(m_nTargetScore[0] >= TRASHGAME_SCORE_RANK_A && m_nTargetScore[0] < TRASHGAME_SCORE_RANK_S)
-		{//ƒ‰ƒ“ƒNA
+		{//ãƒ©ãƒ³ã‚¯A
 			m_pRank[0] = CScene2D::Create(D3DXVECTOR3(1100, 160.0f, 0.0f),D3DXVECTOR3(380.0f, 380.0f, 0.0f),TEXTURE_RANK_A);
 		}
 		else if(m_nTargetScore[0] >= TRASHGAME_SCORE_RANK_B && m_nTargetScore[0] < TRASHGAME_SCORE_RANK_A)
-		{//ƒ‰ƒ“ƒNB
+		{//ãƒ©ãƒ³ã‚¯B
 			m_pRank[0] = CScene2D::Create(D3DXVECTOR3(1100, 160.0f, 0.0f),D3DXVECTOR3(380.0f, 380.0f, 0.0f),TEXTURE_RANK_B);
 		}
 		else if(m_nTargetScore[0] >= TRASHGAME_SCORE_RANK_C && m_nTargetScore[0] < TRASHGAME_SCORE_RANK_B)
-		{//ƒ‰ƒ“ƒNC
+		{//ãƒ©ãƒ³ã‚¯C
 			m_pRank[0] = CScene2D::Create(D3DXVECTOR3(1100, 180.0f, 0.0f),D3DXVECTOR3(380.0f, 380.0f, 0.0f),TEXTURE_RANK_C);
 		}
 
@@ -185,12 +185,12 @@ void CResult::Update()
 
 		m_nTrashGameScore -= 100000;
 	}
-	//ƒXƒRƒA‰ÁZi2‚Â–Új
+	//ã‚¹ã‚³ã‚¢åŠ ç®—ï¼ˆ2ã¤ç›®ï¼‰
 	if(m_pZebraGameScore != NULL && m_nZebraGameScore != 0)
 	{
 		if( m_nZebraGameScore > 0 )
 		{
-			//60F‚Å–Ú•W’l‚É“’B‚·‚é‚æ‚¤‚ÉƒXƒRƒA‰ÁZ
+			//60Fã§ç›®æ¨™å€¤ã«åˆ°é”ã™ã‚‹ã‚ˆã†ã«ã‚¹ã‚³ã‚¢åŠ ç®—
 			m_pZebraGameScore->AddScore(m_nTargetScore[1]/60);
 			m_nZebraGameScore-=m_nTargetScore[1]/60;
 			m_nCntCoin++;
@@ -201,7 +201,7 @@ void CResult::Update()
 			}
 		}
 		else if(m_nZebraGameScore < 0 && m_nZebraGameScore > -10000)
-		{//ƒXƒRƒA’²®
+		{//ã‚¹ã‚³ã‚¢èª¿æ•´
 			m_pZebraGameScore->SetScore(m_nTargetScore[1]);
 			m_nZebraGameScore = 0;
 		}
@@ -212,22 +212,22 @@ void CResult::Update()
 	}
 	else if(m_pZebraGameScore != NULL && m_nZebraGameScore == 0)
 	{
-		//ƒ‰ƒ“ƒN•\¦
+		//ãƒ©ãƒ³ã‚¯è¡¨ç¤º
 		if(m_nTargetScore[1] >= ZEBRAGAME_SCORE_RANK_S)
-		{//ƒ‰ƒ“ƒNS
+		{//ãƒ©ãƒ³ã‚¯S
 			m_pRank[1] = CScene2D::Create(D3DXVECTOR3(1100, 360.0f, 0.0f),D3DXVECTOR3(270.0f, 270.0f, 0.0f),TEXTURE_RANK_S);
 			m_pRank[1]->SetColor(YELLOW(1.0f));
 		}
 		else if(m_nTargetScore[1] >= ZEBRAGAME_SCORE_RANK_A && m_nTargetScore[1] < ZEBRAGAME_SCORE_RANK_S)
-		{//ƒ‰ƒ“ƒNA
+		{//ãƒ©ãƒ³ã‚¯A
 			m_pRank[1] = CScene2D::Create(D3DXVECTOR3(1100, 380.0f, 0.0f),D3DXVECTOR3(380.0f, 380.0f, 0.0f),TEXTURE_RANK_A);
 		}
 		else if(m_nTargetScore[1] >= ZEBRAGAME_SCORE_RANK_B && m_nTargetScore[1] < ZEBRAGAME_SCORE_RANK_A)
-		{//ƒ‰ƒ“ƒNB
+		{//ãƒ©ãƒ³ã‚¯B
 			m_pRank[1] = CScene2D::Create(D3DXVECTOR3(1100, 380.0f, 0.0f),D3DXVECTOR3(380.0f, 380.0f, 0.0f),TEXTURE_RANK_B);
 		}
 		else if(m_nTargetScore[1] >= ZEBRAGAME_SCORE_RANK_C && m_nTargetScore[1] < ZEBRAGAME_SCORE_RANK_B)
-		{//ƒ‰ƒ“ƒNC
+		{//ãƒ©ãƒ³ã‚¯C
 			m_pRank[1] = CScene2D::Create(D3DXVECTOR3(1100, 380.0f, 0.0f),D3DXVECTOR3(380.0f, 380.0f, 0.0f),TEXTURE_RANK_C);
 		}
 
@@ -236,7 +236,7 @@ void CResult::Update()
 
 		m_nZebraGameScore -= 100000;
 	}
-	//ƒXƒRƒA‰ÁZi3‚Â–Új
+	//ã‚¹ã‚³ã‚¢åŠ ç®—ï¼ˆ3ã¤ç›®ï¼‰
 	if(m_pLionGameScore != NULL && m_nLionGameScore != 0)
 	{
 		if( m_nLionGameScore > 0 )
@@ -251,7 +251,7 @@ void CResult::Update()
 			}
 		}
 		else if(m_nLionGameScore < 0 && m_nLionGameScore > -10000)
-		{//ƒXƒRƒA’²®
+		{//ã‚¹ã‚³ã‚¢èª¿æ•´
 			m_pLionGameScore->SetScore(m_nTargetScore[2]);
 			m_nLionGameScore = 0;
 		}
@@ -262,22 +262,22 @@ void CResult::Update()
 	}
 	else if(m_pLionGameScore != NULL && m_nLionGameScore == 0)
 	{
-		//ƒ‰ƒ“ƒN•\¦
+		//ãƒ©ãƒ³ã‚¯è¡¨ç¤º
 		if(m_nTargetScore[2] >= LIONGAME_SCORE_RANK_S)
-		{//ƒ‰ƒ“ƒNS
+		{//ãƒ©ãƒ³ã‚¯S
 			m_pRank[2] = CScene2D::Create(D3DXVECTOR3(1100, 560.0f, 0.0f),D3DXVECTOR3(270.0f, 270.0f, 0.0f),TEXTURE_RANK_S);
 			m_pRank[2]->SetColor(YELLOW(1.0f));
 		}
 		else if(m_nTargetScore[2] >= ZEBRAGAME_SCORE_RANK_A && m_nTargetScore[2] < LIONGAME_SCORE_RANK_S)
-		{//ƒ‰ƒ“ƒNA
+		{//ãƒ©ãƒ³ã‚¯A
 			m_pRank[2] = CScene2D::Create(D3DXVECTOR3(1100, 580.0f, 0.0f),D3DXVECTOR3(380.0f, 380.0f, 0.0f),TEXTURE_RANK_A);
 		}
 		else if(m_nTargetScore[2] >= ZEBRAGAME_SCORE_RANK_B && m_nTargetScore[2] < LIONGAME_SCORE_RANK_A)
-		{//ƒ‰ƒ“ƒNB
+		{//ãƒ©ãƒ³ã‚¯B
 			m_pRank[2] = CScene2D::Create(D3DXVECTOR3(1100, 580.0f, 0.0f),D3DXVECTOR3(380.0f, 380.0f, 0.0f),TEXTURE_RANK_B);
 		}
 		else if(m_nTargetScore[2] >= ZEBRAGAME_SCORE_RANK_C && m_nTargetScore[2] < LIONGAME_SCORE_RANK_B)
-		{//ƒ‰ƒ“ƒNC
+		{//ãƒ©ãƒ³ã‚¯C
 			m_pRank[2] = CScene2D::Create(D3DXVECTOR3(1100, 580.0f, 0.0f),D3DXVECTOR3(380.0f, 380.0f, 0.0f),TEXTURE_RANK_C);
 		}
 
@@ -286,7 +286,7 @@ void CResult::Update()
 
 		m_nLionGameScore -= 100000;
 	}
-	//ƒ‰ƒ“ƒN•\¦iƒTƒCƒY•ÏXj
+	//ãƒ©ãƒ³ã‚¯è¡¨ç¤ºï¼ˆã‚µã‚¤ã‚ºå¤‰æ›´ï¼‰
 	if(m_pRank[0] != NULL )
 	{
 		if(m_nTargetScore[0] >= TRASHGAME_SCORE_RANK_S && m_pRank[0]->GetSize().x > 150)
@@ -323,7 +323,7 @@ void CResult::Update()
 		}
 	}
 
-	//ƒV[ƒ“ƒXƒLƒbƒv	
+	//ã‚·ãƒ¼ãƒ³ã‚¹ã‚­ãƒƒãƒ—	
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
 	CInputMouse *pInputMouse = CManager::GetInputMouse();
 	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN) || pInputMouse->GetMouseLeftTrigger())
@@ -331,7 +331,7 @@ void CResult::Update()
 		SetNextScene( MODE_TITLE);
 	}
 
-	//ƒV[ƒ“‚ªØ‚è‘Ö‚¦‚é‚Æ‚±‚ëAŠeƒV[ƒ“‚ÌUpdate‚ÌÅŒã‚É’u‚¢‚Æ‚­
+	//ã‚·ãƒ¼ãƒ³ãŒåˆ‡ã‚Šæ›¿ãˆã‚‹ã¨ã“ã‚ã€å„ã‚·ãƒ¼ãƒ³ã®Updateã®æœ€å¾Œã«ç½®ã„ã¨ã
 	CManager::SceneChange();
 }
 void CResult::Draw()

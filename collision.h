@@ -1,9 +1,9 @@
-//============================================
+ï»¿//============================================
 //
-// ƒ^ƒCƒgƒ‹:	 –¢—ˆ‘n‘¢“Wƒ`[ƒ€204
-// ƒvƒƒOƒ‰ƒ€–¼: collison.h
-// ì¬ŽÒ:		 HAL“Œ‹žƒQ[ƒ€Šw‰È@—«“ìG
-// ì¬“ú:       2016/12/02
+// ã‚¿ã‚¤ãƒˆãƒ«:	 æœªæ¥å‰µé€ å±•ãƒãƒ¼ãƒ 204
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å: collison.h
+// ä½œæˆè€…:		 HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
+// ä½œæˆæ—¥:       2016/12/02
 //
 //============================================
 
@@ -11,12 +11,12 @@
 #define _COLLISION_H_
 
 //============================================
-//ƒ}ƒNƒ’è‹`
+//ãƒžã‚¯ãƒ­å®šç¾©
 //============================================
 
 
 //============================================
-//\‘¢‘Ì’è‹`
+//æ§‹é€ ä½“å®šç¾©
 //============================================
 
 class CCollision
@@ -25,37 +25,37 @@ public:
 	CCollision();
 	virtual ~CCollision();
 
-	// ƒ|ƒŠƒSƒ“‚Æü•ª‚Æ‚Ì“–‚½‚è”»’è
+	// ãƒãƒªã‚´ãƒ³ã¨ç·šåˆ†ã¨ã®å½“ãŸã‚Šåˆ¤å®š
 	static bool HitCheck(D3DXVECTOR3 p0, D3DXVECTOR3 p1, D3DXVECTOR3 p2, D3DXVECTOR3 pos0, D3DXVECTOR3 pos1, D3DXVECTOR3 *hitPos);
 
-	// •Ç‚¸‚èƒxƒNƒgƒ‹
+	// å£ãšã‚Šãƒ™ã‚¯ãƒˆãƒ«
 	static D3DXVECTOR3* GetWallScratchVector(D3DXVECTOR3 *out, D3DXVECTOR3 &front, D3DXVECTOR3 &normal);
 
-	// ŠÛ‚Ì“–‚½‚è”»’è
+	// ä¸¸ã®å½“ãŸã‚Šåˆ¤å®š
 	static bool HitCheckBall( D3DXVECTOR3 pos1, float radius1, D3DXVECTOR3 pos2, float radius2);
 
-	// •½–Ê‚Ì‰~‚Ì“–‚½‚è”»’è
+	// å¹³é¢ã®å††ã®å½“ãŸã‚Šåˆ¤å®š
 	static bool HitCheckCircleXZ( D3DXVECTOR3 pos1, float radius1, D3DXVECTOR3 pos2, float radius2);
 
-	// ‚Q“_‚ÌŒü‚«ƒxƒNƒgƒ‹‚ðŽæ“¾
+	// ï¼’ç‚¹ã®å‘ããƒ™ã‚¯ãƒˆãƒ«ã‚’å–å¾—
 	static D3DXVECTOR3 GetRotationAngle( D3DXVECTOR3 myPos, D3DXVECTOR3 target, D3DXVECTOR3 myRot);
 
-	// Ž‹–ì“à‚Ì”»’è
+	// è¦–é‡Žå†…ã®åˆ¤å®š
 	static bool HitCheckViewArea( D3DXVECTOR3 myPos, D3DXVECTOR3 tarPos, D3DXVECTOR3 myRot, float myView);
 
-	// ‚Q“_‹——£‚ðŽæ“¾
+	// ï¼’ç‚¹è·é›¢ã‚’å–å¾—
 	static float GetDistance( D3DXVECTOR3 pos1, D3DXVECTOR3 pos2);
 
-	//2DƒoƒEƒ“ƒhƒ{ƒbƒNƒX‚Ì“–‚½‚è”»’è
+	//2Dãƒã‚¦ãƒ³ãƒ‰ãƒœãƒƒã‚¯ã‚¹ã®å½“ãŸã‚Šåˆ¤å®š
 	static bool HitCheck2D( D3DXVECTOR3 pos1,  D3DXVECTOR3 size1, D3DXVECTOR3 pos2, D3DXVECTOR3 size2);
 
-	//2DƒXƒtƒBƒA ‚Ì“–‚½‚è”»’è
+	//2Dã‚¹ãƒ•ã‚£ã‚¢ ã®å½“ãŸã‚Šåˆ¤å®š
 	static bool HitCheck2D( D3DXVECTOR3 pos1,  float radius1, D3DXVECTOR3 pos2, float radius2);
 
-	// “àÏ
+	// å†…ç©
 	static float DotProduct( D3DXVECTOR3 vl, D3DXVECTOR3 vr);
 
-	// ŠOÏ
+	// å¤–ç©
 	static D3DXVECTOR3 CrossProduct( D3DXVECTOR3 vl, D3DXVECTOR3 vr );
 
 private:

@@ -1,14 +1,14 @@
-//============================================
+ï»¿//============================================
 //
-// ƒ^ƒCƒgƒ‹:	 –¢—ˆ‘n‘¢“Wƒ`[ƒ€204
-// ƒvƒƒOƒ‰ƒ€–¼: playerX.cpp
-// ì¬Ò:		 HAL“Œ‹ƒQ[ƒ€Šw‰È@—«“ìG
-// ì¬“ú:       2016/11/15
+// ã‚¿ã‚¤ãƒˆãƒ«:	 æœªæ¥å‰µé€ å±•ãƒãƒ¼ãƒ 204
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å: playerX.cpp
+// ä½œæˆè€…:		 HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
+// ä½œæˆæ—¥:       2016/11/15
 //
 //============================================
 
 //============================================
-//ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+//ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //============================================
 #include "main.h"
 #include "cubeX.h"
@@ -16,27 +16,27 @@
 #include "renderer.h"
 
 //============================================
-// ƒ}ƒNƒ’è‹`
+// ãƒã‚¯ãƒ­å®šç¾©
 //============================================
 #define MODEL_FILENAME_1X1 "data/MODEL/cashier.x"
 #define MODEL_FILENAME_1X2 "data/MODEL/shelf200.x"
 #define MODEL_FILENAME_1X4 "data/MODEL/shelf400.x"
 
 //=============================================================================
-// \‘¢‘Ì’è‹`
+// æ§‹é€ ä½“å®šç¾©
 //=============================================================================
 
 
 //============================================
-// Ã“Iƒƒ“ƒo[•Ï”‚Ì‰Šú‰»
+// é™çš„ãƒ¡ãƒ³ãƒãƒ¼å¤‰æ•°ã®åˆæœŸåŒ–
 //============================================
-LPDIRECT3DTEXTURE9	CCubeX::m_pTexture		[TYPE_MAX] = {};		// ƒeƒNƒXƒ`ƒƒ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-LPD3DXMESH			CCubeX::m_pD3DXMesh		[TYPE_MAX] = {};		// ƒƒbƒVƒ…î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-LPD3DXBUFFER		CCubeX::m_pD3DXBuffMat	[TYPE_MAX] = {};		// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-DWORD				CCubeX::m_nNumMat		[TYPE_MAX] = {};		// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ì”
+LPDIRECT3DTEXTURE9	CCubeX::m_pTexture		[TYPE_MAX] = {};		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+LPD3DXMESH			CCubeX::m_pD3DXMesh		[TYPE_MAX] = {};		// ãƒ¡ãƒƒã‚·ãƒ¥æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+LPD3DXBUFFER		CCubeX::m_pD3DXBuffMat	[TYPE_MAX] = {};		// ãƒãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+DWORD				CCubeX::m_nNumMat		[TYPE_MAX] = {};		// ãƒãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã®æ•°
 
 //=============================================================================
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CCubeX::CCubeX()
 {
@@ -44,7 +44,7 @@ CCubeX::CCubeX()
 }
 
 //=============================================================================
-//ƒfƒXƒgƒ‰ƒNƒ^
+//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CCubeX::~CCubeX()
 {
@@ -60,7 +60,7 @@ HRESULT CCubeX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, D3DXVECT
 	m_sideLen = sideLen;
 	m_type = type;
 
-	//scene‚É“o˜^
+	//sceneã«ç™»éŒ²
 	SetObjType(OBJTYPE_CUBE);
 	
 	switch( type)
@@ -114,7 +114,7 @@ CCubeX *CCubeX::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 sideLen, TY
 	pCube = new CCubeX;
 	pCube->Init(pos, rot, D3DXVECTOR3( 1.0f, 1.0f, 1.0f), sideLen, type);
 
-	//Xfile‚ÌŠ„‚è“–‚Ä
+	//Xfileã®å‰²ã‚Šå½“ã¦
 	pCube->BindXfile( m_pTexture[type], m_pD3DXMesh[type], m_pD3DXBuffMat[type], m_nNumMat[type]);
 
 	return pCube;
@@ -151,7 +151,7 @@ D3DXVECTOR3 CCubeX::GetSideMax(void)
 //=============================================================================
 float CCubeX::GetDistanceBoxPoint(D3DXVECTOR3 point)
 {
-	float distance = 0.0f;   // ’·‚³‚Ì‚×‚«æ‚Ì’l‚ğŠi”[
+	float distance = 0.0f;   // é•·ã•ã®ã¹ãä¹—ã®å€¤ã‚’æ ¼ç´
 
 	D3DXVECTOR3 sideMin = GetSideMin();
 	D3DXVECTOR3 sideMax = GetSideMax();
@@ -182,7 +182,7 @@ float CCubeX::GetDistanceBoxPoint(D3DXVECTOR3 point)
 			break;
 		}
 
-		//‹——£‚ğŒvZ
+		//è·é›¢ã‚’è¨ˆç®—
 		if( tpoint < min)
 		{
 			distance += (tpoint - min) * (tpoint - min);
@@ -238,16 +238,16 @@ HRESULT CCubeX::Load(void)
 			m_nNumMat[cntType] == 0
 			)
 		{
-			// Xƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
+			// Xãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
 			if(FAILED(D3DXLoadMeshFromX(
-				strFileName,			// “Ç‚İ‚Şƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹–¼(Xƒtƒ@ƒCƒ‹)
-				D3DXMESH_SYSTEMMEM,		// ƒƒbƒVƒ…‚Ìì¬ƒIƒvƒVƒ‡ƒ“‚ğw’è
-				pDevice,				// IDirect3DDevice9ƒCƒ“ƒ^[ƒtƒFƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-				NULL,					// —×Ú«ƒf[ƒ^‚ğŠÜ‚Şƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-				&m_pD3DXBuffMat[cntType],	// ƒ}ƒeƒŠƒAƒ‹ƒf[ƒ^‚ğŠÜ‚Şƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-				NULL,					// ƒGƒtƒFƒNƒgƒCƒ“ƒXƒ^ƒ“ƒX‚Ì”z—ñ‚ğŠÜ‚Şƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-				&m_nNumMat[cntType],	// D3DXMATERIAL\‘¢‘Ì‚Ì”
-				&m_pD3DXMesh[cntType]	// ID3DXMeshƒCƒ“ƒ^[ƒtƒFƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ÌƒAƒhƒŒƒX
+				strFileName,			// èª­ã¿è¾¼ã‚€ãƒ¢ãƒ‡ãƒ«ãƒ•ã‚¡ã‚¤ãƒ«å(Xãƒ•ã‚¡ã‚¤ãƒ«)
+				D3DXMESH_SYSTEMMEM,		// ãƒ¡ãƒƒã‚·ãƒ¥ã®ä½œæˆã‚ªãƒ—ã‚·ãƒ§ãƒ³ã‚’æŒ‡å®š
+				pDevice,				// IDirect3DDevice9ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+				NULL,					// éš£æ¥æ€§ãƒ‡ãƒ¼ã‚¿ã‚’å«ã‚€ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+				&m_pD3DXBuffMat[cntType],	// ãƒãƒ†ãƒªã‚¢ãƒ«ãƒ‡ãƒ¼ã‚¿ã‚’å«ã‚€ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+				NULL,					// ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®é…åˆ—ã‚’å«ã‚€ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+				&m_nNumMat[cntType],	// D3DXMATERIALæ§‹é€ ä½“ã®æ•°
+				&m_pD3DXMesh[cntType]	// ID3DXMeshã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã®ã‚¢ãƒ‰ãƒ¬ã‚¹
 				)))
 			{
 				return E_FAIL;
@@ -266,19 +266,19 @@ void CCubeX::Unload(void)
 {
 	for(int cntType = 0; cntType < TYPE_MAX; cntType++)
 	{
-		// ƒeƒNƒXƒ`ƒƒ‚ÌŠJ•ú
+		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®é–‹æ”¾
 		if(m_pTexture[cntType] != NULL)
 		{
 			m_pTexture[cntType]->Release();
 			m_pTexture[cntType] = NULL;
 		}
-		// ƒƒbƒVƒ…‚ÌŠJ•ú
+		// ãƒ¡ãƒƒã‚·ãƒ¥ã®é–‹æ”¾
 		if(m_pD3DXMesh[cntType] != NULL)
 		{
 			m_pD3DXMesh[cntType]->Release();
 			m_pD3DXMesh[cntType] = NULL;
 		}
-		// ƒ}ƒeƒŠƒAƒ‹‚ÌŠJ•ú
+		// ãƒãƒ†ãƒªã‚¢ãƒ«ã®é–‹æ”¾
 		if(m_pD3DXBuffMat != NULL)
 		{
 			m_pD3DXBuffMat[cntType]->Release();

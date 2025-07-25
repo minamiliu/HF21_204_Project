@@ -1,9 +1,9 @@
-//============================================
+ï»¿//============================================
 //
-// ƒ^ƒCƒgƒ‹:	 –¢—ˆ‘n‘¢“Wƒ`[ƒ€204
-// ƒvƒƒOƒ‰ƒ€–¼: partX.h
-// ì¬ŽÒ:		 HAL“Œ‹žƒQ[ƒ€Šw‰È@—«“ìG
-// ì¬“ú:       2017/01/04
+// ã‚¿ã‚¤ãƒˆãƒ«:	 æœªæ¥å‰µé€ å±•ãƒãƒ¼ãƒ 204
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å: partX.h
+// ä½œæˆè€…:		 HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
+// ä½œæˆæ—¥:       2017/01/04
 //
 //============================================
 
@@ -11,15 +11,15 @@
 #define _PARTX_H_
 
 //============================================
-//ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+//ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //============================================
 
 //============================================
-//ƒ}ƒNƒ’è‹`
+//ãƒžã‚¯ãƒ­å®šç¾©
 //============================================
 
 //============================================
-//\‘¢‘Ì’è‹`
+//æ§‹é€ ä½“å®šç¾©
 //============================================
 
 class CPartX
@@ -37,13 +37,13 @@ public:
 	static CPartX *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl);
 	HRESULT LoadXfile(LPCSTR strFileName);
 	
-	void BindXfile( LPDIRECT3DTEXTURE9	pTexture,		// ƒeƒNƒXƒ`ƒƒ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-					LPD3DXMESH			pD3DXMesh,		// ƒƒbƒVƒ…î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-					LPD3DXBUFFER		pD3DXBuffMat,	// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-					DWORD				nNumMat);		// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ì”
+	void BindXfile( LPDIRECT3DTEXTURE9	pTexture,		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+					LPD3DXMESH			pD3DXMesh,		// ãƒ¡ãƒƒã‚·ãƒ¥æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+					LPD3DXBUFFER		pD3DXBuffMat,	// ãƒžãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+					DWORD				nNumMat);		// ãƒžãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã®æ•°
 
 
-	//Šî–{î•ñ‚ÌÝ’èAŽæ“¾
+	//åŸºæœ¬æƒ…å ±ã®è¨­å®šã€å–å¾—
 	D3DXVECTOR3 GetPosition(void);
 	D3DXVECTOR3 GetSize(void);
 	D3DXVECTOR3 GetRot(void);
@@ -53,17 +53,17 @@ public:
 
 private:
 
-	//•Ï”
-	LPDIRECT3DTEXTURE9	m_pTexture;		// ƒeƒNƒXƒ`ƒƒ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	LPD3DXMESH  m_pD3DXMesh;			// ƒƒbƒVƒ…î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	LPD3DXBUFFER  m_pD3DXBuffMat;		// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	DWORD	m_nNumMat;					// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ì”
+	//å¤‰æ•°
+	LPDIRECT3DTEXTURE9	m_pTexture;		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	LPD3DXMESH  m_pD3DXMesh;			// ãƒ¡ãƒƒã‚·ãƒ¥æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	LPD3DXBUFFER  m_pD3DXBuffMat;		// ãƒžãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	DWORD	m_nNumMat;					// ãƒžãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã®æ•°
 
-	D3DXVECTOR3 m_pos;					// ƒ‚ƒfƒ‹‚ÌˆÊ’u
-	D3DXVECTOR3 m_rot;					// ƒ‚ƒfƒ‹‚ÌŒü‚«(‰ñ“])
-	D3DXVECTOR3 m_scl;					// ƒ‚ƒfƒ‹‚Ì‘å‚«‚³(ƒXƒP[ƒ‹)
+	D3DXVECTOR3 m_pos;					// ãƒ¢ãƒ‡ãƒ«ã®ä½ç½®
+	D3DXVECTOR3 m_rot;					// ãƒ¢ãƒ‡ãƒ«ã®å‘ã(å›žè»¢)
+	D3DXVECTOR3 m_scl;					// ãƒ¢ãƒ‡ãƒ«ã®å¤§ãã•(ã‚¹ã‚±ãƒ¼ãƒ«)
 
-	D3DXMATRIX m_mtxWorld;				// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX
+	D3DXMATRIX m_mtxWorld;				// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒžãƒˆãƒªãƒƒã‚¯ã‚¹
 
 	D3DXVECTOR3 m_size;
 	bool m_bLoadXfile;

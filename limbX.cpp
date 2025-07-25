@@ -1,14 +1,14 @@
-//============================================
+﻿//============================================
 //
-// �^�C�g��:	 �����n���W�`�[��204
-// �v���O������: limbX.cpp
-// �쐬��:		 HAL�����Q�[���w�ȁ@����G
-// �쐬��:       2017/01/16
+// タイトル:	 未来創造展チーム204
+// プログラム名: limbX.cpp
+// 作成者:		 HAL東京ゲーム学科　劉南宏
+// 作成日:       2017/01/16
 //
 //============================================
 
 //============================================
-//�C���N���[�h�t�@�C��
+//インクルードファイル
 //============================================
 #include "main.h"
 #include "limbX.h"
@@ -16,7 +16,7 @@
 #include "manager.h"
 #include "effect3D.h"
 //============================================
-// �}�N����`
+// マクロ定義
 //============================================
 //HUMAN
 #define MODEL_FILENAME_L_HAND	"data/MODEL/mom_L_hand.x"
@@ -31,27 +31,27 @@
 #define MAX_MOTION (2)
 
 //=============================================================================
-// �\���̒�`
+// 構造体定義
 //=============================================================================
 
 //============================================
-// �ÓI�����o�[�ϐ��̏�����
+// 静的メンバー変数の初期化
 //============================================
 CLimbX::MOTION *CLimbX::m_pMotionPara = NULL;
-LPDIRECT3DTEXTURE9	CLimbX::m_pTexture		[TYPE_MAX] = {};		// �e�N�X�`���ւ̃|�C���^
-LPD3DXMESH			CLimbX::m_pD3DXMesh		[TYPE_MAX] = {};		// ���b�V�����ւ̃|�C���^
-LPD3DXBUFFER		CLimbX::m_pD3DXBuffMat	[TYPE_MAX] = {};		// �}�e���A�����ւ̃|�C���^
-DWORD				CLimbX::m_nNumMat		[TYPE_MAX] = {};		// �}�e���A�����̐�
+LPDIRECT3DTEXTURE9	CLimbX::m_pTexture		[TYPE_MAX] = {};		// テクスチャへのポインタ
+LPD3DXMESH			CLimbX::m_pD3DXMesh		[TYPE_MAX] = {};		// メッシュ情報へのポインタ
+LPD3DXBUFFER		CLimbX::m_pD3DXBuffMat	[TYPE_MAX] = {};		// マテリアル情報へのポインタ
+DWORD				CLimbX::m_nNumMat		[TYPE_MAX] = {};		// マテリアル情報の数
 
 //=============================================================================
-//�R���X�g���N�^
+//コンストラクタ
 //=============================================================================
 CLimbX::CLimbX()
 {
 }
 
 //=============================================================================
-//�f�X�g���N�^
+//デストラクタ
 //=============================================================================
 CLimbX::~CLimbX()
 {
@@ -60,11 +60,11 @@ CLimbX::~CLimbX()
 
 
 //=============================================================================
-// �|���S���̏���������
+// ポリゴンの初期化処理
 //=============================================================================
 HRESULT CLimbX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, TYPE type)
 {
-	//���[�V����
+	//モーション
 	m_pMotionPara = new MOTION[MAX_MOTION];
 	
 	m_pMotionPara[0].nFrame = 30;
@@ -73,7 +73,7 @@ HRESULT CLimbX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, TYPE typ
 	m_pMotionPara[1].nFrame = 30;
 	m_pMotionPara[1].rotX = D3DXToRadian(60.0f);
 
-	//TYPE���Ƃ̏�����
+	//TYPEことの初期化
 	LPCSTR strFileName;
 	switch(type)
 	{
@@ -107,7 +107,7 @@ HRESULT CLimbX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, TYPE typ
 		break;
 	}
 
-	//�����ݒ�
+	//初期設定
 	D3DXVECTOR3 tPos = pos + m_posLocal;
 	D3DXVECTOR3 tRot = rot + m_rotLocal;
 	D3DXVECTOR3 tScl = scl;
@@ -137,20 +137,20 @@ void CLimbX::Update(void)
 	//CDebugProc::Print("posZ = %f\n", m_pos.z);
 	//CDebugProc::Print("rotY = %f\n", m_rot.y);
 
-	//���[�J�����W�̍X�V
+	//ローカル座標の更新
 	D3DXVECTOR3 tPos = this->GetPosition();
 	tPos.x +=  m_posLocal.x * sinf(this->GetRot().y + D3DX_PI / 2.0f);
 	tPos.z +=  m_posLocal.x * cosf(this->GetRot().y + D3DX_PI / 2.0f);
 	tPos.y += m_posLocal.y;
 	this->SetPosition( tPos);
 
-	//����
+	//向き
 	D3DXVECTOR3 tRot = this->GetRot();
 	m_rotLocal.x += m_rotXTurn;
 	tRot += m_rotLocal;
 	this->SetRot( tRot);
 
-	//���[�V�����X�V����
+	//モーション更新処理
 	m_nCntFrame++;
 	if( m_nCntFrame >= m_pMotionPara[m_nMotionNow].nFrame)
 	{
@@ -177,14 +177,14 @@ CLimbX *CLimbX::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, TYPE t
 	pSceneX = new CLimbX;
 	pSceneX->Init(pos, rot, scl, type);
 	
-	//X�t�@�C���̊��蓖��
+	//Xファイルの割り当て
 	((CPartX*)pSceneX)->BindXfile( m_pTexture[type], m_pD3DXMesh[type], m_pD3DXBuffMat[type], m_nNumMat[type]);
 
 	return pSceneX;
 }
 
 //=============================================================================
-//XFILE�̃��[�h
+//XFILEのロード
 //=============================================================================
 HRESULT CLimbX::Load(void)
 {
@@ -230,16 +230,16 @@ HRESULT CLimbX::Load(void)
 			m_nNumMat[cntType] == 0
 			)
 		{
-			// X�t�@�C���̓ǂݍ���
+			// Xファイルの読み込み
 			if(FAILED(D3DXLoadMeshFromX(
-				strFileName,			// �ǂݍ��ރ��f���t�@�C����(X�t�@�C��)
-				D3DXMESH_SYSTEMMEM,		// ���b�V���̍쐬�I�v�V�������w��
-				pDevice,				// IDirect3DDevice9�C���^�[�t�F�C�X�ւ̃|�C���^
-				NULL,					// �אڐ��f�[�^���܂ރo�b�t�@�ւ̃|�C���^
-				&m_pD3DXBuffMat[cntType],	// �}�e���A���f�[�^���܂ރo�b�t�@�ւ̃|�C���^
-				NULL,					// �G�t�F�N�g�C���X�^���X�̔z����܂ރo�b�t�@�ւ̃|�C���^
-				&m_nNumMat[cntType],	// D3DXMATERIAL�\���̂̐�
-				&m_pD3DXMesh[cntType]	// ID3DXMesh�C���^�[�t�F�C�X�ւ̃|�C���^�̃A�h���X
+				strFileName,			// 読み込むモデルファイル名(Xファイル)
+				D3DXMESH_SYSTEMMEM,		// メッシュの作成オプションを指定
+				pDevice,				// IDirect3DDevice9インターフェイスへのポインタ
+				NULL,					// 隣接性データを含むバッファへのポインタ
+				&m_pD3DXBuffMat[cntType],	// マテリアルデータを含むバッファへのポインタ
+				NULL,					// エフェクトインスタンスの配列を含むバッファへのポインタ
+				&m_nNumMat[cntType],	// D3DXMATERIAL構造体の数
+				&m_pD3DXMesh[cntType]	// ID3DXMeshインターフェイスへのポインタのアドレス
 				)))
 			{
 				return E_FAIL;
@@ -252,25 +252,25 @@ HRESULT CLimbX::Load(void)
 }
 
 //=============================================================================
-//XFILE�̃A�����[�h
+//XFILEのアンロード
 //=============================================================================
 void CLimbX::Unload(void)
 {
 	for(int cntType = 0; cntType < TYPE_MAX; cntType++)
 	{
-		// �e�N�X�`���̊J��
+		// テクスチャの開放
 		if(m_pTexture[cntType] != NULL)
 		{
 			m_pTexture[cntType]->Release();
 			m_pTexture[cntType] = NULL;
 		}
-		// ���b�V���̊J��
+		// メッシュの開放
 		if(m_pD3DXMesh[cntType] != NULL)
 		{
 			m_pD3DXMesh[cntType]->Release();
 			m_pD3DXMesh[cntType] = NULL;
 		}
-		// �}�e���A���̊J��
+		// マテリアルの開放
 		if(m_pD3DXBuffMat != NULL)
 		{
 			m_pD3DXBuffMat[cntType]->Release();
@@ -280,7 +280,7 @@ void CLimbX::Unload(void)
 
 }
 //=============================================================================
-//XFILE�̊��蓖��
+//XFILEの割り当て
 //=============================================================================
 void CLimbX::BindXfile(TYPE type)
 {

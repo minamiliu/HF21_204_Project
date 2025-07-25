@@ -1,14 +1,14 @@
-//============================================
+ï»¿//============================================
 //
-// ƒ^ƒCƒgƒ‹:	 –¢—ˆ‘n‘¢“Wƒ`[ƒ€204
-// ƒvƒƒOƒ‰ƒ€–¼: title.cpp
-// ì¬ŽÒ:		 HAL“Œ‹žƒQ[ƒ€Šw‰È@—«“ìG
-// ì¬“ú:       2016/11/17
+// ã‚¿ã‚¤ãƒˆãƒ«:	 æœªæ¥å‰µé€ å±•ãƒãƒ¼ãƒ 204
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å: title.cpp
+// ä½œæˆè€…:		 HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
+// ä½œæˆæ—¥:       2016/11/17
 //
 //============================================
 
 //============================================
-//ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+//ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //============================================
 #include "main.h"
 #include "title.h"
@@ -21,18 +21,18 @@
 #include "titleObj.h"
 #include "sound.h"
 //============================================
-// ƒ}ƒNƒ’è‹`
+// ãƒžã‚¯ãƒ­å®šç¾©
 //============================================
-//#define TEXTURE_BG "data/TEXTURE/ƒTƒoƒ“ƒiƒ^ƒCƒgƒ‹—p/”wŒi/titleBg.png"
+//#define TEXTURE_BG "data/TEXTURE/ã‚µãƒãƒ³ãƒŠã‚¿ã‚¤ãƒˆãƒ«ç”¨/èƒŒæ™¯/titleBg.png"
 
 #define LOGO_ROTATE (100)
 //============================================
-// Ã“Iƒƒ“ƒo[•Ï”‚Ì‰Šú‰»
+// é™çš„ãƒ¡ãƒ³ãƒãƒ¼å¤‰æ•°ã®åˆæœŸåŒ–
 //============================================
 
 
 //============================================
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //============================================
 CTitle::CTitle() : CManager(MODE_TITLE)
 {
@@ -47,7 +47,7 @@ CTitle::~CTitle()
 HRESULT CTitle::Init(void)
 {
 
-	//ƒIƒuƒWƒFƒNƒg‚Ì¶¬(2Dƒ|ƒŠƒSƒ“)
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç”Ÿæˆ(2Dãƒãƒªã‚´ãƒ³)
 	//CScene2D::Create( D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f), D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f), TEXTURE_BG);
 
 	//
@@ -55,11 +55,11 @@ HRESULT CTitle::Init(void)
 	//CGorira::Create(D3DXVECTOR3( SCREEN_WIDTH + 300, SCREEN_HEIGHT-230, 0.0f), D3DXVECTOR3(160, 140, 0.0f));
 	//CLion::Create(D3DXVECTOR3( SCREEN_WIDTH + 900, SCREEN_HEIGHT-225, 0.0f), D3DXVECTOR3(230, 220, 0.0f));
 
-	//”wŒi
+	//èƒŒæ™¯
 	CTitleObj::Create(CTitleObj::TITLE_BG,D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f),D3DXVECTOR3(0, 0, 0.0f), D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f));
-	//ƒƒS
+	//ãƒ­ã‚´
 	CTitleObj::Create(CTitleObj::TITLE_LOGO,D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_HEIGHT/4, 0.0f),D3DXVECTOR3(0, 0, 0.0f), D3DXVECTOR3(7.5*LOGO_ROTATE, 1.45*LOGO_ROTATE, 0.0f));
-	//“®•¨‚½‚¿
+	//å‹•ç‰©ãŸã¡
 	CTitleObj::Create(CTitleObj::TITLE_ZEBRA,D3DXVECTOR3( SCREEN_WIDTH + 600, SCREEN_HEIGHT-250, 0.0f),D3DXVECTOR3(0, 0, 0.0f), D3DXVECTOR3(300, 200, 0.0f));
 	CTitleObj::Create(CTitleObj::TITLE_GORIRA,D3DXVECTOR3( SCREEN_WIDTH + 300, SCREEN_HEIGHT-230, 0.0f),D3DXVECTOR3(0, 0, 0.0f), D3DXVECTOR3(160, 140, 0.0f));
 	CTitleObj::Create(CTitleObj::TITLE_LION,D3DXVECTOR3( SCREEN_WIDTH + 900, SCREEN_HEIGHT-225, 0.0f),D3DXVECTOR3(0, 0, 0.0f), D3DXVECTOR3(230, 220, 0.0f));
@@ -85,13 +85,13 @@ void CTitle::Uninit()
 
 void CTitle::Update()
 {
-	//“ü—Í‚È‚Ç‚ÌXVAŠeƒV[ƒ“‚ÌUpdate‚ÌÅ‰‚ÉŒÄ‚Ño‚·
+	//å…¥åŠ›ãªã©ã®æ›´æ–°ã€å„ã‚·ãƒ¼ãƒ³ã®Updateã®æœ€åˆã«å‘¼ã³å‡ºã™
 	CManager::Update();
 
 	//SE
 	CSound *pSound = CManager::GetSound();
 
-	//ƒV[ƒ“ƒXƒLƒbƒv
+	//ã‚·ãƒ¼ãƒ³ã‚¹ã‚­ãƒƒãƒ—
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
 	CInputMouse *pInputMouse = CManager::GetInputMouse();
 	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN) || pInputMouse->GetMouseLeftTrigger())
@@ -100,7 +100,7 @@ void CTitle::Update()
 		pSound->Play(CSound::SOUND_LABEL_SE_LIONSOUND);
 	}
 
-	//ƒV[ƒ“‚ªØ‚è‘Ö‚¦‚é‚Æ‚±‚ëAŠeƒV[ƒ“‚ÌUpdate‚ÌÅŒã‚É’u‚¢‚Æ‚­
+	//ã‚·ãƒ¼ãƒ³ãŒåˆ‡ã‚Šæ›¿ãˆã‚‹ã¨ã“ã‚ã€å„ã‚·ãƒ¼ãƒ³ã®Updateã®æœ€å¾Œã«ç½®ã„ã¨ã
 	CManager::SceneChange();
 }
 void CTitle::Draw()

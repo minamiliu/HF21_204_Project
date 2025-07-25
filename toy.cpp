@@ -1,14 +1,14 @@
-//============================================
+ï»¿//============================================
 //
-// ƒ^ƒCƒgƒ‹:	 –¢—ˆ‘n‘¢“Wƒ`[ƒ€204
-// ƒvƒƒOƒ‰ƒ€–¼: playerX.cpp
-// ì¬Ò:		 HAL“Œ‹ƒQ[ƒ€Šw‰È@—«“ìG
-// ì¬“ú:       2016/11/15
+// ã‚¿ã‚¤ãƒˆãƒ«:	 æœªæ¥å‰µé€ å±•ãƒãƒ¼ãƒ 204
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å: playerX.cpp
+// ä½œæˆè€…:		 HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
+// ä½œæˆæ—¥:       2016/11/15
 //
 //============================================
 
 //============================================
-//ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+//ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //============================================
 #include "main.h"
 #include "toy.h"
@@ -23,35 +23,35 @@
 #include "effectBoom.h"
 #include "sound.h"
 //============================================
-// ƒ}ƒNƒ’è‹`
+// ãƒã‚¯ãƒ­å®šç¾©
 //============================================
 #define MODEL_TOY_BEAR    "data/MODEL/kuma.x"
 #define MODEL_TOY_CAR "data/MODEL/toy_car.x"
 #define MODEL_TOY_ROBOT "data/MODEL/robot.x"
 #define MODEL_TOY_BLOCK "data/MODEL/block.x"
-#define VALUE_ROTATE	(D3DX_PI * 0.1f) 	// ‰ñ“]—Ê
+#define VALUE_ROTATE	(D3DX_PI * 0.1f) 	// å›è»¢é‡
 
 //============================================
-// Ã“Iƒƒ“ƒo•Ï”‚Ì‰Šú‰»
+// é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°ã®åˆæœŸåŒ–
 //============================================
 LPDIRECT3DTEXTURE9	CToy::m_pTexture[] ={};
-LPD3DXMESH			CToy::m_pD3DXMesh[]={};			// ƒƒbƒVƒ…î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-LPD3DXBUFFER		CToy::m_pD3DXBuffMat	[]={};		// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-DWORD				CToy::m_nNumMat		[]={};					// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ì”
+LPD3DXMESH			CToy::m_pD3DXMesh[]={};			// ãƒ¡ãƒƒã‚·ãƒ¥æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+LPD3DXBUFFER		CToy::m_pD3DXBuffMat	[]={};		// ãƒãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+DWORD				CToy::m_nNumMat		[]={};					// ãƒãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã®æ•°
 //HRESULT CToy::LoadXfile(LPCSTR strFileName, int nCnt);
 int CToy::m_nNumber = 0;
 //=============================================================================
-// \‘¢‘Ì’è‹`
+// æ§‹é€ ä½“å®šç¾©
 //=============================================================================
 
 //=============================================================================
-// Ã“Iƒƒ“ƒo•Ï”
+// é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
 //============================================================================
 D3DXVECTOR3 CToy::Toyboxpos = D3DXVECTOR3(0.0f,0.0f,0.0f);
 D3DXVECTOR3 CToy::Bookboxpos = D3DXVECTOR3(0.0f,0.0f,0.0f);
 
 //=============================================================================
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CToy::CToy()
 {
@@ -59,7 +59,7 @@ CToy::CToy()
 }
 
 //=============================================================================
-//ƒfƒXƒgƒ‰ƒNƒ^
+//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CToy::~CToy()
 {
@@ -88,7 +88,7 @@ HRESULT CToy::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float spee
 }
 
 //=============================================================================
-//xƒtƒ@ƒCƒ‹‚Ìİ’è
+//xãƒ•ã‚¡ã‚¤ãƒ«ã®è¨­å®š
 //=============================================================================
 void CToy::BindXfile(int type)	
 {
@@ -99,7 +99,7 @@ void CToy::BindXfile(int type)
 	);
 }
 //=============================================================================
-//XFILE‚Ìƒ[ƒh
+//XFILEã®ãƒ­ãƒ¼ãƒ‰
 //=============================================================================
 HRESULT CToy::Load(void)
 {
@@ -131,16 +131,16 @@ HRESULT CToy::Load(void)
 			m_nNumMat[cntType] == 0
 			)
 		{
-			// Xƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
+			// Xãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
 			if(FAILED(D3DXLoadMeshFromX(
-				strFileName,			// “Ç‚İ‚Şƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹–¼(Xƒtƒ@ƒCƒ‹)
-				D3DXMESH_SYSTEMMEM,		// ƒƒbƒVƒ…‚Ìì¬ƒIƒvƒVƒ‡ƒ“‚ğw’è
-				pDevice,				// IDirect3DDevice9ƒCƒ“ƒ^[ƒtƒFƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-				NULL,					// —×Ú«ƒf[ƒ^‚ğŠÜ‚Şƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-				&m_pD3DXBuffMat[cntType],	// ƒ}ƒeƒŠƒAƒ‹ƒf[ƒ^‚ğŠÜ‚Şƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-				NULL,					// ƒGƒtƒFƒNƒgƒCƒ“ƒXƒ^ƒ“ƒX‚Ì”z—ñ‚ğŠÜ‚Şƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-				&m_nNumMat[cntType],	// D3DXMATERIAL\‘¢‘Ì‚Ì”
-				&m_pD3DXMesh[cntType]	// ID3DXMeshƒCƒ“ƒ^[ƒtƒFƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ÌƒAƒhƒŒƒX
+				strFileName,			// èª­ã¿è¾¼ã‚€ãƒ¢ãƒ‡ãƒ«ãƒ•ã‚¡ã‚¤ãƒ«å(Xãƒ•ã‚¡ã‚¤ãƒ«)
+				D3DXMESH_SYSTEMMEM,		// ãƒ¡ãƒƒã‚·ãƒ¥ã®ä½œæˆã‚ªãƒ—ã‚·ãƒ§ãƒ³ã‚’æŒ‡å®š
+				pDevice,				// IDirect3DDevice9ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+				NULL,					// éš£æ¥æ€§ãƒ‡ãƒ¼ã‚¿ã‚’å«ã‚€ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+				&m_pD3DXBuffMat[cntType],	// ãƒãƒ†ãƒªã‚¢ãƒ«ãƒ‡ãƒ¼ã‚¿ã‚’å«ã‚€ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+				NULL,					// ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®é…åˆ—ã‚’å«ã‚€ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+				&m_nNumMat[cntType],	// D3DXMATERIALæ§‹é€ ä½“ã®æ•°
+				&m_pD3DXMesh[cntType]	// ID3DXMeshã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã®ã‚¢ãƒ‰ãƒ¬ã‚¹
 				)))
 			{
 				return E_FAIL;
@@ -153,7 +153,7 @@ HRESULT CToy::Load(void)
 }
 
 //=============================================================================
-//ƒNƒŠƒbƒN‚³‚ê‚½‚Æ‚«
+//ã‚¯ãƒªãƒƒã‚¯ã•ã‚ŒãŸã¨ã
 //=============================================================================
 void CToy::ChangePicked(bool pick, bool zebra)	
 {
@@ -171,7 +171,7 @@ void CToy::ChangePicked(bool pick, bool zebra)
 	m_bZebra = zebra ;
 	if(m_bPicked == true && m_bZebra == true)
 	{
-		//Œ»İˆÊ’u‚Æ” ‚ÌˆÊ’u‚©‚çA‘¬“x‚ğZo
+		//ç¾åœ¨ä½ç½®ã¨ç®±ã®ä½ç½®ã‹ã‚‰ã€é€Ÿåº¦ã‚’ç®—å‡º
 		m_Move = Toyboxpos-pos;
 		m_Move.y = 500.0f;
 		m_Move = m_Move/100.0f;
@@ -181,7 +181,7 @@ void CToy::ChangePicked(bool pick, bool zebra)
 		pSound->Play(CSound::SOUND_LABEL_SE_KICK);
 	}
 
-	//ƒGƒtƒFƒNƒg
+	//ã‚¨ãƒ•ã‚§ã‚¯ãƒˆ
 	CEffectBoom::Create( pos, D3DXVECTOR3(100, 20, 100), 5);
 }
 //=============================================================================
@@ -200,10 +200,10 @@ void CToy::Update(void)
 	D3DXVECTOR3 pos;
 	pos = CSceneX::GetPosition();
 	
-	CDebugProc::Print("\nƒgƒC‚ÌêŠ.x.y.z:%f,%f,%f",pos.x,pos.y,pos.z);
+	CDebugProc::Print("\nãƒˆã‚¤ã®å ´æ‰€.x.y.z:%f,%f,%f",pos.x,pos.y,pos.z);
 	if(m_bPicked == true && m_bZebra == false)
 	{
-		//ƒJ[ƒ\ƒ‹‚ÌˆÊ’u‚ğæ“¾
+		//ã‚«ãƒ¼ã‚½ãƒ«ã®ä½ç½®ã‚’å–å¾—
 		for(int Cnt=0; Cnt<MAX_SCENE ; Cnt++)
 		{
 			CScene *pScene;
@@ -237,7 +237,7 @@ void CToy::Update(void)
 			}
 		}	
 	}
-	//ƒoƒbƒNƒ‚[ƒh
+	//ãƒãƒƒã‚¯ãƒ¢ãƒ¼ãƒ‰
 	if( m_bZebra == false && m_bBack == true)
 	{
 		m_Move.y -= m_gravity;
@@ -250,7 +250,7 @@ void CToy::Update(void)
 			m_bBack = false;
 		}
 	}
-	//ƒ[ƒuƒ‰ƒ‚[ƒh
+	//ã‚¼ãƒ–ãƒ©ãƒ¢ãƒ¼ãƒ‰
 	if( m_bZebra == true)
 	{
 		m_Move.y -= m_gravity;
@@ -258,7 +258,7 @@ void CToy::Update(void)
 		m_Timecnt ++;
 		CSceneX::SetPosition(pos);
 
-		//ƒGƒtƒFƒNƒg
+		//ã‚¨ãƒ•ã‚§ã‚¯ãƒˆ
 		CEffect3D::Create( pos, D3DXVECTOR2( 20.0f, 20.0f), CEffect3D::TYPE_MARU, GREEN(1.0f), 0.02f);
 
 		if(m_Timecnt == 99)
@@ -268,7 +268,7 @@ void CToy::Update(void)
 			m_Timecnt = 0;
 			CZebraGame::PutObj(true);
 
-			//ƒGƒtƒFƒNƒg
+			//ã‚¨ãƒ•ã‚§ã‚¯ãƒˆ
 			CEffectBoom::Create( pos, D3DXVECTOR3( 200, 200, 200), 5);
 
 			CZebraGame::GetScore()->AddScore(100);
@@ -283,7 +283,7 @@ void CToy::Update(void)
 	}
 	else if(m_bPicked == false && m_bPicked == false)
 	{
-		//“K“–‚ÈêŠ
+		//é©å½“ãªå ´æ‰€
 		if(pos.y>=0.0f)
 		{
 			pos.y -= 3.0f;
@@ -293,7 +293,7 @@ void CToy::Update(void)
 			CSound *pSound = CManager::GetSound();
 			pSound->Play(CSound::SOUND_LABEL_SE_PUT);
 		}
-		//ŠÔˆá‚¢
+		//é–“é•ã„
 		if( pos.y <= 0.0f&&
 			     pos.x > Bookboxpos.x - 120.0f
 			  && pos.x < Bookboxpos.x + 120.0f
@@ -301,7 +301,7 @@ void CToy::Update(void)
 			  && pos.z < Bookboxpos.z + 70.0f 
 			)
 		{
-			//Œ»İˆÊ’u‚Æ” ‚ÌˆÊ’u‚©‚çA‘¬“x‚ğZo
+			//ç¾åœ¨ä½ç½®ã¨ç®±ã®ä½ç½®ã‹ã‚‰ã€é€Ÿåº¦ã‚’ç®—å‡º
 			m_Move = m_oldpos-pos;
 			m_Move.y = 250.0f;
 			m_Move = m_Move/50.0f;
@@ -311,7 +311,7 @@ void CToy::Update(void)
 			CSound *pSound = CManager::GetSound();
 			pSound->Play(CSound::SOUND_LABEL_SE_WRONG);
 		}
-		//³‰ğ
+		//æ­£è§£
 		if( pos.y <= 0.0f&&
 			     pos.x > Toyboxpos.x - 150.0f 
 			  && pos.x < Toyboxpos.x + 150.0f 
@@ -322,7 +322,7 @@ void CToy::Update(void)
 			CZebraGame::GetScore()->AddScore(100);
 			CZebraGame::PutObj(true);
 
-			//ƒGƒtƒFƒNƒg
+			//ã‚¨ãƒ•ã‚§ã‚¯ãƒˆ
 			CEffectBoom::Create( pos, D3DXVECTOR3( 200, 200, 200), 5);
 
 			//SE
@@ -357,7 +357,7 @@ CToy *CToy::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float spee
 }
 
 //=============================================================================
-////” ‚ÌˆÊ’u‚ğæ“¾
+////ç®±ã®ä½ç½®ã‚’å–å¾—
 //=============================================================================
 void CToy::GetBoxpos(void)
 {

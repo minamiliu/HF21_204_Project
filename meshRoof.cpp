@@ -1,14 +1,14 @@
-//============================================
+ï»¿//============================================
 //
-// ƒ^ƒCƒgƒ‹:	 –¢—ˆ‘n‘¢“Wƒ`[ƒ€204
-// ƒvƒƒOƒ‰ƒ€–¼: meshField.cpp
-// ì¬Ò:		 HAL“Œ‹ƒQ[ƒ€Šw‰È@—«“ìG
-// ì¬“ú:       2016/12/15
+// ã‚¿ã‚¤ãƒˆãƒ«:	 æœªæ¥å‰µé€ å±•ãƒãƒ¼ãƒ 204
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å: meshField.cpp
+// ä½œæˆè€…:		 HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
+// ä½œæˆæ—¥:       2016/12/15
 //
 //============================================
 
 //============================================
-//ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+//ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //============================================
 #include "main.h"
 #include "meshRoof.h"
@@ -16,7 +16,7 @@
 #include "manager.h"
 
 //============================================
-// ƒ}ƒNƒ’è‹`
+// ãƒã‚¯ãƒ­å®šç¾©
 //============================================
 
 #define TEXTURE_GREEN "data/TEXTURE/field000.jpg"
@@ -24,12 +24,12 @@
 
 
 //============================================
-// Ã“Iƒƒ“ƒo[•Ï”‚Ì‰Šú‰»
+// é™çš„ãƒ¡ãƒ³ãƒãƒ¼å¤‰æ•°ã®åˆæœŸåŒ–
 //============================================
 LPDIRECT3DTEXTURE9 CMeshRoof::m_pTexture[TYPE_MAX] = {};
 
 //=============================================================================
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CMeshRoof::CMeshRoof()
 {
@@ -37,7 +37,7 @@ CMeshRoof::CMeshRoof()
 }
 
 //=============================================================================
-//ƒfƒXƒgƒ‰ƒNƒ^
+//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CMeshRoof::~CMeshRoof()
 {
@@ -46,7 +46,7 @@ CMeshRoof::~CMeshRoof()
 
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚Ì‰Šú‰»ˆ—
+// ãƒãƒªã‚´ãƒ³ã®åˆæœŸåŒ–å‡¦ç†
 //=============================================================================
 
 HRESULT CMeshRoof::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ)
@@ -77,12 +77,12 @@ void CMeshRoof::Draw(void)
 	LPDIRECT3DDEVICE9 pDevice;
 	pDevice = CManager::GetRenderer()->GetDevice();
 
-	//’¸“_‚Ì•`‰æ‡”Ô‚ğ•Ï‚¦‚é
+	//é ‚ç‚¹ã®æç”»é †ç•ªã‚’å¤‰ãˆã‚‹
 	pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
 
 	CScene3D::Draw();
 
-	//’¸“_‚Ì•`‰æ‡”Ô‚ğ–ß‚·
+	//é ‚ç‚¹ã®æç”»é †ç•ªã‚’æˆ»ã™
 	pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 //=============================================================================
@@ -95,7 +95,7 @@ CMeshRoof *CMeshRoof::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, i
 
 	pMeshField->Init(pos, rot, nNumBlockX, nNumBlockZ, fSizeBlockX, fSizeBlockZ);
 
-	//ƒeƒNƒXƒ`ƒƒ‚ÌŠ„‚è“–‚Ä
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®å‰²ã‚Šå½“ã¦
 	pMeshField->BindTexture( m_pTexture[type]);
 
 	return pMeshField;
@@ -126,7 +126,7 @@ HRESULT CMeshRoof::Load(void)
 			LPDIRECT3DDEVICE9 pDevice;
 			pDevice = CManager::GetRenderer()->GetDevice();
 
-			// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ
+			// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
 			D3DXCreateTextureFromFile( pDevice, strFileName, &m_pTexture[cntType]);
 		}	
 	}
@@ -141,7 +141,7 @@ void CMeshRoof::Unload(void)
 {
 	for(int cntType = 0; cntType < TYPE_MAX; cntType++)
 	{
-		//ƒeƒNƒXƒ`ƒƒ‚Ì”jŠü
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ç ´æ£„
 		if( m_pTexture[cntType] != NULL)
 		{
 			m_pTexture[cntType]->Release();

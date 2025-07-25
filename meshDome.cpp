@@ -1,14 +1,14 @@
-//============================================
+ï»¿//============================================
 //
-// ƒ^ƒCƒgƒ‹:	 –¢—ˆ‘n‘¢“Wƒ`[ƒ€204
-// ƒvƒƒOƒ‰ƒ€–¼: meshDome.cpp
-// ì¬Ò:		 HAL“Œ‹ƒQ[ƒ€Šw‰È@—«“ìG
-// ì¬“ú:       2017/01/12
+// ã‚¿ã‚¤ãƒˆãƒ«:	 æœªæ¥å‰µé€ å±•ãƒãƒ¼ãƒ 204
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å: meshDome.cpp
+// ä½œæˆè€…:		 HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
+// ä½œæˆæ—¥:       2017/01/12
 //
 //============================================
 
 //============================================
-//ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+//ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //============================================
 #include "main.h"
 #include "meshDome.h"
@@ -17,22 +17,22 @@
 #include "manager.h"
 
 //============================================
-// ƒ}ƒNƒ’è‹`
+// ãƒã‚¯ãƒ­å®šç¾©
 //============================================
-#define	TEXTURE_MESHDOME	"data/TEXTURE/pattern02.jpg"	// “Ç‚İ‚ŞƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼
-#define	VALUE_MOVE_DOME		(4.0f)						// ˆÚ“®‘¬“x
-#define	VALUE_ROTATE_DOME	(D3DX_PI * 0.01f)			// ‰ñ“]‘¬“x
+#define	TEXTURE_MESHDOME	"data/TEXTURE/pattern02.jpg"	// èª­ã¿è¾¼ã‚€ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ•ã‚¡ã‚¤ãƒ«å
+#define	VALUE_MOVE_DOME		(4.0f)						// ç§»å‹•é€Ÿåº¦
+#define	VALUE_ROTATE_DOME	(D3DX_PI * 0.01f)			// å›è»¢é€Ÿåº¦
 
-#define	DOME_HEIGHT_RATE	(1.0f)		// ‹óƒh[ƒ€‚Ì‚‚³ŒW”
-#define	TEX_COUNT_LOOP		(8)			// ƒeƒNƒXƒ`ƒƒ‚ÌŒJ‚è•Ô‚µ‰ñ”
+#define	DOME_HEIGHT_RATE	(1.0f)		// ç©ºãƒ‰ãƒ¼ãƒ ã®é«˜ã•ä¿‚æ•°
+#define	TEX_COUNT_LOOP		(8)			// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ç¹°ã‚Šè¿”ã—å›æ•°
 
 //============================================
-// Ã“Iƒƒ“ƒo[•Ï”‚Ì‰Šú‰»
+// é™çš„ãƒ¡ãƒ³ãƒãƒ¼å¤‰æ•°ã®åˆæœŸåŒ–
 //============================================
-LPDIRECT3DTEXTURE9 CMeshDome::m_pTexture = NULL;	// ƒeƒNƒXƒ`ƒƒ‚Ö‚Ìƒ|ƒCƒ“ƒ^
+LPDIRECT3DTEXTURE9 CMeshDome::m_pTexture = NULL;	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¸ã®ãƒã‚¤ãƒ³ã‚¿
 
 //=============================================================================
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CMeshDome::CMeshDome()
 {
@@ -40,7 +40,7 @@ CMeshDome::CMeshDome()
 }
 
 //=============================================================================
-//ƒfƒXƒgƒ‰ƒNƒ^
+//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CMeshDome::~CMeshDome()
 {
@@ -49,79 +49,79 @@ CMeshDome::~CMeshDome()
 
 
 //=============================================================================
-// ƒƒVƒ…ƒ|ƒŠƒSƒ“‚Ì‰Šú‰»ˆ—
+// ãƒ¡ã‚·ãƒ¥ãƒãƒªã‚´ãƒ³ã®åˆæœŸåŒ–å‡¦ç†
 //=============================================================================
 HRESULT CMeshDome::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, float fRadius, int nNumBlockH, int nNumBlockV)
 {
 	LPDIRECT3DDEVICE9 pDevice;
 	pDevice = CManager::GetRenderer()->GetDevice();
 
-	// ˆÊ’uEŒü‚«E”¼ŒaiƒOƒ[ƒoƒ‹•Ï”j‚Ì‰Šúİ’è
+	// ä½ç½®ãƒ»å‘ããƒ»åŠå¾„ï¼ˆã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°ï¼‰ã®åˆæœŸè¨­å®š
 	m_pos = pos;
 	m_rot = rot;
 	m_fRadius = fRadius;
 
-	// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
 	D3DXCreateTextureFromFile( pDevice, TEXTURE_MESHDOME, &m_pTexture);
 
-	// ƒuƒƒbƒN”H/ViƒOƒ[ƒoƒ‹•Ï”j‚Ìİ’è
+	// ãƒ–ãƒ­ãƒƒã‚¯æ•°H/Vï¼ˆã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°ï¼‰ã®è¨­å®š
 	m_nNumBlockH = nNumBlockH;
 	m_nNumBlockV = nNumBlockV;
 
-	// ’¸“_”iƒOƒ[ƒoƒ‹•Ï”j‚Ìİ’è
+	// é ‚ç‚¹æ•°ï¼ˆã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°ï¼‰ã®è¨­å®š
 	m_nNumVertex = (m_nNumBlockH + 1) * (m_nNumBlockV + 1);
 
-	// ƒ|ƒŠƒSƒ“”iƒOƒ[ƒoƒ‹•Ï”j‚Ìİ’è
+	// ãƒãƒªã‚´ãƒ³æ•°ï¼ˆã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°ï¼‰ã®è¨­å®š
 	m_nNumPolygon = ( m_nNumBlockH * (m_nNumBlockV * 2) + (m_nNumBlockV - 1) * 4);
 
-	// ƒCƒ“ƒfƒbƒNƒX”iƒOƒ[ƒoƒ‹•Ï”j‚Ìİ’è
+	// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹æ•°ï¼ˆã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°ï¼‰ã®è¨­å®š
 	m_nNumVertexIndex = (m_nNumBlockH * (m_nNumBlockV * 2) + m_nNumBlockV * 2 + (m_nNumBlockV - 1) * 2);
 
-	// ƒIƒuƒWƒFƒNƒg‚Ì’¸“_ƒoƒbƒtƒ@‚ğ¶¬
-    if(FAILED(pDevice->CreateVertexBuffer(sizeof(VERTEX_3D) * m_nNumVertex,	// ’¸“_ƒf[ƒ^—p‚ÉŠm•Û‚·‚éƒoƒbƒtƒ@ƒTƒCƒY(ƒoƒCƒg’PˆÊ)
-												D3DUSAGE_WRITEONLY,							// ’¸“_ƒoƒbƒtƒ@‚Ìg—p–@@
-												FVF_VERTEX_3D,								// g—p‚·‚é’¸“_ƒtƒH[ƒ}ƒbƒg
-												D3DPOOL_MANAGED,							// ƒŠƒ\[ƒX‚Ìƒoƒbƒtƒ@‚ğ•Û‚·‚éƒƒ‚ƒŠƒNƒ‰ƒX‚ğw’è
-												&m_pVtxBuff,					// ’¸“_ƒoƒbƒtƒ@ƒCƒ“ƒ^[ƒtƒF[ƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-												NULL)))										// NULL‚Éİ’è
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ç”Ÿæˆ
+    if(FAILED(pDevice->CreateVertexBuffer(sizeof(VERTEX_3D) * m_nNumVertex,	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ç”¨ã«ç¢ºä¿ã™ã‚‹ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º(ãƒã‚¤ãƒˆå˜ä½)
+												D3DUSAGE_WRITEONLY,							// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä½¿ç”¨æ³•ã€€
+												FVF_VERTEX_3D,								// ä½¿ç”¨ã™ã‚‹é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
+												D3DPOOL_MANAGED,							// ãƒªã‚½ãƒ¼ã‚¹ã®ãƒãƒƒãƒ•ã‚¡ã‚’ä¿æŒã™ã‚‹ãƒ¡ãƒ¢ãƒªã‚¯ãƒ©ã‚¹ã‚’æŒ‡å®š
+												&m_pVtxBuff,					// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+												NULL)))										// NULLã«è¨­å®š
 	{
         return E_FAIL;
 	}
 
-	// ƒIƒuƒWƒFƒNƒg‚Ì’¸“_ƒoƒbƒtƒ@‚ğ¶¬
-	if(FAILED(pDevice->CreateVertexBuffer(sizeof(VERTEX_3D) * (m_nNumBlockH + 1),		// ’¸“_ƒf[ƒ^—p‚ÉŠm•Û‚·‚éƒoƒbƒtƒ@ƒTƒCƒY(ƒoƒCƒg’PˆÊ)
-												D3DUSAGE_WRITEONLY,						// ’¸“_ƒoƒbƒtƒ@‚Ìg—p–@@
-												FVF_VERTEX_3D,							// g—p‚·‚é’¸“_ƒtƒH[ƒ}ƒbƒg
-												D3DPOOL_MANAGED,						// ƒŠƒ\[ƒX‚Ìƒoƒbƒtƒ@‚ğ•Û‚·‚éƒƒ‚ƒŠƒNƒ‰ƒX‚ğw’è
-												&m_pVtxBuffTop,						// ’¸“_ƒoƒbƒtƒ@ƒCƒ“ƒ^[ƒtƒF[ƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-												NULL)))									// NULL‚Éİ’è
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ç”Ÿæˆ
+	if(FAILED(pDevice->CreateVertexBuffer(sizeof(VERTEX_3D) * (m_nNumBlockH + 1),		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ç”¨ã«ç¢ºä¿ã™ã‚‹ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º(ãƒã‚¤ãƒˆå˜ä½)
+												D3DUSAGE_WRITEONLY,						// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä½¿ç”¨æ³•ã€€
+												FVF_VERTEX_3D,							// ä½¿ç”¨ã™ã‚‹é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
+												D3DPOOL_MANAGED,						// ãƒªã‚½ãƒ¼ã‚¹ã®ãƒãƒƒãƒ•ã‚¡ã‚’ä¿æŒã™ã‚‹ãƒ¡ãƒ¢ãƒªã‚¯ãƒ©ã‚¹ã‚’æŒ‡å®š
+												&m_pVtxBuffTop,						// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+												NULL)))									// NULLã«è¨­å®š
 	{
         return E_FAIL;
 	}
 
-	// ƒIƒuƒWƒFƒNƒg‚ÌƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ğ¶¬
-	if(FAILED(pDevice->CreateIndexBuffer(sizeof(WORD) * m_nNumVertexIndex,	// ’¸“_ƒf[ƒ^—p‚ÉŠm•Û‚·‚éƒoƒbƒtƒ@ƒTƒCƒY(ƒoƒCƒg’PˆÊ)
-												D3DUSAGE_WRITEONLY,					// ’¸“_ƒoƒbƒtƒ@‚Ìg—p–@@
-												D3DFMT_INDEX16,						// g—p‚·‚éƒCƒ“ƒfƒbƒNƒXƒtƒH[ƒ}ƒbƒg
-												D3DPOOL_MANAGED,					// ƒŠƒ\[ƒX‚Ìƒoƒbƒtƒ@‚ğ•Û‚·‚éƒƒ‚ƒŠƒNƒ‰ƒX‚ğw’è
-												&m_pIdxBuff,					// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@ƒCƒ“ƒ^[ƒtƒF[ƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-												NULL)))								// NULL‚Éİ’è
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ç”Ÿæˆ
+	if(FAILED(pDevice->CreateIndexBuffer(sizeof(WORD) * m_nNumVertexIndex,	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ç”¨ã«ç¢ºä¿ã™ã‚‹ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º(ãƒã‚¤ãƒˆå˜ä½)
+												D3DUSAGE_WRITEONLY,					// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä½¿ç”¨æ³•ã€€
+												D3DFMT_INDEX16,						// ä½¿ç”¨ã™ã‚‹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
+												D3DPOOL_MANAGED,					// ãƒªã‚½ãƒ¼ã‚¹ã®ãƒãƒƒãƒ•ã‚¡ã‚’ä¿æŒã™ã‚‹ãƒ¡ãƒ¢ãƒªã‚¯ãƒ©ã‚¹ã‚’æŒ‡å®š
+												&m_pIdxBuff,					// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+												NULL)))								// NULLã«è¨­å®š
 	{
         return E_FAIL;
 	}
 
-	// ƒIƒuƒWƒFƒNƒg‚ÌƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ğ¶¬
-	if(FAILED(pDevice->CreateIndexBuffer(sizeof(WORD) * (m_nNumBlockH + 2),			// ’¸“_ƒf[ƒ^—p‚ÉŠm•Û‚·‚éƒoƒbƒtƒ@ƒTƒCƒY(ƒoƒCƒg’PˆÊ)
-												D3DUSAGE_WRITEONLY,					// ’¸“_ƒoƒbƒtƒ@‚Ìg—p–@@
-												D3DFMT_INDEX16,						// g—p‚·‚éƒCƒ“ƒfƒbƒNƒXƒtƒH[ƒ}ƒbƒg
-												D3DPOOL_MANAGED,					// ƒŠƒ\[ƒX‚Ìƒoƒbƒtƒ@‚ğ•Û‚·‚éƒƒ‚ƒŠƒNƒ‰ƒX‚ğw’è
-												&m_pIdxBuffTop,					// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@ƒCƒ“ƒ^[ƒtƒF[ƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-												NULL)))								// NULL‚Éİ’è
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ç”Ÿæˆ
+	if(FAILED(pDevice->CreateIndexBuffer(sizeof(WORD) * (m_nNumBlockH + 2),			// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ç”¨ã«ç¢ºä¿ã™ã‚‹ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º(ãƒã‚¤ãƒˆå˜ä½)
+												D3DUSAGE_WRITEONLY,					// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä½¿ç”¨æ³•ã€€
+												D3DFMT_INDEX16,						// ä½¿ç”¨ã™ã‚‹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
+												D3DPOOL_MANAGED,					// ãƒªã‚½ãƒ¼ã‚¹ã®ãƒãƒƒãƒ•ã‚¡ã‚’ä¿æŒã™ã‚‹ãƒ¡ãƒ¢ãƒªã‚¯ãƒ©ã‚¹ã‚’æŒ‡å®š
+												&m_pIdxBuffTop,					// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+												NULL)))								// NULLã«è¨­å®š
 	{
         return E_FAIL;
 	}
 
-	{//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ğ–„‚ß‚é
+	{//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 		VERTEX_3D *pVtx;
 		const float angleH = (D3DX_PI * 2.0f) / m_nNumBlockH;
 		const float angleV = (D3DX_PI / 2.0f) / (m_nNumBlockV + 1);
@@ -130,7 +130,7 @@ HRESULT CMeshDome::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, float fRadius, int nNu
 		float lengthXZ;
 		D3DXVECTOR3 nor;
 
-		// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ğƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğæ“¾
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 		m_pVtxBuff->Lock( 0, 0, (void**)&pVtx, 0);
 		for(int nCntV = 0; nCntV < (m_nNumBlockV + 1); nCntV++)
 		{
@@ -138,20 +138,20 @@ HRESULT CMeshDome::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, float fRadius, int nNu
 
 			for(int nCntH = 0; nCntH < (m_nNumBlockH + 1); nCntH++, pVtx++)
 			{
-				// ’¸“_À•W‚Ìİ’è
+				// é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 				pVtx->vtx.x = sinf(angleH * nCntH) * lengthXZ;
 				pVtx->vtx.y = sinf(angleV * nCntV) * m_fRadius * DOME_HEIGHT_RATE;
 				pVtx->vtx.z = -cosf(angleH * nCntH) * lengthXZ;
 
-				// –@ü‚Ìİ’è
+				// æ³•ç·šã®è¨­å®š
 				nor = pVtx->vtx;
 				D3DXVec3Normalize(&nor, &nor);
 				pVtx->nor = nor;
 
-				// ’¸“_ƒJƒ‰[‚Ìİ’è
+				// é ‚ç‚¹ã‚«ãƒ©ãƒ¼ã®è¨­å®š
 				pVtx->col = D3DCOLOR_RGBA(255,255,255,255);
 
-				// ƒeƒNƒXƒ`ƒƒÀ•W‚Ìİ’è
+				// ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™ã®è¨­å®š
 				pVtx->tex.x = nCntH * width * TEX_COUNT_LOOP;
 
 				if(nCntV == m_nNumBlockV)
@@ -164,60 +164,60 @@ HRESULT CMeshDome::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, float fRadius, int nNu
 				}
 			}
 		}
-		// ’¸“_ƒf[ƒ^‚ğƒAƒ“ƒƒbƒN‚·‚é
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 		m_pVtxBuff->Unlock();
 
-		// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ğƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğæ“¾
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 		m_pVtxBuffTop->Lock( 0, 0, (void**)&pVtx, 0);
-		// ’¸“_À•W‚Ìİ’è
+		// é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 		pVtx->vtx.x = 0.0f;
 		pVtx->vtx.y = sinf(angleV * (m_nNumBlockV + 1)) * m_fRadius * DOME_HEIGHT_RATE;
 		pVtx->vtx.z = 0.0f;
 
-		// –@ü‚Ìİ’è
+		// æ³•ç·šã®è¨­å®š
 		nor = pVtx->vtx;
 		D3DXVec3Normalize(&nor, &nor);
 		pVtx->nor = nor;
 
-		// ’¸“_ƒJƒ‰[‚Ìİ’è
+		// é ‚ç‚¹ã‚«ãƒ©ãƒ¼ã®è¨­å®š
 		pVtx->col = D3DCOLOR_RGBA(255,255,255,255);
 
-		// ƒeƒNƒXƒ`ƒƒÀ•W‚Ìİ’è
+		// ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™ã®è¨­å®š
 		pVtx->tex.x = 0.5f;
 		pVtx->tex.y = 0.0f;
 
-		// ’¸“_ƒoƒbƒtƒ@‚Ìƒ|ƒCƒ“ƒ^‚ğƒCƒ“ƒNƒŠƒƒ“ƒg
+		// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ãƒã‚¤ãƒ³ã‚¿ã‚’ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆ
 		pVtx++;
 
 		lengthXZ = cosf(angleV * m_nNumBlockV) * m_fRadius;
 		for(int nCntH = 0; nCntH < m_nNumBlockH; nCntH++, pVtx++)
 		{
-			// ’¸“_À•W‚Ìİ’è
+			// é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 			pVtx->vtx.x = -sinf(angleH * nCntH) * lengthXZ;
 			pVtx->vtx.y = sinf(angleV * m_nNumBlockV) * m_fRadius * DOME_HEIGHT_RATE;
 			pVtx->vtx.z = -cosf(angleH * nCntH) * lengthXZ;
 
-			// –@ü‚Ìİ’è
+			// æ³•ç·šã®è¨­å®š
 			nor = pVtx->vtx;
 			D3DXVec3Normalize(&nor, &nor);
 			pVtx->nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 
-			// ’¸“_ƒJƒ‰[‚Ìİ’è
+			// é ‚ç‚¹ã‚«ãƒ©ãƒ¼ã®è¨­å®š
 			pVtx->col = D3DCOLOR_RGBA(255,255,255,255);
 
-			// ƒeƒNƒXƒ`ƒƒÀ•W‚Ìİ’è
+			// ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™ã®è¨­å®š
 			pVtx->tex.x = 0.5f;
 			pVtx->tex.y = 1.0f;
 		}
 
-		// ’¸“_ƒf[ƒ^‚ğƒAƒ“ƒƒbƒN‚·‚é
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 		m_pVtxBuffTop->Unlock();
 	}
 
-	{//ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚Ì’†g‚ğ–„‚ß‚é
+	{//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 		WORD *pIdx;
 
-		// ƒCƒ“ƒfƒbƒNƒXƒf[ƒ^‚Ì”ÍˆÍ‚ğƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğæ“¾
+		// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 		m_pIdxBuff->Lock( 0, 0, (void**)&pIdx, 0);
 		for(int nCntV = 0; nCntV < m_nNumBlockV; nCntV++)
 		{
@@ -243,10 +243,10 @@ HRESULT CMeshDome::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, float fRadius, int nNu
 			}
 		}
 
-		// ƒCƒ“ƒfƒbƒNƒXƒf[ƒ^‚ğƒAƒ“ƒƒbƒN‚·‚é
+		// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 		m_pIdxBuff->Unlock();
 
-		// ƒCƒ“ƒfƒbƒNƒXƒf[ƒ^‚Ì”ÍˆÍ‚ğƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğæ“¾
+		// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 		m_pIdxBuffTop->Lock( 0, 0, (void**)&pIdx, 0);
 		for(int nCntH = 0; nCntH < m_nNumBlockH + 1; nCntH++, pIdx++)
 		{
@@ -254,59 +254,59 @@ HRESULT CMeshDome::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, float fRadius, int nNu
 		}
 		*pIdx = 1;
 
-		// ƒCƒ“ƒfƒbƒNƒXƒf[ƒ^‚ğƒAƒ“ƒƒbƒN‚·‚é
+		// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 		m_pIdxBuffTop->Unlock();
 	}
 
 	return S_OK;
 }
 //=============================================================================
-// ƒƒVƒ…ƒ|ƒŠƒSƒ“‚ÌI—¹ˆ—
+// ãƒ¡ã‚·ãƒ¥ãƒãƒªã‚´ãƒ³ã®çµ‚äº†å‡¦ç†
 //=============================================================================
 void CMeshDome::Uninit(void)
 {
 	if(m_pVtxBuff != NULL)
-	{// ’¸“_ƒoƒbƒtƒ@‚ÌŠJ•ú
+	{// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®é–‹æ”¾
 		m_pVtxBuff->Release();
 		m_pVtxBuff = NULL;
 	}
 
 	if(m_pIdxBuff != NULL)
-	{// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ÌŠJ•ú
+	{// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã®é–‹æ”¾
 		m_pIdxBuff->Release();
 		m_pIdxBuff = NULL;
 	}
 
 	if(m_pVtxBuffTop != NULL)
-	{// ’¸“_ƒoƒbƒtƒ@‚ÌŠJ•ú
+	{// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®é–‹æ”¾
 		m_pVtxBuffTop->Release();
 		m_pVtxBuffTop = NULL;
 	}
 
 	if(m_pIdxBuffTop != NULL)
-	{// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ÌŠJ•ú
+	{// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã®é–‹æ”¾
 		m_pIdxBuffTop->Release();
 		m_pIdxBuffTop = NULL;
 	}
 
 	if(m_pTexture != NULL && m_bLoadTexture == true)
-	{// ƒeƒNƒXƒ`ƒƒ‚ÌŠJ•ú
+	{// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®é–‹æ”¾
 		m_pTexture->Release();
 		m_pTexture = NULL;
 	}
 
-	//ƒIƒuƒWƒFƒNƒg‚Ì”jŠü
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç ´æ£„
 	Release();
 }
 //=============================================================================
-// ƒƒVƒ…ƒ|ƒŠƒSƒ“‚ÌXVˆ—
+// ãƒ¡ã‚·ãƒ¥ãƒãƒªã‚´ãƒ³ã®æ›´æ–°å‡¦ç†
 //=============================================================================
 void CMeshDome::Update(void)
 {
 
 }
 //=============================================================================
-// ƒƒVƒ…ƒ|ƒŠƒSƒ“‚Ì•`‰æˆ—
+// ãƒ¡ã‚·ãƒ¥ãƒãƒªã‚´ãƒ³ã®æç”»å‡¦ç†
 //=============================================================================
 void CMeshDome::Draw(void)
 {
@@ -315,65 +315,65 @@ void CMeshDome::Draw(void)
 
 	D3DXMATRIX mtxRot, mtxTranslate;
 
-	pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);	// — –Ê‚ğƒJƒŠƒ“ƒO
+	pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);	// è£é¢ã‚’ã‚«ãƒªãƒ³ã‚°
 
-	// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚Ì‰Šú‰»
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒãƒˆãƒªãƒƒã‚¯ã‚¹ã®åˆæœŸåŒ–
 	D3DXMatrixIdentity( &m_mtxWorld);
 
-	// ‰ñ“]‚ğ”½‰f
+	// å›è»¢ã‚’åæ˜ 
 	D3DXMatrixRotationYawPitchRoll( &mtxRot, m_rot.y, m_rot.x, m_rot.z);
 	D3DXMatrixMultiply( &m_mtxWorld, &m_mtxWorld, &mtxRot);
 
-	// ˆÚ“®‚ğ”½‰f
+	// ç§»å‹•ã‚’åæ˜ 
 	D3DXMatrixTranslation( &mtxTranslate, m_pos.x, m_pos.y, m_pos.z);
 	D3DXMatrixMultiply( &m_mtxWorld, &m_mtxWorld, &mtxTranslate);
 
-	// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚Ìİ’è
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒãƒˆãƒªãƒƒã‚¯ã‚¹ã®è¨­å®š
 	pDevice->SetTransform( D3DTS_WORLD, &m_mtxWorld);
 
-	// ’¸“_ƒoƒbƒtƒ@‚ğƒŒƒ“ƒ_ƒŠƒ“ƒOƒpƒCƒvƒ‰ƒCƒ“‚Éİ’è
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«è¨­å®š
 	pDevice->SetStreamSource(0, m_pVtxBuff, 0, sizeof(VERTEX_3D));
 
-	// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ğƒŒƒ“ƒ_ƒŠƒ“ƒOƒpƒCƒvƒ‰ƒCƒ“‚Éİ’è
+	// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«è¨­å®š
 	pDevice->SetIndices(m_pIdxBuff);
 
-	// ’¸“_ƒtƒH[ƒ}ƒbƒg‚Ìİ’è
+	// é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã®è¨­å®š
 	pDevice->SetFVF(FVF_VERTEX_3D);
 
-	// ƒeƒNƒXƒ`ƒƒ‚Ìİ’è
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®è¨­å®š
 	pDevice->SetTexture(0, m_pTexture);
 
-	// ƒ|ƒŠƒSƒ“‚Ì•`‰æ
+	// ãƒãƒªã‚´ãƒ³ã®æç”»
 	pDevice->DrawIndexedPrimitive(
-		D3DPT_TRIANGLESTRIP,			//ƒvƒŠƒ~ƒeƒBƒu‚Ìí—Ş
-		0,								//Å‰‚Ì’¸“_ƒCƒ“ƒfƒbƒNƒX‚Ü‚Å‚ÌƒIƒtƒZƒbƒg
-		0,								//Å¬‚Ì’¸“_ƒCƒ“ƒfƒbƒNƒX
-		m_nNumVertex,		//’¸“_‚Ì”
-		0,								//“Ç‚İæ‚è‚ğŠJn‚·‚éˆÊ’u
-		m_nNumPolygon		//ƒ|ƒŠƒSƒ“‚Ì”
+		D3DPT_TRIANGLESTRIP,			//ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ã®ç¨®é¡
+		0,								//æœ€åˆã®é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã¾ã§ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆ
+		0,								//æœ€å°ã®é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+		m_nNumVertex,		//é ‚ç‚¹ã®æ•°
+		0,								//èª­ã¿å–ã‚Šã‚’é–‹å§‹ã™ã‚‹ä½ç½®
+		m_nNumPolygon		//ãƒãƒªã‚´ãƒ³ã®æ•°
 	);
 
-	// ’¸“_ƒoƒbƒtƒ@‚ğƒŒƒ“ƒ_ƒŠƒ“ƒOƒpƒCƒvƒ‰ƒCƒ“‚Éİ’è
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«è¨­å®š
 	pDevice->SetStreamSource(0, m_pVtxBuffTop, 0, sizeof(VERTEX_3D));
 
-	// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ğƒŒƒ“ƒ_ƒŠƒ“ƒOƒpƒCƒvƒ‰ƒCƒ“‚Éİ’è
+	// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«è¨­å®š
 	pDevice->SetIndices(m_pIdxBuffTop);
 
-	// ƒ|ƒŠƒSƒ“‚Ì•`‰æ
+	// ãƒãƒªã‚´ãƒ³ã®æç”»
 	pDevice->DrawIndexedPrimitive(
-		D3DPT_TRIANGLEFAN,				//ƒvƒŠƒ~ƒeƒBƒu‚Ìí—Ş
-		0,								//Å‰‚Ì’¸“_ƒCƒ“ƒfƒbƒNƒX‚Ü‚Å‚ÌƒIƒtƒZƒbƒg
-		0,								//Å¬‚Ì’¸“_ƒCƒ“ƒfƒbƒNƒX
-		(m_nNumBlockH + 1),		//’¸“_‚Ì”
-		0,								//“Ç‚İæ‚è‚ğŠJn‚·‚éˆÊ’u
-		m_nNumBlockH		//ƒ|ƒŠƒSƒ“‚Ì”
+		D3DPT_TRIANGLEFAN,				//ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ã®ç¨®é¡
+		0,								//æœ€åˆã®é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã¾ã§ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆ
+		0,								//æœ€å°ã®é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+		(m_nNumBlockH + 1),		//é ‚ç‚¹ã®æ•°
+		0,								//èª­ã¿å–ã‚Šã‚’é–‹å§‹ã™ã‚‹ä½ç½®
+		m_nNumBlockH		//ãƒãƒªã‚´ãƒ³ã®æ•°
 	);
 
-	pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);	// — –Ê‚ğƒJƒŠƒ“ƒO
+	pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);	// è£é¢ã‚’ã‚«ãƒªãƒ³ã‚°
 }
 
 //=============================================================================
-// ƒƒVƒ…ƒ|ƒŠƒSƒ“‚Ì¶¬
+// ãƒ¡ã‚·ãƒ¥ãƒãƒªã‚´ãƒ³ã®ç”Ÿæˆ
 //=============================================================================
 CMeshDome *CMeshDome::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, float fRadius, int nNumBlockH, int nNumBlockV)
 {
@@ -381,21 +381,21 @@ CMeshDome *CMeshDome::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, float fRadius, in
 	pDome = new CMeshDome;
 	pDome->Init(pos, rot, fRadius, nNumBlockH, nNumBlockV);
 
-	//ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
 	pDome->Load();
 
 	return pDome;
 }
 
 //=============================================================================
-// À•W‚Ìæ“¾
+// åº§æ¨™ã®å–å¾—
 //=============================================================================
 D3DXVECTOR3 CMeshDome::GetPosition(void)
 {
 	return m_pos;
 }
 //=============================================================================
-// ƒTƒCƒY‚Ìæ“¾
+// ã‚µã‚¤ã‚ºã®å–å¾—
 //=============================================================================
 D3DXVECTOR3 CMeshDome::GetSize(void)
 {
@@ -404,7 +404,7 @@ D3DXVECTOR3 CMeshDome::GetSize(void)
 
 
 //=============================================================================
-// ƒƒVƒ…ƒ|ƒŠƒSƒ“‚ÌƒeƒNƒXƒ`ƒƒ‚ğ“Ç‚İ‚Ş
+// ãƒ¡ã‚·ãƒ¥ãƒãƒªã‚´ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’èª­ã¿è¾¼ã‚€
 //=============================================================================
 HRESULT CMeshDome::Load(void)
 {
@@ -413,10 +413,10 @@ HRESULT CMeshDome::Load(void)
 		LPDIRECT3DDEVICE9 pDevice;
 		pDevice = CManager::GetRenderer()->GetDevice();
 
-		// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ
+		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
 		D3DXCreateTextureFromFile( pDevice, TEXTURE_MESHDOME, &m_pTexture);
 
-		// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İƒtƒ‰ƒO
+		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿ãƒ•ãƒ©ã‚°
 		m_bLoadTexture = true;
 	}
 
@@ -424,14 +424,14 @@ HRESULT CMeshDome::Load(void)
 }
 
 //=============================================================================
-// ƒƒVƒ…ƒ|ƒŠƒSƒ“‚ÌƒeƒNƒXƒ`ƒƒ‚ğŠ„‚è“–‚Ä‚é
+// ãƒ¡ã‚·ãƒ¥ãƒãƒªã‚´ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’å‰²ã‚Šå½“ã¦ã‚‹
 //=============================================================================
 void CMeshDome::BindTexture( LPDIRECT3DTEXTURE9 pTexture)
 {
 	m_pTexture = pTexture;
 }
 //=============================================================================
-// À•W‚Ìİ’è
+// åº§æ¨™ã®è¨­å®š
 //=============================================================================
 void CMeshDome::SetPosition(D3DXVECTOR3 pos)
 {

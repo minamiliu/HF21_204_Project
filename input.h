@@ -1,6 +1,6 @@
-//=============================================================================
+ï»¿//=============================================================================
 //
-// “ü—Íˆ— [input.h]
+// å…¥åŠ›å‡¦ç† [input.h]
 // Author : AKIRA TANAKA
 //
 //=============================================================================
@@ -10,22 +10,22 @@
 #include "main.h"
 
 //*****************************************************************************
-// ƒ}ƒNƒ’è‹`
+// ãƒã‚¯ãƒ­å®šç¾©
 //*****************************************************************************
 
 /* Keyboard  */
-#define	NUM_KEY_MAX		(256)	// ƒL[Å‘å”
+#define	NUM_KEY_MAX		(256)	// ã‚­ãƒ¼æœ€å¤§æ•°
 
 /* Mouse  */
-#define	NUM_MOUSE_BUTTON_MAX	(8)		// ƒ}ƒEƒX‚Ìƒ{ƒ^ƒ“Å‘å”
-#define	MOUSE_BUTTON_LEFT		(0)		// ƒ}ƒEƒX‚Ì¶ƒ{ƒ^ƒ“
-#define	MOUSE_BUTTON_RIGHT		(1)		// ƒ}ƒEƒX‚Ì‰Eƒ{ƒ^ƒ“
-#define	MOUSE_BUTTON_CENTER		(2)		// ƒ}ƒEƒX‚Ì’†‰›ƒ{ƒ^ƒ“
+#define	NUM_MOUSE_BUTTON_MAX	(8)		// ãƒã‚¦ã‚¹ã®ãƒœã‚¿ãƒ³æœ€å¤§æ•°
+#define	MOUSE_BUTTON_LEFT		(0)		// ãƒã‚¦ã‚¹ã®å·¦ãƒœã‚¿ãƒ³
+#define	MOUSE_BUTTON_RIGHT		(1)		// ãƒã‚¦ã‚¹ã®å³ãƒœã‚¿ãƒ³
+#define	MOUSE_BUTTON_CENTER		(2)		// ãƒã‚¦ã‚¹ã®ä¸­å¤®ãƒœã‚¿ãƒ³
 
 /* Joypad  */
-#define MAX_CONTROLER	(2)			//ƒRƒ“ƒgƒ[ƒ‰Å‘å”(g‚¤”‚É‰‚¶‚Ä•ÏX‚·‚é‚±‚Æ)
-#define STICK_RANGE		(65536)		//¶‚O`‚R‚Q‚V‚U‚VG‰E‚R‚Q‚V‚U‚W`‚U‚T‚T‚R‚T
-#define STICK_DEADZONE	(3000)		//”½‰‚µ‚È‚¢”ÍˆÍ
+#define MAX_CONTROLER	(2)			//ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©æœ€å¤§æ•°(ä½¿ã†æ•°ã«å¿œã˜ã¦å¤‰æ›´ã™ã‚‹ã“ã¨)
+#define STICK_RANGE		(65536)		//å·¦ï¼ï½ï¼“ï¼’ï¼—ï¼–ï¼—ï¼›å³ï¼“ï¼’ï¼—ï¼–ï¼˜ï½ï¼–ï¼•ï¼•ï¼“ï¼•
+#define STICK_DEADZONE	(3000)		//åå¿œã—ãªã„ç¯„å›²
 
 #define BUTTON_A		(0)
 #define BUTTON_B		(1)
@@ -49,7 +49,7 @@
 #define RSTICK_RIGHT	(17)
 
 //*********************************************************
-// “ü—ÍƒNƒ‰ƒX
+// å…¥åŠ›ã‚¯ãƒ©ã‚¹
 //*********************************************************
 class CInput
 {
@@ -59,15 +59,15 @@ public:
 
 	virtual HRESULT Init(HINSTANCE hInst, HWND hWnd);
 	virtual void Uninit(void);
-	virtual void Update(void) = 0;		// ---> ƒˆ‰¼‘zŠÖ”‰»
+	virtual void Update(void) = 0;		// ---> ç´”ç²‹ä»®æƒ³é–¢æ•°åŒ–
 
 protected:
-	static LPDIRECTINPUT8 m_pDInput;	// DirectInputƒIƒuƒWƒFƒNƒg
-	LPDIRECTINPUTDEVICE8 m_pDIDevice;	// DeviceƒIƒuƒWƒFƒNƒg(“ü—Í‚É•K—v)
+	static LPDIRECTINPUT8 m_pDInput;	// DirectInputã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	LPDIRECTINPUTDEVICE8 m_pDIDevice;	// Deviceã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ(å…¥åŠ›ã«å¿…è¦)
 };
 
 //*********************************************************
-// ƒL[ƒ{[ƒh“ü—ÍƒNƒ‰ƒX
+// ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰å…¥åŠ›ã‚¯ãƒ©ã‚¹
 //*********************************************************
 class CInputKeyboard : public CInput
 {
@@ -79,7 +79,7 @@ public:
 	void Uninit(void);
 	void Update(void);
 
-	//ƒL[ƒ{[ƒhŠÖ˜A
+	//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰é–¢é€£
 	BOOL GetKeyPress(int nKey);
 	BOOL GetKeyTrigger(int nKey);
 	BOOL GetKeyRelease(int nKey);
@@ -87,15 +87,15 @@ public:
 	void FlushKeyTrigger(int nKey);
 
 private:
-	BYTE	m_aKeyState[NUM_KEY_MAX];			// ƒL[ƒ{[ƒh‚Ìó‘Ô‚ğó‚¯æ‚éƒ[ƒN
-	BYTE	m_aKeyStateTrigger[NUM_KEY_MAX];	// ƒgƒŠƒK[ƒ[ƒN
-	BYTE	m_aKeyStateRelease[NUM_KEY_MAX];	// ƒŠƒŠ[ƒXƒ[ƒN
-	BYTE	m_aKeyStateRepeat[NUM_KEY_MAX];		// ƒŠƒs[ƒgƒ[ƒN
-	int		m_aKeyStateRepeatCnt[NUM_KEY_MAX];	// ƒŠƒs[ƒgƒJƒEƒ“ƒ^
+	BYTE	m_aKeyState[NUM_KEY_MAX];			// ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã®çŠ¶æ…‹ã‚’å—ã‘å–ã‚‹ãƒ¯ãƒ¼ã‚¯
+	BYTE	m_aKeyStateTrigger[NUM_KEY_MAX];	// ãƒˆãƒªã‚¬ãƒ¼ãƒ¯ãƒ¼ã‚¯
+	BYTE	m_aKeyStateRelease[NUM_KEY_MAX];	// ãƒªãƒªãƒ¼ã‚¹ãƒ¯ãƒ¼ã‚¯
+	BYTE	m_aKeyStateRepeat[NUM_KEY_MAX];		// ãƒªãƒ”ãƒ¼ãƒˆãƒ¯ãƒ¼ã‚¯
+	int		m_aKeyStateRepeatCnt[NUM_KEY_MAX];	// ãƒªãƒ”ãƒ¼ãƒˆã‚«ã‚¦ãƒ³ã‚¿
 };
 
 //*********************************************************
-// ƒ}ƒEƒX“ü—ÍƒNƒ‰ƒX
+// ãƒã‚¦ã‚¹å…¥åŠ›ã‚¯ãƒ©ã‚¹
 //*********************************************************
 class CInputMouse : public CInput
 {
@@ -107,7 +107,7 @@ public:
 	void Uninit(void);
 	void Update(void);
 
-	// ƒ}ƒEƒXŠÖ˜A
+	// ãƒã‚¦ã‚¹é–¢é€£
 	bool GetMouseLeftPress(void);
 	bool GetMouseLeftTrigger(void);
 	bool GetMouseLeftRelease(void);
@@ -125,13 +125,13 @@ public:
 	long GetMouseAxisZ(void);
 
 private:
-	DIMOUSESTATE2	m_mouseState;			// ƒ}ƒEƒX‚Ì“ü—Íî•ñƒ[ƒN
-	DIMOUSESTATE2	m_mouseStateTrigger;	// ƒ}ƒEƒX‚ÌƒgƒŠƒK[î•ñƒ[ƒN
-	DIMOUSESTATE2	m_mouseStateRelease;	// ƒ}ƒEƒX‚ÌƒŠƒŠ[ƒXî•ñƒ[ƒN
+	DIMOUSESTATE2	m_mouseState;			// ãƒã‚¦ã‚¹ã®å…¥åŠ›æƒ…å ±ãƒ¯ãƒ¼ã‚¯
+	DIMOUSESTATE2	m_mouseStateTrigger;	// ãƒã‚¦ã‚¹ã®ãƒˆãƒªã‚¬ãƒ¼æƒ…å ±ãƒ¯ãƒ¼ã‚¯
+	DIMOUSESTATE2	m_mouseStateRelease;	// ãƒã‚¦ã‚¹ã®ãƒªãƒªãƒ¼ã‚¹æƒ…å ±ãƒ¯ãƒ¼ã‚¯
 };
 
 //*********************************************************
-// ƒWƒ‡ƒCƒpƒbƒh“ü—ÍƒNƒ‰ƒX
+// ã‚¸ãƒ§ã‚¤ãƒ‘ãƒƒãƒ‰å…¥åŠ›ã‚¯ãƒ©ã‚¹
 //*********************************************************
 class CInputJoypad : public CInput
 {
@@ -143,7 +143,7 @@ public:
 	void Uninit(void);
 	void Update(void);
 
-	// ƒWƒ‡ƒCƒpƒbƒhŠÖ˜A
+	// ã‚¸ãƒ§ã‚¤ãƒ‘ãƒƒãƒ‰é–¢é€£
 	static BOOL CALLBACK EnumJoyCallback(const DIDEVICEINSTANCE* lpddi, VOID* pvRef);
 
 	bool GetJoypadTrigger( int padNo, DWORD button );
@@ -152,12 +152,12 @@ public:
 	long GetJoypadRightAxisY(int padNo);
 
 private:
-	DIJOYSTATE				m_joyState[MAX_CONTROLER];				// ƒWƒ‡ƒCƒpƒbƒhî•ñ”z—ñ
-	DIJOYSTATE				m_joyStatePrev[MAX_CONTROLER];			// ƒWƒ‡ƒCƒpƒbƒhî•ñ”z—ñi’¼‘Oj
+	DIJOYSTATE				m_joyState[MAX_CONTROLER];				// ã‚¸ãƒ§ã‚¤ãƒ‘ãƒƒãƒ‰æƒ…å ±é…åˆ—
+	DIJOYSTATE				m_joyStatePrev[MAX_CONTROLER];			// ã‚¸ãƒ§ã‚¤ãƒ‘ãƒƒãƒ‰æƒ…å ±é…åˆ—ï¼ˆç›´å‰ï¼‰
 	BYTE					m_joyStateTrigger[MAX_CONTROLER][32];
 
-	static LPDIRECTINPUTDEVICE8	m_pDIDevJoypad[MAX_CONTROLER];		// IDirectInputDevice8ƒCƒ“ƒ^[ƒtƒF[ƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^(ƒWƒ‡ƒCƒpƒbƒh)
-	static int					m_nJoypadNum;						// Œ©‚Â‚©‚Á‚½ƒWƒ‡ƒCƒpƒbƒh‚Ì”
+	static LPDIRECTINPUTDEVICE8	m_pDIDevJoypad[MAX_CONTROLER];		// IDirectInputDevice8ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿(ã‚¸ãƒ§ã‚¤ãƒ‘ãƒƒãƒ‰)
+	static int					m_nJoypadNum;						// è¦‹ã¤ã‹ã£ãŸã‚¸ãƒ§ã‚¤ãƒ‘ãƒƒãƒ‰ã®æ•°
 };
 
 #endif

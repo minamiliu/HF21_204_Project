@@ -1,14 +1,14 @@
-//============================================
+ï»¿//============================================
 //
-// ƒ^ƒCƒgƒ‹:	 –¢—ˆ‘n‘¢“Wƒ`[ƒ€204
-// ƒvƒƒOƒ‰ƒ€–¼: scene3D.cpp
-// ì¬ŽÒ:		 HAL“Œ‹žƒQ[ƒ€Šw‰È@—«“ìG
-// ì¬“ú:       2016/11/10
+// ã‚¿ã‚¤ãƒˆãƒ«:	 æœªæ¥å‰µé€ å±•ãƒãƒ¼ãƒ 204
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å: scene3D.cpp
+// ä½œæˆè€…:		 HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
+// ä½œæˆæ—¥:       2016/11/10
 //
 //============================================
 
 //============================================
-//ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+//ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //============================================
 #include "main.h"
 #include "meshWall.h"
@@ -17,19 +17,19 @@
 #include "input.h"
 
 //============================================
-// ƒ}ƒNƒ’è‹`
+// ãƒžã‚¯ãƒ­å®šç¾©
 //============================================
 
 #define TEXTURENAME "data/TEXTURE/wall001.jpg"
 
 //============================================
-// Ã“Iƒƒ“ƒo[•Ï”‚Ì‰Šú‰»
+// é™çš„ãƒ¡ãƒ³ãƒãƒ¼å¤‰æ•°ã®åˆæœŸåŒ–
 //============================================
 LPDIRECT3DTEXTURE9 CMeshWall::m_pTexture = NULL;
 
 
 //=============================================================================
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CMeshWall::CMeshWall()
 {
@@ -37,7 +37,7 @@ CMeshWall::CMeshWall()
 }
 
 //=============================================================================
-//ƒfƒXƒgƒ‰ƒNƒ^
+//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CMeshWall::~CMeshWall()
 {
@@ -46,14 +46,14 @@ CMeshWall::~CMeshWall()
 
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚Ì‰Šú‰»ˆ—
+// ãƒãƒªã‚´ãƒ³ã®åˆæœŸåŒ–å‡¦ç†
 //=============================================================================
 
 HRESULT CMeshWall::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockY, float fSizeBlockX, float fSizeBlockY)
 {
 	CScene3D::Init( pos, rot, nNumBlockX, nNumBlockY, fSizeBlockX, fSizeBlockY, true);
 
-	//scene‚É“o˜^
+	//sceneã«ç™»éŒ²
 	SetObjType(OBJTYPE_WALL);
 
 	return S_OK;
@@ -89,7 +89,7 @@ CMeshWall *CMeshWall::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, i
 
 	pMeshWall->Init(pos, rot, nNumBlockX, nNumBlockY, fSizeBlockX, fSizeBlockY);
 
-	//ƒeƒNƒXƒ`ƒƒ‚ÌŠ„‚è“–‚Ä
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®å‰²ã‚Šå½“ã¦
 	pMeshWall->BindTexture( m_pTexture);
 
 	return pMeshWall;
@@ -110,7 +110,7 @@ HRESULT CMeshWall::Load(void)
 		LPDIRECT3DDEVICE9 pDevice;
 		pDevice = CManager::GetRenderer()->GetDevice();
 
-		// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚Ýž‚Ý
+		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
 		D3DXCreateTextureFromFile( pDevice, TEXTURENAME, &m_pTexture);
 	}
 
@@ -122,7 +122,7 @@ HRESULT CMeshWall::Load(void)
 //=============================================================================
 void CMeshWall::Unload(void)
 {
-	//ƒeƒNƒXƒ`ƒƒ‚Ì”jŠü
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ç ´æ£„
 	if( m_pTexture != NULL)
 	{
 		m_pTexture->Release();

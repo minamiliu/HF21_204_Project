@@ -1,6 +1,6 @@
-//=============================================================================
+ï»¿//=============================================================================
 //
-// ƒTƒEƒ“ƒhˆ— [sound.h]
+// ã‚µã‚¦ãƒ³ãƒ‰å‡¦ç† [sound.h]
 // Author : AKIRA TANAKA
 //
 //=============================================================================
@@ -10,7 +10,7 @@
 #include "main.h"
 
 //*********************************************************
-// ƒTƒEƒ“ƒhƒNƒ‰ƒX
+// ã‚µã‚¦ãƒ³ãƒ‰ã‚¯ãƒ©ã‚¹
 //*********************************************************
 class CSound
 {
@@ -18,7 +18,7 @@ public:
 	CSound();
 	~CSound();
 
-	// ƒTƒEƒ“ƒhƒtƒ@ƒCƒ‹
+	// ã‚µã‚¦ãƒ³ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 	typedef enum
 	{
 		SOUND_LABEL_BGM_TITLE = 0,	// BGM
@@ -28,13 +28,13 @@ public:
 		SOUND_LABEL_BGM_RESULT,		// BGM
 		SOUND_LABEL_BGM_STAGE,		// BGM
 		SOUND_LABEL_BGM_CHANGE,		// BGM
-		SOUND_LABEL_SE_LIONSOUND,	// ’e”­ŽË‰¹
-		SOUND_LABEL_SE_CHARAMOVE,	// ƒLƒƒƒ‰ˆÚ“®
-		SOUND_LABEL_SE_HITBOX,		// Õ“Ë‰¹
-		SOUND_LABEL_SE_HITENEMY,	// Õ“Ë‰¹ 
-		SOUND_LABEL_SE_WHISTLE,		// Œû“J
-		SOUND_LABEL_SE_COIN_GET,	// ƒRƒCƒ“Šl“¾‰¹
-		SOUND_LABEL_SE_STAMP,		// ”»Žq‚ð‰Ÿ‚·
+		SOUND_LABEL_SE_LIONSOUND,	// å¼¾ç™ºå°„éŸ³
+		SOUND_LABEL_SE_CHARAMOVE,	// ã‚­ãƒ£ãƒ©ç§»å‹•
+		SOUND_LABEL_SE_HITBOX,		// è¡çªéŸ³
+		SOUND_LABEL_SE_HITENEMY,	// è¡çªéŸ³ 
+		SOUND_LABEL_SE_WHISTLE,		// å£ç¬›
+		SOUND_LABEL_SE_COIN_GET,	// ã‚³ã‚¤ãƒ³ç²å¾—éŸ³
+		SOUND_LABEL_SE_STAMP,		// åˆ¤å­ã‚’æŠ¼ã™
 		SOUND_LABEL_SE_KICK,		// zebra kick
 		SOUND_LABEL_SE_ITEM_GET,	// item get
 		SOUND_LABEL_SE_PICK,		// pick
@@ -51,23 +51,23 @@ public:
 	void SetVolume(SOUND_LABEL label, float fValue);
 
 private:
-	// ƒpƒ‰ƒ[ƒ^\‘¢‘Ì
+	// ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿æ§‹é€ ä½“
 	typedef struct
 	{
-		char *pFilename;	// ƒtƒ@ƒCƒ‹–¼
-		int nCntLoop;		// ƒ‹[ƒvƒJƒEƒ“ƒ^
+		char *pFilename;	// ãƒ•ã‚¡ã‚¤ãƒ«å
+		int nCntLoop;		// ãƒ«ãƒ¼ãƒ—ã‚«ã‚¦ãƒ³ã‚¿
 	} PARAM;
 
 	HRESULT CheckChunk(HANDLE hFile, DWORD dwFormat, DWORD *pChunkSize, DWORD *pChunkDataPosition);
 	HRESULT ReadChunkData(HANDLE hFile, void *pBuffer, DWORD dwBuffersize, DWORD dwBufferoffset);
 
-	IXAudio2 *m_pXAudio2;									// XAudio2ƒIƒuƒWƒFƒNƒg‚Ö‚ÌƒCƒ“ƒ^[ƒtƒFƒCƒX
-	IXAudio2MasteringVoice *m_pMasteringVoice;				// ƒ}ƒXƒ^[ƒ{ƒCƒX
-	IXAudio2SourceVoice *m_apSourceVoice[SOUND_LABEL_MAX];	// ƒ\[ƒXƒ{ƒCƒX
-	BYTE *m_apDataAudio[SOUND_LABEL_MAX];					// ƒI[ƒfƒBƒIƒf[ƒ^
-	DWORD m_aSizeAudio[SOUND_LABEL_MAX];					// ƒI[ƒfƒBƒIƒf[ƒ^ƒTƒCƒY
+	IXAudio2 *m_pXAudio2;									// XAudio2ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¸ã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹
+	IXAudio2MasteringVoice *m_pMasteringVoice;				// ãƒžã‚¹ã‚¿ãƒ¼ãƒœã‚¤ã‚¹
+	IXAudio2SourceVoice *m_apSourceVoice[SOUND_LABEL_MAX];	// ã‚½ãƒ¼ã‚¹ãƒœã‚¤ã‚¹
+	BYTE *m_apDataAudio[SOUND_LABEL_MAX];					// ã‚ªãƒ¼ãƒ‡ã‚£ã‚ªãƒ‡ãƒ¼ã‚¿
+	DWORD m_aSizeAudio[SOUND_LABEL_MAX];					// ã‚ªãƒ¼ãƒ‡ã‚£ã‚ªãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º
 
-	static PARAM m_aParam[SOUND_LABEL_MAX];					// ƒpƒ‰ƒ[ƒ^
+	static PARAM m_aParam[SOUND_LABEL_MAX];					// ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿
 };
 
 #endif

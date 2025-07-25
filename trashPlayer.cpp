@@ -1,14 +1,14 @@
-//============================================
+ï»¿//============================================
 //
-// ƒ^ƒCƒgƒ‹:	 –¢—ˆ‘n‘¢“Wƒ`[ƒ€204
-// ƒvƒƒOƒ‰ƒ€–¼: player2D.cpp
-// ì¬Ò:		 HAL“Œ‹ƒQ[ƒ€Šw‰È@—«“ìG
-// ì¬“ú:       2016/10/19
+// ã‚¿ã‚¤ãƒˆãƒ«:	 æœªæ¥å‰µé€ å±•ãƒãƒ¼ãƒ 204
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å: player2D.cpp
+// ä½œæˆè€…:		 HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
+// ä½œæˆæ—¥:       2016/10/19
 //
 //============================================
 
 //============================================
-//ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+//ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //============================================
 #include "main.h"
 #include "manager.h"
@@ -18,16 +18,16 @@
 #include "debugproc.h"
 
 //============================================
-// ƒ}ƒNƒ’è‹`
+// ãƒã‚¯ãƒ­å®šç¾©
 //============================================
 
 #define TEXTURE_PLAYER "data/TEXTURE/throwingMother.png"
-#define	TEX_PATTERN_DIVIDE_X		(5)												// ƒAƒjƒ[ƒVƒ‡ƒ“ƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒ“à‚Å‚Ì•ªŠ„”(‚w•ûŒü)
-#define	TEX_PATTERN_DIVIDE_Y		(1)												// ƒAƒjƒ[ƒVƒ‡ƒ“ƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒ“à‚Å‚Ì•ªŠ„”(‚x•ûŒü)
-#define	TEX_PATTERN_SIZE_X			(1.0f / TEX_PATTERN_DIVIDE_X)					// ‚Pƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒƒTƒCƒY(‚w•ûŒü)(1.0f/X•ûŒü•ªŠ„”)
-#define	TEX_PATTERN_SIZE_Y			(1.0f / TEX_PATTERN_DIVIDE_Y)					// ‚Pƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒƒTƒCƒY(‚x•ûŒü)(1.0f/Y•ûŒü•ªŠ„”)
-#define	NUM_ANIM_PATTERN			(TEX_PATTERN_DIVIDE_X * TEX_PATTERN_DIVIDE_Y)	// ƒAƒjƒ[ƒVƒ‡ƒ“‚Ìƒpƒ^[ƒ“”(X•ûŒü•ªŠ„”~Y•ûŒü•ªŠ„”)
-#define	TIME_CHANGE_PATTERN			(5)											// ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌØ‚è‘Ö‚í‚éƒ^ƒCƒ~ƒ“ƒO(ƒtƒŒ[ƒ€”)
+#define	TEX_PATTERN_DIVIDE_X		(5)												// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£å†…ã§ã®åˆ†å‰²æ•°(ï¼¸æ–¹å‘)
+#define	TEX_PATTERN_DIVIDE_Y		(1)												// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£å†…ã§ã®åˆ†å‰²æ•°(ï¼¹æ–¹å‘)
+#define	TEX_PATTERN_SIZE_X			(1.0f / TEX_PATTERN_DIVIDE_X)					// ï¼‘ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µã‚¤ã‚º(ï¼¸æ–¹å‘)(1.0f/Xæ–¹å‘åˆ†å‰²æ•°)
+#define	TEX_PATTERN_SIZE_Y			(1.0f / TEX_PATTERN_DIVIDE_Y)					// ï¼‘ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µã‚¤ã‚º(ï¼¹æ–¹å‘)(1.0f/Yæ–¹å‘åˆ†å‰²æ•°)
+#define	NUM_ANIM_PATTERN			(TEX_PATTERN_DIVIDE_X * TEX_PATTERN_DIVIDE_Y)	// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ãƒ‘ã‚¿ãƒ¼ãƒ³æ•°(Xæ–¹å‘åˆ†å‰²æ•°Ã—Yæ–¹å‘åˆ†å‰²æ•°)
+#define	TIME_CHANGE_PATTERN			(5)											// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®åˆ‡ã‚Šæ›¿ã‚ã‚‹ã‚¿ã‚¤ãƒŸãƒ³ã‚°(ãƒ•ãƒ¬ãƒ¼ãƒ æ•°)
 
 #define TEXTURE_GORILLA "data/TEXTURE/throwingGorilla.png"
 //============================================
@@ -35,11 +35,11 @@
 LPDIRECT3DTEXTURE9 CTrashPlayer::m_pTexture[2] = {NULL,NULL};
 
 //=============================================================================
-// \‘¢‘Ì’è‹`
+// æ§‹é€ ä½“å®šç¾©
 //=============================================================================
 
 //=============================================================================
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CTrashPlayer::CTrashPlayer()
 {
@@ -47,7 +47,7 @@ CTrashPlayer::CTrashPlayer()
 }
 
 //=============================================================================
-//ƒfƒXƒgƒ‰ƒNƒ^
+//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CTrashPlayer::~CTrashPlayer()
 {
@@ -56,7 +56,7 @@ CTrashPlayer::~CTrashPlayer()
 
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚Ì‰Šú‰»ˆ—
+// ãƒãƒªã‚´ãƒ³ã®åˆæœŸåŒ–å‡¦ç†
 //=============================================================================
 
 HRESULT CTrashPlayer::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size)
@@ -73,7 +73,7 @@ HRESULT CTrashPlayer::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚ÌI—¹ˆ—
+// ãƒãƒªã‚´ãƒ³ã®çµ‚äº†å‡¦ç†
 //=============================================================================
 void CTrashPlayer::Uninit(void)
 {
@@ -82,29 +82,29 @@ void CTrashPlayer::Uninit(void)
 
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚ÌXVˆ—
+// ãƒãƒªã‚´ãƒ³ã®æ›´æ–°å‡¦ç†
 //=============================================================================
 void CTrashPlayer::Update(void)
 {
 	CScene2D::Update();
 	if(CManager::GetInputMouse()->GetMouseLeftPress() || m_nPatternAnim >= 3)
 	{
-		//ƒAƒjƒ[ƒVƒ‡ƒ“
+		//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
 		m_nAnimCnt++;
 		if((m_nAnimCnt % TIME_CHANGE_PATTERN) == 0)
 		{
-			//ƒAƒjƒ[ƒVƒ‡ƒ“‚ğ“r’†‚Å~‚ß‚é
+			//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’é€”ä¸­ã§æ­¢ã‚ã‚‹
 			if( m_nPatternAnim == (3 -1) )
 			{
 				return;
 			}
-			// ƒpƒ^[ƒ“‚ÌØ‚è‘Ö‚¦
+			// ãƒ‘ã‚¿ãƒ¼ãƒ³ã®åˆ‡ã‚Šæ›¿ãˆ
 			m_nPatternAnim = (m_nPatternAnim + 1) % NUM_ANIM_PATTERN;
 			ChangeTextureAnime(m_nPatternAnim, D3DXVECTOR2(TEX_PATTERN_SIZE_X,TEX_PATTERN_SIZE_Y), D3DXVECTOR2(TEX_PATTERN_DIVIDE_X,TEX_PATTERN_DIVIDE_Y));
 		}
 	}
 
-	//ƒ}ƒEƒX‚ğ˜b‚µ‚½‚çƒAƒjƒ[ƒVƒ‡ƒ“‚ğXV
+	//ãƒã‚¦ã‚¹ã‚’è©±ã—ãŸã‚‰ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’æ›´æ–°
 	if(CManager::GetInputMouse()->GetMouseLeftRelease())
 	{
 		m_nPatternAnim = 3;
@@ -112,7 +112,7 @@ void CTrashPlayer::Update(void)
 }
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚Ì•`‰æˆ—
+// ãƒãƒªã‚´ãƒ³ã®æç”»å‡¦ç†
 //=============================================================================
 void CTrashPlayer::Draw(void)
 {
@@ -120,7 +120,7 @@ void CTrashPlayer::Draw(void)
 }
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚Ì¶¬ˆ—
+// ãƒãƒªã‚´ãƒ³ã®ç”Ÿæˆå‡¦ç†
 //=============================================================================
 CTrashPlayer *CTrashPlayer::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size,LPCSTR strFileName)
 {
@@ -128,7 +128,7 @@ CTrashPlayer *CTrashPlayer::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size,LPCSTR strF
 	pTrashBox2D = new CTrashPlayer;
 	pTrashBox2D->Init(pos, size);
 
-	//ƒeƒNƒXƒ`ƒƒ‚ÌŠ„‚è“–‚Ä
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®å‰²ã‚Šå½“ã¦
 	//pTrashBox2D->Load( TEXTURE_PLAYER);
 	if(strFileName == TEXTURE_PLAYER)
 	{
@@ -159,7 +159,7 @@ void CTrashPlayer::Load(void)
 		LPDIRECT3DDEVICE9 pDevice;
 		pDevice = CManager::GetRenderer()->GetDevice();
 
-		// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ
+		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
 		D3DXCreateTextureFromFile( pDevice,TEXTURE_PLAYER, &m_pTexture[0]);
 	}
 
@@ -168,7 +168,7 @@ void CTrashPlayer::Load(void)
 		LPDIRECT3DDEVICE9 pDevice;
 		pDevice = CManager::GetRenderer()->GetDevice();
 
-		// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ
+		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
 		D3DXCreateTextureFromFile( pDevice,TEXTURE_GORILLA, &m_pTexture[1]);
 	}
 }

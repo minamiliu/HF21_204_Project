@@ -1,14 +1,14 @@
-//============================================
+Ôªø//============================================
 //
-// É^ÉCÉgÉã:	 ñ¢óàënë¢ìWÉ`Å[ÉÄ204
-// ÉvÉçÉOÉâÉÄñº: lionGame.cpp
-// çÏê¨é“:		 HALìåãûÉQÅ[ÉÄäwâ»Å@ó´ìÏçG
-// çÏê¨ì˙:       2016/11/17
+// „Çø„Ç§„Éà„É´:	 Êú™Êù•ÂâµÈÄ†Â±ï„ÉÅ„Éº„É†204
+// „Éó„É≠„Ç∞„É©„É†Âêç: lionGame.cpp
+// ‰ΩúÊàêËÄÖ:		 HALÊù±‰∫¨„Ç≤„Éº„É†Â≠¶Áßë„ÄÄÂäâÂçóÂÆè
+// ‰ΩúÊàêÊó•:       2016/11/17
 //
 //============================================
 
 //============================================
-//ÉCÉìÉNÉãÅ[ÉhÉtÉ@ÉCÉã
+//„Ç§„É≥„ÇØ„É´„Éº„Éâ„Éï„Ç°„Ç§„É´
 //============================================
 #include "main.h"
 #include "debugproc.h"
@@ -39,21 +39,21 @@
 #include "staffX.h"
 #include "sound.h"
 //============================================
-// É}ÉNÉçíËã`
+// „Éû„ÇØ„É≠ÂÆöÁæ©
 //============================================
-#define TEXTURE_MLT		"data/TEXTURE/Ç©ÇØÇÈ.png"
+#define TEXTURE_MLT		"data/TEXTURE/„Åã„Åë„Çã.png"
 
 #define TIME_POS	D3DXVECTOR3(SCREEN_WIDTH/2, 100.0f, 0.0f)
 #define TIME_SIZE	D3DXVECTOR3( 140, 70.0f, 0.0f)
 #define SCORE_POS	D3DXVECTOR3( 150.0f, 30.0f, 0.0f)
 #define SCORE_SIZE	D3DXVECTOR3( 300, 50.0f, 0.0f)
 //============================================
-// ê√ìIÉÅÉìÉoÅ[ïœêîÇÃèâä˙âª
+// ÈùôÁöÑ„É°„É≥„Éê„ÉºÂ§âÊï∞„ÅÆÂàùÊúüÂåñ
 //============================================
 CScore *CLionGame::m_pScore = NULL;
 CPlayerX *CLionGame::m_pPlayer = NULL;
 //=============================================================================
-//ÉRÉìÉXÉgÉâÉNÉ^
+//„Ç≥„É≥„Çπ„Éà„É©„ÇØ„Çø
 //=============================================================================
 CLionGame::CLionGame() : CManager(MODE_LIONGAME)
 {
@@ -64,7 +64,7 @@ CLionGame::CLionGame() : CManager(MODE_LIONGAME)
 	m_pSound = NULL;
 }
 //=============================================================================
-//ÉfÉXÉgÉâÉNÉ^
+//„Éá„Çπ„Éà„É©„ÇØ„Çø
 //=============================================================================
 CLionGame::~CLionGame()
 {
@@ -75,27 +75,27 @@ CLionGame::~CLionGame()
 //=============================================================================
 HRESULT CLionGame::Init(void)
 {
-	//ÉQÅ[ÉÄÉfÅ[É^ÇÉçÅ[Éh
+	//„Ç≤„Éº„É†„Éá„Éº„Çø„Çí„É≠„Éº„Éâ
 	LoadAll();
 
-	//ïœêîÇÃèâä˙âª
+	//Â§âÊï∞„ÅÆÂàùÊúüÂåñ
 	m_state = STATE_NORMAL;
 	m_nCntState = 0;
 
-	//ÉJÉÅÉâÇÃèâä˙âª
+	//„Ç´„É°„É©„ÅÆÂàùÊúüÂåñ
 	m_pCamera->Init();
 
-	//ÉXÉeÅ[ÉWê›åv
+	//„Çπ„ÉÜ„Éº„Ç∏Ë®≠Ë®à
 	//CreateStageLiu();
 	CreateStageUsukura();
 	
-	//ÉXÉRÉA
+	//„Çπ„Ç≥„Ç¢
 	m_pScore = CScore::Create( D3DXVECTOR3( 150.0f, 30.0f, 0.0f), D3DXVECTOR3( 300, 50.0f, 0.0f), 6, RED(1.0f)); 
 
-	//É^ÉCÉÄ
+	//„Çø„Ç§„É†
 	m_pTime = CTime::Create( D3DXVECTOR3(SCREEN_WIDTH/2, 100.0f, 0.0f), D3DXVECTOR3(140, 70.0f, 0.0f), 2, 90, true, BLUE(1.0f));
 
-	//ÉvÉåÉCÉÑÅ[
+	//„Éó„É¨„Ç§„É§„Éº
 	m_pPlayer = CPlayerX::Create( D3DXVECTOR3( 50.0f, 60.0f, 50.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 2.0f, 2.0f, 2.0f), 0.03f, CPlayerX::TYPE_HUMAN);
 
 	m_pTextureMlt = NULL;
@@ -116,7 +116,7 @@ HRESULT CLionGame::Init(void)
 //=============================================================================
 void CLionGame::Uninit()
 {
-	//ì_êîÇï€ë∂
+	//ÁÇπÊï∞„Çí‰øùÂ≠ò
 	CManager::SaveScore( MODE_LIONGAME, m_pScore->GetValue());
 
 	//BGM
@@ -129,7 +129,7 @@ void CLionGame::Uninit()
 //=============================================================================
 void CLionGame::Update()
 {
-	//ì¸óÕÇ»Ç«ÇÃçXêVÅAäeÉVÅ[ÉìÇÃUpdateÇÃç≈èâÇ…åƒÇ—èoÇ∑
+	//ÂÖ•Âäõ„Å™„Å©„ÅÆÊõ¥Êñ∞„ÄÅÂêÑ„Ç∑„Éº„É≥„ÅÆUpdate„ÅÆÊúÄÂàù„Å´Âëº„Å≥Âá∫„Åô
 	CManager::Update();
 
 	//Game Clear or Time Up
@@ -142,17 +142,17 @@ void CLionGame::Update()
 		m_state = STATE_BONUS;
 	}
 
-	//èÛë‘çXêV
+	//Áä∂ÊÖãÊõ¥Êñ∞
 	switch( m_state)
 	{
 	case STATE_NORMAL:
-		//éûä‘Ç…Ç»Ç¡ÇΩÇÁÅAêHçﬁÇÇVå¬èWÇﬂÇΩÇÁÅAïœêgÇ∑ÇÈ
+		//ÊôÇÈñì„Å´„Å™„Å£„Åü„Çâ„ÄÅÈ£üÊùê„ÇíÔºóÂÄãÈõÜ„ÇÅ„Åü„Çâ„ÄÅÂ§âË∫´„Åô„Çã
 		if(m_pTime->GetTime() == 15 || m_pPlayer->GetFoodNum() == 7)
 		{
 			m_pTime->StopTime();
 			m_pChange = CChange::Create(CChange::MODE_LION);
 			m_state = STATE_UPGRADE;
-			m_pPlayer->SetState(CPlayerX::STATE_UPGRADE); //ïœêging
+			m_pPlayer->SetState(CPlayerX::STATE_UPGRADE); //Â§âË∫´ing
 
 			//BGM
 			CSound *pSound = CManager::GetSound();
@@ -174,7 +174,7 @@ void CLionGame::Update()
 			m_pChange->Uninit();
 			m_state = STATE_LION;
 			m_pTime->StopTime();
-			m_pPlayer->SetState(CPlayerX::STATE_LION); //ÉâÉCÉIÉìÇ…ïœêg
+			m_pPlayer->SetState(CPlayerX::STATE_LION); //„É©„Ç§„Ç™„É≥„Å´Â§âË∫´
 		}
 		break;
 
@@ -195,7 +195,7 @@ void CLionGame::Update()
 	}
 
 #ifdef _DEBUG
-	//ÉXÉLÉbÉvÉVÅ[Éì
+	//„Çπ„Ç≠„ÉÉ„Éó„Ç∑„Éº„É≥
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
 	CInputMouse *pInputMouse = CManager::GetInputMouse();
 	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN))
@@ -205,7 +205,7 @@ void CLionGame::Update()
 	}
 #endif
 
-	//ÉVÅ[ÉìÇ™êÿÇËë÷Ç¶ÇÈÇ∆Ç±ÇÎÅAäeÉVÅ[ÉìÇÃUpdateÇÃç≈å„Ç…íuÇ¢Ç∆Ç≠
+	//„Ç∑„Éº„É≥„ÅåÂàá„ÇäÊõø„Åà„Çã„Å®„Åì„Çç„ÄÅÂêÑ„Ç∑„Éº„É≥„ÅÆUpdate„ÅÆÊúÄÂæå„Å´ÁΩÆ„ÅÑ„Å®„Åè
 	CManager::SceneChange();
 }
 //=============================================================================
@@ -230,7 +230,7 @@ CPlayerX *CLionGame::GetPlayer(void)
 	return m_pPlayer;
 }
 //=============================================================================
-//ÉQÅ[ÉÄÇ™óßÇøè„Ç™ÇÈÇ∆Ç´ÅAàÍâÒÇÃÇ›ëSïîÉçÅ[ÉhÇ∑ÇÈ
+//„Ç≤„Éº„É†„ÅåÁ´ã„Å°‰∏ä„Åå„Çã„Å®„Åç„ÄÅ‰∏ÄÂõû„ÅÆ„ÅøÂÖ®ÈÉ®„É≠„Éº„Éâ„Åô„Çã
 //=============================================================================
 HRESULT CLionGame::LoadAll(void)
 {
@@ -253,23 +253,23 @@ HRESULT CLionGame::LoadAll(void)
 //=============================================================================
 void CLionGame::CreateStageLiu(void)
 {
-	//ÉhÅ[ÉÄ
+	//„Éâ„Éº„É†
 	CMeshDome::Create( D3DXVECTOR3( 1000.0f, 0.0f, 750.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 1500.0f, 8, 8);
 	CMeshDome::Create( D3DXVECTOR3( 1000.0f, 0.0f, 750.0f), D3DXVECTOR3( D3DX_PI, 0.0f, 0.0f), 1500.0f, 8, 8);
 
-	//è∞
+	//Â∫ä
 	CMeshField::Create( D3DXVECTOR3( 1000.0f, 0.0f, 750.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 20, 15, 100.0f, 100.0f, CMeshField::TYPE_GREEN);
 
-	//ìVà‰
+	//Â§©‰∫ï
 	CMeshRoof::Create( D3DXVECTOR3( 1000.0f, 400.0f, 750.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 10, 8, 200.0f, 200.0f, CMeshRoof::TYPE_WHITE);
 
-	//ÉEÉHÅ[Éã
+	//„Ç¶„Ç©„Éº„É´
 	CMeshWall::Create( D3DXVECTOR3( 1000.0f, 200.0f, 1500.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 20, 4, 100.0f, 100.0f);
 	CMeshWall::Create( D3DXVECTOR3( 1000.0f, 200.0f, 0.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(180.0f), 0.0f), 20, 4, 100.0f, 100.0f);
 	CMeshWall::Create( D3DXVECTOR3( 2000.0f, 200.0f, 750.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(90.0f), 0.0f), 15, 4, 100.0f, 100.0f);
 	CMeshWall::Create( D3DXVECTOR3( 0.0f, 200.0f, 750.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(-90.0f), 0.0f), 15, 4, 100.0f, 100.0f);
 	
-	//àÍî‘âú ÇUå¬
+	//‰∏ÄÁï™Â•• ÔºñÂÄã
 	CCubeX::Create( D3DXVECTOR3( 250.0f, 50.0f, 1100.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 100.0f, 100.0f, 400.0f), CCubeX::TYPE_1X4);
 	CCubeX::Create( D3DXVECTOR3( 550.0f, 50.0f, 1100.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 100.0f, 100.0f, 400.0f), CCubeX::TYPE_1X4);
 	CCubeX::Create( D3DXVECTOR3( 850.0f, 50.0f, 1100.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 100.0f, 100.0f, 400.0f), CCubeX::TYPE_1X4);
@@ -292,7 +292,7 @@ void CLionGame::CreateStageLiu(void)
 	CCubeX::Create( D3DXVECTOR3(1250.0f, 50.0f, 250.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 100.0f, 100.0f, 100.0f), CCubeX::TYPE_1X1);
 	CCubeX::Create( D3DXVECTOR3(1550.0f, 50.0f, 250.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 100.0f, 100.0f, 100.0f), CCubeX::TYPE_1X1);
 
-	//ìG
+	//Êïµ
 	CEnemyX::Create(D3DXVECTOR3(  50, 60.0f, 600.0f), D3DXVECTOR3(0.0f, D3DX_PI / 2, 0.0f), D3DXVECTOR3(2.0f, 2.0f, 2.0f), CEnemyX::TYPE_000);
 	CEnemyX::Create(D3DXVECTOR3( 350, 60.0f, 600.0f), D3DXVECTOR3(0.0f, D3DX_PI / 2, 0.0f), D3DXVECTOR3(2.0f, 2.0f, 2.0f), CEnemyX::TYPE_000);
 	CEnemyX::Create(D3DXVECTOR3( 650, 60.0f, 600.0f), D3DXVECTOR3(0.0f, D3DX_PI / 2, 0.0f), D3DXVECTOR3(2.0f, 2.0f, 2.0f), CEnemyX::TYPE_000);
@@ -309,7 +309,7 @@ void CLionGame::CreateStageLiu(void)
 	CEnemyX::Create(D3DXVECTOR3(1550, 60.0f, 1000.0f), D3DXVECTOR3(0.0f, D3DX_PI / 2, 0.0f), D3DXVECTOR3(2.0f, 2.0f, 2.0f), CEnemyX::TYPE_000);
 	CEnemyX::Create(D3DXVECTOR3(1850, 60.0f, 1000.0f), D3DXVECTOR3(0.0f, D3DX_PI / 2, 0.0f), D3DXVECTOR3(2.0f, 2.0f, 2.0f), CEnemyX::TYPE_000);
 
-	//ÉXÅ[ÉpÅ[ÇÃêHçﬁ
+	//„Çπ„Éº„Éë„Éº„ÅÆÈ£üÊùê
 	CFood::Create(D3DXVECTOR3( 100.0f, 50.0f, 700.0f), D3DXVECTOR2(100.0f, 100.0f), CFood::TYPE_CURRY);
 	CFood::Create(D3DXVECTOR3( 400.0f, 50.0f, 700.0f), D3DXVECTOR2(100.0f, 100.0f), CFood::TYPE_EGG);
 	CFood::Create(D3DXVECTOR3( 700.0f, 50.0f, 700.0f), D3DXVECTOR2(100.0f, 100.0f), CFood::TYPE_ONION);
@@ -327,24 +327,24 @@ void CLionGame::CreateStageLiu(void)
 //=============================================================================
 void CLionGame::CreateStageUsukura(void)
 {
-	//ÉhÅ[ÉÄ
+	//„Éâ„Éº„É†
 	CMeshDome::Create( D3DXVECTOR3( 1050.0f, 0.0f,1500.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 2000.0f, 8, 8);
 	CMeshDome::Create( D3DXVECTOR3( 1050.0f, 0.0f,1500.0f), D3DXVECTOR3( D3DX_PI, 0.0f, 0.0f), 2000.0f, 8, 8);
 
-	//è∞
+	//Â∫ä
 	CMeshField::Create( D3DXVECTOR3( 1050.0f, 0.0f, 1500.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 21, 30, 100.0f, 100.0f, CMeshField::TYPE_GREEN);
 
-	//ìVà‰
+	//Â§©‰∫ï
 	CMeshRoof::Create( D3DXVECTOR3( 1050.0f, 400.0f, 1500.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 21, 30, 100.0f, 100.0f, CMeshRoof::TYPE_WHITE);
 
-	//ÉEÉHÅ[Éã
+	//„Ç¶„Ç©„Éº„É´
 	CMeshWall::Create( D3DXVECTOR3( 1050.0f, 200.0f, 3000.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 21, 4, 100.0f, 100.0f);
 	CMeshWall::Create( D3DXVECTOR3( 1050.0f, 200.0f, 0.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(180.0f), 0.0f), 21, 4, 100.0f, 100.0f);
 	CMeshWall::Create( D3DXVECTOR3( 2100.0f, 200.0f, 1500.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(90.0f), 0.0f), 30, 4, 100.0f, 100.0f);
 	CMeshWall::Create( D3DXVECTOR3( 0.0f, 200.0f, 1500.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(-90.0f), 0.0f), 30, 4, 100.0f, 100.0f);
 	
 	
-	//íI
+	//Ê£ö
 	for(int nCnt = 0 ; nCnt < 4 ; nCnt++)
 	{
 		CCubeX::Create( D3DXVECTOR3( 450.0f + (400 * nCnt), 50.0f, 800.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 100.0f, 100.0f, 400.0f), CCubeX::TYPE_1X4);
@@ -355,7 +355,7 @@ void CLionGame::CreateStageUsukura(void)
 	CCubeX::Create( D3DXVECTOR3( 700.0f , 50.0f, 350.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(90.0f), 0.0f), D3DXVECTOR3( 400.0f, 100.0f, 100.0f), CCubeX::TYPE_1X4);
 	CCubeX::Create( D3DXVECTOR3( 1100.0f , 50.0f, 350.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(90.0f), 0.0f), D3DXVECTOR3( 400.0f, 100.0f, 100.0f), CCubeX::TYPE_1X4);
 
-	//ÉåÉWÅ@
+	//„É¨„Ç∏„ÄÄ
 	CCubeX::Create( D3DXVECTOR3( 1950.0f, 50.0f, 300.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(180.0f), 0.0f), D3DXVECTOR3( 100.0f, 100.0f, 100.0f), CCubeX::TYPE_1X1);
 	CCubeX::Create( D3DXVECTOR3( 1750.0f, 50.0f, 300.0f), D3DXVECTOR3( 0.0f,D3DXToRadian(180.0f), 0.0f), D3DXVECTOR3( 100.0f, 100.0f, 100.0f), CCubeX::TYPE_1X1);
 
@@ -363,7 +363,7 @@ void CLionGame::CreateStageUsukura(void)
 	CStaffX::Create( D3DXVECTOR3( 1975.0f, 60.0f, 300.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 2.0f, 2.0f, 2.0f), CStaffX::TYPE_000);
 	CStaffX::Create( D3DXVECTOR3( 1775.0f, 60.0f, 300.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 2.0f, 2.0f, 2.0f), CStaffX::TYPE_000);
 
-	//ìG
+	//Êïµ
 	CEnemyX::Create( D3DXVECTOR3(150, 60.0f, 1350.0f), D3DXVECTOR3( 0.0f, D3DX_PI/2, 0.0f), D3DXVECTOR3( 2.0f, 2.0f, 2.0f), CEnemyX::TYPE_000);
 	CEnemyX::Create( D3DXVECTOR3(150, 60.0f, 2350.0f), D3DXVECTOR3( 0.0f, D3DX_PI/2, 0.0f), D3DXVECTOR3( 2.0f, 2.0f, 2.0f), CEnemyX::TYPE_000);
 	CEnemyX::Create( D3DXVECTOR3(750, 60.0f, 2850.0f), D3DXVECTOR3( 0.0f, D3DX_PI/2, 0.0f), D3DXVECTOR3( 2.0f, 2.0f, 2.0f), CEnemyX::TYPE_000);
@@ -383,7 +383,7 @@ void CLionGame::CreateStageUsukura(void)
 	CEnemyX::Create( D3DXVECTOR3(1650.0f, 60.0f, 550.0f), D3DXVECTOR3( 0.0f, D3DX_PI/2, 0.0f), D3DXVECTOR3( 2.0f, 2.0f, 2.0f), CEnemyX::TYPE_000);
 	CEnemyX::Create( D3DXVECTOR3(1900.0f, 60.0f, 650.0f), D3DXVECTOR3( 0.0f, D3DX_PI/2, 0.0f), D3DXVECTOR3( 2.0f, 2.0f, 2.0f), CEnemyX::TYPE_000);
 
-	//ÉXÅ[ÉpÅ[ÇÃêHçﬁ
+	//„Çπ„Éº„Éë„Éº„ÅÆÈ£üÊùê
 	CFood::Create(D3DXVECTOR3( 1150.0f, 50.0f, 1950.0f), D3DXVECTOR2(100.0f, 100.0f), CFood::TYPE_CURRY);
 	CFood::Create(D3DXVECTOR3( 1950.0f, 50.0f, 2850.0f), D3DXVECTOR2(100.0f, 100.0f), CFood::TYPE_EGG);
 	CFood::Create(D3DXVECTOR3( 150.0f, 50.0f, 2650.0f), D3DXVECTOR2(100.0f, 100.0f), CFood::TYPE_ONION);
@@ -397,7 +397,7 @@ void CLionGame::CreateStageUsukura(void)
 	CFood::Create(D3DXVECTOR3( 750.0f, 50.0f, 1650.0f), D3DXVECTOR2(100.0f, 100.0f), CFood::TYPE_TOMATO);
 }
 //=============================================================================
-//ó]Ç¡ÇΩÉ^ÉCÉÄÇÃåvéZ
+//‰Ωô„Å£„Åü„Çø„Ç§„É†„ÅÆË®àÁÆó
 //=============================================================================
 void CLionGame::CalcBonus(void)
 {
@@ -409,33 +409,33 @@ void CLionGame::CalcBonus(void)
 	const float fSpeed = 100.0f;
 	bool bMove = false;
 
-	//ÉXÉRÉAí≤êÆ
+	//„Çπ„Ç≥„Ç¢Ë™øÊï¥
 	D3DXVECTOR3 scorePos = m_pScore->GetPosition();
 	D3DXVECTOR3 scoreSize = m_pScore->GetSize();
 
 	if( scorePos.y <= 400 )
 	{
-		//ÉXÉRÉAÇÃà⁄ìÆèàóù
+		//„Çπ„Ç≥„Ç¢„ÅÆÁßªÂãïÂá¶ÁêÜ
 		scorePos += (D3DXVECTOR3(SCREEN_WIDTH/2, 400.0f, 0.0f) - SCORE_POS)  / fSpeed;
 		m_pScore->SetPosition(scorePos);
 
-		//ÉXÉRÉAÇÃÉTÉCÉYí≤êÆ
+		//„Çπ„Ç≥„Ç¢„ÅÆ„Çµ„Ç§„Ç∫Ë™øÊï¥
 		scoreSize += (D3DXVECTOR3( 600, 100, 0.0f) - SCORE_SIZE)  / fSpeed;
 		m_pScore->SetSize(scoreSize);
 			
 		bMove = true;
 	}
 
-	//É^ÉCÉÄí≤êÆ
+	//„Çø„Ç§„É†Ë™øÊï¥
 	D3DXVECTOR3 timePos = m_pTime->GetPosition();
 	D3DXVECTOR3 timeSize = m_pTime->GetSize();
 	if( timePos.y <= 200 )
 	{
-		//É^ÉCÉÄÇÃà⁄ìÆèàóù
+		//„Çø„Ç§„É†„ÅÆÁßªÂãïÂá¶ÁêÜ
 		timePos += (D3DXVECTOR3(SCREEN_WIDTH/2, 200.0f, 0.0f) - TIME_POS)  / fSpeed;
 		m_pTime->SetPosition(timePos);
 
-		//É^ÉCÉÄÇÃÉTÉCÉYí≤êÆ
+		//„Çø„Ç§„É†„ÅÆ„Çµ„Ç§„Ç∫Ë™øÊï¥
 		timeSize += (D3DXVECTOR3( 200, 100, 0.0f) - TIME_SIZE)  / fSpeed;
 		m_pTime->SetSize(timeSize);
 

@@ -1,9 +1,9 @@
-//============================================
+ï»¿//============================================
 //
-// ƒ^ƒCƒgƒ‹:	 –¢—ˆ‘n‘¢“Wƒ`[ƒ€204
-// ƒvƒƒOƒ‰ƒ€–¼: enemyX.h
-// ì¬ŽÒ:		 HAL“Œ‹žƒQ[ƒ€Šw‰È@—«“ìG
-// ì¬“ú:       2016/12/12
+// ã‚¿ã‚¤ãƒˆãƒ«:	 æœªæ¥å‰µé€ å±•ãƒãƒ¼ãƒ 204
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å: enemyX.h
+// ä½œæˆè€…:		 HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
+// ä½œæˆæ—¥:       2016/12/12
 //
 //============================================
 
@@ -11,22 +11,22 @@
 #define _ENEMYX_H_
 
 //============================================
-//ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+//ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //============================================
 #include "sceneX.h"
 
 //============================================
-//ƒ}ƒNƒ’è‹`
+//ãƒžã‚¯ãƒ­å®šç¾©
 //============================================
 #define MAX_LIMB (4)
 //============================================
-//‘O•ûéŒ¾
+//å‰æ–¹å®£è¨€
 //============================================
 class CShadow;
 class CLimbX;
 
 //============================================
-//\‘¢‘Ì’è‹`
+//æ§‹é€ ä½“å®šç¾©
 //============================================
 class CEnemyX : public CSceneX
 {
@@ -73,18 +73,18 @@ protected:
 	void UpdateMotion(void);
 
 private:
-	//ƒ‚ƒfƒ‹ŠÖŒW
-	static LPDIRECT3DTEXTURE9	m_pTexture		[TYPE_MAX];		// ƒeƒNƒXƒ`ƒƒ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	static LPD3DXMESH			m_pD3DXMesh		[TYPE_MAX];		// ƒƒbƒVƒ…î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	static LPD3DXBUFFER			m_pD3DXBuffMat	[TYPE_MAX];		// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	static DWORD				m_nNumMat		[TYPE_MAX];		// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ì”	
+	//ãƒ¢ãƒ‡ãƒ«é–¢ä¿‚
+	static LPDIRECT3DTEXTURE9	m_pTexture		[TYPE_MAX];		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	static LPD3DXMESH			m_pD3DXMesh		[TYPE_MAX];		// ãƒ¡ãƒƒã‚·ãƒ¥æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	static LPD3DXBUFFER			m_pD3DXBuffMat	[TYPE_MAX];		// ãƒžãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	static DWORD				m_nNumMat		[TYPE_MAX];		// ãƒžãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã®æ•°	
 
-	//ƒ‚[ƒVƒ‡ƒ“ŠÖŒW
+	//ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³é–¢ä¿‚
 	static MOTION *m_pMotionPara[TYPE_MAX];
 	int m_nCntMotion;
 	int m_nMotionNow;
 
-	//Šî–{î•ñ
+	//åŸºæœ¬æƒ…å ±
 	D3DXVECTOR3 m_front;
 	float m_rotTurn;
 	STATE m_state;
@@ -94,8 +94,8 @@ private:
 	D3DXVECTOR3 m_sclInit;
 	D3DXVECTOR3 m_rotSave;
 
-	CShadow *m_pShadow;			//‰e
-	CLimbX *m_pLimb[MAX_LIMB];	//Žè‘«x4
+	CShadow *m_pShadow;			//å½±
+	CLimbX *m_pLimb[MAX_LIMB];	//æ‰‹è¶³x4
 };
 
 #endif

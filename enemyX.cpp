@@ -1,14 +1,14 @@
-//============================================
+ï»¿//============================================
 //
-// ƒ^ƒCƒgƒ‹:	 –¢—ˆ‘n‘¢“Wƒ`[ƒ€204
-// ƒvƒƒOƒ‰ƒ€–¼: enemyX.cpp
-// ì¬Ò:		 HAL“Œ‹ƒQ[ƒ€Šw‰È@—«“ìG
-// ì¬“ú:       2016/12/12
+// ã‚¿ã‚¤ãƒˆãƒ«:	 æœªæ¥å‰µé€ å±•ãƒãƒ¼ãƒ 204
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å: enemyX.cpp
+// ä½œæˆè€…:		 HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
+// ä½œæˆæ—¥:       2016/12/12
 //
 //============================================
 
 //============================================
-//ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+//ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //============================================
 #include "main.h"
 #include "enemyX.h"
@@ -20,33 +20,33 @@
 #include "limbX.h"
 
 //============================================
-// ƒ}ƒNƒ’è‹`
+// ãƒã‚¯ãƒ­å®šç¾©
 //============================================
 #define MODEL_ENEMY000 "data/MODEL/enemy_body.x"
-#define VALUE_ROTATE	(D3DX_PI * 0.1f) 	// ‰ñ“]—Ê
+#define VALUE_ROTATE	(D3DX_PI * 0.1f) 	// å›è»¢é‡
 #define MAX_MOTION (4)
 
 //=============================================================================
-// \‘¢‘Ì’è‹`
+// æ§‹é€ ä½“å®šç¾©
 //=============================================================================
 
 //============================================
-// Ã“Iƒƒ“ƒo[•Ï”‚Ì‰Šú‰»
+// é™çš„ãƒ¡ãƒ³ãƒãƒ¼å¤‰æ•°ã®åˆæœŸåŒ–
 //============================================
 CEnemyX::MOTION		*CEnemyX::m_pMotionPara[TYPE_MAX] = {};
-LPDIRECT3DTEXTURE9	CEnemyX::m_pTexture		[TYPE_MAX] = {};		// ƒeƒNƒXƒ`ƒƒ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-LPD3DXMESH			CEnemyX::m_pD3DXMesh	[TYPE_MAX] = {};		// ƒƒbƒVƒ…î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-LPD3DXBUFFER		CEnemyX::m_pD3DXBuffMat	[TYPE_MAX] = {};		// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-DWORD				CEnemyX::m_nNumMat		[TYPE_MAX] = {};		// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ì”
+LPDIRECT3DTEXTURE9	CEnemyX::m_pTexture		[TYPE_MAX] = {};		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+LPD3DXMESH			CEnemyX::m_pD3DXMesh	[TYPE_MAX] = {};		// ãƒ¡ãƒƒã‚·ãƒ¥æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+LPD3DXBUFFER		CEnemyX::m_pD3DXBuffMat	[TYPE_MAX] = {};		// ãƒãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+DWORD				CEnemyX::m_nNumMat		[TYPE_MAX] = {};		// ãƒãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã®æ•°
 
 //=============================================================================
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CEnemyX::CEnemyX()
 {
 	m_pShadow = NULL;
 
-	//è‘«
+	//æ‰‹è¶³
 	for(int cntLimb = 0; cntLimb < MAX_LIMB; cntLimb++)
 	{
 		m_pLimb[cntLimb] = NULL;
@@ -54,7 +54,7 @@ CEnemyX::CEnemyX()
 }
 
 //=============================================================================
-//ƒfƒXƒgƒ‰ƒNƒ^
+//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CEnemyX::~CEnemyX()
 {
@@ -70,26 +70,26 @@ HRESULT CEnemyX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl)
 	CSceneX::Init( pos, rot, scl);
 	SetObjType( OBJTYPE_L_ENEMY);
 
-	//Šî–{î•ñ
+	//åŸºæœ¬æƒ…å ±
 	m_state = STATE_NORMAL;
 	m_nCntState = 0;
 	m_posInit = pos;
 	m_rotInit = rot;
 	m_sclInit = scl;
 
-	//ƒ‚[ƒVƒ‡ƒ“ŠÖ˜A
+	//ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³é–¢é€£
 	m_nCntMotion = 0;
 	m_nMotionNow = 0;
 	m_front = m_pMotionPara[TYPE_000][0].front / m_pMotionPara[TYPE_000][0].nFrame;
 	m_rotTurn = m_pMotionPara[TYPE_000][0].rotY / m_pMotionPara[TYPE_000][0].nFrame;
 
-	//è‘«
+	//æ‰‹è¶³
 	m_pLimb[0] = CLimbX::Create( pos, rot, scl, CLimbX::TYPE_L_HAND);
 	m_pLimb[1] = CLimbX::Create( pos, rot, scl, CLimbX::TYPE_R_HAND);
 	m_pLimb[2] = CLimbX::Create( pos, rot, scl, CLimbX::TYPE_L_FOOT);
 	m_pLimb[3] = CLimbX::Create( pos, rot, scl, CLimbX::TYPE_R_FOOT);
 
-	//‰e‚Ì¶¬
+	//å½±ã®ç”Ÿæˆ
 	m_pShadow = CShadow::Create( pos, D3DXVECTOR2( 50.0f, 50.0f));
 
 	return S_OK;
@@ -100,7 +100,7 @@ HRESULT CEnemyX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl)
 //=============================================================================
 void CEnemyX::Uninit(void)
 {
-	//è‘«
+	//æ‰‹è¶³
 	for(int cntLimb = 0; cntLimb < MAX_LIMB; cntLimb++)
 	{
 		m_pLimb[cntLimb]->Uninit();
@@ -114,7 +114,7 @@ void CEnemyX::Uninit(void)
 //=============================================================================
 void CEnemyX::Update(void)
 {
-	//ó‘ÔXV
+	//çŠ¶æ…‹æ›´æ–°
 	switch( m_state)
 	{
 	case STATE_NORMAL:
@@ -141,7 +141,7 @@ void CEnemyX::Update(void)
 		break;
 	}
 
-	//è‘«‚ÌXVˆ—
+	//æ‰‹è¶³ã®æ›´æ–°å‡¦ç†
 	for(int cntLimb = 0; cntLimb < MAX_LIMB; cntLimb++)
 	{
 		m_pLimb[cntLimb]->SetPosition(this->GetPosition());
@@ -149,7 +149,7 @@ void CEnemyX::Update(void)
 		m_pLimb[cntLimb]->Update();
 	}
 
-	//‰e‚ÌXVˆ—
+	//å½±ã®æ›´æ–°å‡¦ç†
 	m_pShadow->SetPosition( this->GetPosition());
 }
 
@@ -158,7 +158,7 @@ void CEnemyX::Update(void)
 //=============================================================================
 void CEnemyX::Draw(void)
 {
-	//è‘«
+	//æ‰‹è¶³
 	for(int cntLimb = 0; cntLimb < MAX_LIMB; cntLimb++)
 	{
 		m_pLimb[cntLimb]->Draw();
@@ -176,14 +176,14 @@ CEnemyX *CEnemyX::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, TYPE
 	pEnemy = new CEnemyX;
 	pEnemy->Init(pos, rot, scl);
 
-	//Xfile‚ÌŠ„‚è“–‚Ä
+	//Xfileã®å‰²ã‚Šå½“ã¦
 	pEnemy->BindXfile( m_pTexture[type], m_pD3DXMesh[type], m_pD3DXBuffMat[type], m_nNumMat[type]);
 
 	return pEnemy;
 }
 
 //=============================================================================
-// ‰ñ“]Šp“x‚ğæ“¾
+// å›è»¢è§’åº¦ã‚’å–å¾—
 //=============================================================================
 D3DXVECTOR3 CEnemyX::Get2RotDiffAngle( D3DXVECTOR3 rot, D3DXVECTOR3 rotTarget)
 {
@@ -218,7 +218,7 @@ D3DXVECTOR3 CEnemyX::Get2RotDiffAngle( D3DXVECTOR3 rot, D3DXVECTOR3 rotTarget)
 }
 
 //=============================================================================
-//XFILE‚Ìƒ[ƒh
+//XFILEã®ãƒ­ãƒ¼ãƒ‰
 //=============================================================================
 HRESULT CEnemyX::Load(void)
 {
@@ -241,16 +241,16 @@ HRESULT CEnemyX::Load(void)
 			m_nNumMat[cntType] == 0
 			)
 		{
-			// Xƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
+			// Xãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
 			if(FAILED(D3DXLoadMeshFromX(
-				strFileName,			// “Ç‚İ‚Şƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹–¼(Xƒtƒ@ƒCƒ‹)
-				D3DXMESH_SYSTEMMEM,		// ƒƒbƒVƒ…‚Ìì¬ƒIƒvƒVƒ‡ƒ“‚ğw’è
-				pDevice,				// IDirect3DDevice9ƒCƒ“ƒ^[ƒtƒFƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-				NULL,					// —×Ú«ƒf[ƒ^‚ğŠÜ‚Şƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-				&m_pD3DXBuffMat[cntType],	// ƒ}ƒeƒŠƒAƒ‹ƒf[ƒ^‚ğŠÜ‚Şƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-				NULL,					// ƒGƒtƒFƒNƒgƒCƒ“ƒXƒ^ƒ“ƒX‚Ì”z—ñ‚ğŠÜ‚Şƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-				&m_nNumMat[cntType],	// D3DXMATERIAL\‘¢‘Ì‚Ì”
-				&m_pD3DXMesh[cntType]	// ID3DXMeshƒCƒ“ƒ^[ƒtƒFƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ÌƒAƒhƒŒƒX
+				strFileName,			// èª­ã¿è¾¼ã‚€ãƒ¢ãƒ‡ãƒ«ãƒ•ã‚¡ã‚¤ãƒ«å(Xãƒ•ã‚¡ã‚¤ãƒ«)
+				D3DXMESH_SYSTEMMEM,		// ãƒ¡ãƒƒã‚·ãƒ¥ã®ä½œæˆã‚ªãƒ—ã‚·ãƒ§ãƒ³ã‚’æŒ‡å®š
+				pDevice,				// IDirect3DDevice9ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+				NULL,					// éš£æ¥æ€§ãƒ‡ãƒ¼ã‚¿ã‚’å«ã‚€ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+				&m_pD3DXBuffMat[cntType],	// ãƒãƒ†ãƒªã‚¢ãƒ«ãƒ‡ãƒ¼ã‚¿ã‚’å«ã‚€ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+				NULL,					// ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®é…åˆ—ã‚’å«ã‚€ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+				&m_nNumMat[cntType],	// D3DXMATERIALæ§‹é€ ä½“ã®æ•°
+				&m_pD3DXMesh[cntType]	// ID3DXMeshã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã®ã‚¢ãƒ‰ãƒ¬ã‚¹
 				)))
 			{
 				return E_FAIL;
@@ -259,32 +259,32 @@ HRESULT CEnemyX::Load(void)
 		}
 	}
 
-	//ƒ‚[ƒVƒ‡ƒ“‚ğƒ[ƒh‚·‚é
+	//ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ãƒ­ãƒ¼ãƒ‰ã™ã‚‹
 	LoadMotion();
 
 	return S_OK;
 }
 
 //=============================================================================
-//XFILE‚ÌƒAƒ“ƒ[ƒh
+//XFILEã®ã‚¢ãƒ³ãƒ­ãƒ¼ãƒ‰
 //=============================================================================
 void CEnemyX::Unload(void)
 {
 	for(int cntType = 0; cntType < TYPE_MAX; cntType++)
 	{
-		// ƒeƒNƒXƒ`ƒƒ‚ÌŠJ•ú
+		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®é–‹æ”¾
 		if(m_pTexture[cntType] != NULL)
 		{
 			m_pTexture[cntType]->Release();
 			m_pTexture[cntType] = NULL;
 		}
-		// ƒƒbƒVƒ…‚ÌŠJ•ú
+		// ãƒ¡ãƒƒã‚·ãƒ¥ã®é–‹æ”¾
 		if(m_pD3DXMesh[cntType] != NULL)
 		{
 			m_pD3DXMesh[cntType]->Release();
 			m_pD3DXMesh[cntType] = NULL;
 		}
-		// ƒ}ƒeƒŠƒAƒ‹‚ÌŠJ•ú
+		// ãƒãƒ†ãƒªã‚¢ãƒ«ã®é–‹æ”¾
 		if(m_pD3DXBuffMat != NULL)
 		{
 			m_pD3DXBuffMat[cntType]->Release();
@@ -294,16 +294,16 @@ void CEnemyX::Unload(void)
 
 }
 //=============================================================================
-// “G‚ªƒm[ƒ}ƒ‹ó‘Ô‚Å‚Ìƒ‚[ƒVƒ‡ƒ“
+// æ•µãŒãƒãƒ¼ãƒãƒ«çŠ¶æ…‹ã§ã®ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³
 //=============================================================================
 void CEnemyX::UpdateMotion(void)
 {
-	//ˆÚ“®ˆ—
+	//ç§»å‹•å‡¦ç†
 	D3DXVECTOR3 pos = this->GetPosition();
 	pos += m_front;
 	this->SetPosition( pos);
 
-	//Œü‚«
+	//å‘ã
 	D3DXVECTOR3 rot = this->GetRot();
 	rot.y += m_rotTurn;
 	if( rot.y > D3DX_PI)
@@ -312,7 +312,7 @@ void CEnemyX::UpdateMotion(void)
 	}
 	this->SetRot( rot);
 
-	//ƒ‚[ƒVƒ‡ƒ“XVˆ—
+	//ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³æ›´æ–°å‡¦ç†
 	m_nCntMotion++;
 	if( m_nCntMotion >= m_pMotionPara[TYPE_000][m_nMotionNow].nFrame)
 	{
@@ -324,7 +324,7 @@ void CEnemyX::UpdateMotion(void)
 
 }
 //=============================================================================
-// ƒXƒe[ƒg‚ğİ’è
+// ã‚¹ãƒ†ãƒ¼ãƒˆã‚’è¨­å®š
 //=============================================================================
 void CEnemyX::SetState(STATE state, int nCntState)
 {
@@ -340,14 +340,14 @@ void CEnemyX::SetState(STATE state, int nCntState)
 	}
 }
 //=============================================================================
-// ƒXƒe[ƒg‚ğæ“¾
+// ã‚¹ãƒ†ãƒ¼ãƒˆã‚’å–å¾—
 //=============================================================================
 CEnemyX::STATE CEnemyX::GetState(void)
 {
 	return m_state;
 }
 //=============================================================================
-// ƒ‚[ƒVƒ‡ƒ“‚ğƒ[ƒh
+// ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ãƒ­ãƒ¼ãƒ‰
 //=============================================================================
 HRESULT CEnemyX::LoadMotion(void)
 {

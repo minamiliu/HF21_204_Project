@@ -1,14 +1,14 @@
-//============================================
+ï»¿//============================================
 //
-// ƒ^ƒCƒgƒ‹:	 –¢—ˆ‘n‘¢“Wƒ`[ƒ€204
-// ƒvƒƒOƒ‰ƒ€–¼: scene2D.cpp
-// ì¬ŽÒ:		 HAL“Œ‹žƒQ[ƒ€Šw‰È@—«“ìG
-// ì¬“ú:       2016/10/19
+// ã‚¿ã‚¤ãƒˆãƒ«:	 æœªæ¥å‰µé€ å±•ãƒãƒ¼ãƒ 204
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å: scene2D.cpp
+// ä½œæˆè€…:		 HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
+// ä½œæˆæ—¥:       2016/10/19
 //
 //============================================
 
 //============================================
-//ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+//ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //============================================
 #include "main.h"
 #include "scene2D.h"
@@ -17,34 +17,34 @@
 #include "input.h"
 
 //============================================
-// ƒ}ƒNƒ’è‹`
+// ãƒžã‚¯ãƒ­å®šç¾©
 //============================================
 
 //=============================================================================
-// \‘¢‘Ì’è‹`
+// æ§‹é€ ä½“å®šç¾©
 //=============================================================================
 
 
 //=============================================================================
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CScene2D::CScene2D()
 {
-	m_pTexture = NULL;		// ƒeƒNƒXƒ`ƒƒ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	m_pVtxBuff = NULL;		// ’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	m_pos = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);			// ƒ|ƒŠƒSƒ“‚ÌˆÊ’u
+	m_pTexture = NULL;		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	m_pVtxBuff = NULL;		// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	m_pos = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);			// ãƒãƒªã‚´ãƒ³ã®ä½ç½®
 	m_bLoadTexture = false;
 }
 CScene2D::CScene2D(LAYER layer) : CScene(layer)
 {
-	m_pTexture = NULL;		// ƒeƒNƒXƒ`ƒƒ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	m_pVtxBuff = NULL;		// ’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	m_pos = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);			// ƒ|ƒŠƒSƒ“‚ÌˆÊ’u
+	m_pTexture = NULL;		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	m_pVtxBuff = NULL;		// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	m_pos = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);			// ãƒãƒªã‚´ãƒ³ã®ä½ç½®
 	m_bLoadTexture = false;
 }
 
 //=============================================================================
-//ƒfƒXƒgƒ‰ƒNƒ^
+//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CScene2D::~CScene2D()
 {
@@ -53,7 +53,7 @@ CScene2D::~CScene2D()
 
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚Ì‰Šú‰»ˆ—
+// ãƒãƒªã‚´ãƒ³ã®åˆæœŸåŒ–å‡¦ç†
 //=============================================================================
 HRESULT CScene2D::Init(void)
 {
@@ -65,29 +65,29 @@ HRESULT CScene2D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 	LPDIRECT3DDEVICE9 pDevice;
 	pDevice = CManager::GetRenderer()->GetDevice();
 
-	// ƒ|ƒŠƒSƒ“‚Ìî•ñ‚ðÝ’u
+	// ãƒãƒªã‚´ãƒ³ã®æƒ…å ±ã‚’è¨­ç½®
 	m_pos = pos;
 	m_size = size;
 
-	// ’¸“_ƒoƒbƒtƒ@‚Ì¶¬
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	if(FAILED(pDevice->CreateVertexBuffer(
-		sizeof(VERTEX_2D)*NUM_VERTEX,	//’¸“_ƒf[ƒ^‚Ìƒoƒbƒtƒ@ƒTƒCƒY 
+		sizeof(VERTEX_2D)*NUM_VERTEX,	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º 
 		D3DUSAGE_WRITEONLY, 
-		FVF_VERTEX_2D,			//’¸“_ƒtƒH[ƒ}ƒbƒg
+		FVF_VERTEX_2D,			//é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆ
 		D3DPOOL_MANAGED, 
-		&m_pVtxBuff,		//’¸“_ƒoƒbƒtƒ@ƒCƒ“ƒ^[ƒtƒF[ƒX‚Ìƒ|ƒCƒ“ƒ^
+		&m_pVtxBuff,		//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã®ãƒã‚¤ãƒ³ã‚¿
 		NULL)))
 	{
 		return E_FAIL;
 	}
 
-	// ’¸“_î•ñ‚ðÝ’è
+	// é ‚ç‚¹æƒ…å ±ã‚’è¨­å®š
 	VERTEX_2D *pVtx;
 
-	//’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 	m_pVtxBuff->Lock( 0, 0, (void**)&pVtx, 0);
 
-	// ƒ|ƒŠƒSƒ“‚ÌˆÊ’u‚ðÝ’è
+	// ãƒãƒªã‚´ãƒ³ã®ä½ç½®ã‚’è¨­å®š
 	pVtx[0].pos = D3DXVECTOR3(m_pos.x - (m_size.x/2), m_pos.y - (m_size.y/2), 0.0f);
 	pVtx[1].pos = D3DXVECTOR3(m_pos.x + (m_size.x/2), m_pos.y - (m_size.y/2), 0.0f);
 	pVtx[2].pos = D3DXVECTOR3(m_pos.x - (m_size.x/2), m_pos.y + (m_size.y/2), 0.0f);
@@ -105,7 +105,7 @@ HRESULT CScene2D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 	pVtx[2].col = D3DCOLOR_RGBA(255,255,255,255);
 	pVtx[3].col = D3DCOLOR_RGBA(255,255,255,255);
 
-	//ƒeƒNƒXƒ`ƒƒÀ•WŽw’è
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™æŒ‡å®š
 	pVtx[0].tex = D3DXVECTOR2(0.0F, 0.0F);
 	pVtx[1].tex = D3DXVECTOR2(1.0F, 0.0F);
 	pVtx[2].tex = D3DXVECTOR2(0.0F, 1.0F);
@@ -117,19 +117,19 @@ HRESULT CScene2D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 }
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚Ì‰Šú‰»ˆ—
+// ãƒãƒªã‚´ãƒ³ã®åˆæœŸåŒ–å‡¦ç†
 //=============================================================================
 HRESULT CScene2D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size, D3DXVECTOR2 ptnSize)
 {
 	Init(pos, size);
 
-	// ’¸“_î•ñ‚ðÝ’è
+	// é ‚ç‚¹æƒ…å ±ã‚’è¨­å®š
 	VERTEX_2D *pVtx;
 
-	//’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 	m_pVtxBuff->Lock( 0, 0, (void**)&pVtx, 0);
 
-	//ƒeƒNƒXƒ`ƒƒÀ•WŽw’è
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™æŒ‡å®š
 	pVtx[0].tex = D3DXVECTOR2( ptnSize.x * 0.0f, ptnSize.y * 0.0f);
 	pVtx[1].tex = D3DXVECTOR2( ptnSize.x * 1.0f, ptnSize.y * 0.0f);
 	pVtx[2].tex = D3DXVECTOR2( ptnSize.x * 0.0f, ptnSize.y * 1.0f);
@@ -142,31 +142,31 @@ HRESULT CScene2D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size, D3DXVECTOR2 ptnSize)
 
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚ÌI—¹ˆ—
+// ãƒãƒªã‚´ãƒ³ã®çµ‚äº†å‡¦ç†
 //=============================================================================
 void CScene2D::Uninit(void)
 {
-	// ’¸“_ƒoƒbƒtƒ@‚Ì”jŠü
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ç ´æ£„
 	if(m_pVtxBuff != NULL)
 	{
 		m_pVtxBuff->Release();
 		m_pVtxBuff = NULL;
 	}
 
-	// ƒeƒNƒXƒ`ƒƒ‚Ì”jŠü
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ç ´æ£„
 	if(m_pTexture != NULL && m_bLoadTexture == true)
 	{
 		m_pTexture->Release();
 		m_pTexture = NULL;
 	}
 
-	//ƒIƒuƒWƒFƒNƒg‚Ì”jŠü
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç ´æ£„
 	Release();
 }
 
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚ÌXVˆ—
+// ãƒãƒªã‚´ãƒ³ã®æ›´æ–°å‡¦ç†
 //=============================================================================
 void CScene2D::Update(void)
 {
@@ -174,32 +174,32 @@ void CScene2D::Update(void)
 }
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚Ì•`‰æˆ—
+// ãƒãƒªã‚´ãƒ³ã®æç”»å‡¦ç†
 //=============================================================================
 void CScene2D::Draw(void)
 {
 		LPDIRECT3DDEVICE9 pDevice;
 		pDevice = CManager::GetRenderer()->GetDevice();
 
-		// ’¸“_ƒoƒbƒtƒ@‚ðƒf[ƒ^ƒXƒgƒŠ[ƒ€‚ÉÝ’è
+		// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒ‡ãƒ¼ã‚¿ã‚¹ãƒˆãƒªãƒ¼ãƒ ã«è¨­å®š
 		pDevice->SetStreamSource(0, m_pVtxBuff, 0, sizeof(VERTEX_2D));
 
-		// ’¸“_ƒtƒH[ƒ}ƒbƒg‚ÌÝ’è
+		// é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆã®è¨­å®š
 		pDevice->SetFVF(FVF_VERTEX_2D);
 
-		// ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
+		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®è¨­å®š
 		pDevice->SetTexture(0, m_pTexture);
 
-		// ƒ|ƒŠƒSƒ“‚Ì•`‰æ
+		// ãƒãƒªã‚´ãƒ³ã®æç”»
 		pDevice->DrawPrimitive(
-			D3DPT_TRIANGLESTRIP,	//ƒvƒŠƒ~ƒeƒBƒu‚ÌŽí—Þ
-			0,						//ƒ[ƒh‚·‚éÅ‰‚Ì’¸“_ƒCƒ“ƒfƒbƒNƒX
-			NUM_POLYGON				//ƒ|ƒŠƒSƒ“‚Ì”
+			D3DPT_TRIANGLESTRIP,	//ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ã®ç¨®é¡ž
+			0,						//ãƒ­ãƒ¼ãƒ‰ã™ã‚‹æœ€åˆã®é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+			NUM_POLYGON				//ãƒãƒªã‚´ãƒ³ã®æ•°
 		);
 }
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚Ì¶¬ˆ—
+// ãƒãƒªã‚´ãƒ³ã®ç”Ÿæˆå‡¦ç†
 //=============================================================================
 CScene2D *CScene2D::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, LPCSTR strFileName)
 {
@@ -207,26 +207,26 @@ CScene2D *CScene2D::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, LPCSTR strFileName
 	pScene2D = new CScene2D;
 	pScene2D->Init(pos, size);
 
-	//ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚Ýž‚Ý
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
 	pScene2D->Load( strFileName);
 
 	return pScene2D;
 }
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚ÌÀ•WÝ’u
+// ãƒãƒªã‚´ãƒ³ã®åº§æ¨™è¨­ç½®
 //=============================================================================
 void CScene2D::SetPosition(D3DXVECTOR3 pos)
 {
 	m_pos = pos;
 
-	// ’¸“_î•ñ‚ðÝ’è
+	// é ‚ç‚¹æƒ…å ±ã‚’è¨­å®š
 	VERTEX_2D *pVtx;
 
-	//’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 	m_pVtxBuff->Lock( 0, 0, (void**)&pVtx, 0);
 
-	// ƒ|ƒŠƒSƒ“‚ÌˆÊ’u‚ðÝ’è
+	// ãƒãƒªã‚´ãƒ³ã®ä½ç½®ã‚’è¨­å®š
 	pVtx[0].pos = D3DXVECTOR3(m_pos.x - (m_size.x/2), m_pos.y - (m_size.y/2), 0.0f);
 	pVtx[1].pos = D3DXVECTOR3(m_pos.x + (m_size.x/2), m_pos.y - (m_size.y/2), 0.0f);
 	pVtx[2].pos = D3DXVECTOR3(m_pos.x - (m_size.x/2), m_pos.y + (m_size.y/2), 0.0f);
@@ -236,21 +236,21 @@ void CScene2D::SetPosition(D3DXVECTOR3 pos)
 }
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚ÌÀ•WŽæ“¾
+// ãƒãƒªã‚´ãƒ³ã®åº§æ¨™å–å¾—
 //=============================================================================
 D3DXVECTOR3 CScene2D::GetPosition(void)
 {
 	return m_pos;
 }
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚ÌƒTƒCƒYŽæ“¾
+// ãƒãƒªã‚´ãƒ³ã®ã‚µã‚¤ã‚ºå–å¾—
 //=============================================================================
 D3DXVECTOR3 CScene2D::GetSize(void)
 {
 	return m_size;
 }
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚ÌƒeƒNƒXƒ`ƒƒ‚ð“Ç‚Ýž‚Þ
+// ãƒãƒªã‚´ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’èª­ã¿è¾¼ã‚€
 //=============================================================================
 HRESULT CScene2D::Load(LPCSTR strFileName)
 {
@@ -259,10 +259,10 @@ HRESULT CScene2D::Load(LPCSTR strFileName)
 		LPDIRECT3DDEVICE9 pDevice;
 		pDevice = CManager::GetRenderer()->GetDevice();
 
-		// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚Ýž‚Ý
+		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
 		HRESULT result = D3DXCreateTextureFromFile( pDevice, strFileName, &m_pTexture);
 
-		// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚Ýž‚Ýƒtƒ‰ƒO
+		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿ãƒ•ãƒ©ã‚°
 		m_bLoadTexture = true;
 	}
 
@@ -270,7 +270,7 @@ HRESULT CScene2D::Load(LPCSTR strFileName)
 }
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚ÌƒeƒNƒXƒ`ƒƒ‚ðŠ„‚è“–‚Ä‚é
+// ãƒãƒªã‚´ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’å‰²ã‚Šå½“ã¦ã‚‹
 //=============================================================================
 void CScene2D::BindTexture( LPDIRECT3DTEXTURE9 pTexture)
 {
@@ -278,20 +278,20 @@ void CScene2D::BindTexture( LPDIRECT3DTEXTURE9 pTexture)
 }
 
 //=============================================================================
-//ƒAƒjƒ‚Ìƒpƒ^[ƒ“‚ð•Ï‚¦‚é
+//ã‚¢ãƒ‹ãƒ¡ã®ãƒ‘ã‚¿ãƒ¼ãƒ³ã‚’å¤‰ãˆã‚‹
 //=============================================================================
 void CScene2D::SetTexture(int patX,int patY,int animPat)
 {
-	{//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ð–„‚ß‚é
+	{//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 		VERTEX_2D *pVtx;
 
 		float fPosXLeft	, fPosXRight;
 		float fPosYUp	, fPosYDown;
-		// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 
 		m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
-		// ƒeƒNƒXƒ`ƒƒÀ•W‚ÌÝ’è
+		// ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™ã®è¨­å®š
 		fPosXLeft	= animPat % patX * (1.0f/patX);
 		fPosXRight	= fPosXLeft + (1.0f/patX);
 		fPosYUp		= animPat / patX * (1.0f/patY);
@@ -302,20 +302,20 @@ void CScene2D::SetTexture(int patX,int patY,int animPat)
 		pVtx[2].tex = D3DXVECTOR2( fPosXLeft, fPosYDown );
 		pVtx[3].tex = D3DXVECTOR2( fPosXRight, fPosYDown );
 
-		// ’¸“_ƒf[ƒ^‚ðƒAƒ“ƒƒbƒN‚·‚é
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 		m_pVtxBuff->Unlock();
 	}
 }
 
 //=============================================================================
-//F‚ð•ÏX
+//è‰²ã‚’å¤‰æ›´
 //=============================================================================
 void CScene2D::SetColor(const D3DXCOLOR &col)
 {
-	// ’¸“_î•ñ‚ðÝ’è
+	// é ‚ç‚¹æƒ…å ±ã‚’è¨­å®š
 	VERTEX_2D *pVtx;
 
-	//’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 	m_pVtxBuff->Lock( 0, 0, (void**)&pVtx, 0);
 
 	//color
@@ -334,18 +334,18 @@ void CScene2D::SetTexture(LPCSTR strFileName)
 	LPDIRECT3DDEVICE9 pDevice;
 	pDevice = CManager::GetRenderer()->GetDevice();
 
-	// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚Ýž‚Ý
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
 	D3DXCreateTextureFromFile( pDevice, strFileName, &m_pTexture);
 }
 //=============================================================================
-//’ˆÓFƒAƒ‹ƒtƒ@’l‚ÍintŒ^
+//æ³¨æ„ï¼šã‚¢ãƒ«ãƒ•ã‚¡å€¤ã¯intåž‹
 //=============================================================================
 void CScene2D::SetAlpha(int alpha)
 {
-	// ’¸“_î•ñ‚ðÝ’è
+	// é ‚ç‚¹æƒ…å ±ã‚’è¨­å®š
 	VERTEX_2D *pVtx;
 
-	//’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 	m_pVtxBuff->Lock( 0, 0, (void**)&pVtx, 0);
 
 	//color
@@ -362,13 +362,13 @@ void CScene2D::SetAlpha(int alpha)
 void CScene2D::SetSize(D3DXVECTOR3 size)
 {
 	m_size = size;
-	// ’¸“_î•ñ‚ðÝ’è
+	// é ‚ç‚¹æƒ…å ±ã‚’è¨­å®š
 	VERTEX_2D *pVtx;
 
-	//’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 	m_pVtxBuff->Lock( 0, 0, (void**)&pVtx, 0);
 
-	// ƒ|ƒŠƒSƒ“‚ÌˆÊ’u‚ðÝ’è
+	// ãƒãƒªã‚´ãƒ³ã®ä½ç½®ã‚’è¨­å®š
 	pVtx[0].pos = D3DXVECTOR3(m_pos.x - (m_size.x/2), m_pos.y - (m_size.y/2), 0.0f);
 	pVtx[1].pos = D3DXVECTOR3(m_pos.x + (m_size.x/2), m_pos.y - (m_size.y/2), 0.0f);
 	pVtx[2].pos = D3DXVECTOR3(m_pos.x - (m_size.x/2), m_pos.y + (m_size.y/2), 0.0f);
@@ -377,19 +377,19 @@ void CScene2D::SetSize(D3DXVECTOR3 size)
 	m_pVtxBuff->Unlock();
 }
 //=============================================================================
-//ƒAƒjƒ‚Ìƒpƒ^[ƒ“‚ð•Ï‚¦‚é
+//ã‚¢ãƒ‹ãƒ¡ã®ãƒ‘ã‚¿ãƒ¼ãƒ³ã‚’å¤‰ãˆã‚‹
 //=============================================================================
 void CScene2D::ChangeTextureAnime( int nPatternAnim, D3DXVECTOR2 ptnSize, D3DXVECTOR2 ptnDivide)
 {
-	//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ð–„‚ß‚é
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 	VERTEX_2D *pVtx;
 	float fPosXLeft, fPosXRight;
 	float fPosYUp, fPosYDown;
 
-	// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
-	// ƒeƒNƒXƒ`ƒƒÀ•W‚ÌÝ’è
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™ã®è¨­å®š
 	fPosXLeft	= ptnSize.x * (nPatternAnim % (int)ptnDivide.x);
 	fPosXRight	= ptnSize.x * (nPatternAnim % (int)ptnDivide.x + 1);
 	fPosYUp		= ptnSize.y * (nPatternAnim / (int)ptnDivide.x);
@@ -401,17 +401,17 @@ void CScene2D::ChangeTextureAnime( int nPatternAnim, D3DXVECTOR2 ptnSize, D3DXVE
 	pVtx[2].tex = D3DXVECTOR2( fPosXLeft, fPosYDown );
 	pVtx[3].tex = D3DXVECTOR2( fPosXRight, fPosYDown );
 
-	// ’¸“_ƒf[ƒ^‚ðƒAƒ“ƒƒbƒN‚·‚é
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 	m_pVtxBuff->Unlock();
 }
 
 void CScene2D::Scl(float nValue,SCL_TYPE type)
 {
 
-	{//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ð–„‚ß‚é
+	{//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 		VERTEX_2D *pVtx;
 
-		// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 
 		m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 		switch(type)
@@ -441,7 +441,7 @@ void CScene2D::Scl(float nValue,SCL_TYPE type)
 			pVtx[3].tex.x += nValue;
 			break;
 		}
-		// ’¸“_ƒf[ƒ^‚ðƒAƒ“ƒƒbƒN‚·‚é
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 		m_pVtxBuff->Unlock();
 	}
 }

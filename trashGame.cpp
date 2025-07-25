@@ -1,14 +1,14 @@
-//============================================
+ï»¿//============================================
 //
-// ƒ^ƒCƒgƒ‹:	 –¢—ˆ‘n‘¢“Wƒ`[ƒ€204
-// ƒvƒƒOƒ‰ƒ€–¼: trashGame.cpp
-// ì¬Ò:		 HAL“Œ‹ƒQ[ƒ€Šw‰È@R‰ÆŒ[‰î
-// ì¬“ú:       2016/11/24
+// ã‚¿ã‚¤ãƒˆãƒ«:	 æœªæ¥å‰µé€ å±•ãƒãƒ¼ãƒ 204
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å: trashGame.cpp
+// ä½œæˆè€…:		 HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€å±±å®¶å•“ä»‹
+// ä½œæˆæ—¥:       2016/11/24
 //
 //============================================
 
 //============================================
-//ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+//ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //============================================
 #include "main.h"
 #include "trashGame.h"
@@ -33,12 +33,12 @@
 #include "change.h"
 #include "sound.h"
 //============================================
-// ƒ}ƒNƒ’è‹`
+// ãƒã‚¯ãƒ­å®šç¾©
 //============================================
 #define TEXTURENAME "data/TEXTURE/player000.png"
 #define TEXTURE_POINT "data/TEXTURE/redPoint.png"
-#define TEXTURE_TRASH "data/TEXTURE/ƒyƒbƒgƒ{ƒgƒ‹.png"
-#define TEXTURE_TRASHBOX "data/TEXTURE/ƒSƒ~” (ŠDF).png"
+#define TEXTURE_TRASH "data/TEXTURE/ãƒšãƒƒãƒˆãƒœãƒˆãƒ«.png"
+#define TEXTURE_TRASHBOX "data/TEXTURE/ã‚´ãƒŸç®±(ç°è‰²).png"
 #define TEXTURE_GORILLA "data/TEXTURE/throwingGorilla.png"
 #define TEXTURE_BGPOLYGON "data/TEXTURE/rendering003-16.png"
 #define TEXTURE_PLAYER "data/TEXTURE/throwingMother.png"
@@ -47,15 +47,15 @@
 
 
 #define TEXTURE_EXPLOSION "data/TEXTURE/explosion000.png"
-#define	TEX_PATTERN_DIVIDE_X		(8)												// ƒAƒjƒ[ƒVƒ‡ƒ“ƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒ“à‚Å‚Ì•ªŠ„”(‚w•ûŒü)
-#define	TEX_PATTERN_DIVIDE_Y		(1)												// ƒAƒjƒ[ƒVƒ‡ƒ“ƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒ“à‚Å‚Ì•ªŠ„”(‚x•ûŒü)
-#define	TEX_PATTERN_SIZE_X			(1.0f / TEX_PATTERN_DIVIDE_X)					// ‚Pƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒƒTƒCƒY(‚w•ûŒü)(1.0f/X•ûŒü•ªŠ„”)
-#define	TEX_PATTERN_SIZE_Y			(1.0f / TEX_PATTERN_DIVIDE_Y)					// ‚Pƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒƒTƒCƒY(‚x•ûŒü)(1.0f/Y•ûŒü•ªŠ„”)
-#define	NUM_ANIM_PATTERN			(TEX_PATTERN_DIVIDE_X * TEX_PATTERN_DIVIDE_Y)	// ƒAƒjƒ[ƒVƒ‡ƒ“‚Ìƒpƒ^[ƒ“”(X•ûŒü•ªŠ„”~Y•ûŒü•ªŠ„”)
-#define	TIME_CHANGE_PATTERN			(10)											// ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌØ‚è‘Ö‚í‚éƒ^ƒCƒ~ƒ“ƒO(ƒtƒŒ[ƒ€”)
+#define	TEX_PATTERN_DIVIDE_X		(8)												// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£å†…ã§ã®åˆ†å‰²æ•°(ï¼¸æ–¹å‘)
+#define	TEX_PATTERN_DIVIDE_Y		(1)												// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£å†…ã§ã®åˆ†å‰²æ•°(ï¼¹æ–¹å‘)
+#define	TEX_PATTERN_SIZE_X			(1.0f / TEX_PATTERN_DIVIDE_X)					// ï¼‘ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µã‚¤ã‚º(ï¼¸æ–¹å‘)(1.0f/Xæ–¹å‘åˆ†å‰²æ•°)
+#define	TEX_PATTERN_SIZE_Y			(1.0f / TEX_PATTERN_DIVIDE_Y)					// ï¼‘ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µã‚¤ã‚º(ï¼¹æ–¹å‘)(1.0f/Yæ–¹å‘åˆ†å‰²æ•°)
+#define	NUM_ANIM_PATTERN			(TEX_PATTERN_DIVIDE_X * TEX_PATTERN_DIVIDE_Y)	// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ãƒ‘ã‚¿ãƒ¼ãƒ³æ•°(Xæ–¹å‘åˆ†å‰²æ•°Ã—Yæ–¹å‘åˆ†å‰²æ•°)
+#define	TIME_CHANGE_PATTERN			(10)											// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®åˆ‡ã‚Šæ›¿ã‚ã‚‹ã‚¿ã‚¤ãƒŸãƒ³ã‚°(ãƒ•ãƒ¬ãƒ¼ãƒ æ•°)
 #define TIME_TO_CHANGE	(15)
 //============================================
-// Ã“Iƒƒ“ƒo[•Ï”‚Ì‰Šú‰»
+// é™çš„ãƒ¡ãƒ³ãƒãƒ¼å¤‰æ•°ã®åˆæœŸåŒ–
 //============================================
 CTrash *CTrashGame::m_pTrash = NULL;
 CScene2D *CTrashGame::m_pTrashBox = NULL;
@@ -74,7 +74,7 @@ CChange *pChange = NULL;
 bool bMessageFlag = false;
 CTrashGame::STATE CTrashGame::m_state = STATE_CHANGE;
 //============================================
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //============================================
 CTrashGame::CTrashGame() : CManager(MODE_TRASHGAME)
 {
@@ -88,36 +88,36 @@ CTrashGame::~CTrashGame()
 
 HRESULT CTrashGame::Init(void)
 { 
-	//ƒQ[ƒ€ƒf[ƒ^‚ğƒ[ƒh
+	//ã‚²ãƒ¼ãƒ ãƒ‡ãƒ¼ã‚¿ã‚’ãƒ­ãƒ¼ãƒ‰
 	LoadAll();
-	//ƒJƒƒ‰‚Ì‰Šú‰»
+	//ã‚«ãƒ¡ãƒ©ã®åˆæœŸåŒ–
 	m_pCamera->Init();
-	//ƒQ[ƒ€‹N“®‚Ìƒ}ƒEƒX‚ğˆÊ’u‚ğæ‚Á‚Ä‚µ‚Ü‚¤‚½‚ßA‹­§“I‚É‰æ–Ê’†‰›‚Ö
+	//ã‚²ãƒ¼ãƒ èµ·å‹•æ™‚ã®ãƒã‚¦ã‚¹ã‚’ä½ç½®ã‚’å–ã£ã¦ã—ã¾ã†ãŸã‚ã€å¼·åˆ¶çš„ã«ç”»é¢ä¸­å¤®ã¸
 	SetCursorPos(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
-	//ƒXƒRƒA‰Šú‰»
+	//ã‚¹ã‚³ã‚¢åˆæœŸåŒ–
 	SaveScore(MODE_TRASHGAME,0);
-	//”wŒi
+	//èƒŒæ™¯
 	CScene2D::Create(D3DXVECTOR3(SCREEN_WIDTH/2,SCREEN_HEIGHT/2,0.0f),D3DXVECTOR3(SCREEN_WIDTH*1.2,SCREEN_HEIGHT*1.4,0.0f),TEXTURE_BGPOLYGON);
-	//ƒIƒuƒWƒFƒNƒg‚Ì¶¬
-	//ƒvƒŒƒCƒ„[
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç”Ÿæˆ
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
 	pAnimPlayer = CTrashPlayer::Create( D3DXVECTOR3( 150.0f, 580.0f, 0.0f), D3DXVECTOR3( 300.0f, 300.0f, 0.0f),TEXTURE_PLAYER);
-	//ƒSƒ~
+	//ã‚´ãƒŸ
 	m_pTrash = CTrash::Create(D3DXVECTOR3(200.0f, 400.0f, 0.0f), D3DXVECTOR3(200.0f, 200.0f, 0.0f),TEXTURE_TRASH,CScene::OBJTYPE_TRASH);
-	//ƒXƒRƒA
+	//ã‚¹ã‚³ã‚¢
 	m_pScore = CScore::Create( D3DXVECTOR3( 150.0f, 30.0f, 0.0f), D3DXVECTOR3( 300, 50.0f, 0.0f), 6, RED(1.0f)); 
-	//ƒSƒ~” 
+	//ã‚´ãƒŸç®±
 	//m_pTrashBox = CScene2D::Create(D3DXVECTOR3(1000.0f, 500.0f, 0.0f), D3DXVECTOR3(800.0f, 600.0f, 0.0f),TEXTURE_TRASHBOX);
 	m_pTrashBox = CScene2D::Create(D3DXVECTOR3(1100.0f, 350.0f, 0.0f), D3DXVECTOR3(700.0f, 300.0f, 0.0f),TEXTURE_TRASHBOX);
-	//ƒ^ƒCƒ€
+	//ã‚¿ã‚¤ãƒ 
 	pTime = CTime::Create( D3DXVECTOR3(SCREEN_WIDTH/2, 100.0f, 0.0f), D3DXVECTOR3(140, 70.0f, 0.0f), 2, 45, true, BLUE(1.0f));
 	pTime->StopTime();
-	//ƒ}ƒEƒX‚ÌˆÊ’u‚ğ“¾‚é
+	//ãƒã‚¦ã‚¹ã®ä½ç½®ã‚’å¾—ã‚‹
 	CPoint2D::Create(D3DXVECTOR3(0.0f,0.0f,0.0f), D3DXVECTOR3(0.0f,0.0f,0.0f),0);
-	//‚Â‚Ë‚É’†‰›‚É
+	//ã¤ã­ã«ä¸­å¤®ã«
 	m_pCenterPoint = CScene2D::Create(D3DXVECTOR3(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f), D3DXVECTOR3(70.0f, 70.0f, 0.0f),TEXTURE_POINT);
-	//’†‰›‚ÆŒ»İˆÊ’u‚Ì’†ŠÔ‚ÉƒeƒNƒXƒ`ƒƒ
+	//ä¸­å¤®ã¨ç¾åœ¨ä½ç½®ã®ä¸­é–“ã«ãƒ†ã‚¯ã‚¹ãƒãƒ£
 	m_pMidpoint = CScene2D::Create(D3DXVECTOR3(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f), D3DXVECTOR3(40.0f, 40.0f, 0.0f),TEXTURE_POINT);
-	//ƒ}ƒEƒX‚ÌˆÊ’u‚ÉƒeƒNƒXƒ`ƒƒ
+	//ãƒã‚¦ã‚¹ã®ä½ç½®ã«ãƒ†ã‚¯ã‚¹ãƒãƒ£
 	m_pMouse = CScene2D::Create(D3DXVECTOR3(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f), D3DXVECTOR3(120.0f, 120.0f, 0.0f),TEXTURE_POINT);
 
 	pExplosion = NULL;
@@ -133,7 +133,7 @@ HRESULT CTrashGame::Init(void)
 
 void CTrashGame::Uninit()
 {
-	//“_”‚ğ•Û‘¶
+	//ç‚¹æ•°ã‚’ä¿å­˜
 	CManager::SaveScore( MODE_TRASHGAME, m_pScore->GetValue());
 
 	//BGM
@@ -145,7 +145,7 @@ void CTrashGame::Uninit()
 
 void CTrashGame::Update()
 {
-	//“ü—Í‚È‚Ç‚ÌXVAŠeƒV[ƒ“‚ÌUpdate‚ÌÅ‰‚ÉŒÄ‚Ño‚·
+	//å…¥åŠ›ãªã©ã®æ›´æ–°ã€å„ã‚·ãƒ¼ãƒ³ã®Updateã®æœ€åˆã«å‘¼ã³å‡ºã™
 	CManager::Update();
 
 	m_nTrashGameCnt++;
@@ -157,14 +157,14 @@ void CTrashGame::Update()
 	
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
 
-	//~‚ß
+	//æ™‚æ­¢ã‚
 	if( pInputKeyboard->GetKeyTrigger(DIK_T))
 	{
 		pTime->StopTime();
 	}
 
 
-	//ƒ}ƒEƒX‚ğ˜b‚µ‚½‚çƒJ[ƒ\ƒ‹‚ğ‰æ–Ê’†‰›‚Ö
+	//ãƒã‚¦ã‚¹ã‚’è©±ã—ãŸã‚‰ã‚«ãƒ¼ã‚½ãƒ«ã‚’ç”»é¢ä¸­å¤®ã¸
 	if(CManager::GetInputMouse()->GetMouseLeftRelease())
 	{
 		SetCursorPos(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
@@ -184,7 +184,7 @@ void CTrashGame::Update()
 				D3DXVECTOR3 sizeTrash;
 				posTrash = pScene->GetPosition();
 				sizeTrash = pScene->GetSize();
-				//“–‚½‚è”»’è
+				//å½“ãŸã‚Šåˆ¤å®š
 				if( (posTrash.y + sizeTrash.y/2 > posTrashBox.y - sizeTrashBox.y*0.8/2) &&
 					(posTrash.y - sizeTrash.y/2 < posTrashBox.y + sizeTrashBox.y*0.8/2) &&
 					(posTrash.x + sizeTrash.x/2 > posTrashBox.x - sizeTrashBox.x*0.4/2) &&
@@ -196,7 +196,7 @@ void CTrashGame::Update()
 						//(posTrash.x - sizeTrash.x/2) < (posTrashBox.x - sizeTrashBox.x) //&&
 						(posTrash.y - sizeTrash.y/2) > (posTrashBox.y - sizeTrashBox.y/2) )//||
 						//(posTrash.x < (posTrashBox.x - sizeTrashBox.x/2)))
-					{//ŠO‘¤‚Ì‰E’[‚Å‚Í‚¶‚­
+					{//å¤–å´ã®å³ç«¯ã§ã¯ã˜ã
 						((CTrash*)pScene)->ReverseMove();
 						CTrajectory::Create(D3DXVECTOR3(posTrash.x,posTrash.y,100.0f),D3DXVECTOR3(100,100,0.0f),CTrajectory::TJRTYPE_NORMAL,0.0);
 						//SE
@@ -204,14 +204,14 @@ void CTrashGame::Update()
 						pSound->Play(CSound::SOUND_LABEL_SE_HITBOX);
 					}
 					else
-					{//Š®‘S‚É“ü‚Á‚Ä‚é
-						//Å‰‚É“ü‚Á‚½‚Æ‚«‚ÉŠÔ‚ğ“®‚©‚·
+					{//å®Œå…¨ã«å…¥ã£ã¦ã‚‹
+						//æœ€åˆã«å…¥ã£ãŸã¨ãã«æ™‚é–“ã‚’å‹•ã‹ã™
 						if(m_pScore->GetValue() == 0)
 						{
 							pTime->StopTime();
 							CMessage::Create(D3DXVECTOR3(SCREEN_WIDTH + 100,100,0),D3DXVECTOR3(250,250,0),TEXTURE_START);
 						}
-						//ƒXƒRƒA’Ç‰Á
+						//ã‚¹ã‚³ã‚¢è¿½åŠ 
 						if(((CTrash*)pScene)->GetTrashType() == CTrash::TRASHTYPE_NORMAL)
 						{
 							m_pScore->AddScore(100);
@@ -234,7 +234,7 @@ void CTrashGame::Update()
 							CGetScore *pGetScore = CGetScore::Create(posTrash,D3DXVECTOR3(120,120,0.0f),3,YELLOW(1.0));
 							pGetScore->AddScore(150);
 						}
-						//ƒIƒuƒWƒFƒNƒg‚ÌˆÊ’u‚ğ‰æ–ÊŠO‚Ö -> ‰æ–ÊŠO”»’è‚ÅÁ–Å
+						//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ä½ç½®ã‚’ç”»é¢å¤–ã¸ -> ç”»é¢å¤–åˆ¤å®šã§æ¶ˆæ»…
 						pScene->SetPosition(D3DXVECTOR3(100.0f,1000.0f,0.0f));
 						
 						//SE
@@ -244,9 +244,9 @@ void CTrashGame::Update()
 				}
 			}
 			else if(type == CScene::OBJTYPE_POINT2D)
-			{//ƒ}ƒEƒX‚ÌˆÊ’u‚ÉƒeƒNƒXƒ`ƒƒ
+			{//ãƒã‚¦ã‚¹ã®ä½ç½®ã«ãƒ†ã‚¯ã‚¹ãƒãƒ£
 				
-				//’²®’†
+				//èª¿æ•´ä¸­
 				/*if( CManager::GetInputMouse()->GetMouseLeftTrigger() )
 				{
 					m_pMouse->SetPosition(D3DXVECTOR3(SCREEN_WIDTH/2,SCREEN_HEIGHT/2,0.0f));
@@ -257,13 +257,13 @@ void CTrashGame::Update()
 				m_pMouse->SetPosition(posMouse);
 
 
-				//‰æ–Ê’†S‚ÉƒeƒNƒXƒ`ƒƒ
+				//ç”»é¢ä¸­å¿ƒã«ãƒ†ã‚¯ã‚¹ãƒãƒ£
 				m_pCenterPoint->SetPosition(D3DXVECTOR3(SCREEN_WIDTH/2,SCREEN_HEIGHT/2,0.0f));
-				//ƒ}ƒEƒX‚ÌˆÊ’u‚Æ‰æ–Ê’†‰›‚ÌŠÔ‚ÉƒeƒNƒXƒ`ƒƒ
+				//ãƒã‚¦ã‚¹ã®ä½ç½®ã¨ç”»é¢ä¸­å¤®ã®é–“ã«ãƒ†ã‚¯ã‚¹ãƒãƒ£
 				D3DXVECTOR3 posMidpoint;
 				posMidpoint= D3DXVECTOR3( (posMouse.x + SCREEN_WIDTH/2)/2,(posMouse.y + SCREEN_HEIGHT/2)/2,0.0f);
 				m_pMidpoint->SetPosition(posMidpoint);
-				//ƒNƒŠƒbƒN‚µ‚Ä‚È‚¢‚Æ‚«‚Í‰æ–ÊŠO‚Ö
+				//ã‚¯ãƒªãƒƒã‚¯ã—ã¦ãªã„ã¨ãã¯ç”»é¢å¤–ã¸
 				if(!CManager::GetInputMouse()->GetMouseLeftPress())
 				{
 					m_pCenterPoint->SetPosition(D3DXVECTOR3(-100,-100,0.0f));
@@ -273,13 +273,13 @@ void CTrashGame::Update()
 			}
 		}
 	}
-	//•Ïg’¼‘O
+	//å¤‰èº«ç›´å‰
 	if(pTime->GetTime() == TIME_TO_CHANGE + 1)
 	{
 		pAnimPlayer->SetColor(RED(1.0));
 		if(pExplosion == NULL)
 		{
-			//‰Œ
+			//ç…™
 			//pExplosion = CTrashGameExplosion::Create(D3DXVECTOR3( 150.0f, 580.0f, 0.0f), D3DXVECTOR3( 400.0f, 400.0f, 0.0f));
 			//pExplosion->ChangeTextureAnime(0, D3DXVECTOR2(TEX_PATTERN_SIZE_X,TEX_PATTERN_SIZE_Y),
 											//D3DXVECTOR2(TEX_PATTERN_DIVIDE_X,TEX_PATTERN_DIVIDE_Y));
@@ -288,11 +288,11 @@ void CTrashGame::Update()
 	}
 	
 
-	//c‚èŠÔ‚ª‚P‚O‚É‚È‚Á‚½‚ç
+	//æ®‹ã‚Šæ™‚é–“ãŒï¼‘ï¼ã«ãªã£ãŸã‚‰
 	if(pTime->GetTime() == TIME_TO_CHANGE)
 	{
 		pAnimPlayer->SetColor(WHITE(1.0));
-		//player‚Ìƒ|ƒCƒ“ƒ^‚ğæ‚é
+		//playerã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–ã‚‹
 		//CPlayer2D* pPlayer;
 		//for(int nCntScene = 0;nCntScene < MAX_SCENE;nCntScene++)
 		//{
@@ -306,10 +306,10 @@ void CTrashGame::Update()
 		//		{
 		//			if( ((CPlayer2D*)pScene)->GetGorillaMode() == false )
 		//			{
-		//				//ƒSƒŠƒ‰ƒ‚[ƒh‚Ö
+		//				//ã‚´ãƒªãƒ©ãƒ¢ãƒ¼ãƒ‰ã¸
 		//				((CPlayer2D*)pScene)->SetGorillaMode();
 		
-		//ƒSƒŠƒ‰ƒ‚[ƒh‚É‚·‚é
+		//ã‚´ãƒªãƒ©ãƒ¢ãƒ¼ãƒ‰ã«ã™ã‚‹
 		if( pAnimPlayer->GetGorillaMode() == false )
 		{
 			pTime->StopTime();
@@ -327,7 +327,7 @@ void CTrashGame::Update()
 			
 			pAnimPlayer->SetGorillaMode();
 
-			//ƒSƒ~‚ğ•¡”¶¬
+			//ã‚´ãƒŸã‚’è¤‡æ•°ç”Ÿæˆ
 			//CTrash::Create(D3DXVECTOR3(100.0f, 370.0f, 0.0f), D3DXVECTOR3(200.0f, 200.0f, 0.0f),TEXTURE_TRASH,CTrash::OBJTYPE_LEFTTRASH);
 			//CTrash::Create(D3DXVECTOR3(300.0f, 370.0f, 0.0f), D3DXVECTOR3(200.0f, 200.0f, 0.0f),TEXTURE_TRASH,CTrash::OBJTYPE_RIGHTTRASH);
 		}
@@ -338,7 +338,7 @@ void CTrashGame::Update()
 		}*/
 	}
 
-	//•Ïg‰‰oI—¹Œã‚Ìˆ—
+	//å¤‰èº«æ¼”å‡ºçµ‚äº†å¾Œã®å‡¦ç†
 	if(pAnimPlayer->GetGorillaMode() == true && pChange != NULL )
 	{
 		if(pChange->GetState() == false)
@@ -350,12 +350,12 @@ void CTrashGame::Update()
 			pAnimPlayer = NULL;
 			pAnimPlayer = CTrashPlayer::Create(D3DXVECTOR3( 150.0f, 580.0f, 0.0f), D3DXVECTOR3( 300.0f, 300.0f, 0.0f),TEXTURE_GORILLA);
 			pAnimPlayer->SetGorillaMode();
-			//ƒSƒ~‚ğ•¡”¶¬
+			//ã‚´ãƒŸã‚’è¤‡æ•°ç”Ÿæˆ
 			CTrash::Create(D3DXVECTOR3(100.0f, 370.0f, 0.0f), D3DXVECTOR3(200.0f, 200.0f, 0.0f),TEXTURE_TRASH,CTrash::OBJTYPE_LEFTTRASH);
 			CTrash::Create(D3DXVECTOR3(300.0f, 370.0f, 0.0f), D3DXVECTOR3(200.0f, 200.0f, 0.0f),TEXTURE_TRASH,CTrash::OBJTYPE_RIGHTTRASH);
 	
 			//CChange::changeState();
-			//‚ª“®‚«o‚·
+			//æ™‚ãŒå‹•ãå‡ºã™
 			pTime->StopTime();
 		}
 	}
@@ -368,7 +368,7 @@ void CTrashGame::Update()
 			bMessageFlag = true;
 		}
 	}
-	//ŠÔ‚ª‚O‚É‚È‚Á‚½‚ç
+	//æ™‚é–“ãŒï¼ã«ãªã£ãŸã‚‰
 	if(pTime != NULL && pTime->GetTime() == 0)
 	{
 		if(bMessageFlag == false)
@@ -400,7 +400,7 @@ void CTrashGame::Update()
 
 	}
 #ifdef _DEBUG
-	//ƒXƒLƒbƒvƒV[ƒ“
+	//ã‚¹ã‚­ãƒƒãƒ—ã‚·ãƒ¼ãƒ³
 	pInputKeyboard = CManager::GetInputKeyboard();
 	CInputMouse *pInputMouse = CManager::GetInputMouse();
 	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN))
@@ -408,21 +408,21 @@ void CTrashGame::Update()
 		SetNextScene( MODE_STAGE_GORIRA);
 	}
 
-	//ƒV[ƒ“‚ÌØ‚è‘Ö‚¦
+	//ã‚·ãƒ¼ãƒ³ã®åˆ‡ã‚Šæ›¿ãˆ
 	if( pInputKeyboard->GetKeyTrigger(DIK_E))
 	{
 		SetNextScene( MODE_RESULT);
 	}
 #endif
 
-	//ƒV[ƒ“‚ªØ‚è‘Ö‚¦‚é‚Æ‚±‚ëAŠeƒV[ƒ“‚ÌUpdate‚ÌÅŒã‚É’u‚¢‚Æ‚­
+	//ã‚·ãƒ¼ãƒ³ãŒåˆ‡ã‚Šæ›¿ãˆã‚‹ã¨ã“ã‚ã€å„ã‚·ãƒ¼ãƒ³ã®Updateã®æœ€å¾Œã«ç½®ã„ã¨ã
 	CManager::SceneChange();
 }
 void CTrashGame::Draw()
 {
 	CManager::Draw();
 }
-//Ÿ‚É“Š‚°‚éƒSƒ~‚Ìƒ|ƒCƒ“ƒ^‚ğƒZƒbƒg
+//æ¬¡ã«æŠ•ã’ã‚‹ã‚´ãƒŸã®ãƒã‚¤ãƒ³ã‚¿ã‚’ã‚»ãƒƒãƒˆ
 void CTrashGame::SetTrashPointer(CTrash *pTrash)
 {
 	m_pTrash = pTrash;
@@ -443,7 +443,7 @@ CTrashGame::STATE CTrashGame::GetState(void)
 	return m_state;
 }
 //=============================================================================
-//ƒQ[ƒ€‚ª—§‚¿ã‚ª‚é‚Æ‚«Aˆê‰ñ‚Ì‚İ‘S•”ƒ[ƒh‚·‚é
+//ã‚²ãƒ¼ãƒ ãŒç«‹ã¡ä¸ŠãŒã‚‹ã¨ãã€ä¸€å›ã®ã¿å…¨éƒ¨ãƒ­ãƒ¼ãƒ‰ã™ã‚‹
 //=============================================================================
 HRESULT CTrashGame::LoadAll(void)
 {

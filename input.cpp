@@ -1,25 +1,25 @@
-//=============================================================================
+ï»¿//=============================================================================
 //
-// “ü—Íˆ— [input.cpp]
+// å…¥åŠ›å‡¦ç† [input.cpp]
 // Author : AKIRA TANAKA
 //
 //=============================================================================
 #include "input.h"
 
 //*****************************************************************************
-// ƒ}ƒNƒ’è‹`
+// ãƒã‚¯ãƒ­å®šç¾©
 //*****************************************************************************
-#define	COUNT_WAIT_REPEAT	(20)	// ƒŠƒs[ƒg‘Ò‚¿ŠÔ
+#define	COUNT_WAIT_REPEAT	(20)	// ãƒªãƒ”ãƒ¼ãƒˆå¾…ã¡æ™‚é–“
 
 //*****************************************************************************
-// Ã“I•Ï”
+// é™çš„å¤‰æ•°
 //*****************************************************************************
-LPDIRECTINPUT8			CInput::m_pDInput = NULL;						// DirectInputƒIƒuƒWƒFƒNƒg
-int						CInputJoypad::m_nJoypadNum = 0;					// Œ©‚Â‚©‚Á‚½ƒWƒ‡ƒCƒpƒbƒh‚Ì”
+LPDIRECTINPUT8			CInput::m_pDInput = NULL;						// DirectInputã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+int						CInputJoypad::m_nJoypadNum = 0;					// è¦‹ã¤ã‹ã£ãŸã‚¸ãƒ§ã‚¤ãƒ‘ãƒƒãƒ‰ã®æ•°
 LPDIRECTINPUTDEVICE8	CInputJoypad::m_pDIDevJoypad[MAX_CONTROLER] = {};
 
 //=============================================================================
-// CInputƒRƒ“ƒXƒgƒ‰ƒXƒ^
+// CInputã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¹ã‚¿
 //=============================================================================
 CInput::CInput()
 {
@@ -27,20 +27,20 @@ CInput::CInput()
 }
 
 //=============================================================================
-// CInputƒfƒXƒgƒ‰ƒXƒ^
+// CInputãƒ‡ã‚¹ãƒˆãƒ©ã‚¹ã‚¿
 //=============================================================================
 CInput::~CInput()
 {
 }
 
 //=============================================================================
-// “ü—Íˆ—‚Ì‰Šú‰»ˆ—
+// å…¥åŠ›å‡¦ç†ã®åˆæœŸåŒ–å‡¦ç†
 //=============================================================================
 HRESULT CInput::Init(HINSTANCE hInst, HWND hWnd)
 {
 	HRESULT hr = S_FALSE;
 
-	// DirectInputƒIƒuƒWƒFƒNƒg‚Ìì¬
+	// DirectInputã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ä½œæˆ
 	if(!m_pDInput)
 	{
 		hr = DirectInput8Create(hInst, DIRECTINPUT_VERSION,
@@ -51,9 +51,9 @@ HRESULT CInput::Init(HINSTANCE hInst, HWND hWnd)
 }
 
 //=============================================================================
-// “ü—Íˆ—‚ÌXVˆ—
+// å…¥åŠ›å‡¦ç†ã®æ›´æ–°å‡¦ç†
 //=============================================================================
-#if 0	// ---> ƒˆ‰¼‘zŠÖ”‰»
+#if 0	// ---> ç´”ç²‹ä»®æƒ³é–¢æ•°åŒ–
 HRESULT CInput::Update(void)
 {
 	return S_OK;
@@ -61,12 +61,12 @@ HRESULT CInput::Update(void)
 #endif
 
 //=============================================================================
-// “ü—Íˆ—‚ÌI—¹ˆ—
+// å…¥åŠ›å‡¦ç†ã®çµ‚äº†å‡¦ç†
 //=============================================================================
 void CInput::Uninit(void)
 {
 	if(m_pDIDevice)
-	{// ƒfƒoƒCƒXƒIƒuƒWƒFƒNƒg‚ÌŠJ•ú
+	{// ãƒ‡ãƒã‚¤ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®é–‹æ”¾
 		m_pDIDevice->Unacquire();
 
 		m_pDIDevice->Release();
@@ -74,18 +74,18 @@ void CInput::Uninit(void)
 	}
 
 	if(m_pDInput)
-	{// DirectInputƒIƒuƒWƒFƒNƒg‚ÌŠJ•ú
+	{// DirectInputã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®é–‹æ”¾
 		m_pDInput->Release();
 		m_pDInput = NULL;
 	}
 }
 
 //=============================================================================
-// CInputKeyboardƒRƒ“ƒXƒgƒ‰ƒXƒ^
+// CInputKeyboardã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¹ã‚¿
 //=============================================================================
 CInputKeyboard::CInputKeyboard()
 {
-	// Šeƒ[ƒN‚ÌƒNƒŠƒA
+	// å„ãƒ¯ãƒ¼ã‚¯ã®ã‚¯ãƒªã‚¢
 	ZeroMemory(m_aKeyState, sizeof m_aKeyState);
 	ZeroMemory(m_aKeyStateTrigger, sizeof m_aKeyStateTrigger);
 	ZeroMemory(m_aKeyStateRelease, sizeof m_aKeyStateRelease);
@@ -94,63 +94,63 @@ CInputKeyboard::CInputKeyboard()
 }
 
 //=============================================================================
-// CInputKeyboardƒfƒXƒgƒ‰ƒXƒ^
+// CInputKeyboardãƒ‡ã‚¹ãƒˆãƒ©ã‚¹ã‚¿
 //=============================================================================
 CInputKeyboard::~CInputKeyboard()
 {
 }
 
 //=============================================================================
-// ƒL[ƒ{[ƒh‚Ì‰Šú‰»ˆ—
+// ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã®åˆæœŸåŒ–å‡¦ç†
 //=============================================================================
 HRESULT CInputKeyboard::Init(HINSTANCE hInst, HWND hWnd)
 {
 	HRESULT hr;
 
-	// “ü—Íˆ—‚Ì‰Šú‰»
+	// å…¥åŠ›å‡¦ç†ã®åˆæœŸåŒ–
 	CInput::Init(hInst, hWnd);
 
-	// ƒfƒoƒCƒXƒIƒuƒWƒFƒNƒg‚ğì¬
+	// ãƒ‡ãƒã‚¤ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œæˆ
 	hr = m_pDInput->CreateDevice(GUID_SysKeyboard, &m_pDIDevice, NULL);
 	if(FAILED(hr) || m_pDIDevice == NULL)
 	{
-		MessageBox(hWnd, "ƒL[ƒ{[ƒh‚ª‚Ë‚¥I", "ŒxI", MB_ICONWARNING);
+		MessageBox(hWnd, "ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ãŒã­ã‡ï¼", "è­¦å‘Šï¼", MB_ICONWARNING);
 		return hr;
 	}
 
-	// ƒf[ƒ^ƒtƒH[ƒ}ƒbƒg‚ğİ’è
+	// ãƒ‡ãƒ¼ã‚¿ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã‚’è¨­å®š
 	hr = m_pDIDevice->SetDataFormat(&c_dfDIKeyboard);
 	if(FAILED(hr))
 	{
-		MessageBox(hWnd, "ƒL[ƒ{[ƒh‚Ìƒf[ƒ^ƒtƒH[ƒ}ƒbƒg‚ğİ’è‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½B", "ŒxI", MB_ICONWARNING);
+		MessageBox(hWnd, "ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã®ãƒ‡ãƒ¼ã‚¿ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã‚’è¨­å®šã§ãã¾ã›ã‚“ã§ã—ãŸã€‚", "è­¦å‘Šï¼", MB_ICONWARNING);
 		return hr;
 	}
 
-	// ‹¦’²ƒ‚[ƒh‚ğİ’èiƒtƒHƒAƒOƒ‰ƒEƒ“ƒh•”ñ”r‘¼ƒ‚[ƒhj
+	// å”èª¿ãƒ¢ãƒ¼ãƒ‰ã‚’è¨­å®šï¼ˆãƒ•ã‚©ã‚¢ã‚°ãƒ©ã‚¦ãƒ³ãƒ‰ï¼†éæ’ä»–ãƒ¢ãƒ¼ãƒ‰ï¼‰
 	hr = m_pDIDevice->SetCooperativeLevel(hWnd, (DISCL_FOREGROUND | DISCL_NONEXCLUSIVE));
 	if(FAILED(hr))
 	{
-		MessageBox(hWnd, "ƒL[ƒ{[ƒh‚Ì‹¦’²ƒ‚[ƒh‚ğİ’è‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½B", "ŒxI", MB_ICONWARNING);
+		MessageBox(hWnd, "ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã®å”èª¿ãƒ¢ãƒ¼ãƒ‰ã‚’è¨­å®šã§ãã¾ã›ã‚“ã§ã—ãŸã€‚", "è­¦å‘Šï¼", MB_ICONWARNING);
 		return hr;
 	}
 
-	// m_pDIDeviceƒAƒNƒZƒXŒ ‚ğŠl“¾(“ü—Í§ŒäŠJn)
+	// m_pDIDeviceã‚¢ã‚¯ã‚»ã‚¹æ¨©ã‚’ç²å¾—(å…¥åŠ›åˆ¶å¾¡é–‹å§‹)
 	m_pDIDevice->Acquire();
 
 	return hr;
 }
 
 //=============================================================================
-// ƒL[ƒ{[ƒh“ü—Íˆ—‚ÌŠJ•ú
+// ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰å…¥åŠ›å‡¦ç†ã®é–‹æ”¾
 //=============================================================================
 void CInputKeyboard::Uninit(void)
 {
-	// “ü—Íˆ—‚ÌŠJ•ú
+	// å…¥åŠ›å‡¦ç†ã®é–‹æ”¾
 	CInput::Uninit();
 }
 
 //=============================================================================
-// ƒL[ƒ{[ƒh‚ÌXVˆ—
+// ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã®æ›´æ–°å‡¦ç†
 //=============================================================================
 void CInputKeyboard::Update(void)
 {
@@ -162,7 +162,7 @@ void CInputKeyboard::Update(void)
 		return;
 	}
 
-	// ƒfƒoƒCƒX‚©‚çƒf[ƒ^‚ğæ“¾
+	// ãƒ‡ãƒã‚¤ã‚¹ã‹ã‚‰ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—
 	hr = m_pDIDevice->GetDeviceState(sizeof(aKeyState), aKeyState);
 	if(SUCCEEDED(hr))
 	{
@@ -197,7 +197,7 @@ void CInputKeyboard::Update(void)
 }
 
 //=============================================================================
-// ƒL[ƒ{[ƒhƒf[ƒ^æ“¾(ƒvƒŒƒX)
+// ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ãƒ‡ãƒ¼ã‚¿å–å¾—(ãƒ—ãƒ¬ã‚¹)
 //=============================================================================
 BOOL CInputKeyboard::GetKeyPress(int nKey)
 {
@@ -205,7 +205,7 @@ BOOL CInputKeyboard::GetKeyPress(int nKey)
 }
 
 //=============================================================================
-// ƒL[ƒ{[ƒhƒf[ƒ^æ“¾(ƒgƒŠƒK[)
+// ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ãƒ‡ãƒ¼ã‚¿å–å¾—(ãƒˆãƒªã‚¬ãƒ¼)
 //=============================================================================
 BOOL CInputKeyboard::GetKeyTrigger(int nKey)
 {
@@ -213,7 +213,7 @@ BOOL CInputKeyboard::GetKeyTrigger(int nKey)
 }
 
 //=============================================================================
-// ƒL[ƒ{[ƒhƒf[ƒ^æ“¾(ƒŠƒŠ[ƒX)
+// ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ãƒ‡ãƒ¼ã‚¿å–å¾—(ãƒªãƒªãƒ¼ã‚¹)
 //=============================================================================
 BOOL CInputKeyboard::GetKeyRelease(int nKey)
 {
@@ -221,7 +221,7 @@ BOOL CInputKeyboard::GetKeyRelease(int nKey)
 }
 
 //=============================================================================
-// ƒL[ƒ{[ƒhƒf[ƒ^æ“¾(ƒŠƒs[ƒg)
+// ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ãƒ‡ãƒ¼ã‚¿å–å¾—(ãƒªãƒ”ãƒ¼ãƒˆ)
 //=============================================================================
 BOOL CInputKeyboard::GetKeyRepeat(int nKey)
 {
@@ -229,7 +229,7 @@ BOOL CInputKeyboard::GetKeyRepeat(int nKey)
 }
 
 //=============================================================================
-// ƒL[ƒ{[ƒhƒf[ƒ^íœ(ƒgƒŠƒK[)
+// ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ãƒ‡ãƒ¼ã‚¿å‰Šé™¤(ãƒˆãƒªã‚¬ãƒ¼)
 //=============================================================================
 void CInputKeyboard::FlushKeyTrigger(int nKey)
 {
@@ -237,7 +237,7 @@ void CInputKeyboard::FlushKeyTrigger(int nKey)
 }
 
 //=============================================================================
-// CInputMouseƒRƒ“ƒXƒgƒ‰ƒXƒ^
+// CInputMouseã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¹ã‚¿
 //=============================================================================
 CInputMouse::CInputMouse()
 {
@@ -247,47 +247,47 @@ CInputMouse::CInputMouse()
 }
 
 //=============================================================================
-// CInputMouseƒfƒXƒgƒ‰ƒXƒ^
+// CInputMouseãƒ‡ã‚¹ãƒˆãƒ©ã‚¹ã‚¿
 //=============================================================================
 CInputMouse::~CInputMouse()
 {
 }
 
 //=============================================================================
-// ƒ}ƒEƒX‚Ì‰Šú‰»
+// ãƒã‚¦ã‚¹ã®åˆæœŸåŒ–
 //=============================================================================
 HRESULT CInputMouse::Init(HINSTANCE hInstance, HWND hWnd)
 {
 	HRESULT hr;
 
-	// “ü—Íˆ—‚Ì‰Šú‰»
+	// å…¥åŠ›å‡¦ç†ã®åˆæœŸåŒ–
 	CInput::Init(hInstance, hWnd);
 
-	// ƒfƒoƒCƒXƒIƒuƒWƒFƒNƒg‚ğì¬
+	// ãƒ‡ãƒã‚¤ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œæˆ
 	hr = m_pDInput->CreateDevice(GUID_SysMouse, &m_pDIDevice, NULL);
 	if(FAILED(hr))
 	{
-		MessageBox(hWnd, "ƒ}ƒEƒX‚ª‚Ë‚¥I", "ŒxI", MB_ICONWARNING);
+		MessageBox(hWnd, "ãƒã‚¦ã‚¹ãŒã­ã‡ï¼", "è­¦å‘Šï¼", MB_ICONWARNING);
 		return hr;
 	}
 
-	// ƒf[ƒ^ƒtƒH[ƒ}ƒbƒg‚ğİ’è
+	// ãƒ‡ãƒ¼ã‚¿ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã‚’è¨­å®š
 	hr = m_pDIDevice->SetDataFormat(&c_dfDIMouse2);
 	if(FAILED(hr))
 	{
-		MessageBox(hWnd, "ƒ}ƒEƒX‚Ìƒf[ƒ^ƒtƒH[ƒ}ƒbƒg‚ğİ’è‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½B", "ŒxI", MB_ICONWARNING);
+		MessageBox(hWnd, "ãƒã‚¦ã‚¹ã®ãƒ‡ãƒ¼ã‚¿ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã‚’è¨­å®šã§ãã¾ã›ã‚“ã§ã—ãŸã€‚", "è­¦å‘Šï¼", MB_ICONWARNING);
 		return hr;
 	}
 
-	// ‹¦’²ƒ‚[ƒh‚ğİ’èiƒtƒHƒAƒOƒ‰ƒEƒ“ƒh•”ñ”r‘¼ƒ‚[ƒhj
+	// å”èª¿ãƒ¢ãƒ¼ãƒ‰ã‚’è¨­å®šï¼ˆãƒ•ã‚©ã‚¢ã‚°ãƒ©ã‚¦ãƒ³ãƒ‰ï¼†éæ’ä»–ãƒ¢ãƒ¼ãƒ‰ï¼‰
 	hr = m_pDIDevice->SetCooperativeLevel(hWnd, (DISCL_FOREGROUND | DISCL_NONEXCLUSIVE));
 	if(FAILED(hr))
 	{
-		MessageBox(hWnd, "ƒ}ƒEƒX‚Ì‹¦’²ƒ‚[ƒh‚ğİ’è‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½B", "ŒxI", MB_ICONWARNING);
+		MessageBox(hWnd, "ãƒã‚¦ã‚¹ã®å”èª¿ãƒ¢ãƒ¼ãƒ‰ã‚’è¨­å®šã§ãã¾ã›ã‚“ã§ã—ãŸã€‚", "è­¦å‘Šï¼", MB_ICONWARNING);
 		return hr;
 	}
 
-	// ƒfƒoƒCƒX‚ÌƒvƒƒpƒeƒB‚ğİ’è
+	// ãƒ‡ãƒã‚¤ã‚¹ã®ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ã‚’è¨­å®š
 	{
 		DIPROPDWORD dipdw;
 
@@ -300,34 +300,34 @@ HRESULT CInputMouse::Init(HINSTANCE hInstance, HWND hWnd)
 		hr = m_pDIDevice->SetProperty(DIPROP_AXISMODE, &dipdw.diph);
 		if(FAILED(hr))
 		{
-			MessageBox(hWnd, "ƒ}ƒEƒX‚ÌƒfƒoƒCƒX‚ÌƒvƒƒpƒeƒB‚ğİ’è‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½B", "ŒxI", MB_ICONWARNING);
+			MessageBox(hWnd, "ãƒã‚¦ã‚¹ã®ãƒ‡ãƒã‚¤ã‚¹ã®ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ã‚’è¨­å®šã§ãã¾ã›ã‚“ã§ã—ãŸã€‚", "è­¦å‘Šï¼", MB_ICONWARNING);
 			return hr;
 		}
 	}
 
-	// ƒ}ƒEƒX‚Ö‚ÌƒAƒNƒZƒXŒ ‚ğŠl“¾(“ü—Í§ŒäŠJn)
+	// ãƒã‚¦ã‚¹ã¸ã®ã‚¢ã‚¯ã‚»ã‚¹æ¨©ã‚’ç²å¾—(å…¥åŠ›åˆ¶å¾¡é–‹å§‹)
 	m_pDIDevice->Acquire();
 
 	return S_OK;
 }
 
 //=============================================================================
-// ƒ}ƒEƒX‚ÌI—¹ˆ—
+// ãƒã‚¦ã‚¹ã®çµ‚äº†å‡¦ç†
 //=============================================================================
 void CInputMouse::Uninit(void)
 {
-	// “ü—Íˆ—‚ÌŠJ•ú
+	// å…¥åŠ›å‡¦ç†ã®é–‹æ”¾
 	CInput::Uninit();
 }
 
 //=============================================================================
-// ƒ}ƒEƒX‚ÌXVˆ—
+// ãƒã‚¦ã‚¹ã®æ›´æ–°å‡¦ç†
 //=============================================================================
 void CInputMouse::Update(void)
 {
 	DIMOUSESTATE2 mouseState;
 
-	// ƒfƒoƒCƒX‚©‚çƒf[ƒ^‚ğæ“¾
+	// ãƒ‡ãƒã‚¤ã‚¹ã‹ã‚‰ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—
 	if(SUCCEEDED(m_pDIDevice->GetDeviceState(sizeof(mouseState), &mouseState)))
 	{
 		m_mouseStateTrigger.lX = ((m_mouseState.lX ^ mouseState.lX) & mouseState.lX);
@@ -348,13 +348,13 @@ void CInputMouse::Update(void)
 	}
 	else
 	{
-		// ƒ}ƒEƒX‚Ö‚ÌƒAƒNƒZƒXŒ ‚ğŠl“¾(“ü—Í§ŒäŠJn)
+		// ãƒã‚¦ã‚¹ã¸ã®ã‚¢ã‚¯ã‚»ã‚¹æ¨©ã‚’ç²å¾—(å…¥åŠ›åˆ¶å¾¡é–‹å§‹)
 		m_pDIDevice->Acquire();
 	}
 }
 
 //=============================================================================
-// ƒ}ƒEƒXƒf[ƒ^æ“¾(¶ƒvƒŒƒX)
+// ãƒã‚¦ã‚¹ãƒ‡ãƒ¼ã‚¿å–å¾—(å·¦ãƒ—ãƒ¬ã‚¹)
 //=============================================================================
 bool CInputMouse::GetMouseLeftPress(void)
 {
@@ -362,7 +362,7 @@ bool CInputMouse::GetMouseLeftPress(void)
 }
 
 //=============================================================================
-// ƒ}ƒEƒXƒf[ƒ^æ“¾(¶ƒgƒŠƒK[)
+// ãƒã‚¦ã‚¹ãƒ‡ãƒ¼ã‚¿å–å¾—(å·¦ãƒˆãƒªã‚¬ãƒ¼)
 //=============================================================================
 bool CInputMouse::GetMouseLeftTrigger(void)
 {
@@ -370,7 +370,7 @@ bool CInputMouse::GetMouseLeftTrigger(void)
 }
 
 //=============================================================================
-// ƒ}ƒEƒXƒf[ƒ^æ“¾(¶ƒŠƒŠ[ƒX)
+// ãƒã‚¦ã‚¹ãƒ‡ãƒ¼ã‚¿å–å¾—(å·¦ãƒªãƒªãƒ¼ã‚¹)
 //=============================================================================
 bool CInputMouse::GetMouseLeftRelease(void)
 {
@@ -378,7 +378,7 @@ bool CInputMouse::GetMouseLeftRelease(void)
 }
 
 //=============================================================================
-// ƒ}ƒEƒXƒf[ƒ^æ“¾(‰EƒvƒŒƒX)
+// ãƒã‚¦ã‚¹ãƒ‡ãƒ¼ã‚¿å–å¾—(å³ãƒ—ãƒ¬ã‚¹)
 //=============================================================================
 bool CInputMouse::GetMouseRightPress(void)
 {
@@ -386,7 +386,7 @@ bool CInputMouse::GetMouseRightPress(void)
 }
 
 //=============================================================================
-// ƒ}ƒEƒXƒf[ƒ^æ“¾(‰EƒgƒŠƒK[)
+// ãƒã‚¦ã‚¹ãƒ‡ãƒ¼ã‚¿å–å¾—(å³ãƒˆãƒªã‚¬ãƒ¼)
 //=============================================================================
 bool CInputMouse::GetMouseRightTrigger(void)
 {
@@ -394,7 +394,7 @@ bool CInputMouse::GetMouseRightTrigger(void)
 }
 
 //=============================================================================
-// ƒ}ƒEƒXƒf[ƒ^æ“¾(‰EƒŠƒŠ[ƒX)
+// ãƒã‚¦ã‚¹ãƒ‡ãƒ¼ã‚¿å–å¾—(å³ãƒªãƒªãƒ¼ã‚¹)
 //=============================================================================
 bool CInputMouse::GetMouseRightRelease(void)
 {
@@ -402,7 +402,7 @@ bool CInputMouse::GetMouseRightRelease(void)
 }
 
 //=============================================================================
-// ƒ}ƒEƒXƒf[ƒ^æ“¾(’†‰›ƒvƒŒƒX)
+// ãƒã‚¦ã‚¹ãƒ‡ãƒ¼ã‚¿å–å¾—(ä¸­å¤®ãƒ—ãƒ¬ã‚¹)
 //=============================================================================
 bool CInputMouse::GetMouseCenterPress(void)
 {
@@ -410,7 +410,7 @@ bool CInputMouse::GetMouseCenterPress(void)
 }
 
 //=============================================================================
-// ƒ}ƒEƒXƒf[ƒ^æ“¾(’†‰›ƒgƒŠƒK[)
+// ãƒã‚¦ã‚¹ãƒ‡ãƒ¼ã‚¿å–å¾—(ä¸­å¤®ãƒˆãƒªã‚¬ãƒ¼)
 //=============================================================================
 bool CInputMouse::GetMouseCenterTrigger(void)
 {
@@ -418,7 +418,7 @@ bool CInputMouse::GetMouseCenterTrigger(void)
 }
 
 //=============================================================================
-// ƒ}ƒEƒXƒf[ƒ^æ“¾(’†‰›ƒŠƒŠ[ƒX)
+// ãƒã‚¦ã‚¹ãƒ‡ãƒ¼ã‚¿å–å¾—(ä¸­å¤®ãƒªãƒªãƒ¼ã‚¹)
 //=============================================================================
 bool CInputMouse::GetMouseCenterRelease(void)
 {
@@ -426,7 +426,7 @@ bool CInputMouse::GetMouseCenterRelease(void)
 }
 
 //=============================================================================
-// ƒ}ƒEƒXƒf[ƒ^æ“¾(‚w²ˆÚ“®)
+// ãƒã‚¦ã‚¹ãƒ‡ãƒ¼ã‚¿å–å¾—(ï¼¸è»¸ç§»å‹•)
 //=============================================================================
 long CInputMouse::GetMouseAxisX(void)
 {
@@ -434,7 +434,7 @@ long CInputMouse::GetMouseAxisX(void)
 }
 
 //=============================================================================
-// ƒ}ƒEƒXƒf[ƒ^æ“¾(‚x²ˆÚ“®)
+// ãƒã‚¦ã‚¹ãƒ‡ãƒ¼ã‚¿å–å¾—(ï¼¹è»¸ç§»å‹•)
 //=============================================================================
 long CInputMouse::GetMouseAxisY(void)
 {
@@ -442,7 +442,7 @@ long CInputMouse::GetMouseAxisY(void)
 }
 
 //=============================================================================
-// ƒ}ƒEƒXƒf[ƒ^æ“¾(‚y²ˆÚ“®)
+// ãƒã‚¦ã‚¹ãƒ‡ãƒ¼ã‚¿å–å¾—(ï¼ºè»¸ç§»å‹•)
 //=============================================================================
 long CInputMouse::GetMouseAxisZ(void)
 {
@@ -450,55 +450,55 @@ long CInputMouse::GetMouseAxisZ(void)
 }
 
 //=============================================================================
-// CInputMouseƒRƒ“ƒXƒgƒ‰ƒXƒ^
+// CInputMouseã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¹ã‚¿
 //=============================================================================
 CInputJoypad::CInputJoypad()
 {
-	// Šeƒ[ƒN‚ÌƒNƒŠƒA
+	// å„ãƒ¯ãƒ¼ã‚¯ã®ã‚¯ãƒªã‚¢
 	ZeroMemory(m_joyState, sizeof m_joyState);
 	ZeroMemory(m_joyStatePrev, sizeof m_joyStatePrev);
 	ZeroMemory(m_joyStateTrigger, sizeof m_joyStateTrigger);
 }
 
 //=============================================================================
-// CInputMouseƒfƒXƒgƒ‰ƒXƒ^
+// CInputMouseãƒ‡ã‚¹ãƒˆãƒ©ã‚¹ã‚¿
 //=============================================================================
 CInputJoypad::~CInputJoypad()
 {
 }
 
 //=============================================================================
-// ƒWƒ‡ƒCƒpƒbƒh‚Ì‰Šú‰»
+// ã‚¸ãƒ§ã‚¤ãƒ‘ãƒƒãƒ‰ã®åˆæœŸåŒ–
 //=============================================================================
 HRESULT CInputJoypad::Init(HINSTANCE hInstance, HWND hWnd)
 {
 	int nLoop;
 
 
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	for(nLoop = 0; nLoop < MAX_CONTROLER; nLoop++)
 		m_pDIDevJoypad[nLoop] = NULL;
 
-	// ƒfƒoƒCƒXƒIƒuƒWƒFƒNƒg‚ğì¬(Ú‘±‚³‚ê‚Ä‚¢‚éƒWƒ‡ƒCƒpƒbƒh‚ğ—ñ‹“‚·‚é)
+	// ãƒ‡ãƒã‚¤ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œæˆ(æ¥ç¶šã•ã‚Œã¦ã„ã‚‹ã‚¸ãƒ§ã‚¤ãƒ‘ãƒƒãƒ‰ã‚’åˆ—æŒ™ã™ã‚‹)
 	if(FAILED(m_pDInput->EnumDevices(DI8DEVCLASS_GAMECTRL, EnumJoyCallback, NULL, DIEDFL_ATTACHEDONLY)))
 		return E_FAIL;
 
-	// ƒWƒ‡ƒCƒpƒbƒh‚Ì”‚¾‚¯ˆ—
+	// ã‚¸ãƒ§ã‚¤ãƒ‘ãƒƒãƒ‰ã®æ•°ã ã‘å‡¦ç†
 	for(nLoop = 0; nLoop < MAX_CONTROLER; nLoop++)
 	{
-		// ƒWƒ‡ƒCƒpƒbƒh‚ª‚È‚¢ê‡‚Í‚·‚Á”ò‚Î‚·
+		// ã‚¸ãƒ§ã‚¤ãƒ‘ãƒƒãƒ‰ãŒãªã„å ´åˆã¯ã™ã£é£›ã°ã™
 		if(m_pDIDevJoypad[nLoop] == NULL)
 			continue;
 
-		// ƒf[ƒ^ƒtƒH[ƒ}ƒbƒg‚Ìİ’è
+		// ãƒ‡ãƒ¼ã‚¿ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã®è¨­å®š
 		if(FAILED(m_pDIDevJoypad[nLoop]->SetDataFormat(&c_dfDIJoystick)))
 			return E_FAIL;
 
-		// ‹¦’²ƒŒƒxƒ‹‚Ìİ’è
+		// å”èª¿ãƒ¬ãƒ™ãƒ«ã®è¨­å®š
 		if(FAILED(m_pDIDevJoypad[nLoop]->SetCooperativeLevel(hWnd, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND)))
 			return E_FAIL;
 
-		// ƒfƒoƒCƒX‚Ö‚Ì“ü—Í§ŒäŠJn
+		// ãƒ‡ãƒã‚¤ã‚¹ã¸ã®å…¥åŠ›åˆ¶å¾¡é–‹å§‹
 		m_pDIDevJoypad[nLoop]->Acquire();	
 	}
 
@@ -506,36 +506,36 @@ HRESULT CInputJoypad::Init(HINSTANCE hInstance, HWND hWnd)
 }
 
 //=============================================================================
-// ƒWƒ‡ƒCƒpƒbƒh–â‚¢‡‚í‚¹—pƒR[ƒ‹ƒoƒbƒNŠÖ”
+// ã‚¸ãƒ§ã‚¤ãƒ‘ãƒƒãƒ‰å•ã„åˆã‚ã›ç”¨ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°
 //=============================================================================
 BOOL CALLBACK CInputJoypad::EnumJoyCallback(const DIDEVICEINSTANCE* lpddi, VOID* pvRef)
 {
-	DIDEVCAPS	diDevCaps;			// ƒfƒoƒCƒXî•ñ
+	DIDEVCAPS	diDevCaps;			// ãƒ‡ãƒã‚¤ã‚¹æƒ…å ±
 
-	// ƒWƒ‡ƒCƒpƒbƒh—pƒfƒoƒCƒXƒIƒuƒWƒFƒNƒg‚ğì¬
+	// ã‚¸ãƒ§ã‚¤ãƒ‘ãƒƒãƒ‰ç”¨ãƒ‡ãƒã‚¤ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œæˆ
 	if(FAILED(m_pDInput->CreateDevice(lpddi->guidInstance, &m_pDIDevJoypad[m_nJoypadNum], NULL)))
-		return DIENUM_CONTINUE;		// —ñ‹“‚ğ‘±‚¯‚é
+		return DIENUM_CONTINUE;		// åˆ—æŒ™ã‚’ç¶šã‘ã‚‹
 
-	// ƒWƒ‡ƒCƒpƒbƒh‚Ì”\—Í‚ğ’²‚×‚é
+	// ã‚¸ãƒ§ã‚¤ãƒ‘ãƒƒãƒ‰ã®èƒ½åŠ›ã‚’èª¿ã¹ã‚‹
 	diDevCaps.dwSize = sizeof(DIDEVCAPS);
 	if(FAILED(m_pDIDevJoypad[m_nJoypadNum]->GetCapabilities(&diDevCaps)))
 	{
 		if(m_pDIDevJoypad[m_nJoypadNum])
 			m_pDIDevJoypad[m_nJoypadNum]->Release();
 		m_pDIDevJoypad[m_nJoypadNum] = NULL;
-		return DIENUM_CONTINUE;		// —ñ‹“‚ğ‘±‚¯‚é
+		return DIENUM_CONTINUE;		// åˆ—æŒ™ã‚’ç¶šã‘ã‚‹
 	}
 
-	// ‹K’è”‚É’B‚µ‚½‚çI—¹
+	// è¦å®šæ•°ã«é”ã—ãŸã‚‰çµ‚äº†
 	m_nJoypadNum++;
 	if(m_nJoypadNum == MAX_CONTROLER)
-		return DIENUM_STOP;			// —ñ‹“‚ğI—¹‚·‚é
+		return DIENUM_STOP;			// åˆ—æŒ™ã‚’çµ‚äº†ã™ã‚‹
 	else
-		return DIENUM_CONTINUE;		// —ñ‹“‚ğ‘±‚¯‚é
+		return DIENUM_CONTINUE;		// åˆ—æŒ™ã‚’ç¶šã‘ã‚‹
 }
 
 //=============================================================================
-// ƒWƒ‡ƒCƒpƒbƒh‚ÌI—¹ˆ—
+// ã‚¸ãƒ§ã‚¤ãƒ‘ãƒƒãƒ‰ã®çµ‚äº†å‡¦ç†
 //=============================================================================
 void CInputJoypad::Uninit(void)
 {
@@ -546,7 +546,7 @@ void CInputJoypad::Uninit(void)
 }
 
 //=============================================================================
-// ƒWƒ‡ƒCƒpƒbƒh‚ÌXVˆ—
+// ã‚¸ãƒ§ã‚¤ãƒ‘ãƒƒãƒ‰ã®æ›´æ–°å‡¦ç†
 //=============================================================================
 void CInputJoypad::Update(void)
 {
@@ -554,18 +554,18 @@ void CInputJoypad::Update(void)
 	
 	for(nLoop = 0; nLoop < MAX_CONTROLER; nLoop++)
 	{
-		// ’¼‘OƒWƒ‡ƒCƒpƒbƒhî•ñ‚ÌƒoƒbƒNƒAƒbƒv
+		// ç›´å‰ã‚¸ãƒ§ã‚¤ãƒ‘ãƒƒãƒ‰æƒ…å ±ã®ãƒãƒƒã‚¯ã‚¢ãƒƒãƒ—
 		m_joyStatePrev[nLoop] = m_joyState[nLoop];
 
 		if(m_pDIDevJoypad[nLoop])
 		{
-			// ƒfƒoƒCƒX‚©‚çƒf[ƒ^‚ğæ“¾
+			// ãƒ‡ãƒã‚¤ã‚¹ã‹ã‚‰ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—
 			if(FAILED(m_pDIDevJoypad[nLoop]->GetDeviceState(sizeof(DIJOYSTATE), &m_joyState[nLoop])))
 				m_pDIDevJoypad[nLoop]->Acquire();
 		}
 		
 
-		// ƒgƒŠƒK[î•ñŒvZ
+		// ãƒˆãƒªã‚¬ãƒ¼æƒ…å ±è¨ˆç®—
 		for( int i = 0; i < 32; i++ )
 		{
 			if( m_joyState[nLoop].rgbButtons[i] & 0x80 && 
@@ -585,7 +585,7 @@ void CInputJoypad::Update(void)
 	}
 }
 //=============================================================================
-// ƒWƒ‡ƒCƒpƒbƒhƒf[ƒ^æ“¾(ƒgƒŠƒK[)
+// ã‚¸ãƒ§ã‚¤ãƒ‘ãƒƒãƒ‰ãƒ‡ãƒ¼ã‚¿å–å¾—(ãƒˆãƒªã‚¬ãƒ¼)
 //=============================================================================
 bool CInputJoypad::GetJoypadTrigger( int padNo, DWORD button )
 {
@@ -593,7 +593,7 @@ bool CInputJoypad::GetJoypadTrigger( int padNo, DWORD button )
 	return (m_joyStateTrigger[padNo][button] & 0x80) ? true: false;
 }
 //=============================================================================
-// ƒWƒ‡ƒCƒpƒbƒhƒf[ƒ^æ“¾(ƒvƒŒƒX)
+// ã‚¸ãƒ§ã‚¤ãƒ‘ãƒƒãƒ‰ãƒ‡ãƒ¼ã‚¿å–å¾—(ãƒ—ãƒ¬ã‚¹)
 //=============================================================================
 bool CInputJoypad::GetJoypadPress( int padNo, DWORD button )
 {
@@ -601,7 +601,7 @@ bool CInputJoypad::GetJoypadPress( int padNo, DWORD button )
 	return (m_joyState[padNo].rgbButtons[button] & 0x80) ? true: false;
 }
 //=============================================================================
-// ƒWƒ‡ƒCƒpƒbƒhƒf[ƒ^æ“¾(‚w²ˆÚ“®)
+// ã‚¸ãƒ§ã‚¤ãƒ‘ãƒƒãƒ‰ãƒ‡ãƒ¼ã‚¿å–å¾—(ï¼¸è»¸ç§»å‹•)
 //=============================================================================
 long CInputJoypad::GetJoypadRightAxisX(int padNo)
 {
@@ -612,7 +612,7 @@ long CInputJoypad::GetJoypadRightAxisX(int padNo)
 	return (m_joyState[padNo].lRx - STICK_RANGE/2) * (long)0.01f;
 }
 //=============================================================================
-// ƒ}ƒEƒXƒf[ƒ^æ“¾(‚x²ˆÚ“®)
+// ãƒã‚¦ã‚¹ãƒ‡ãƒ¼ã‚¿å–å¾—(ï¼¹è»¸ç§»å‹•)
 //=============================================================================
 long CInputJoypad::GetJoypadRightAxisY(int padNo)
 {

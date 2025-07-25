@@ -1,14 +1,14 @@
-//============================================
+ï»¿//============================================
 //
-// ƒ^ƒCƒgƒ‹:	 –¢—ˆ‘n‘¢“Wƒ`[ƒ€204
-// ƒvƒƒOƒ‰ƒ€–¼: trashGameResult.cpp
-// ì¬ŽÒ:		 HAL“Œ‹žƒQ[ƒ€Šw‰È@ŽR‰ÆŒ[‰î
-// ì¬“ú:       2016/12/13
+// ã‚¿ã‚¤ãƒˆãƒ«:	 æœªæ¥å‰µé€ å±•ãƒãƒ¼ãƒ 204
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å: trashGameResult.cpp
+// ä½œæˆè€…:		 HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€å±±å®¶å•“ä»‹
+// ä½œæˆæ—¥:       2016/12/13
 //
 //============================================
 
 //============================================
-//ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+//ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //============================================
 #include "main.h"
 #include "renderer.h"
@@ -17,17 +17,17 @@
 #include "trashGameResult.h"
 #include "scene2D.h"
 //============================================
-// ƒ}ƒNƒ’è‹`
+// ãƒžã‚¯ãƒ­å®šç¾©
 //============================================
 #define TEXTURE_BGPOLYGON "data/TEXTURE/rendering003-16.png"
 
 //============================================
-// Ã“Iƒƒ“ƒo[•Ï”‚Ì‰Šú‰»
+// é™çš„ãƒ¡ãƒ³ãƒãƒ¼å¤‰æ•°ã®åˆæœŸåŒ–
 //============================================
 CScore *CTrashGameResult::m_pScore;
 int CTrashGameResult::m_nTrashGameResultCnt = 0;
 //============================================
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //============================================
 CTrashGameResult::CTrashGameResult() : CManager(MODE_TRASHGAMERESULT)
 {
@@ -43,15 +43,15 @@ HRESULT CTrashGameResult::Init(void)
 { 
 	//m_pCamera->Init();
 	
-	//ƒIƒuƒWƒFƒNƒg‚Ì¶¬(3Dƒ|ƒŠƒSƒ“)
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç”Ÿæˆ(3Dãƒãƒªã‚´ãƒ³)
 	//CScene3D::Create( D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 10, 10, 100.0f, 100.0f);
 
-	//ƒIƒuƒWƒFƒNƒg‚Ì¶¬(Xfile)
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç”Ÿæˆ(Xfile)
 	//CPlayerX::Create( D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), 5.0f);
 
-	//”wŒi
+	//èƒŒæ™¯
 	CScene2D::Create(D3DXVECTOR3(SCREEN_WIDTH/2,SCREEN_HEIGHT/2,0.0f),D3DXVECTOR3(SCREEN_WIDTH,SCREEN_HEIGHT,0.0f),TEXTURE_BGPOLYGON);
-	//ƒXƒRƒA
+	//ã‚¹ã‚³ã‚¢
 	m_pScore = CScore::Create(D3DXVECTOR3(640, 360.0f, 0.0f), D3DXVECTOR3(600.0f, 100.0f, 0.0f), 6, RED(1.0f));
 	return S_OK;
 }
@@ -72,7 +72,7 @@ void CTrashGameResult::Update()
 		SetNextScene( MODE_ZEBRAGAME);
 	}
 
-	//ƒV[ƒ“‚ªØ‚è‘Ö‚¦‚é‚Æ‚±‚ëAŠeƒV[ƒ“‚ÌUpdate‚ÌÅŒã‚É’u‚¢‚Æ‚­
+	//ã‚·ãƒ¼ãƒ³ãŒåˆ‡ã‚Šæ›¿ãˆã‚‹ã¨ã“ã‚ã€å„ã‚·ãƒ¼ãƒ³ã®Updateã®æœ€å¾Œã«ç½®ã„ã¨ã
 	CManager::SceneChange();
 }
 

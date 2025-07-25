@@ -1,14 +1,14 @@
-//============================================
+ï»¿//============================================
 //
-// ƒ^ƒCƒgƒ‹:	 –¢—ˆ‘n‘¢“Wƒ`[ƒ€204
-// ƒvƒƒOƒ‰ƒ€–¼: playerX.cpp
-// ì¬Ò:		 HAL“Œ‹ƒQ[ƒ€Šw‰È@—«“ìG
-// ì¬“ú:       2016/11/15
+// ã‚¿ã‚¤ãƒˆãƒ«:	 æœªæ¥å‰µé€ å±•ãƒãƒ¼ãƒ 204
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å: playerX.cpp
+// ä½œæˆè€…:		 HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
+// ä½œæˆæ—¥:       2016/11/15
 //
 //============================================
 
 //============================================
-//ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+//ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //============================================
 #include "main.h"
 #include "manager.h"
@@ -31,12 +31,12 @@
 #include "effectBoom.h"
 #include "effect3D.h"
 //============================================
-// ƒ}ƒNƒ’è‹`
+// ãƒã‚¯ãƒ­å®šç¾©
 //============================================
 #define MODEL_FILENAME_BODY			"data/MODEL/mom_body.x"
 #define MODEL_FILENAME_LION_BODY	"data/MODEL/lionMom_body.x"
 
-#define VALUE_ROTATE	(3.0f) 	// ‰ñ“]—Ê
+#define VALUE_ROTATE	(3.0f) 	// å›è»¢é‡
 #define DIVIDE_ROTATE	(5.0f)
 #define MAX_SPEED		(5.0f)
 #define BACK_SPEED		(-2.0f)
@@ -46,26 +46,26 @@
 #define CAMERA_DISTANCE	(200.0f)
 #define PLAYER_POSY		(60.0f)
 //=============================================================================
-// \‘¢‘Ì’è‹`
+// æ§‹é€ ä½“å®šç¾©
 //=============================================================================
 
 //============================================
-// Ã“Iƒƒ“ƒo[•Ï”‚Ì‰Šú‰»
+// é™çš„ãƒ¡ãƒ³ãƒãƒ¼å¤‰æ•°ã®åˆæœŸåŒ–
 //============================================
-LPDIRECT3DTEXTURE9	CPlayerX::m_pTexture		[TYPE_MAX] = {};		// ƒeƒNƒXƒ`ƒƒ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-LPD3DXMESH			CPlayerX::m_pD3DXMesh		[TYPE_MAX] = {};		// ƒƒbƒVƒ…î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-LPD3DXBUFFER		CPlayerX::m_pD3DXBuffMat	[TYPE_MAX] = {};		// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-DWORD				CPlayerX::m_nNumMat			[TYPE_MAX] = {};		// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ì”
+LPDIRECT3DTEXTURE9	CPlayerX::m_pTexture		[TYPE_MAX] = {};		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+LPD3DXMESH			CPlayerX::m_pD3DXMesh		[TYPE_MAX] = {};		// ãƒ¡ãƒƒã‚·ãƒ¥æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+LPD3DXBUFFER		CPlayerX::m_pD3DXBuffMat	[TYPE_MAX] = {};		// ãƒãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+DWORD				CPlayerX::m_nNumMat			[TYPE_MAX] = {};		// ãƒãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã®æ•°
 
 
 //=============================================================================
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CPlayerX::CPlayerX()
 {
 	m_pShadow = NULL;
 
-	//è‘«
+	//æ‰‹è¶³
 	for(int cntLimb = 0; cntLimb < MAX_LIMB; cntLimb++)
 	{
 		m_pLimb[cntLimb] = NULL;
@@ -73,7 +73,7 @@ CPlayerX::CPlayerX()
 }
 
 //=============================================================================
-//ƒfƒXƒgƒ‰ƒNƒ^
+//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CPlayerX::~CPlayerX()
 {
@@ -86,7 +86,7 @@ CPlayerX::~CPlayerX()
 //=============================================================================
 HRESULT CPlayerX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float speed)
 {
-	pos.y = PLAYER_POSY; //ƒvƒŒƒCƒ„[‚Ì‚‚³‚ğŒÅ’è‚·‚é
+	pos.y = PLAYER_POSY; //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®é«˜ã•ã‚’å›ºå®šã™ã‚‹
 	CSceneX::Init( pos, rot, scl);
 
 	m_isGoAhead = false;
@@ -103,15 +103,15 @@ HRESULT CPlayerX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float 
 
 	m_state = STATE_NORMAL;
 	m_nCntState = 0;
-	m_nNumFoodGet = 0; //W‚ß‚½HŞ‚Ì”
+	m_nNumFoodGet = 0; //é›†ã‚ãŸé£Ÿæã®æ•°
 
-	//è‘«
+	//æ‰‹è¶³
 	m_pLimb[0] = CLimbX::Create( pos, rot, scl, CLimbX::TYPE_L_HAND);
 	m_pLimb[1] = CLimbX::Create( pos, rot, scl, CLimbX::TYPE_R_HAND);
 	m_pLimb[2] = CLimbX::Create( pos, rot, scl, CLimbX::TYPE_L_FOOT);
 	m_pLimb[3] = CLimbX::Create( pos, rot, scl, CLimbX::TYPE_R_FOOT);
 
-	//‰e‚Ì¶¬
+	//å½±ã®ç”Ÿæˆ
 	m_pShadow = CShadow::Create( pos, D3DXVECTOR2( 50.0f, 50.0f));
 
 	return S_OK;
@@ -122,13 +122,13 @@ HRESULT CPlayerX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, float 
 //=============================================================================
 void CPlayerX::Uninit(void)
 {
-	//è‘«
+	//æ‰‹è¶³
 	for(int cntLimb = 0; cntLimb < MAX_LIMB; cntLimb++)
 	{
 		m_pLimb[cntLimb]->Uninit();
 	}
 
-	//–{‘Ì
+	//æœ¬ä½“
 	CSceneX::Uninit();
 }
 
@@ -137,23 +137,23 @@ void CPlayerX::Uninit(void)
 //=============================================================================
 void CPlayerX::Update(void)
 {
-	{//ƒJƒƒ‰’Ç]
+	{//ã‚«ãƒ¡ãƒ©è¿½å¾“
 		CCamera *pCamera = CManager::GetCamera();
 
-		//’‹“_
+		//æ³¨è¦–ç‚¹
 		pCamera->SetPosR( this->GetPosition());
 
-		//‹“_
+		//è¦–ç‚¹
 		D3DXVECTOR3 posV = pCamera->GetPosV();
 		posV.x = pCamera->GetPosR().x - CAMERA_DISTANCE * sinf(pCamera->GetRot().y);
 		posV.z = pCamera->GetPosR().z - CAMERA_DISTANCE * cosf(pCamera->GetRot().y);
 		pCamera->SetPosV( posV);
 
-		//Œü‚«
+		//å‘ã
 		pCamera->SetRot( this->GetRot());
 	}
 
-	//ˆÚ“®ˆ—
+	//ç§»å‹•å‡¦ç†
 	if( isMouseUse())
 	{
 		UpdateRot();
@@ -166,7 +166,7 @@ void CPlayerX::Update(void)
 	}
 #endif
 
-	//ó‘ÔXV
+	//çŠ¶æ…‹æ›´æ–°
 	switch( m_state)
 	{
 	case STATE_HIT:
@@ -181,9 +181,9 @@ void CPlayerX::Update(void)
 		}
 		else
 		{
-			//’µ‚Ë•Ô‚éˆ—
+			//è·³ã­è¿”ã‚‹å‡¦ç†
 			m_front.y = (m_nCntState - 15) * 0.2f;
-			//ˆÚ“®Šµ«
+			//ç§»å‹•æ…£æ€§
 			m_fSpeed -= m_fSpeed * 0.05f;
 		}
 		break;
@@ -195,14 +195,14 @@ void CPlayerX::Update(void)
 		break;
 
 	case STATE_NORMAL:
-		//‘OiƒxƒNƒgƒ‹‚ÌXV
+		//å‰é€²ãƒ™ã‚¯ãƒˆãƒ«ã®æ›´æ–°
 		CalcFront();
 		break;
 	case STATE_LION:
-		//‘OiƒxƒNƒgƒ‹‚ÌXV
+		//å‰é€²ãƒ™ã‚¯ãƒˆãƒ«ã®æ›´æ–°
 		CalcFront();
 
-		//‰Eè
+		//å³æ‰‹
 		D3DXVECTOR3 tPos;
 		tPos = this->GetPosition();
 		tPos.x =  this->GetPosition().x + 5.0f * sinf(this->GetRot().y + D3DX_PI / 2.0f);
@@ -213,10 +213,10 @@ void CPlayerX::Update(void)
 		m_posSuper.z = tPos.z + 20.0f * cosf( m_fTurn);
 		m_posSuper.y = 0.0f;
 
-		//ƒGƒtƒFƒNƒg
+		//ã‚¨ãƒ•ã‚§ã‚¯ãƒˆ
 		CEffect3D::Create( m_posSuper, D3DXVECTOR2( 5.0f, 5.0f), 0.02f, true);
 
-		//¶è
+		//å·¦æ‰‹
 		tPos = this->GetPosition();
 		tPos.x =  this->GetPosition().x + 5.0f * sinf(this->GetRot().y - D3DX_PI / 2.0f);
 		tPos.z =  this->GetPosition().z + 5.0f * cosf(this->GetRot().y - D3DX_PI / 2.0f);
@@ -226,17 +226,17 @@ void CPlayerX::Update(void)
 		m_posSuper.z = tPos.z + 20.0f * cosf( m_fTurn);
 		m_posSuper.y = 0.0f;
 
-		//ƒGƒtƒFƒNƒg
+		//ã‚¨ãƒ•ã‚§ã‚¯ãƒˆ
 		CEffect3D::Create( m_posSuper, D3DXVECTOR2( 5.0f, 5.0f), 0.02f, true);
 		break;
 	}
 
-	//À•WXVˆ—
+	//åº§æ¨™æ›´æ–°å‡¦ç†
 	if( isCollision() == false)
 	{
 		SetPosition( this->GetPosition() + m_front);
 	}
-	//è‘«
+	//æ‰‹è¶³
 	for(int cntLimb = 0; cntLimb < MAX_LIMB; cntLimb++)
 	{
 		m_pLimb[cntLimb]->SetPosition(this->GetPosition());
@@ -244,7 +244,7 @@ void CPlayerX::Update(void)
 		m_pLimb[cntLimb]->Update();
 	}
 
-	//‰e‚ÌXVˆ—
+	//å½±ã®æ›´æ–°å‡¦ç†
 	m_pShadow->SetPosition( this->GetPosition());
 
 }
@@ -254,13 +254,13 @@ void CPlayerX::Update(void)
 //=============================================================================
 void CPlayerX::Draw(void)
 {
-	//è‘«
+	//æ‰‹è¶³
 	for(int cntLimb = 0; cntLimb < MAX_LIMB; cntLimb++)
 	{
 		m_pLimb[cntLimb]->Draw();
 	}
 
-	//–{‘Ì
+	//æœ¬ä½“
 	CSceneX::Draw();
 }
 
@@ -273,7 +273,7 @@ CPlayerX *CPlayerX::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, fl
 	pPlayerX = new CPlayerX;
 	pPlayerX->Init(pos, rot, scl, speed);
 
-	//Xƒtƒ@ƒCƒ‹‚ÌŠ„‚è“–‚Ä
+	//Xãƒ•ã‚¡ã‚¤ãƒ«ã®å‰²ã‚Šå½“ã¦
 	((CSceneX*)pPlayerX)->BindXfile( m_pTexture[type], m_pD3DXMesh[type], m_pD3DXBuffMat[type], m_nNumMat[type]);
 
 	return pPlayerX;
@@ -284,13 +284,13 @@ void CPlayerX::UpdateRot(void)
 {
 	D3DXVECTOR3 rotPlayer = GetRot();
 
-	//‰ñ“]Šµ«
+	//å›è»¢æ…£æ€§
 	m_rotAngle.y *= 0.999f;
 
-	//–ˆ‰ñ‚Ì‰ñ“]—Ê
+	//æ¯å›ã®å›è»¢é‡
 	m_rotAngle = Get2RotDiffAngle(rotPlayer, m_rotTarget);
 
-	//Ÿ‚Ì‰ñ“]ˆÊ’u‚É“’…‚µ‚½‚ç
+	//æ¬¡ã®å›è»¢ä½ç½®ã«åˆ°ç€ã—ãŸã‚‰
 	float diff = fabsf(rotPlayer.y - m_rotTarget.y);
 	if( diff > D3DX_PI)
 	{
@@ -302,11 +302,11 @@ void CPlayerX::UpdateRot(void)
 		rotPlayer.y = m_rotTarget.y;
 		m_rotAngle.y = 0;
 	}
-	else //Ÿ‚Ì‰ñ“]ˆÊ’u‚É‚Ü‚¾“’…‚µ‚Ä‚È‚¢
+	else //æ¬¡ã®å›è»¢ä½ç½®ã«ã¾ã åˆ°ç€ã—ã¦ãªã„
 	{
 		rotPlayer.y += m_rotAngle.y;
 
-		//ƒ‚ƒfƒ‹Šp“xC³
+		//ãƒ¢ãƒ‡ãƒ«è§’åº¦ä¿®æ­£
 		if( rotPlayer.y > D3DX_PI)
 		{
 			rotPlayer.y -= D3DX_PI*2;
@@ -317,7 +317,7 @@ void CPlayerX::UpdateRot(void)
 		}
 	}	
 
-	//ƒf[ƒ^‚ÌXV
+	//ãƒ‡ãƒ¼ã‚¿ã®æ›´æ–°
 	SetRot(rotPlayer);
 }
 
@@ -327,13 +327,13 @@ bool CPlayerX::isKeyUse(int nUp, int nDown, int nLeft, int nRight)
 	D3DXVECTOR3 rotCamera = CManager::GetCamera()->GetRot();
 	D3DXVECTOR3 rotPlayer = GetRot();
 
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	m_isGoAhead = false;
 	m_isGoBack = false;
 
 
-	//Î‚ßˆÚ“®
-	if( (pInputKeyboard->GetKeyPress(nRight) && pInputKeyboard->GetKeyPress(nUp)) ) //‰Eã
+	//æ–œã‚ç§»å‹•
+	if( (pInputKeyboard->GetKeyPress(nRight) && pInputKeyboard->GetKeyPress(nUp)) ) //å³ä¸Š
 	{
 		m_rotTarget.y = rotPlayer.y + D3DXToRadian(VALUE_ROTATE);
 		if( m_rotTarget.y > D3DX_PI)
@@ -342,7 +342,7 @@ bool CPlayerX::isKeyUse(int nUp, int nDown, int nLeft, int nRight)
 		}
 		m_isGoAhead = true;
 	}
-	else if((pInputKeyboard->GetKeyPress(nRight) && pInputKeyboard->GetKeyPress(nDown)) ) //‰E‰º
+	else if((pInputKeyboard->GetKeyPress(nRight) && pInputKeyboard->GetKeyPress(nDown)) ) //å³ä¸‹
 	{
 		m_rotTarget.y = rotPlayer.y + D3DXToRadian(VALUE_ROTATE);
 		if( m_rotTarget.y > D3DX_PI)
@@ -351,7 +351,7 @@ bool CPlayerX::isKeyUse(int nUp, int nDown, int nLeft, int nRight)
 		}
 		m_isGoBack = true;
 	}
-	else if((pInputKeyboard->GetKeyPress(nLeft)  && pInputKeyboard->GetKeyPress(nUp))  ) //¶ã
+	else if((pInputKeyboard->GetKeyPress(nLeft)  && pInputKeyboard->GetKeyPress(nUp))  ) //å·¦ä¸Š
 	{
 		m_rotTarget.y = rotPlayer.y + D3DXToRadian(-VALUE_ROTATE);
 		if( m_rotTarget.y < -D3DX_PI)
@@ -360,7 +360,7 @@ bool CPlayerX::isKeyUse(int nUp, int nDown, int nLeft, int nRight)
 		}
 		m_isGoAhead = true;
 	}
-	else if((pInputKeyboard->GetKeyPress(nLeft) && pInputKeyboard->GetKeyPress(nDown)) ) //¶‰º
+	else if((pInputKeyboard->GetKeyPress(nLeft) && pInputKeyboard->GetKeyPress(nDown)) ) //å·¦ä¸‹
 	{
 		m_rotTarget.y = rotPlayer.y + D3DXToRadian(-VALUE_ROTATE);
 		if( m_rotTarget.y < -D3DX_PI)
@@ -396,7 +396,7 @@ bool CPlayerX::isKeyUse(int nUp, int nDown, int nLeft, int nRight)
 		return true;
 	}
 
-	//‘€ì‚µ‚½‚©
+	//æ“ä½œã—ãŸã‹
 	return (m_isGoAhead || m_isGoBack);
 }
 bool CPlayerX::isMouseUse(void)
@@ -407,13 +407,13 @@ bool CPlayerX::isMouseUse(void)
 
 	const int nDeadZone = 0;
 
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	m_isGoAhead = false;
 	m_isGoBack = false;
 
 
-	//Î‚ßˆÚ“®
-	if( (pInputMouse->GetMouseAxisX() > nDeadZone && pInputMouse->GetMouseLeftPress()) ) //‰Eã
+	//æ–œã‚ç§»å‹•
+	if( (pInputMouse->GetMouseAxisX() > nDeadZone && pInputMouse->GetMouseLeftPress()) ) //å³ä¸Š
 	{
 		m_rotTarget.y = rotPlayer.y + D3DXToRadian(VALUE_ROTATE);
 		if( m_rotTarget.y > D3DX_PI)
@@ -422,7 +422,7 @@ bool CPlayerX::isMouseUse(void)
 		}
 		m_isGoAhead = true;
 	}
-	else if((pInputMouse->GetMouseAxisX() > nDeadZone && pInputMouse->GetMouseRightPress()) ) //‰E‰º
+	else if((pInputMouse->GetMouseAxisX() > nDeadZone && pInputMouse->GetMouseRightPress()) ) //å³ä¸‹
 	{
 		m_rotTarget.y = rotPlayer.y + D3DXToRadian(VALUE_ROTATE);
 		if( m_rotTarget.y > D3DX_PI)
@@ -431,7 +431,7 @@ bool CPlayerX::isMouseUse(void)
 		}
 		m_isGoBack = true;
 	}
-	else if((pInputMouse->GetMouseAxisX() < -nDeadZone  && pInputMouse->GetMouseLeftPress())  ) //¶ã
+	else if((pInputMouse->GetMouseAxisX() < -nDeadZone  && pInputMouse->GetMouseLeftPress())  ) //å·¦ä¸Š
 	{
 		m_rotTarget.y = rotPlayer.y + D3DXToRadian(-VALUE_ROTATE);
 		if( m_rotTarget.y < -D3DX_PI)
@@ -440,7 +440,7 @@ bool CPlayerX::isMouseUse(void)
 		}
 		m_isGoAhead = true;
 	}
-	else if((pInputMouse->GetMouseAxisX() < -nDeadZone && pInputMouse->GetMouseRightPress()) ) //¶‰º
+	else if((pInputMouse->GetMouseAxisX() < -nDeadZone && pInputMouse->GetMouseRightPress()) ) //å·¦ä¸‹
 	{
 		m_rotTarget.y = rotPlayer.y + D3DXToRadian(-VALUE_ROTATE);
 		if( m_rotTarget.y < -D3DX_PI)
@@ -449,15 +449,15 @@ bool CPlayerX::isMouseUse(void)
 		}
 		m_isGoBack = true;
 	}
-	else if(pInputMouse->GetMouseLeftPress() ) //‘O
+	else if(pInputMouse->GetMouseLeftPress() ) //å‰
 	{
 		m_isGoAhead = true;
 	}
-	else if(pInputMouse->GetMouseRightPress() ) //Œã
+	else if(pInputMouse->GetMouseRightPress() ) //å¾Œ
 	{
 		m_isGoBack = true;
 	}
-	else if(pInputMouse->GetMouseAxisX() < -nDeadZone ) //¶
+	else if(pInputMouse->GetMouseAxisX() < -nDeadZone ) //å·¦
 	{
 		m_rotTarget.y = rotPlayer.y + D3DXToRadian(-VALUE_ROTATE);
 		if( m_rotTarget.y < -D3DX_PI)
@@ -466,7 +466,7 @@ bool CPlayerX::isMouseUse(void)
 		}
 		return true;
 	}
-	else if(pInputMouse->GetMouseAxisX() > nDeadZone ) //‰E
+	else if(pInputMouse->GetMouseAxisX() > nDeadZone ) //å³
 	{
 		m_rotTarget.y = rotPlayer.y + D3DXToRadian(VALUE_ROTATE);
 		if( m_rotTarget.y > D3DX_PI)
@@ -476,7 +476,7 @@ bool CPlayerX::isMouseUse(void)
 		return true;
 	}
 
-	//‘€ì‚µ‚½‚©
+	//æ“ä½œã—ãŸã‹
 	return (m_isGoAhead || m_isGoBack);
 }
 
@@ -505,15 +505,15 @@ void CPlayerX::CalcFront(void)
 	}
 	else
 	{
-		//ˆÚ“®Šµ«
+		//ç§»å‹•æ…£æ€§
 		m_fSpeed -= m_fSpeed * 0.05f;	
 	}
 
 
-	//‰ñ“]‚µ‚Ä‚¢‚È‚¢
+	//å›è»¢ã—ã¦ã„ãªã„æ™‚
 	//if( m_rotAngle.y == 0)
 	{
-		//ˆÚ“®
+		//ç§»å‹•
 		m_front.x = m_fSpeed * sinf( rotPlayer.y);
 		m_front.z = m_fSpeed * cosf( rotPlayer.y);
 	}
@@ -525,7 +525,7 @@ D3DXVECTOR3 CPlayerX::GetFront(void)
 }
 
 //=============================================================================
-// ƒXƒe[ƒg‚ğİ’è
+// ã‚¹ãƒ†ãƒ¼ãƒˆã‚’è¨­å®š
 //=============================================================================
 void CPlayerX::SetState(STATE state)
 {
@@ -537,13 +537,13 @@ void CPlayerX::SetState(STATE state)
 		//BODY
 		this->BindXfile( TYPE_LION);
 
-		//è‘«
+		//æ‰‹è¶³
 		m_pLimb[0]->BindXfile(CLimbX::TYPE_LION_L_HAND);
 		m_pLimb[1]->BindXfile(CLimbX::TYPE_LION_R_HAND);
 		m_pLimb[2]->BindXfile(CLimbX::TYPE_LION_L_FOOT);
 		m_pLimb[3]->BindXfile(CLimbX::TYPE_LION_R_FOOT);
 		
-		//ˆÊ’u’²®
+		//ä½ç½®èª¿æ•´
 		D3DXVECTOR3 pos = this->GetPosition();
 		pos.y = PLAYER_POSY;
 		this->SetPosition(pos);
@@ -551,14 +551,14 @@ void CPlayerX::SetState(STATE state)
 	}
 }
 //=============================================================================
-// ƒXƒe[ƒg‚ğæ“¾
+// ã‚¹ãƒ†ãƒ¼ãƒˆã‚’å–å¾—
 //=============================================================================
 CPlayerX::STATE CPlayerX::GetState(void)
 {
 	return m_state;
 }
 //=============================================================================
-// ƒvƒŒƒCƒ„[‚Ì‚ ‚½‚è”»’è‚ğŒvZ‚·‚é
+// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ã‚ãŸã‚Šåˆ¤å®šã‚’è¨ˆç®—ã™ã‚‹
 //=============================================================================
 bool CPlayerX::isCollision(void)
 {
@@ -569,7 +569,7 @@ bool CPlayerX::isCollision(void)
 	bool bHitCube = false;
 	int nHitCubeID = 0;
 
-	//“–‚½‚è”»’è‚Ì‘O€”õ
+	//å½“ãŸã‚Šåˆ¤å®šã®å‰æº–å‚™
 	D3DXVECTOR3 posLside = posPlayer;
 	posLside.x = posPlayer.x +  PLAYER_RADIUS * sinf(rotPlayer.y + D3DXToRadian(-90.0f));
 	posLside.z = posPlayer.z +  PLAYER_RADIUS * cosf(rotPlayer.y + D3DXToRadian(-90.0f));
@@ -578,7 +578,7 @@ bool CPlayerX::isCollision(void)
 	posRside.x = posPlayer.x +  PLAYER_RADIUS * sinf(rotPlayer.y + D3DXToRadian(90.0f));
 	posRside.z = posPlayer.z +  PLAYER_RADIUS * cosf(rotPlayer.y + D3DXToRadian(90.0f));
 
-	//“–‚½‚è”»’è
+	//å½“ãŸã‚Šåˆ¤å®š
 	for( int nCntScene = 0; nCntScene < MAX_SCENE; nCntScene++)
 	{
 		CScene *pScene;
@@ -589,7 +589,7 @@ bool CPlayerX::isCollision(void)
 			CScene::OBJTYPE type;
 			type = pScene->GetObjType();
 
-			//HŞ‚Æ‚Ì‚ ‚½‚è”»’è
+			//é£Ÿæã¨ã®ã‚ãŸã‚Šåˆ¤å®š
 			if (type == CScene::OBJTYPE_L_FOOD)
 			{
 				CFood *pFood = (CFood*)pScene;
@@ -599,11 +599,11 @@ bool CPlayerX::isCollision(void)
 
 				if (pFood->GetState() == CFood::STATE_NORMAL && CCollision::HitCheckCircleXZ(posPlayer, PLAYER_RADIUS, posFood, FOOD_RADIUS))
 				{
-					//ƒAƒCƒRƒ“‚ÌF‚ğ•Ï‚¦‚é
+					//ã‚¢ã‚¤ã‚³ãƒ³ã®è‰²ã‚’å¤‰ãˆã‚‹
 					CFoodIcon *pFoodIcon = pFood->GetIcon();
 					pFoodIcon->SetColor(WHITE(1.0f));
 
-					//HŞƒQƒbƒg
+					//é£Ÿæã‚²ãƒƒãƒˆ
 					pFood->SetClear();
 					pFood->SetState( CFood::STATE_FLYING, 120);
 					m_nNumFoodGet++;
@@ -612,12 +612,12 @@ bool CPlayerX::isCollision(void)
 					CSound *pSound = CManager::GetSound();
 					pSound->Play(CSound::SOUND_LABEL_SE_ITEM_GET);
 
-					//ƒXƒRƒA
+					//ã‚¹ã‚³ã‚¢
 					CLionGame::GetScore()->AddScore(300);
 				}
 			}
 
-			//“G‚Æ‚Ì“–‚½‚è”»’è
+			//æ•µã¨ã®å½“ãŸã‚Šåˆ¤å®š
 			else if( type == CScene::OBJTYPE_L_ENEMY && m_state != STATE_HIT)
 			{
 				D3DXVECTOR3 posEnemy;
@@ -647,7 +647,7 @@ bool CPlayerX::isCollision(void)
 				}
 			}
 
-			//•Ç‚Æ‚Ì‚ ‚½‚è”»’è
+			//å£ã¨ã®ã‚ãŸã‚Šåˆ¤å®š
 			else if( type == CScene::OBJTYPE_WALL)
 			{
 				CMeshWall *pWall = (CMeshWall*)pScene;
@@ -664,16 +664,16 @@ bool CPlayerX::isCollision(void)
 				}
 			}
 
-			//’I‚Æ‚Ì‚ ‚½‚è”»’è
+			//æ£šã¨ã®ã‚ãŸã‚Šåˆ¤å®š
 			else if( type == CScene::OBJTYPE_CUBE)
 			{
 				CCubeX *pCube = (CCubeX*)pScene;
 
-				//‚ ‚½‚è”»’è
+				//ã‚ãŸã‚Šåˆ¤å®š
 				float len = pCube->GetDistanceBoxPoint( posPlayer + m_front);
 				if( len < PLAYER_RADIUS)
 				{
-					//ƒŒƒW
+					//ãƒ¬ã‚¸
 					if(pCube->GetType() == CCubeX::TYPE_1X1)
 					{
 						if(CFood::isAllClear() == true)
@@ -691,15 +691,15 @@ bool CPlayerX::isCollision(void)
 		}
 	}
 
-	//C³‚µ‚½‘OiƒxƒNƒgƒ‹‚ğ‚à‚¤ˆê“x‚ ‚½‚è”»’è‚ğ‚Æ‚é
+	//ä¿®æ­£ã—ãŸå‰é€²ãƒ™ã‚¯ãƒˆãƒ«ã‚’ã‚‚ã†ä¸€åº¦ã‚ãŸã‚Šåˆ¤å®šã‚’ã¨ã‚‹
 	if( bHitWall == true)
 	{
 		bHitWall = false;
 
-		//‘Oi•ûŒü‚ÌC³
+		//å‰é€²æ–¹å‘ã®ä¿®æ­£
 		CCollision::GetWallScratchVector( &m_front, m_front, wall_nor);
 
-		//“–‚½‚è”»’è(“ñ‰ñ–Ú)
+		//å½“ãŸã‚Šåˆ¤å®š(äºŒå›ç›®)
 		for( int nCntScene = 0; nCntScene < MAX_SCENE; nCntScene++)
 		{
 			CScene *pScene;
@@ -710,7 +710,7 @@ bool CPlayerX::isCollision(void)
 				CScene::OBJTYPE type;
 				type = pScene->GetObjType();
 
-				//•Ç‚Æ‚Ì‚ ‚½‚è”»’è(“ñ‰ñ–Ú)
+				//å£ã¨ã®ã‚ãŸã‚Šåˆ¤å®š(äºŒå›ç›®)
 				if( type == CScene::OBJTYPE_WALL)
 				{
 					CMeshWall *pWall = (CMeshWall*)pScene;
@@ -732,13 +732,13 @@ bool CPlayerX::isCollision(void)
 	}
 	else if( bHitCube == true)
 	{
-		//‘Oi•ûŒü‚ÌC³
+		//å‰é€²æ–¹å‘ã®ä¿®æ­£
 		D3DXVECTOR3 vecX = D3DXVECTOR3( 1.0f, 0.0f, 0.0f);
 		D3DXVECTOR3 vecZ = D3DXVECTOR3( 0.0f, 0.0f, 1.0f);
 		CCollision::GetWallScratchVector( &vecX, m_front, vecX);
 		CCollision::GetWallScratchVector( &vecZ, m_front, vecZ);
 
-		//“–‚½‚è”»’è(“ñ‰ñ–Ú)
+		//å½“ãŸã‚Šåˆ¤å®š(äºŒå›ç›®)
 		CScene *pScene;
 		pScene = CScene::GetScene( nHitCubeID);
 		
@@ -747,7 +747,7 @@ bool CPlayerX::isCollision(void)
 			CScene::OBJTYPE type;
 			type = pScene->GetObjType();
 
-			//’I‚Æ‚Ì‚ ‚½‚è”»’è(“ñ‰ñ–Ú)
+			//æ£šã¨ã®ã‚ãŸã‚Šåˆ¤å®š(äºŒå›ç›®)
 			if( type == CScene::OBJTYPE_CUBE)
 			{
 				CCubeX *pCube = (CCubeX*)pScene;
@@ -769,7 +769,7 @@ bool CPlayerX::isCollision(void)
 	return (bHitCube || bHitWall);
 }
 //=============================================================================
-//XFILE‚Ìƒ[ƒh
+//XFILEã®ãƒ­ãƒ¼ãƒ‰
 //=============================================================================
 HRESULT CPlayerX::Load(void)
 {
@@ -796,16 +796,16 @@ HRESULT CPlayerX::Load(void)
 			m_nNumMat[cntType] == 0
 			)
 		{
-			// Xƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
+			// Xãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
 			if(FAILED(D3DXLoadMeshFromX(
-				strFileName,			// “Ç‚İ‚Şƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹–¼(Xƒtƒ@ƒCƒ‹)
-				D3DXMESH_SYSTEMMEM,		// ƒƒbƒVƒ…‚Ìì¬ƒIƒvƒVƒ‡ƒ“‚ğw’è
-				pDevice,				// IDirect3DDevice9ƒCƒ“ƒ^[ƒtƒFƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-				NULL,					// —×Ú«ƒf[ƒ^‚ğŠÜ‚Şƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-				&m_pD3DXBuffMat[cntType],	// ƒ}ƒeƒŠƒAƒ‹ƒf[ƒ^‚ğŠÜ‚Şƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-				NULL,					// ƒGƒtƒFƒNƒgƒCƒ“ƒXƒ^ƒ“ƒX‚Ì”z—ñ‚ğŠÜ‚Şƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-				&m_nNumMat[cntType],	// D3DXMATERIAL\‘¢‘Ì‚Ì”
-				&m_pD3DXMesh[cntType]	// ID3DXMeshƒCƒ“ƒ^[ƒtƒFƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ÌƒAƒhƒŒƒX
+				strFileName,			// èª­ã¿è¾¼ã‚€ãƒ¢ãƒ‡ãƒ«ãƒ•ã‚¡ã‚¤ãƒ«å(Xãƒ•ã‚¡ã‚¤ãƒ«)
+				D3DXMESH_SYSTEMMEM,		// ãƒ¡ãƒƒã‚·ãƒ¥ã®ä½œæˆã‚ªãƒ—ã‚·ãƒ§ãƒ³ã‚’æŒ‡å®š
+				pDevice,				// IDirect3DDevice9ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+				NULL,					// éš£æ¥æ€§ãƒ‡ãƒ¼ã‚¿ã‚’å«ã‚€ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+				&m_pD3DXBuffMat[cntType],	// ãƒãƒ†ãƒªã‚¢ãƒ«ãƒ‡ãƒ¼ã‚¿ã‚’å«ã‚€ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+				NULL,					// ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®é…åˆ—ã‚’å«ã‚€ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+				&m_nNumMat[cntType],	// D3DXMATERIALæ§‹é€ ä½“ã®æ•°
+				&m_pD3DXMesh[cntType]	// ID3DXMeshã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã®ã‚¢ãƒ‰ãƒ¬ã‚¹
 				)))
 			{
 				return E_FAIL;
@@ -818,25 +818,25 @@ HRESULT CPlayerX::Load(void)
 }
 
 //=============================================================================
-//XFILE‚ÌƒAƒ“ƒ[ƒh
+//XFILEã®ã‚¢ãƒ³ãƒ­ãƒ¼ãƒ‰
 //=============================================================================
 void CPlayerX::Unload(void)
 {
 	for(int cntType = 0; cntType < TYPE_MAX; cntType++)
 	{
-		// ƒeƒNƒXƒ`ƒƒ‚ÌŠJ•ú
+		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®é–‹æ”¾
 		if(m_pTexture[cntType] != NULL)
 		{
 			m_pTexture[cntType]->Release();
 			m_pTexture[cntType] = NULL;
 		}
-		// ƒƒbƒVƒ…‚ÌŠJ•ú
+		// ãƒ¡ãƒƒã‚·ãƒ¥ã®é–‹æ”¾
 		if(m_pD3DXMesh[cntType] != NULL)
 		{
 			m_pD3DXMesh[cntType]->Release();
 			m_pD3DXMesh[cntType] = NULL;
 		}
-		// ƒ}ƒeƒŠƒAƒ‹‚ÌŠJ•ú
+		// ãƒãƒ†ãƒªã‚¢ãƒ«ã®é–‹æ”¾
 		if(m_pD3DXBuffMat != NULL)
 		{
 			m_pD3DXBuffMat[cntType]->Release();
@@ -846,21 +846,21 @@ void CPlayerX::Unload(void)
 
 }
 //=============================================================================
-//XFILE‚ÌŠ„‚è“–‚Ä
+//XFILEã®å‰²ã‚Šå½“ã¦
 //=============================================================================
 void CPlayerX::BindXfile(TYPE type)
 {
 	((CSceneX*)this)->BindXfile( m_pTexture[type], m_pD3DXMesh[type], m_pD3DXBuffMat[type], m_nNumMat[type]);
 }
 //=============================================================================
-//ƒvƒŒƒCƒ„[‚ªƒQƒbƒg‚µ‚½HŞ‚Ì”‚ğæ“¾
+//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒã‚²ãƒƒãƒˆã—ãŸé£Ÿæã®æ•°ã‚’å–å¾—
 //=============================================================================
 int CPlayerX::GetFoodNum(void)
 {
 	return m_nNumFoodGet;
 }
 //=============================================================================
-// ‰ñ“]Šp“x‚ğæ“¾
+// å›è»¢è§’åº¦ã‚’å–å¾—
 //=============================================================================
 D3DXVECTOR3 CPlayerX::Get2RotDiffAngle( D3DXVECTOR3 rot, D3DXVECTOR3 rotTarget)
 {

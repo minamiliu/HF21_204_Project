@@ -1,9 +1,9 @@
-//============================================
+ï»¿//============================================
 //
-// ƒ^ƒCƒgƒ‹:	 –¢—ˆ‘n‘¢“Wƒ`[ƒ€204
-// ƒvƒƒOƒ‰ƒ€–¼: meshDome.h
-// ì¬ŽÒ:		 HAL“Œ‹žƒQ[ƒ€Šw‰È@—«“ìG
-// ì¬“ú:       2017/01/12
+// ã‚¿ã‚¤ãƒˆãƒ«:	 æœªæ¥å‰µé€ å±•ãƒãƒ¼ãƒ 204
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å: meshDome.h
+// ä½œæˆè€…:		 HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
+// ä½œæˆæ—¥:       2017/01/12
 //
 //============================================
 
@@ -11,20 +11,20 @@
 #define _MESHDOME_H_
 
 //============================================
-//ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+//ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //============================================
 #include "scene.h"
 
 //============================================
-//ƒ}ƒNƒ’è‹`
+//ãƒžã‚¯ãƒ­å®šç¾©
 //============================================
 
 //============================================
-//‘O•ûéŒ¾
+//å‰æ–¹å®£è¨€
 //============================================
 
 //============================================
-//\‘¢‘Ì’è‹`
+//æ§‹é€ ä½“å®šç¾©
 //============================================
 class CMeshDome : public CScene
 {
@@ -48,23 +48,23 @@ public:
 
 private:
 
-	static LPDIRECT3DTEXTURE9 m_pTexture;	// ƒeƒNƒXƒ`ƒƒ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff;		// ’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	LPDIRECT3DINDEXBUFFER9 m_pIdxBuff;		// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuffTop;	// ’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	LPDIRECT3DINDEXBUFFER9 m_pIdxBuffTop;	// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	bool m_bLoadTexture;					// ƒeƒNƒXƒ`ƒƒ‚ð“Ç‚Ýž‚ñ‚¾‚©‚Ç‚¤‚©
+	static LPDIRECT3DTEXTURE9 m_pTexture;	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff;		// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	LPDIRECT3DINDEXBUFFER9 m_pIdxBuff;		// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuffTop;	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	LPDIRECT3DINDEXBUFFER9 m_pIdxBuffTop;	// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	bool m_bLoadTexture;					// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’èª­ã¿è¾¼ã‚“ã ã‹ã©ã†ã‹
 
-	D3DXMATRIX m_mtxWorld;					// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX
-	D3DXVECTOR3 m_pos;						// ƒ|ƒŠƒSƒ“•\Ž¦ˆÊ’u‚Ì’†SÀ•W
-	D3DXVECTOR3 m_rot;						// ƒ|ƒŠƒSƒ“‚Ì‰ñ“]Šp
+	D3DXMATRIX m_mtxWorld;					// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒžãƒˆãƒªãƒƒã‚¯ã‚¹
+	D3DXVECTOR3 m_pos;						// ãƒãƒªã‚´ãƒ³è¡¨ç¤ºä½ç½®ã®ä¸­å¿ƒåº§æ¨™
+	D3DXVECTOR3 m_rot;						// ãƒãƒªã‚´ãƒ³ã®å›žè»¢è§’
 
-	int m_nNumBlockH;						// ƒuƒƒbƒN”
-	int m_nNumBlockV;						// ƒuƒƒbƒN”
-	int m_nNumVertex;						// ‘’¸“_”	
-	int m_nNumVertexIndex;					// ‘ƒCƒ“ƒfƒbƒNƒX”
-	int m_nNumPolygon;						// ‘ƒ|ƒŠƒSƒ“”
-	float m_fRadius;						// ”¼Œa
+	int m_nNumBlockH;						// ãƒ–ãƒ­ãƒƒã‚¯æ•°
+	int m_nNumBlockV;						// ãƒ–ãƒ­ãƒƒã‚¯æ•°
+	int m_nNumVertex;						// ç·é ‚ç‚¹æ•°	
+	int m_nNumVertexIndex;					// ç·ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹æ•°
+	int m_nNumPolygon;						// ç·ãƒãƒªã‚´ãƒ³æ•°
+	float m_fRadius;						// åŠå¾„
 };
 
 #endif

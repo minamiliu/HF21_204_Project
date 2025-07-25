@@ -1,14 +1,14 @@
-//============================================
+ï»¿//============================================
 //
-// ƒ^ƒCƒgƒ‹:	 –¢—ˆ‘n‘¢“Wƒ`[ƒ€204
-// ƒvƒƒOƒ‰ƒ€–¼: scene3D.cpp
-// ì¬ŽÒ:		 HAL“Œ‹žƒQ[ƒ€Šw‰È@—«“ìG
-// ì¬“ú:       2016/11/10
+// ã‚¿ã‚¤ãƒˆãƒ«:	 æœªæ¥å‰µé€ å±•ãƒãƒ¼ãƒ 204
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å: scene3D.cpp
+// ä½œæˆè€…:		 HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
+// ä½œæˆæ—¥:       2016/11/10
 //
 //============================================
 
 //============================================
-//ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+//ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //============================================
 #include "main.h"
 #include "scene3D.h"
@@ -18,17 +18,17 @@
 #include "collision.h"
 
 //============================================
-// ƒ}ƒNƒ’è‹`
+// ãƒžã‚¯ãƒ­å®šç¾©
 //============================================
 #define TEXTURENAME "data/TEXTURE/field03.png"
 
 
 //=============================================================================
-// \‘¢‘Ì’è‹`
+// æ§‹é€ ä½“å®šç¾©
 //=============================================================================
 
 //=============================================================================
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CScene3D::CScene3D()
 {
@@ -40,7 +40,7 @@ CScene3D::CScene3D(LAYER layer) : CScene( layer)
 }
 
 //=============================================================================
-//ƒfƒXƒgƒ‰ƒNƒ^
+//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CScene3D::~CScene3D()
 {
@@ -49,14 +49,14 @@ CScene3D::~CScene3D()
 
 
 //=============================================================================
-// ƒƒVƒ…ƒ|ƒŠƒSƒ“‚Ì‰Šú‰»ˆ—
+// ãƒ¡ã‚·ãƒ¥ãƒãƒªã‚´ãƒ³ã®åˆæœŸåŒ–å‡¦ç†
 //=============================================================================
 HRESULT CScene3D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ, bool bUseYnotZ)
 {
 	LPDIRECT3DDEVICE9 pDevice;
 	pDevice = CManager::GetRenderer()->GetDevice();
 
-	// ˆÊ’uE‰ñ“]EƒXƒP[ƒ‹‚Ì‰ŠúÝ’è
+	// ä½ç½®ãƒ»å›žè»¢ãƒ»ã‚¹ã‚±ãƒ¼ãƒ«ã®åˆæœŸè¨­å®š
 	m_pos = pos;
 	m_rot = rot;
 
@@ -75,40 +75,40 @@ HRESULT CScene3D::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNu
 	m_bLoadTexture = false;
 	m_bUseYnotZ = bUseYnotZ;
 	
-	// ’¸“_î•ñ‚Ìì¬
+	// é ‚ç‚¹æƒ…å ±ã®ä½œæˆ
 	MakeVertex(pDevice);
 
 	return S_OK;
 }
 //=============================================================================
-// ƒƒVƒ…ƒ|ƒŠƒSƒ“‚ÌI—¹ˆ—
+// ãƒ¡ã‚·ãƒ¥ãƒãƒªã‚´ãƒ³ã®çµ‚äº†å‡¦ç†
 //=============================================================================
 void CScene3D::Uninit(void)
 {
 	if(m_pTexture != NULL && m_bLoadTexture == true)
-	{// ƒeƒNƒXƒ`ƒƒ‚ÌŠJ•ú
+	{// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®é–‹æ”¾
 		m_pTexture->Release();
 		m_pTexture = NULL;
 	}
 
 	if(m_pVtxBuff != NULL) 
-	{// ’¸“_ƒoƒbƒtƒ@‚ÌŠJ•ú
+	{// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®é–‹æ”¾
 		m_pVtxBuff->Release();
 		m_pVtxBuff = NULL;
 	}
 
-	//ƒIƒuƒWƒFƒNƒg‚Ì”jŠü
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç ´æ£„
 	Release();
 }
 //=============================================================================
-// ƒƒVƒ…ƒ|ƒŠƒSƒ“‚ÌXVˆ—
+// ãƒ¡ã‚·ãƒ¥ãƒãƒªã‚´ãƒ³ã®æ›´æ–°å‡¦ç†
 //=============================================================================
 void CScene3D::Update(void)
 {
 
 }
 //=============================================================================
-// ƒƒVƒ…ƒ|ƒŠƒSƒ“‚Ì•`‰æˆ—
+// ãƒ¡ã‚·ãƒ¥ãƒãƒªã‚´ãƒ³ã®æç”»å‡¦ç†
 //=============================================================================
 void CScene3D::Draw(void)
 {
@@ -117,45 +117,45 @@ void CScene3D::Draw(void)
 
 	D3DXMATRIX mtxScl, mtxRot, mtxTranslate;
 		
-	// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚Ì‰Šú‰»
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒžãƒˆãƒªãƒƒã‚¯ã‚¹ã®åˆæœŸåŒ–
 	D3DXMatrixIdentity( &m_mtxWorld);
 	
-	// ‰ñ“]‚ð”½‰f
+	// å›žè»¢ã‚’åæ˜ 
 	D3DXMatrixRotationYawPitchRoll( &mtxRot, m_rot.y, m_rot.x, m_rot.z);
 	D3DXMatrixMultiply( &m_mtxWorld, &m_mtxWorld, &mtxRot);
 	
-	// ˆÚ“®‚ð”½‰f
+	// ç§»å‹•ã‚’åæ˜ 
 	D3DXMatrixTranslation( &mtxTranslate, m_pos.x, m_pos.y, m_pos.z);
 	D3DXMatrixMultiply( &m_mtxWorld, &m_mtxWorld, &mtxTranslate);
 	
-	// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚ÌÝ’è
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒžãƒˆãƒªãƒƒã‚¯ã‚¹ã®è¨­å®š
 	pDevice->SetTransform( D3DTS_WORLD, &m_mtxWorld);
 
-	// ’¸“_ƒoƒbƒtƒ@‚ðƒfƒoƒCƒX‚Ìƒf[ƒ^ƒXƒgƒŠ[ƒ€‚ÉƒoƒCƒ“ƒh
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒ‡ãƒã‚¤ã‚¹ã®ãƒ‡ãƒ¼ã‚¿ã‚¹ãƒˆãƒªãƒ¼ãƒ ã«ãƒã‚¤ãƒ³ãƒ‰
 	pDevice->SetStreamSource(0, m_pVtxBuff, 0, sizeof(VERTEX_3D));
 
-	// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ðƒŒƒ“ƒ_ƒŠƒ“ƒOƒpƒCƒvƒ‰ƒCƒ“‚ÉÝ’è
+	// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«è¨­å®š
 	pDevice->SetIndices(m_pIdxBuff);
 
-	// ’¸“_ƒtƒH[ƒ}ƒbƒg‚ÌÝ’è
+	// é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆã®è¨­å®š
 	pDevice->SetFVF(FVF_VERTEX_3D);
 
-	// ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®è¨­å®š
 	pDevice->SetTexture(0, m_pTexture);
 	
-	//ƒƒVƒ…ƒ|ƒŠƒSƒ“‚Ì•`‰æ
+	//ãƒ¡ã‚·ãƒ¥ãƒãƒªã‚´ãƒ³ã®æç”»
 	pDevice->DrawIndexedPrimitive(
-		D3DPT_TRIANGLESTRIP,	//ƒvƒŠƒ~ƒeƒBƒu‚ÌŽí—Þ
-		0,						//Å‰‚Ì’¸“_ƒCƒ“ƒfƒbƒNƒX‚Ü‚Å‚ÌƒIƒtƒZƒbƒg
-		0,						//Å¬‚Ì’¸“_ƒCƒ“ƒfƒbƒNƒX
-		m_nNumVertex,			//’¸“_‚Ì”
-		0,						//“Ç‚ÝŽæ‚è‚ðŠJŽn‚·‚éˆÊ’u
-		m_nNumPolygon			//ƒƒVƒ…ƒ|ƒŠƒSƒ“‚Ì”
+		D3DPT_TRIANGLESTRIP,	//ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ã®ç¨®é¡ž
+		0,						//æœ€åˆã®é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã¾ã§ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆ
+		0,						//æœ€å°ã®é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+		m_nNumVertex,			//é ‚ç‚¹ã®æ•°
+		0,						//èª­ã¿å–ã‚Šã‚’é–‹å§‹ã™ã‚‹ä½ç½®
+		m_nNumPolygon			//ãƒ¡ã‚·ãƒ¥ãƒãƒªã‚´ãƒ³ã®æ•°
 	);
 }
 
 //=============================================================================
-// ƒƒVƒ…ƒ|ƒŠƒSƒ“‚Ì•`‰æˆ—
+// ãƒ¡ã‚·ãƒ¥ãƒãƒªã‚´ãƒ³ã®æç”»å‡¦ç†
 //=============================================================================
 void CScene3D::Draw(const D3DXMATRIX *mtxView)
 {
@@ -164,10 +164,10 @@ void CScene3D::Draw(const D3DXMATRIX *mtxView)
 
 	D3DXMATRIX mtxScl, mtxRot, mtxTranslate;
 		
-	// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚Ì‰Šú‰»
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒžãƒˆãƒªãƒƒã‚¯ã‚¹ã®åˆæœŸåŒ–
 	D3DXMatrixIdentity( &m_mtxWorld);
 
-	//ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚ÉƒJƒƒ‰‚Ìs—ñ‚ð“]’us—ñ‚Æ‚µ‚ÄÝ’è‚·‚é
+	//ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒžãƒˆãƒªãƒƒã‚¯ã‚¹ã«ã‚«ãƒ¡ãƒ©ã®è¡Œåˆ—ã‚’è»¢ç½®è¡Œåˆ—ã¨ã—ã¦è¨­å®šã™ã‚‹
 	m_mtxWorld._11 = mtxView->_11;
 	m_mtxWorld._22 = mtxView->_22;
 	m_mtxWorld._33 = mtxView->_33;
@@ -178,42 +178,42 @@ void CScene3D::Draw(const D3DXMATRIX *mtxView)
 	m_mtxWorld._31 = mtxView->_13;
 	m_mtxWorld._32 = mtxView->_23;
 	
-	// ‰ñ“]‚ð”½‰f
+	// å›žè»¢ã‚’åæ˜ 
 	D3DXMatrixRotationYawPitchRoll( &mtxRot, m_rot.y, m_rot.x, m_rot.z);
 	D3DXMatrixMultiply( &m_mtxWorld, &m_mtxWorld, &mtxRot);
 	
-	// ˆÚ“®‚ð”½‰f
+	// ç§»å‹•ã‚’åæ˜ 
 	D3DXMatrixTranslation( &mtxTranslate, m_pos.x, m_pos.y, m_pos.z);
 	D3DXMatrixMultiply( &m_mtxWorld, &m_mtxWorld, &mtxTranslate);
 	
-	// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚ÌÝ’è
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒžãƒˆãƒªãƒƒã‚¯ã‚¹ã®è¨­å®š
 	pDevice->SetTransform( D3DTS_WORLD, &m_mtxWorld);
 
-	// ’¸“_ƒoƒbƒtƒ@‚ðƒfƒoƒCƒX‚Ìƒf[ƒ^ƒXƒgƒŠ[ƒ€‚ÉƒoƒCƒ“ƒh
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒ‡ãƒã‚¤ã‚¹ã®ãƒ‡ãƒ¼ã‚¿ã‚¹ãƒˆãƒªãƒ¼ãƒ ã«ãƒã‚¤ãƒ³ãƒ‰
 	pDevice->SetStreamSource(0, m_pVtxBuff, 0, sizeof(VERTEX_3D));
 
-	// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ðƒŒƒ“ƒ_ƒŠƒ“ƒOƒpƒCƒvƒ‰ƒCƒ“‚ÉÝ’è
+	// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«è¨­å®š
 	pDevice->SetIndices(m_pIdxBuff);
 
-	// ’¸“_ƒtƒH[ƒ}ƒbƒg‚ÌÝ’è
+	// é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆã®è¨­å®š
 	pDevice->SetFVF(FVF_VERTEX_3D);
 
-	// ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®è¨­å®š
 	pDevice->SetTexture(0, m_pTexture);
 	
-	//ƒƒVƒ…ƒ|ƒŠƒSƒ“‚Ì•`‰æ
+	//ãƒ¡ã‚·ãƒ¥ãƒãƒªã‚´ãƒ³ã®æç”»
 	pDevice->DrawIndexedPrimitive(
-		D3DPT_TRIANGLESTRIP,	//ƒvƒŠƒ~ƒeƒBƒu‚ÌŽí—Þ
-		0,						//Å‰‚Ì’¸“_ƒCƒ“ƒfƒbƒNƒX‚Ü‚Å‚ÌƒIƒtƒZƒbƒg
-		0,						//Å¬‚Ì’¸“_ƒCƒ“ƒfƒbƒNƒX
-		m_nNumVertex,			//’¸“_‚Ì”
-		0,						//“Ç‚ÝŽæ‚è‚ðŠJŽn‚·‚éˆÊ’u
-		m_nNumPolygon			//ƒƒVƒ…ƒ|ƒŠƒSƒ“‚Ì”
+		D3DPT_TRIANGLESTRIP,	//ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ã®ç¨®é¡ž
+		0,						//æœ€åˆã®é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã¾ã§ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆ
+		0,						//æœ€å°ã®é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+		m_nNumVertex,			//é ‚ç‚¹ã®æ•°
+		0,						//èª­ã¿å–ã‚Šã‚’é–‹å§‹ã™ã‚‹ä½ç½®
+		m_nNumPolygon			//ãƒ¡ã‚·ãƒ¥ãƒãƒªã‚´ãƒ³ã®æ•°
 	);
 }
 
 //=============================================================================
-// ƒƒVƒ…ƒ|ƒŠƒSƒ“‚Ì¶¬
+// ãƒ¡ã‚·ãƒ¥ãƒãƒªã‚´ãƒ³ã®ç”Ÿæˆ
 //=============================================================================
 CScene3D *CScene3D::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ, bool bUseYnotZ)
 {
@@ -221,29 +221,29 @@ CScene3D *CScene3D::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nNumBlockX, int
 	pScene3D = new CScene3D;
 	pScene3D->Init(pos, rot, nNumBlockX, nNumBlockZ, fSizeBlockX, fSizeBlockZ, bUseYnotZ);
 
-	//ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚Ýž‚Ý
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
 	pScene3D->Load(TEXTURENAME);
 
 	return pScene3D;
 }
 //=============================================================================
-// ƒƒVƒ…ƒ|ƒŠƒSƒ“‚Ì’¸“_¶¬
+// ãƒ¡ã‚·ãƒ¥ãƒãƒªã‚´ãƒ³ã®é ‚ç‚¹ç”Ÿæˆ
 //=============================================================================
 HRESULT CScene3D::MakeVertex(LPDIRECT3DDEVICE9 pDevice)
 {
-	// ƒIƒuƒWƒFƒNƒg‚Ì’¸“_ƒoƒbƒtƒ@‚ð¶¬
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ç”Ÿæˆ
 	if(FAILED(pDevice->CreateVertexBuffer(
-		sizeof(VERTEX_3D) * m_nNumVertex,	//’¸“_ƒf[ƒ^‚Ìƒoƒbƒtƒ@ƒTƒCƒY
+		sizeof(VERTEX_3D) * m_nNumVertex,	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º
 		D3DUSAGE_WRITEONLY,
-		FVF_VERTEX_3D,					//’¸“_ƒtƒH[ƒ}ƒbƒg
+		FVF_VERTEX_3D,					//é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆ
 		D3DPOOL_MANAGED,
-		&m_pVtxBuff,			//’¸“_ƒoƒbƒtƒ@ƒCƒ“ƒ^[ƒtƒF[ƒX‚Ìƒ|ƒCƒ“ƒ^
+		&m_pVtxBuff,			//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã®ãƒã‚¤ãƒ³ã‚¿
 		NULL)))
 	{
 		return E_FAIL;
 	}
 
-	// ƒIƒuƒWƒFƒNƒg‚ÌƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ð¶¬
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ç”Ÿæˆ
 	if(FAILED(pDevice->CreateIndexBuffer(
 		sizeof(WORD) * m_nNumVertexIndex,
 		D3DUSAGE_WRITEONLY,
@@ -256,11 +256,11 @@ HRESULT CScene3D::MakeVertex(LPDIRECT3DDEVICE9 pDevice)
 	}
 
 	
-	{//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ð–„‚ß‚é
+	{//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 
 		VERTEX_3D *pVtx;
 
-		// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 		m_pVtxBuff->Lock( 0, 0, (void**)&pVtx, 0);
 
 		for(int nCntZ = 0; nCntZ < m_nNumBlockZ+1; nCntZ++)
@@ -283,16 +283,16 @@ HRESULT CScene3D::MakeVertex(LPDIRECT3DDEVICE9 pDevice)
 		}
 
 
-		// ’¸“_ƒf[ƒ^‚ðƒAƒ“ƒƒbƒN‚·‚é
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 		m_pVtxBuff->Unlock();	
 	}
 
 
-	{//ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚Ì’†g‚ð–„‚ß‚é
+	{//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 
 		WORD *pIdx;
 
-		// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 		m_pIdxBuff->Lock( 0, 0, (void**)&pIdx, 0);
 
 		for(int nCntZ = 0; nCntZ < m_nNumBlockZ; nCntZ++)
@@ -304,7 +304,7 @@ HRESULT CScene3D::MakeVertex(LPDIRECT3DDEVICE9 pDevice)
 			}
 			for(int nCntX = 0; nCntX < m_nNumBlockX+1; nCntX++, pIdx+=2)
 			{
-				//’¸“_À•W‚ÌÝ’è
+				//é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 				pIdx[0] = (m_nNumBlockX + 1) * (nCntZ + 1) + nCntX; 
 				pIdx[1] = (m_nNumBlockX + 1) * (nCntZ) + nCntX;
 			}
@@ -315,28 +315,28 @@ HRESULT CScene3D::MakeVertex(LPDIRECT3DDEVICE9 pDevice)
 			}
 		}
 
-		// ’¸“_ƒf[ƒ^‚ðƒAƒ“ƒƒbƒN‚·‚é
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 		m_pIdxBuff->Unlock();	
 	}
 
 	return S_OK;
 }
 //=============================================================================
-// À•W‚ÌŽæ“¾
+// åº§æ¨™ã®å–å¾—
 //=============================================================================
 D3DXVECTOR3 CScene3D::GetPosition(void)
 {
 	return m_pos;
 }
 //=============================================================================
-// ƒTƒCƒY‚ÌŽæ“¾
+// ã‚µã‚¤ã‚ºã®å–å¾—
 //=============================================================================
 D3DXVECTOR3 CScene3D::GetSize(void)
 {
 	return m_size;
 }
 //=============================================================================
-// “–‚½‚è”»’è
+// å½“ãŸã‚Šåˆ¤å®š
 //=============================================================================
 bool CScene3D::HitCheck( D3DXVECTOR3 tNowPos, D3DXVECTOR3 tNextPos, D3DXVECTOR3 *wall_nor, D3DXVECTOR3 *HitPoint)
 {
@@ -346,26 +346,26 @@ bool CScene3D::HitCheck( D3DXVECTOR3 tNowPos, D3DXVECTOR3 tNextPos, D3DXVECTOR3 
 	D3DXVECTOR3 tPos[4];
 
 
-	// ƒƒbƒVƒ…•Ç\‘¢‘Ì‚Ìƒ|ƒCƒ“ƒ^‚ÉƒƒbƒVƒ…•Çƒ[ƒN‚Ìæ“ªƒAƒhƒŒƒX‚ð‘ã“ü
+	// ãƒ¡ãƒƒã‚·ãƒ¥å£æ§‹é€ ä½“ã®ãƒã‚¤ãƒ³ã‚¿ã«ãƒ¡ãƒƒã‚·ãƒ¥å£ãƒ¯ãƒ¼ã‚¯ã®å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’ä»£å…¥
 	CScene3D *pMesh = this;
 
 
-	// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚Ì‰Šú‰»
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒžãƒˆãƒªãƒƒã‚¯ã‚¹ã®åˆæœŸåŒ–
 	D3DXMatrixIdentity( &pMesh->m_mtxWorld);
 	
-	// ‰ñ“]‚ð”½‰f
+	// å›žè»¢ã‚’åæ˜ 
 	D3DXMatrixRotationYawPitchRoll( &mtxRot, pMesh->m_rot.y, pMesh->m_rot.x, pMesh->m_rot.z);
 	D3DXMatrixMultiply( &pMesh->m_mtxWorld, &pMesh->m_mtxWorld, &mtxRot);
 	
-	// ˆÚ“®‚ð”½‰f
+	// ç§»å‹•ã‚’åæ˜ 
 	D3DXMatrixTranslation( &mtxTranslate, pMesh->m_pos.x, pMesh->m_pos.y, pMesh->m_pos.z);
 	D3DXMatrixMultiply( &pMesh->m_mtxWorld, &pMesh->m_mtxWorld, &mtxTranslate);
 
-	{//’¸“_ƒoƒbƒtƒ@‚ÌŽæ“¾
+	{//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®å–å¾—
 
 		VERTEX_3D *pVtx;
 
-		// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 		pMesh->m_pVtxBuff->Lock( 0, 0, (void**)&pVtx, 0);
 
 		tPos[0] = pVtx[0].vtx;
@@ -374,11 +374,11 @@ bool CScene3D::HitCheck( D3DXVECTOR3 tNowPos, D3DXVECTOR3 tNextPos, D3DXVECTOR3 
 		tPos[3] = pVtx[(pMesh->m_nNumBlockX+1) * (pMesh->m_nNumBlockZ+1) - 1 ].vtx;
 
 
-		// ’¸“_ƒf[ƒ^‚ðƒAƒ“ƒƒbƒN‚·‚é
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 		pMesh->m_pVtxBuff->Unlock();	
 	}
 
-	//’¸“_ƒoƒbƒtƒ@‚Éƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚ðŠ|‚¯‚éA’¸“_ƒoƒbƒtƒ@‚ªXV‚³‚ê‚é
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã«ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒžãƒˆãƒªãƒƒã‚¯ã‚¹ã‚’æŽ›ã‘ã‚‹ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãŒæ›´æ–°ã•ã‚Œã‚‹
 	D3DXVec3TransformCoord( &tPos[0], &tPos[0], &pMesh->m_mtxWorld);
 	D3DXVec3TransformCoord( &tPos[1], &tPos[1], &pMesh->m_mtxWorld);
 	D3DXVec3TransformCoord( &tPos[2], &tPos[2], &pMesh->m_mtxWorld);
@@ -390,14 +390,14 @@ bool CScene3D::HitCheck( D3DXVECTOR3 tNowPos, D3DXVECTOR3 tNextPos, D3DXVECTOR3 
 	{
 		bHit = true;
 
-		//ˆê”Ô‹ß‚¢Œð“_‚ð‹‚ß‚é
+		//ä¸€ç•ªè¿‘ã„äº¤ç‚¹ã‚’æ±‚ã‚ã‚‹
 		D3DXVECTOR3 v1 = tHitPosNear - tNowPos;
 		D3DXVECTOR3 v2 = tHitPos - tNowPos;
 		if( D3DXVec3Length(&v1) > D3DXVec3Length(&v2))
 		{
 			tHitPosNear = tHitPos;
 
-			//•Ç‚Ì–@ü‚ðŽæ“¾
+			//å£ã®æ³•ç·šã‚’å–å¾—
 			if(wall_nor != NULL) *wall_nor = CCollision::CrossProduct( tPos[0] - tPos[1], tPos[2] - tPos[1]);
 		}
 			
@@ -406,26 +406,26 @@ bool CScene3D::HitCheck( D3DXVECTOR3 tNowPos, D3DXVECTOR3 tNextPos, D3DXVECTOR3 
 	{
 		bHit = true;
 
-		//ˆê”Ô‹ß‚¢Œð“_‚ð‹‚ß‚é
+		//ä¸€ç•ªè¿‘ã„äº¤ç‚¹ã‚’æ±‚ã‚ã‚‹
 		D3DXVECTOR3 v1 = tHitPosNear - tNowPos;
 		D3DXVECTOR3 v2 = tHitPos - tNowPos;
 		if( D3DXVec3Length(&v1) > D3DXVec3Length(&v2))
 		{
 			tHitPosNear = tHitPos;
 
-			//•Ç‚Ì–@ü‚ðŽæ“¾
+			//å£ã®æ³•ç·šã‚’å–å¾—
 			if(wall_nor != NULL) *wall_nor = CCollision::CrossProduct( tPos[1] - tPos[2], tPos[3] - tPos[2]);
 		}
 	}
 
-	//ˆê”Ô‹ß‚¢Œð“_‚ð“n‚·
+	//ä¸€ç•ªè¿‘ã„äº¤ç‚¹ã‚’æ¸¡ã™
 	if(HitPoint != NULL) *HitPoint = tHitPosNear;
 
 	return bHit;
 }
 
 //=============================================================================
-// ƒƒVƒ…ƒ|ƒŠƒSƒ“‚ÌƒeƒNƒXƒ`ƒƒ‚ð“Ç‚Ýž‚Þ
+// ãƒ¡ã‚·ãƒ¥ãƒãƒªã‚´ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’èª­ã¿è¾¼ã‚€
 //=============================================================================
 HRESULT CScene3D::Load(LPCSTR strFileName)
 {
@@ -434,10 +434,10 @@ HRESULT CScene3D::Load(LPCSTR strFileName)
 		LPDIRECT3DDEVICE9 pDevice;
 		pDevice = CManager::GetRenderer()->GetDevice();
 
-		// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚Ýž‚Ý
+		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
 		D3DXCreateTextureFromFile( pDevice, strFileName, &m_pTexture);
 
-		// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚Ýž‚Ýƒtƒ‰ƒO
+		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿ãƒ•ãƒ©ã‚°
 		m_bLoadTexture = true;
 	}
 
@@ -445,29 +445,29 @@ HRESULT CScene3D::Load(LPCSTR strFileName)
 }
 
 //=============================================================================
-// ƒƒVƒ…ƒ|ƒŠƒSƒ“‚ÌƒeƒNƒXƒ`ƒƒ‚ðŠ„‚è“–‚Ä‚é
+// ãƒ¡ã‚·ãƒ¥ãƒãƒªã‚´ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’å‰²ã‚Šå½“ã¦ã‚‹
 //=============================================================================
 void CScene3D::BindTexture( LPDIRECT3DTEXTURE9 pTexture)
 {
 	m_pTexture = pTexture;
 }
 //=============================================================================
-// À•W‚ÌÝ’è
+// åº§æ¨™ã®è¨­å®š
 //=============================================================================
 void CScene3D::SetPosition(D3DXVECTOR3 pos)
 {
 	m_pos = pos;
 }
 //=============================================================================
-//F‚ð•ÏX
+//è‰²ã‚’å¤‰æ›´
 //=============================================================================
 void CScene3D::SetColor(const D3DXCOLOR &col)
 {
-	{//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ð–„‚ß‚é
+	{//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 
 		VERTEX_3D *pVtx;
 
-		// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 		m_pVtxBuff->Lock( 0, 0, (void**)&pVtx, 0);
 
 		for(int nCntZ = 0; nCntZ < m_nNumBlockZ+1; nCntZ++)
@@ -488,7 +488,7 @@ void CScene3D::SetColor(const D3DXCOLOR &col)
 		}
 
 
-		// ’¸“_ƒf[ƒ^‚ðƒAƒ“ƒƒbƒN‚·‚é
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 		m_pVtxBuff->Unlock();	
 	}
 }

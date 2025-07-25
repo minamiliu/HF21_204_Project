@@ -1,14 +1,14 @@
-//============================================
+ï»¿//============================================
 //
-// ƒ^ƒCƒgƒ‹:	 –¢—ˆ‘n‘¢“Wƒ`[ƒ€204
-// ƒvƒƒOƒ‰ƒ€–¼: effect3D.cpp
-// ì¬Ò:		 HAL“Œ‹ƒQ[ƒ€Šw‰È@—«“ìG
-// ì¬“ú:       2017/01/19
+// ã‚¿ã‚¤ãƒˆãƒ«:	 æœªæ¥å‰µé€ å±•ãƒãƒ¼ãƒ 204
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å: effect3D.cpp
+// ä½œæˆè€…:		 HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
+// ä½œæˆæ—¥:       2017/01/19
 //
 //============================================
 
 //============================================
-//ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+//ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //============================================
 #include "main.h"
 #include "manager.h"
@@ -17,12 +17,12 @@
 #include "scene.h"
 
 //============================================
-// ƒ}ƒNƒ’è‹`
+// ãƒã‚¯ãƒ­å®šç¾©
 //============================================
 #define TEXTURE_TOMATO	"data/TEXTURE/effect000.jpg"
 
 //============================================
-// Ã“Iƒƒ“ƒo[•Ï”‚Ì‰Šú‰»
+// é™çš„ãƒ¡ãƒ³ãƒãƒ¼å¤‰æ•°ã®åˆæœŸåŒ–
 //============================================
 LPDIRECT3DTEXTURE9 CEffect3D::m_pTexture[TYPE_MAX] = {};
 int CEffect3D::m_nColorID = 0;
@@ -38,7 +38,7 @@ D3DXCOLOR CEffect3D::m_paraColor[] =
 };
 
 //=============================================================================
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CEffect3D::CEffect3D() : CBillBoard( LAYER_EFFECT)
 {
@@ -46,7 +46,7 @@ CEffect3D::CEffect3D() : CBillBoard( LAYER_EFFECT)
 }
 
 //=============================================================================
-//ƒfƒXƒgƒ‰ƒNƒ^
+//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 CEffect3D::~CEffect3D()
 {
@@ -55,14 +55,14 @@ CEffect3D::~CEffect3D()
 
 
 //=============================================================================
-// ƒ|ƒŠƒSƒ“‚Ì‰Šú‰»ˆ—
+// ãƒãƒªã‚´ãƒ³ã®åˆæœŸåŒ–å‡¦ç†
 //=============================================================================
 
 HRESULT CEffect3D::Init(D3DXVECTOR3 pos, D3DXVECTOR2 size, TYPE type, const D3DXCOLOR &col, float fPercent)
 {
 	CBillBoard::Init( pos, size);
 
-	//‰Šúó‘Ô
+	//åˆæœŸçŠ¶æ…‹
 	m_type = type;
 	m_fPercent = fPercent;
 	m_col = col;
@@ -73,7 +73,7 @@ HRESULT CEffect3D::Init(D3DXVECTOR3 pos, D3DXVECTOR2 size, float fPercent, bool 
 {
 	CBillBoard::Init( pos, size);
 
-	//‰Šúó‘Ô
+	//åˆæœŸçŠ¶æ…‹
 	m_type = TYPE_MARU;
 	m_fPercent = fPercent;
 
@@ -111,38 +111,38 @@ void CEffect3D::Draw(void)
 	LPDIRECT3DDEVICE9 pDevice;
 	pDevice = CManager::GetRenderer()->GetDevice();
 
-	// ‰ÁZ‡¬
-	pDevice->SetRenderState( D3DRS_BLENDOP, D3DBLENDOP_ADD);	// Œ‹‰Ê = “]‘—Œ³(SRC) + “]‘—æ(DEST)
+	// åŠ ç®—åˆæˆ
+	pDevice->SetRenderState( D3DRS_BLENDOP, D3DBLENDOP_ADD);	// çµæœ = è»¢é€å…ƒ(SRC) + è»¢é€å…ˆ(DEST)
 	pDevice->SetRenderState( D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	pDevice->SetRenderState( D3DRS_DESTBLEND, D3DBLEND_ONE);
 
-	// Z”äŠr‚È‚µ
+	// Zæ¯”è¼ƒãªã—
 	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 	pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
 
-	// ƒ‰ƒCƒeƒBƒ“ƒOƒ‚[ƒh‚ğOFF
+	// ãƒ©ã‚¤ãƒ†ã‚£ãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰ã‚’OFF
 	pDevice->SetRenderState( D3DRS_LIGHTING, FALSE);
 
-	//ƒ¿ƒeƒXƒg
+	//Î±ãƒ†ã‚¹ãƒˆ
 	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
 	pDevice->SetRenderState(D3DRS_ALPHAREF, 0);
 	pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 
-	//•`‰æ
+	//æç”»
 	CBillBoard::Draw();
 
-	// ƒ‰ƒCƒeƒBƒ“ƒOƒ‚[ƒh‚ğON
+	// ãƒ©ã‚¤ãƒ†ã‚£ãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰ã‚’ON
 	pDevice->SetRenderState( D3DRS_LIGHTING, TRUE);
 
-	// ƒ¿ƒeƒXƒg‚ğ–³Œø‚É
+	// Î±ãƒ†ã‚¹ãƒˆã‚’ç„¡åŠ¹ã«
 	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 
-	// ’ÊíƒuƒŒƒ“ƒh 
-	pDevice->SetRenderState( D3DRS_BLENDOP, D3DBLENDOP_ADD);	// Œ‹‰Ê = “]‘—Œ³(SRC) + “]‘—æ(DEST)
+	// é€šå¸¸ãƒ–ãƒ¬ãƒ³ãƒ‰ 
+	pDevice->SetRenderState( D3DRS_BLENDOP, D3DBLENDOP_ADD);	// çµæœ = è»¢é€å…ƒ(SRC) + è»¢é€å…ˆ(DEST)
 	pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);	
 	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
-	// Z”äŠr‚ ‚è
+	// Zæ¯”è¼ƒã‚ã‚Š
 	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
 }
@@ -156,7 +156,7 @@ CEffect3D *CEffect3D::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, TYPE type, const
 
 	pEffect->Init(pos, size, type, col, fPercent);
 
-	//ƒeƒNƒXƒ`ƒƒ‚ÌŠ„‚è“–‚Ä
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®å‰²ã‚Šå½“ã¦
 	pEffect->BindTexture( m_pTexture[type]);
 
 	return pEffect;
@@ -168,13 +168,13 @@ CEffect3D *CEffect3D::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, float fPercent, 
 
 	pEffect->Init(pos, size, fPercent, bRainbow);
 
-	//ƒeƒNƒXƒ`ƒƒ‚ÌŠ„‚è“–‚Ä
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®å‰²ã‚Šå½“ã¦
 	pEffect->BindTexture( m_pTexture[TYPE_MARU]);
 
 	return pEffect;
 }
 //=============================================================================
-//ƒeƒNƒXƒ`ƒƒ‚Ìƒ[ƒh
+//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒ­ãƒ¼ãƒ‰
 //=============================================================================
 HRESULT CEffect3D::Load(void)
 {
@@ -193,7 +193,7 @@ HRESULT CEffect3D::Load(void)
 			LPDIRECT3DDEVICE9 pDevice;
 			pDevice = CManager::GetRenderer()->GetDevice();
 
-			// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ
+			// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
 			D3DXCreateTextureFromFile(pDevice, strFileName, &m_pTexture[cntType]);
 		}
 	}
@@ -202,11 +202,11 @@ HRESULT CEffect3D::Load(void)
 }
 
 //=============================================================================
-//ƒeƒNƒXƒ`ƒƒ‚ÌƒAƒ“ƒ[ƒh
+//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ã‚¢ãƒ³ãƒ­ãƒ¼ãƒ‰
 //=============================================================================
 void CEffect3D::Unload(void)
 {
-	//ƒeƒNƒXƒ`ƒƒ‚Ì”jŠü
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ç ´æ£„
 	for (int cntType = 0; cntType < TYPE_MAX; cntType++)
 	{
 		if (m_pTexture[cntType] != NULL)

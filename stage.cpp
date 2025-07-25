@@ -1,14 +1,14 @@
-//============================================
+ï»¿//============================================
 //
-// ƒ^ƒCƒgƒ‹:	 –¢—ˆ‘n‘¢“Wƒ`[ƒ€204
-// ƒvƒƒOƒ‰ƒ€–¼: title.cpp
-// ì¬Ò:		 HAL“Œ‹ƒQ[ƒ€Šw‰È@—«“ìG
-// ì¬“ú:       2016/11/17
+// ã‚¿ã‚¤ãƒˆãƒ«:	 æœªæ¥å‰µé€ å±•ãƒãƒ¼ãƒ 204
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å: title.cpp
+// ä½œæˆè€…:		 HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
+// ä½œæˆæ—¥:       2016/11/17
 //
 //============================================
 
 //============================================
-//ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+//ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //============================================
 #include "main.h"
 #include "title.h"
@@ -23,21 +23,21 @@
 #include "text.h"
 #include "sound.h"
 //============================================
-// ƒ}ƒNƒ’è‹`
+// ãƒã‚¯ãƒ­å®šç¾©
 //============================================
-#define TEXTURE_BG "data/TEXTURE/ƒXƒe[ƒW—p/bg.jpg"
-#define TEXTURE_START "data/TEXTURE/ƒXƒe[ƒW—p/start.png"
-#define TEXTURE_GOAL "data/TEXTURE/ƒXƒe[ƒW—p/goal.png"
-#define TEXTURE_MASU "data/TEXTURE/ƒXƒe[ƒW—p/masu.png"
+#define TEXTURE_BG "data/TEXTURE/ã‚¹ãƒ†ãƒ¼ã‚¸ç”¨/bg.jpg"
+#define TEXTURE_START "data/TEXTURE/ã‚¹ãƒ†ãƒ¼ã‚¸ç”¨/start.png"
+#define TEXTURE_GOAL "data/TEXTURE/ã‚¹ãƒ†ãƒ¼ã‚¸ç”¨/goal.png"
+#define TEXTURE_MASU "data/TEXTURE/ã‚¹ãƒ†ãƒ¼ã‚¸ç”¨/masu.png"
 
-#define TEXTURE_GORIRA_MASU "data/TEXTURE/ƒXƒe[ƒW—p/gorira.png"
-#define TEXTURE_ZEBRA_MASU "data/TEXTURE/ƒXƒe[ƒW—p/zebra.png"
-#define TEXTURE_LION_MASU "data/TEXTURE/ƒXƒe[ƒW—p/lion.png"
+#define TEXTURE_GORIRA_MASU "data/TEXTURE/ã‚¹ãƒ†ãƒ¼ã‚¸ç”¨/gorira.png"
+#define TEXTURE_ZEBRA_MASU "data/TEXTURE/ã‚¹ãƒ†ãƒ¼ã‚¸ç”¨/zebra.png"
+#define TEXTURE_LION_MASU "data/TEXTURE/ã‚¹ãƒ†ãƒ¼ã‚¸ç”¨/lion.png"
 
-#define TEXTURE_GOMIBOX "data/TEXTURE/ƒSƒ~” (ŠDF).png"
-#define TEXTURE_GOMI "data/TEXTURE/ƒSƒ~.png"
-#define TEXTURE_ROAD1 "data/TEXTURE/ƒXƒe[ƒW—p/“¹1.png"
-#define TEXTURE_ROAD2 "data/TEXTURE/ƒXƒe[ƒW—p/“¹2.png"
+#define TEXTURE_GOMIBOX "data/TEXTURE/ã‚´ãƒŸç®±(ç°è‰²).png"
+#define TEXTURE_GOMI "data/TEXTURE/ã‚´ãƒŸ.png"
+#define TEXTURE_ROAD1 "data/TEXTURE/ã‚¹ãƒ†ãƒ¼ã‚¸ç”¨/é“1.png"
+#define TEXTURE_ROAD2 "data/TEXTURE/ã‚¹ãƒ†ãƒ¼ã‚¸ç”¨/é“2.png"
 #define MASU_ROTATE	(0.8)
 #define ROAD_ROTATE1	(55)
 #define ROAD_ROTATE2	(55)
@@ -50,31 +50,31 @@
 #define TEXT_SIZE_Y			(2.82)
 #define TEXT_ROTATE			(50)
 //============================================
-// Ã“Iƒƒ“ƒo[•Ï”‚Ì‰Šú‰»
+// é™çš„ãƒ¡ãƒ³ãƒãƒ¼å¤‰æ•°ã®åˆæœŸåŒ–
 //============================================
 
-//Šeƒ}ƒX‚ÌˆÊ’u
+//å„ãƒã‚¹ã®ä½ç½®
 D3DXVECTOR3 CStage::pos[MASU_MAX] = 
 {
-	//W‚ÌŒ`ver
-	//D3DXVECTOR3( SCREEN_WIDTH*1/6, SCREEN_HEIGHT*3/4, 0.0f),//ƒXƒ^[ƒgˆÊ’u
-	//D3DXVECTOR3( SCREEN_WIDTH*2/6, SCREEN_HEIGHT*2/4, 0.0f),//ƒSƒ~Ì‚Ä
-	//D3DXVECTOR3( SCREEN_WIDTH*3/6, SCREEN_HEIGHT*3/4, 0.0f),//•Ğ•t‚¯
-	//D3DXVECTOR3( SCREEN_WIDTH*4/6, SCREEN_HEIGHT*2/4, 0.0f),//”ƒ‚¢•¨
-	//D3DXVECTOR3( SCREEN_WIDTH*5/6, SCREEN_HEIGHT*3/4, 0.0f)	//ƒS[ƒ‹ˆÊ’u
+	//Wã®å½¢ver
+	//D3DXVECTOR3( SCREEN_WIDTH*1/6, SCREEN_HEIGHT*3/4, 0.0f),//ã‚¹ã‚¿ãƒ¼ãƒˆä½ç½®
+	//D3DXVECTOR3( SCREEN_WIDTH*2/6, SCREEN_HEIGHT*2/4, 0.0f),//ã‚´ãƒŸæ¨ã¦
+	//D3DXVECTOR3( SCREEN_WIDTH*3/6, SCREEN_HEIGHT*3/4, 0.0f),//ç‰‡ä»˜ã‘
+	//D3DXVECTOR3( SCREEN_WIDTH*4/6, SCREEN_HEIGHT*2/4, 0.0f),//è²·ã„ç‰©
+	//D3DXVECTOR3( SCREEN_WIDTH*5/6, SCREEN_HEIGHT*3/4, 0.0f)	//ã‚´ãƒ¼ãƒ«ä½ç½®
 
-	//“|‚µ‚½Z‚ÌŒ`ver
-	D3DXVECTOR3( SCREEN_WIDTH*1/6, SCREEN_HEIGHT-200, 0.0f),//ƒXƒ^[ƒgˆÊ’u
-	D3DXVECTOR3( SCREEN_WIDTH*1/6+100, SCREEN_HEIGHT-350, 0.0f),//ƒSƒ~Ì‚Ä
-	D3DXVECTOR3( SCREEN_WIDTH*3/6, SCREEN_HEIGHT-350, 0.0f),//•Ğ•t‚¯
-	D3DXVECTOR3( SCREEN_WIDTH*5/6-100, SCREEN_HEIGHT-350, 0.0f),//”ƒ‚¢•¨
-	D3DXVECTOR3( SCREEN_WIDTH*5/6, SCREEN_HEIGHT-500, 0.0f)	//ƒS[ƒ‹ˆÊ’u
+	//å€’ã—ãŸZã®å½¢ver
+	D3DXVECTOR3( SCREEN_WIDTH*1/6, SCREEN_HEIGHT-200, 0.0f),//ã‚¹ã‚¿ãƒ¼ãƒˆä½ç½®
+	D3DXVECTOR3( SCREEN_WIDTH*1/6+100, SCREEN_HEIGHT-350, 0.0f),//ã‚´ãƒŸæ¨ã¦
+	D3DXVECTOR3( SCREEN_WIDTH*3/6, SCREEN_HEIGHT-350, 0.0f),//ç‰‡ä»˜ã‘
+	D3DXVECTOR3( SCREEN_WIDTH*5/6-100, SCREEN_HEIGHT-350, 0.0f),//è²·ã„ç‰©
+	D3DXVECTOR3( SCREEN_WIDTH*5/6, SCREEN_HEIGHT-500, 0.0f)	//ã‚´ãƒ¼ãƒ«ä½ç½®
 
 };
 
 CStage::MASU_TYPE CStage::m_stageNow = MASU_START;
 //============================================
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //============================================
 CStage::CStage()// : CManager(MODE_STAGE)
 {
@@ -93,8 +93,8 @@ CStage::~CStage()
 HRESULT CStage::Init(void)
 {
 
-	//ƒIƒuƒWƒFƒNƒg‚Ì¶¬(2Dƒ|ƒŠƒSƒ“)
-	//”wŒi
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç”Ÿæˆ(2Dãƒãƒªã‚´ãƒ³)
+	//èƒŒæ™¯
 	//CScene2D::Create( D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f), D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f), TEXTURE_BG);
 
 	//BGM	
@@ -107,7 +107,7 @@ HRESULT CStage::Init(void)
 		CTimeBg::Create(D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_WIDTH/16, 0.0f),D3DXVECTOR3(SCREEN_WIDTH, SCREEN_WIDTH/8, 0.0f),3,0);
 		//CTimeBg::Create(D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_WIDTH*6/16, 0.0f),D3DXVECTOR3(SCREEN_WIDTH, SCREEN_WIDTH*4/8, 0.0f),3,1);
 
-		CSun::Create(D3DXVECTOR3(SCREEN_WIDTH/2, SCREEN_HEIGHT/6,0),//ƒXƒ^[ƒgˆÊ’u
+		CSun::Create(D3DXVECTOR3(SCREEN_WIDTH/2, SCREEN_HEIGHT/6,0),//ã‚¹ã‚¿ãƒ¼ãƒˆä½ç½®
 					D3DXVECTOR3(90, 90, 0.0f),
 					4.0);
 
@@ -117,7 +117,7 @@ HRESULT CStage::Init(void)
 		CTimeBg::Create(D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_WIDTH/16, 0.0f),D3DXVECTOR3(SCREEN_WIDTH, SCREEN_WIDTH/8, 0.0f),0,0);
 		//CTimeBg::Create(D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_WIDTH*6/16, 0.0f),D3DXVECTOR3(SCREEN_WIDTH, SCREEN_WIDTH*4/8, 0.0f),0,1);
 
-		CSun::Create(D3DXVECTOR3(SCREEN_WIDTH/2, SCREEN_HEIGHT/6,0),//ƒXƒ^[ƒgˆÊ’u
+		CSun::Create(D3DXVECTOR3(SCREEN_WIDTH/2, SCREEN_HEIGHT/6,0),//ã‚¹ã‚¿ãƒ¼ãƒˆä½ç½®
 					D3DXVECTOR3(90, 90, 0.0f),
 					4.4);
 
@@ -127,7 +127,7 @@ HRESULT CStage::Init(void)
 		CTimeBg::Create(D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_WIDTH/16, 0.0f),D3DXVECTOR3(SCREEN_WIDTH, SCREEN_WIDTH/8, 0.0f),1,0);
 		//CTimeBg::Create(D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_WIDTH*6/16, 0.0f),D3DXVECTOR3(SCREEN_WIDTH, SCREEN_WIDTH*4/8, 0.0f),1,1);
 
-		CSun::Create(D3DXVECTOR3(SCREEN_WIDTH/2, SCREEN_HEIGHT/6,0),//ƒXƒ^[ƒgˆÊ’u
+		CSun::Create(D3DXVECTOR3(SCREEN_WIDTH/2, SCREEN_HEIGHT/6,0),//ã‚¹ã‚¿ãƒ¼ãƒˆä½ç½®
 					D3DXVECTOR3(90, 90, 0.0f),
 					4.8);
 
@@ -136,7 +136,7 @@ HRESULT CStage::Init(void)
 		CTimeBg::Create(D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_WIDTH/16, 0.0f),D3DXVECTOR3(SCREEN_WIDTH, SCREEN_WIDTH/8, 0.0f),2,0);
 		//CTimeBg::Create(D3DXVECTOR3( SCREEN_WIDTH/2, SCREEN_WIDTH*6/16, 0.0f),D3DXVECTOR3(SCREEN_WIDTH, SCREEN_WIDTH*4/8, 0.0f),2,1);
 
-		CSun::Create(D3DXVECTOR3(SCREEN_WIDTH/2, SCREEN_HEIGHT/6,0),//ƒXƒ^[ƒgˆÊ’u
+		CSun::Create(D3DXVECTOR3(SCREEN_WIDTH/2, SCREEN_HEIGHT/6,0),//ã‚¹ã‚¿ãƒ¼ãƒˆä½ç½®
 					D3DXVECTOR3(90, 90, 0.0f),
 					5.2);
 
@@ -165,7 +165,7 @@ HRESULT CStage::Init(void)
 	}
 
 
-	//“¹
+	//é“
 	CScene2D::Create(	D3DXVECTOR3(pos[MASU_START].x-(pos[MASU_START].x-pos[MASU_GORIRA].x)/2,pos[MASU_START].y-(pos[MASU_START].y-pos[MASU_GORIRA].y)/2,pos[MASU_START].z),
 						D3DXVECTOR3(5*ROAD_ROTATE1, 5*ROAD_ROTATE1, 0.0f),
 						TEXTURE_ROAD1);
@@ -182,27 +182,27 @@ HRESULT CStage::Init(void)
 						D3DXVECTOR3(5*ROAD_ROTATE1, 5*ROAD_ROTATE1, 0.0f),
 						TEXTURE_ROAD1);
 
-	//ƒXƒ^[ƒg
+	//ã‚¹ã‚¿ãƒ¼ãƒˆ
 	CScene2D::Create( pos[MASU_START], D3DXVECTOR3(300, 120, 0.0f), TEXTURE_START);
 
-	//ƒSƒ~Ì‚ÄƒQ[ƒ€
+	//ã‚´ãƒŸæ¨ã¦ã‚²ãƒ¼ãƒ 
 	CScene2D::Create( pos[MASU_GORIRA], D3DXVECTOR3(300, 300, 0.0f) * MASU_ROTATE, TEXTURE_GORIRA_MASU);
 	//CScene2D::Create( D3DXVECTOR3( SCREEN_WIDTH*2/5, SCREEN_HEIGHT*2/4-120, 0.0f), D3DXVECTOR3(200, 120, 0.0f), TEXTURE_GOMIBOX);
 	//CScene2D::Create( D3DXVECTOR3( SCREEN_WIDTH*2/5-50, SCREEN_HEIGHT*2/4-170, 0.0f), D3DXVECTOR3(70, 50, 0.0f), TEXTURE_GOMI);
 
-	//•Ğ•t‚¯ƒQ[ƒ€
+	//ç‰‡ä»˜ã‘ã‚²ãƒ¼ãƒ 
 	CScene2D::Create( pos[MASU_ZEBRA], D3DXVECTOR3(300, 300, 0.0f) * MASU_ROTATE, TEXTURE_ZEBRA_MASU);
 
-	//”ƒ‚¢•¨ƒQ[ƒ€
+	//è²·ã„ç‰©ã‚²ãƒ¼ãƒ 
 	CScene2D::Create( pos[MASU_LION], D3DXVECTOR3(300, 300, 0.0f) * MASU_ROTATE, TEXTURE_LION_MASU);
 
-	//ƒS[ƒ‹
+	//ã‚´ãƒ¼ãƒ«
 	CScene2D::Create( pos[MASU_GOAL], D3DXVECTOR3(300, 120, 0.0f), TEXTURE_GOAL);
 	switch(m_stageNow)
 	{
 	case MASU_START:
-		CStagePlayer::Create(	D3DXVECTOR3(pos[MASU_START].x,pos[MASU_START].y-PLAYER_POS_TYOUSEI,0),//ƒXƒ^[ƒgˆÊ’u
-							D3DXVECTOR3(pos[MASU_GORIRA].x,pos[MASU_GORIRA].y-PLAYER_POS_TYOUSEI,0),//ƒS[ƒ‹ˆÊ’u
+		CStagePlayer::Create(	D3DXVECTOR3(pos[MASU_START].x,pos[MASU_START].y-PLAYER_POS_TYOUSEI,0),//ã‚¹ã‚¿ãƒ¼ãƒˆä½ç½®
+							D3DXVECTOR3(pos[MASU_GORIRA].x,pos[MASU_GORIRA].y-PLAYER_POS_TYOUSEI,0),//ã‚´ãƒ¼ãƒ«ä½ç½®
 							D3DXVECTOR3(100, 100, 0.0f)
 						);
 		CText::Create(	D3DXVECTOR3(SCREEN_WIDTH/2,SCREEN_HEIGHT-(TEXT_SIZE_Y*TEXT_ROTATE/2),0),
@@ -212,21 +212,21 @@ HRESULT CStage::Init(void)
 
 		break;
 	case MASU_GORIRA:
-		CStagePlayer::Create(	D3DXVECTOR3(pos[MASU_GORIRA].x,pos[MASU_GORIRA].y-PLAYER_POS_TYOUSEI,0),//ƒXƒ^[ƒgˆÊ’u
-							D3DXVECTOR3(pos[MASU_ZEBRA].x,pos[MASU_ZEBRA].y-PLAYER_POS_TYOUSEI,0),//ƒS[ƒ‹ˆÊ’u
+		CStagePlayer::Create(	D3DXVECTOR3(pos[MASU_GORIRA].x,pos[MASU_GORIRA].y-PLAYER_POS_TYOUSEI,0),//ã‚¹ã‚¿ãƒ¼ãƒˆä½ç½®
+							D3DXVECTOR3(pos[MASU_ZEBRA].x,pos[MASU_ZEBRA].y-PLAYER_POS_TYOUSEI,0),//ã‚´ãƒ¼ãƒ«ä½ç½®
 							D3DXVECTOR3(100, 100, 0.0f)
 						);
 		CText::Create(	D3DXVECTOR3(SCREEN_WIDTH/2,SCREEN_HEIGHT-(TEXT_SIZE_Y*TEXT_ROTATE/2),0),
 						D3DXVECTOR3(TEXT_SIZE_X_ZEBRA*TEXT_ROTATE,TEXT_SIZE_Y*TEXT_ROTATE,0),
 						1,
 						1);
-		//ƒXƒRƒA
+		//ã‚¹ã‚³ã‚¢
 		m_pScore = CScore::Create( pos[MASU_GORIRA] + D3DXVECTOR3( 0.0f, 50.0f, 0.0f), D3DXVECTOR3( 240, 40.0f, 0.0f), 6, BLUE(1.0f));
 		m_pScore->SetScore(CManager::LoadScore(MODE_TRASHGAME));
 		break;
 	case MASU_ZEBRA:
-		CStagePlayer::Create(	D3DXVECTOR3(pos[MASU_ZEBRA].x,pos[MASU_ZEBRA].y-PLAYER_POS_TYOUSEI,0),//ƒXƒ^[ƒgˆÊ’u
-							D3DXVECTOR3(pos[MASU_LION].x,pos[MASU_LION].y-PLAYER_POS_TYOUSEI,0),//ƒS[ƒ‹ˆÊ’u
+		CStagePlayer::Create(	D3DXVECTOR3(pos[MASU_ZEBRA].x,pos[MASU_ZEBRA].y-PLAYER_POS_TYOUSEI,0),//ã‚¹ã‚¿ãƒ¼ãƒˆä½ç½®
+							D3DXVECTOR3(pos[MASU_LION].x,pos[MASU_LION].y-PLAYER_POS_TYOUSEI,0),//ã‚´ãƒ¼ãƒ«ä½ç½®
 							D3DXVECTOR3(100, 100, 0.0f)
 						);
 		CText::Create(	D3DXVECTOR3(SCREEN_WIDTH/2,SCREEN_HEIGHT-(TEXT_SIZE_Y*TEXT_ROTATE/2),0),
@@ -234,26 +234,26 @@ HRESULT CStage::Init(void)
 						1,
 						2);
 
-		//ƒXƒRƒA
+		//ã‚¹ã‚³ã‚¢
 		m_pScore = CScore::Create( pos[MASU_GORIRA] + D3DXVECTOR3( 0.0f, 50.0f, 0.0f), D3DXVECTOR3( 240, 40.0f, 0.0f), 6, BLUE(1.0f));
 		m_pScore->SetScore(CManager::LoadScore(MODE_TRASHGAME));
-		//ƒXƒRƒA
+		//ã‚¹ã‚³ã‚¢
 		m_pScore = CScore::Create( pos[MASU_ZEBRA] + D3DXVECTOR3( 0.0f, 50.0f, 0.0f), D3DXVECTOR3( 240, 40.0f, 0.0f), 6, BLUE(1.0f));
 		m_pScore->SetScore(CManager::LoadScore(MODE_ZEBRAGAME));
 
 		break;
 	case MASU_LION:
-		CStagePlayer::Create(	D3DXVECTOR3(pos[MASU_LION].x,pos[MASU_LION].y-PLAYER_POS_TYOUSEI,0),//ƒXƒ^[ƒgˆÊ’u
-							D3DXVECTOR3(pos[MASU_GOAL].x,pos[MASU_GOAL].y-PLAYER_POS_TYOUSEI,0),//ƒS[ƒ‹ˆÊ’u
+		CStagePlayer::Create(	D3DXVECTOR3(pos[MASU_LION].x,pos[MASU_LION].y-PLAYER_POS_TYOUSEI,0),//ã‚¹ã‚¿ãƒ¼ãƒˆä½ç½®
+							D3DXVECTOR3(pos[MASU_GOAL].x,pos[MASU_GOAL].y-PLAYER_POS_TYOUSEI,0),//ã‚´ãƒ¼ãƒ«ä½ç½®
 							D3DXVECTOR3(100, 100, 0.0f)
 						);
-		//ƒXƒRƒA
+		//ã‚¹ã‚³ã‚¢
 		m_pScore = CScore::Create( pos[MASU_GORIRA] + D3DXVECTOR3( 0.0f, 50.0f, 0.0f), D3DXVECTOR3( 240, 40.0f, 0.0f), 6, BLUE(1.0f));
 		m_pScore->SetScore(CManager::LoadScore(MODE_TRASHGAME));
-		//ƒXƒRƒA
+		//ã‚¹ã‚³ã‚¢
 		m_pScore = CScore::Create( pos[MASU_ZEBRA] + D3DXVECTOR3( 0.0f, 50.0f, 0.0f), D3DXVECTOR3( 240, 40.0f, 0.0f), 6, BLUE(1.0f));
 		m_pScore->SetScore(CManager::LoadScore(MODE_ZEBRAGAME));
-		//ƒXƒRƒA
+		//ã‚¹ã‚³ã‚¢
 		m_pScore = CScore::Create( pos[MASU_LION] + D3DXVECTOR3( 0.0f, 50.0f, 0.0f), D3DXVECTOR3( 240, 40.0f, 0.0f), 6, BLUE(1.0f));
 		m_pScore->SetScore(CManager::LoadScore(MODE_LIONGAME));
 		break;
@@ -272,7 +272,7 @@ void CStage::Uninit()
 
 void CStage::Update()
 {
-	//“ü—Í‚È‚Ç‚ÌXVAŠeƒV[ƒ“‚ÌUpdate‚ÌÅ‰‚ÉŒÄ‚Ño‚·
+	//å…¥åŠ›ãªã©ã®æ›´æ–°ã€å„ã‚·ãƒ¼ãƒ³ã®Updateã®æœ€åˆã«å‘¼ã³å‡ºã™
 	CManager::Update();
 
 
@@ -301,7 +301,7 @@ void CStage::Update()
 		}
 	}
 
-	//ƒV[ƒ“‚ªØ‚è‘Ö‚¦‚é‚Æ‚±‚ëAŠeƒV[ƒ“‚ÌUpdate‚ÌÅŒã‚É’u‚¢‚Æ‚­
+	//ã‚·ãƒ¼ãƒ³ãŒåˆ‡ã‚Šæ›¿ãˆã‚‹ã¨ã“ã‚ã€å„ã‚·ãƒ¼ãƒ³ã®Updateã®æœ€å¾Œã«ç½®ã„ã¨ã
 	CManager::SceneChange();
 }
 void CStage::Draw()

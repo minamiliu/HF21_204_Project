@@ -1,14 +1,14 @@
-//============================================
+ï»¿//============================================
 //
-// ƒ^ƒCƒgƒ‹:	 –¢—ˆ‘n‘¢“Wƒ`[ƒ€204
-// ƒvƒƒOƒ‰ƒ€–¼: game.cpp
-// ì¬ŽÒ:		 HAL“Œ‹žƒQ[ƒ€Šw‰È@—«“ìG
-// ì¬“ú:       2016/11/17
+// ã‚¿ã‚¤ãƒˆãƒ«:	 æœªæ¥å‰µé€ å±•ãƒãƒ¼ãƒ 204
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å: game.cpp
+// ä½œæˆè€…:		 HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
+// ä½œæˆæ—¥:       2016/11/17
 //
 //============================================
 
 //============================================
-//ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+//ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //============================================
 #include "main.h"
 #include "zebragame.h"
@@ -35,16 +35,16 @@
 #include "change.h"
 #include "sound.h"
 //============================================
-// ƒ}ƒNƒ’è‹`
+// ãƒžã‚¯ãƒ­å®šç¾©
 //============================================
 #define TIME_POS	D3DXVECTOR3(SCREEN_WIDTH/2, 100.0f, 0.0f)
 #define TIME_SIZE	D3DXVECTOR3( 140, 70.0f, 0.0f)
 #define SCORE_POS	D3DXVECTOR3( 150.0f, 30.0f, 0.0f)
 #define SCORE_SIZE	D3DXVECTOR3( 300, 50.0f, 0.0f)
 
-#define TEXTURE_MLT			"data/TEXTURE/‚©‚¯‚é.png"
+#define TEXTURE_MLT			"data/TEXTURE/ã‹ã‘ã‚‹.png"
 //============================================
-// Ã“Iƒƒ“ƒo[•Ï”‚Ì‰Šú‰»
+// é™çš„ãƒ¡ãƒ³ãƒãƒ¼å¤‰æ•°ã®åˆæœŸåŒ–
 //============================================
 int CZebraGame::m_PutToy = 0;
 int CZebraGame::m_PutBook = 0;
@@ -52,7 +52,7 @@ CPoint3D *CZebraGame:: m_pPoint3D= NULL;
 CScore *CZebraGame::m_pScore = NULL;
 CTime *CZebraGame::m_pTime = NULL;
 //============================================
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //============================================
 CZebraGame::CZebraGame() : CManager(MODE_ZEBRAGAME)
 {
@@ -66,10 +66,10 @@ CZebraGame::~CZebraGame()
 
 HRESULT CZebraGame::Init(void)
 {
-	//ƒQ[ƒ€ƒf[ƒ^‚ðƒ[ƒh
+	//ã‚²ãƒ¼ãƒ ãƒ‡ãƒ¼ã‚¿ã‚’ãƒ­ãƒ¼ãƒ‰
 	LoadAll();
 
-	//•Ï”‚Ì‰Šú‰»
+	//å¤‰æ•°ã®åˆæœŸåŒ–
 	m_state = STATE_NORMAL;
 	m_PutToy = 0;
 	m_PutBook = 0;
@@ -80,28 +80,28 @@ HRESULT CZebraGame::Init(void)
 	m_pTextureHd = NULL;
 	m_nGameCnt = 0;
 
-	//ƒJƒƒ‰‚ÌˆÊ’u
+	//ã‚«ãƒ¡ãƒ©ã®ä½ç½®
 	m_pCamera->Init();
 	m_pCamera->SetPosV(D3DXVECTOR3(0.0f,300.0f,-500.0f));
 	m_pCamera->SetPosR(D3DXVECTOR3(0.0f,0.0f,400.0f));
 
-	//°
+	//åºŠ
 	CMeshField::Create( D3DXVECTOR3( 0.0f,- 10.0f, 0.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 5, 5, 200.0f, 200.0f, CMeshField::TYPE_WOOD);
 
-	//ƒEƒH[ƒ‹
+	//ã‚¦ã‚©ãƒ¼ãƒ«
 	CMeshWall::Create( D3DXVECTOR3( 0.0f, 100.0f, 450.0f), D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 10, 10, 100.0f, 100.0f);
 	CMeshWall::Create( D3DXVECTOR3( -450.0f, 100.0f, 200.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(270.0f), 0.0f), 10, 10, 100.0f, 100.0f);
 	CMeshWall::Create( D3DXVECTOR3( 450.0f, 100.0f, 200.0f), D3DXVECTOR3( 0.0f, D3DXToRadian(90.0f), 0.0f), 10, 10, 100.0f, 100.0f);
 
-	//ƒJƒƒ‰‚ÌˆÊ’u
+	//ã‚«ãƒ¡ãƒ©ã®ä½ç½®
 	CManager::GetCamera() ->SetPosV(D3DXVECTOR3(0.0f,300.0f,-550.0f));
 	CManager::GetCamera() ->SetPosR(D3DXVECTOR3(0.0f,0.0f,400.0f));
 
-	//—”
+	//ä¹±æ•°
 	unsigned int now = (unsigned int)time( 0 );
 	srand(now);
 	int varX,varZ,varR;
-	//ƒIƒuƒWƒFƒNƒg‚Ì¶¬(3D)
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç”Ÿæˆ(3D)
 	CBookBox::Create(D3DXVECTOR3(300.0f,0.0f,370.0f) , D3DXVECTOR3( 0.0f, 0.0f, 0.0f),CBookBox::TYPE_TOYBOX);
 	CBookBox::Create(D3DXVECTOR3(-300.0f,0.0f,370.0f) , D3DXVECTOR3( 0.0f,D3DXToRadian(90.0f), 0.0f),CBookBox::TYPE_BOOKBOX);
 
@@ -111,7 +111,7 @@ HRESULT CZebraGame::Init(void)
 		varX = rand() % 101 ;
 		varZ = rand() % 71 ;
 		varR = rand() % 101 ;
-		//ƒIƒuƒWƒFƒNƒg‚Ì¶¬(Xfile)
+		//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç”Ÿæˆ(Xfile)
 		CToy::Create( D3DXVECTOR3( 5.0f*varX-350.0f, 10.0f, 5.0f*varZ-250.0f), D3DXVECTOR3( 0.0f,D3DXToRadian(30*varR), 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), 5.0f);
 	}
 
@@ -121,7 +121,7 @@ HRESULT CZebraGame::Init(void)
 		varX = rand() % 101 ;
 		varZ = rand() % 71 ;
 		varR = rand() % 101 ;
-		//ƒIƒuƒWƒFƒNƒg‚Ì¶¬(Xfile)
+		//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç”Ÿæˆ(Xfile)
 		CBook::Create( D3DXVECTOR3( 5.0f*varX-350.0f, 10.0f, 5.0f*varZ-250.0f), D3DXVECTOR3( 0.0f,D3DXToRadian(30*varR), 0.0f), D3DXVECTOR3( 1.0f, 1.0f, 1.0f), 5.0f);
 	}
 
@@ -130,14 +130,14 @@ HRESULT CZebraGame::Init(void)
 
 	
 	
-	//ƒIƒuƒWƒFƒNƒg‚Ì¶¬(2Dƒ|ƒŠƒSƒ“)
-	//ƒ^ƒCƒ€
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç”Ÿæˆ(2Dãƒãƒªã‚´ãƒ³)
+	//ã‚¿ã‚¤ãƒ 
 	m_pTime = CTime::Create( D3DXVECTOR3(SCREEN_WIDTH/2, 100.0f, 0.0f), D3DXVECTOR3(140, 70.0f, 0.0f), 2, 60, true, BLUE(1.0f));
 
-	//ƒXƒRƒA
+	//ã‚¹ã‚³ã‚¢
 	m_pScore = CScore::Create( D3DXVECTOR3( 150.0f, 30.0f, 0.0f), D3DXVECTOR3( 300, 50.0f, 0.0f), 6, RED(1.0f)); 
 
-	//ƒIƒuƒWƒFƒNƒg‚Ì¶¬(2Dƒ|ƒŠƒSƒ“)
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç”Ÿæˆ(2Dãƒãƒªã‚´ãƒ³)
 	m_pPoint3D = CPoint3D::Create( D3DXVECTOR3( 300.0f, 500.0f, 0.0f), D3DXVECTOR3( 60.0f, 60.0f, 0.0f),0);
 
 	//BGM
@@ -152,7 +152,7 @@ HRESULT CZebraGame::Init(void)
 
 void CZebraGame::Uninit()
 {
-	//“_”‚ð•Û‘¶
+	//ç‚¹æ•°ã‚’ä¿å­˜
 	CManager::SaveScore( MODE_ZEBRAGAME, m_pScore->GetValue());
 
 	//BGM
@@ -163,25 +163,25 @@ void CZebraGame::Uninit()
 
 void CZebraGame::Update()
 {
-	//“ü—Í‚È‚Ç‚ÌXVAŠeƒV[ƒ“‚ÌUpdate‚ÌÅ‰‚ÉŒÄ‚Ño‚·
+	//å…¥åŠ›ãªã©ã®æ›´æ–°ã€å„ã‚·ãƒ¼ãƒ³ã®Updateã®æœ€åˆã«å‘¼ã³å‡ºã™
 	CManager::Update();
 
-	//ó‘ÔXV
+	//çŠ¶æ…‹æ›´æ–°
 	switch( m_state)
 	{
 	case STATE_NORMAL:
-		//‘S•”‚ÌƒAƒCƒeƒ€‚ð” ‚É“ü‚ê‚½‚ç
+		//å…¨éƒ¨ã®ã‚¢ã‚¤ãƒ†ãƒ ã‚’ç®±ã«å…¥ã‚ŒãŸã‚‰
 		if (m_PutToy + m_PutBook == MAX_TOY + MAX_BOOK)
 		{
 			m_state = STATE_BONUS;
 		}
 
-		//ŽžŠÔ‚É‚È‚Á‚½‚çA20ŒÂŽæ‚Á‚½‚çA•Ïg‚·‚é
+		//æ™‚é–“ã«ãªã£ãŸã‚‰ã€20å€‹å–ã£ãŸã‚‰ã€å¤‰èº«ã™ã‚‹
 		if(m_pTime->GetTime() == 10 || m_PutToy + m_PutBook == 20)
 		{
 			m_pTime->StopTime();
 			m_state = STATE_UPGRADE;
-			m_pChange = CChange::Create(CChange::MODE_ZEBRA); //•Ïg‰‰o
+			m_pChange = CChange::Create(CChange::MODE_ZEBRA); //å¤‰èº«æ¼”å‡º
 
 			//BGM
 			CSound *pSound = CManager::GetSound();
@@ -196,12 +196,12 @@ void CZebraGame::Update()
 			m_pChange->Uninit();
 			m_state = STATE_ZEBRA;
 			m_pTime->StopTime();
-			m_pPoint3D->ChangeZebra(); //–{“–‚Ì•Ïg‚·‚éuŠÔ
+			m_pPoint3D->ChangeZebra(); //æœ¬å½“ã®å¤‰èº«ã™ã‚‹çž¬é–“
 		}
 		break;
 
 	case STATE_ZEBRA:
-		//‘S•”‚ÌƒAƒCƒeƒ€‚ð” ‚É“ü‚ê‚½‚ç or Time Up
+		//å…¨éƒ¨ã®ã‚¢ã‚¤ãƒ†ãƒ ã‚’ç®±ã«å…¥ã‚ŒãŸã‚‰ or Time Up
 		if (m_PutToy + m_PutBook == MAX_TOY + MAX_BOOK || m_pTime->TimeUp())
 		{
 			m_state = STATE_BONUS;
@@ -225,13 +225,13 @@ void CZebraGame::Update()
 		break;
 
 	case STATE_FINISH:
-		//‘JˆÚ
+		//é·ç§»
 		SetNextScene( MODE_STAGE_ZEBRA);
 		break;
 	}
 
 #ifdef _DEBUG
-	//ƒXƒLƒbƒvƒV[ƒ“
+	//ã‚¹ã‚­ãƒƒãƒ—ã‚·ãƒ¼ãƒ³
 	CInputKeyboard *pInputKeyboard = CManager::GetInputKeyboard();
 	CInputMouse *pInputMouse = CManager::GetInputMouse();
 	if( pInputKeyboard->GetKeyTrigger(DIK_RETURN))
@@ -240,7 +240,7 @@ void CZebraGame::Update()
 	}
 #endif
 
-	//ƒV[ƒ“‚ªØ‚è‘Ö‚¦‚é‚Æ‚±‚ëAŠeƒV[ƒ“‚ÌUpdate‚ÌÅŒã‚É’u‚¢‚Æ‚­
+	//ã‚·ãƒ¼ãƒ³ãŒåˆ‡ã‚Šæ›¿ãˆã‚‹ã¨ã“ã‚ã€å„ã‚·ãƒ¼ãƒ³ã®Updateã®æœ€å¾Œã«ç½®ã„ã¨ã
 	CManager::SceneChange();
 }
 void CZebraGame::Draw()
@@ -267,7 +267,7 @@ CScore *CZebraGame::GetScore(void)
 	return m_pScore;
 }
 //=============================================================================
-//ƒQ[ƒ€‚ª—§‚¿ã‚ª‚é‚Æ‚«Aˆê‰ñ‚Ì‚Ý‘S•”ƒ[ƒh‚·‚é
+//ã‚²ãƒ¼ãƒ ãŒç«‹ã¡ä¸ŠãŒã‚‹ã¨ãã€ä¸€å›žã®ã¿å…¨éƒ¨ãƒ­ãƒ¼ãƒ‰ã™ã‚‹
 //=============================================================================
 HRESULT CZebraGame::LoadAll(void)
 {
@@ -281,7 +281,7 @@ HRESULT CZebraGame::LoadAll(void)
 	return S_OK;
 }
 //=============================================================================
-//—]‚Á‚½ƒ^ƒCƒ€‚ÌŒvŽZ
+//ä½™ã£ãŸã‚¿ã‚¤ãƒ ã®è¨ˆç®—
 //=============================================================================
 void CZebraGame::CalcBonus(void)
 {
@@ -293,33 +293,33 @@ void CZebraGame::CalcBonus(void)
 	const float fSpeed = 100.0f;
 	bool bMove = false;
 
-	//ƒXƒRƒA’²®
+	//ã‚¹ã‚³ã‚¢èª¿æ•´
 	D3DXVECTOR3 scorePos = m_pScore->GetPosition();
 	D3DXVECTOR3 scoreSize = m_pScore->GetSize();
 
 	if( scorePos.y <= 400 )
 	{
-		//ƒXƒRƒA‚ÌˆÚ“®ˆ—
+		//ã‚¹ã‚³ã‚¢ã®ç§»å‹•å‡¦ç†
 		scorePos += (D3DXVECTOR3(SCREEN_WIDTH/2, 400.0f, 0.0f) - SCORE_POS)  / fSpeed;
 		m_pScore->SetPosition(scorePos);
 
-		//ƒXƒRƒA‚ÌƒTƒCƒY’²®
+		//ã‚¹ã‚³ã‚¢ã®ã‚µã‚¤ã‚ºèª¿æ•´
 		scoreSize += (D3DXVECTOR3( 600, 100, 0.0f) - SCORE_SIZE)  / fSpeed;
 		m_pScore->SetSize(scoreSize);
 			
 		bMove = true;
 	}
 
-	//ƒ^ƒCƒ€’²®
+	//ã‚¿ã‚¤ãƒ èª¿æ•´
 	D3DXVECTOR3 timePos = m_pTime->GetPosition();
 	D3DXVECTOR3 timeSize = m_pTime->GetSize();
 	if( timePos.y <= 200 )
 	{
-		//ƒ^ƒCƒ€‚ÌˆÚ“®ˆ—
+		//ã‚¿ã‚¤ãƒ ã®ç§»å‹•å‡¦ç†
 		timePos += (D3DXVECTOR3(SCREEN_WIDTH/2, 200.0f, 0.0f) - TIME_POS)  / fSpeed;
 		m_pTime->SetPosition(timePos);
 
-		//ƒ^ƒCƒ€‚ÌƒTƒCƒY’²®
+		//ã‚¿ã‚¤ãƒ ã®ã‚µã‚¤ã‚ºèª¿æ•´
 		timeSize += (D3DXVECTOR3( 200, 100, 0.0f) - TIME_SIZE)  / fSpeed;
 		m_pTime->SetSize(timeSize);
 

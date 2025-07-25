@@ -1,14 +1,14 @@
-//============================================
+﻿//============================================
 //
-// �^�C�g��:	 �����n���W�`�[��204
-// �v���O������: staff.cpp
-// �쐬��:		 HAL�����Q�[���w�ȁ@����G
-// �쐬��:       2017/01/23
+// タイトル:	 未来創造展チーム204
+// プログラム名: staff.cpp
+// 作成者:		 HAL東京ゲーム学科　劉南宏
+// 作成日:       2017/01/23
 //
 //============================================
 
 //============================================
-//�C���N���[�h�t�@�C��
+//インクルードファイル
 //============================================
 #include "main.h"
 #include "staffX.h"
@@ -18,24 +18,24 @@
 
 
 //============================================
-// �}�N����`
+// マクロ定義
 //============================================
 #define MODEL_STAFF	"data/MODEL/staff.x"
 
 //=============================================================================
-// �\���̒�`
+// 構造体定義
 //=============================================================================
 
 //============================================
-// �ÓI�����o�[�ϐ��̏�����
+// 静的メンバー変数の初期化
 //============================================
-LPDIRECT3DTEXTURE9	CStaffX::m_pTexture		[TYPE_MAX] = {};		// �e�N�X�`���ւ̃|�C���^
-LPD3DXMESH			CStaffX::m_pD3DXMesh	[TYPE_MAX] = {};		// ���b�V�����ւ̃|�C���^
-LPD3DXBUFFER		CStaffX::m_pD3DXBuffMat	[TYPE_MAX] = {};		// �}�e���A�����ւ̃|�C���^
-DWORD				CStaffX::m_nNumMat		[TYPE_MAX] = {};		// �}�e���A�����̐�
+LPDIRECT3DTEXTURE9	CStaffX::m_pTexture		[TYPE_MAX] = {};		// テクスチャへのポインタ
+LPD3DXMESH			CStaffX::m_pD3DXMesh	[TYPE_MAX] = {};		// メッシュ情報へのポインタ
+LPD3DXBUFFER		CStaffX::m_pD3DXBuffMat	[TYPE_MAX] = {};		// マテリアル情報へのポインタ
+DWORD				CStaffX::m_nNumMat		[TYPE_MAX] = {};		// マテリアル情報の数
 
 //=============================================================================
-//�R���X�g���N�^
+//コンストラクタ
 //=============================================================================
 CStaffX::CStaffX()
 {
@@ -43,7 +43,7 @@ CStaffX::CStaffX()
 }
 
 //=============================================================================
-//�f�X�g���N�^
+//デストラクタ
 //=============================================================================
 CStaffX::~CStaffX()
 {
@@ -59,7 +59,7 @@ HRESULT CStaffX::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl)
 	CSceneX::Init( pos, rot, scl);
 	SetObjType( OBJTYPE_L_ENEMY);
 
-	//�e�̐���
+	//影の生成
 	m_pShadow = CShadow::Create( pos, D3DXVECTOR2( 50.0f, 50.0f));
 
 	return S_OK;
@@ -78,7 +78,7 @@ void CStaffX::Uninit(void)
 //=============================================================================
 void CStaffX::Update(void)
 {
-	//�e�̍X�V����
+	//影の更新処理
 	//m_pShadow->SetPosition( this->GetPosition());
 }
 
@@ -99,7 +99,7 @@ CStaffX *CStaffX::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, TYPE
 	pEnemy = new CStaffX;
 	pEnemy->Init(pos, rot, scl);
 
-	//Xfile�̊��蓖��
+	//Xfileの割り当て
 	pEnemy->BindXfile( m_pTexture[type], m_pD3DXMesh[type], m_pD3DXBuffMat[type], m_nNumMat[type]);
 
 	return pEnemy;
@@ -107,7 +107,7 @@ CStaffX *CStaffX::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 scl, TYPE
 
 
 //=============================================================================
-//XFILE�̃��[�h
+//XFILEのロード
 //=============================================================================
 HRESULT CStaffX::Load(void)
 {
@@ -130,16 +130,16 @@ HRESULT CStaffX::Load(void)
 			m_nNumMat[cntType] == 0
 			)
 		{
-			// X�t�@�C���̓ǂݍ���
+			// Xファイルの読み込み
 			if(FAILED(D3DXLoadMeshFromX(
-				strFileName,			// �ǂݍ��ރ��f���t�@�C����(X�t�@�C��)
-				D3DXMESH_SYSTEMMEM,		// ���b�V���̍쐬�I�v�V�������w��
-				pDevice,				// IDirect3DDevice9�C���^�[�t�F�C�X�ւ̃|�C���^
-				NULL,					// �אڐ��f�[�^���܂ރo�b�t�@�ւ̃|�C���^
-				&m_pD3DXBuffMat[cntType],	// �}�e���A���f�[�^���܂ރo�b�t�@�ւ̃|�C���^
-				NULL,					// �G�t�F�N�g�C���X�^���X�̔z����܂ރo�b�t�@�ւ̃|�C���^
-				&m_nNumMat[cntType],	// D3DXMATERIAL�\���̂̐�
-				&m_pD3DXMesh[cntType]	// ID3DXMesh�C���^�[�t�F�C�X�ւ̃|�C���^�̃A�h���X
+				strFileName,			// 読み込むモデルファイル名(Xファイル)
+				D3DXMESH_SYSTEMMEM,		// メッシュの作成オプションを指定
+				pDevice,				// IDirect3DDevice9インターフェイスへのポインタ
+				NULL,					// 隣接性データを含むバッファへのポインタ
+				&m_pD3DXBuffMat[cntType],	// マテリアルデータを含むバッファへのポインタ
+				NULL,					// エフェクトインスタンスの配列を含むバッファへのポインタ
+				&m_nNumMat[cntType],	// D3DXMATERIAL構造体の数
+				&m_pD3DXMesh[cntType]	// ID3DXMeshインターフェイスへのポインタのアドレス
 				)))
 			{
 				return E_FAIL;
@@ -152,25 +152,25 @@ HRESULT CStaffX::Load(void)
 }
 
 //=============================================================================
-//XFILE�̃A�����[�h
+//XFILEのアンロード
 //=============================================================================
 void CStaffX::Unload(void)
 {
 	for(int cntType = 0; cntType < TYPE_MAX; cntType++)
 	{
-		// �e�N�X�`���̊J��
+		// テクスチャの開放
 		if(m_pTexture[cntType] != NULL)
 		{
 			m_pTexture[cntType]->Release();
 			m_pTexture[cntType] = NULL;
 		}
-		// ���b�V���̊J��
+		// メッシュの開放
 		if(m_pD3DXMesh[cntType] != NULL)
 		{
 			m_pD3DXMesh[cntType]->Release();
 			m_pD3DXMesh[cntType] = NULL;
 		}
-		// �}�e���A���̊J��
+		// マテリアルの開放
 		if(m_pD3DXBuffMat != NULL)
 		{
 			m_pD3DXBuffMat[cntType]->Release();

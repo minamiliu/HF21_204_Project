@@ -1,9 +1,9 @@
-//============================================
+ï»¿//============================================
 //
-// ƒ^ƒCƒgƒ‹:	 –¢—ˆ‘n‘¢“Wƒ`[ƒ€204
-// ƒvƒƒOƒ‰ƒ€–¼: scene3D.h
-// ì¬ŽÒ:		 HAL“Œ‹žƒQ[ƒ€Šw‰È@—«“ìG
-// ì¬“ú:       2016/11/10
+// ã‚¿ã‚¤ãƒˆãƒ«:	 æœªæ¥å‰µé€ å±•ãƒãƒ¼ãƒ 204
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å: scene3D.h
+// ä½œæˆè€…:		 HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
+// ä½œæˆæ—¥:       2016/11/10
 //
 //============================================
 
@@ -11,25 +11,25 @@
 #define _SCENE3D_H_
 
 //============================================
-//ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+//ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //============================================
 #include "scene.h"
 
 //============================================
-//ƒ}ƒNƒ’è‹`
+//ãƒžã‚¯ãƒ­å®šç¾©
 //============================================
 #define FVF_VERTEX_3D	(D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_DIFFUSE | D3DFVF_TEX1)
 
 //============================================
-//\‘¢‘Ì’è‹`
+//æ§‹é€ ä½“å®šç¾©
 //============================================
-//‚R‚cƒ|ƒŠƒSƒ“
+//ï¼“ï¼¤ãƒãƒªã‚´ãƒ³
 typedef struct
 {
-	D3DXVECTOR3 vtx; //’¸“_À•W
-	D3DXVECTOR3 nor; //–@üƒxƒNƒgƒ‹
-	D3DCOLOR	col; //’¸“_ƒJƒ‰[
-	D3DXVECTOR2	tex; //ƒeƒNƒXƒ`ƒƒÀ•W
+	D3DXVECTOR3 vtx; //é ‚ç‚¹åº§æ¨™
+	D3DXVECTOR3 nor; //æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
+	D3DCOLOR	col; //é ‚ç‚¹ã‚«ãƒ©ãƒ¼
+	D3DXVECTOR2	tex; //ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™
 }VERTEX_3D;
 
 class CScene3D : public CScene
@@ -54,30 +54,30 @@ public:
 	D3DXVECTOR3 GetPosition(void);
 	D3DXVECTOR3 GetSize(void);
 	void SetPosition(D3DXVECTOR3 pos);
-	void SetColor(const D3DXCOLOR &col); //F‚ð•ÏX
+	void SetColor(const D3DXCOLOR &col); //è‰²ã‚’å¤‰æ›´
 	
 protected:
 	virtual bool HitCheck( D3DXVECTOR3 tNowPos, D3DXVECTOR3 tNextPos, D3DXVECTOR3 *wall_nor, D3DXVECTOR3 *HitPoint);
 
 private:
-	//ŠÖ”
+	//é–¢æ•°
 	HRESULT MakeVertex(LPDIRECT3DDEVICE9 pDevice);
 
-	//•Ï”
-	LPDIRECT3DTEXTURE9		m_pTexture;		// ƒeƒNƒXƒ`ƒƒ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff;		// ’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	LPDIRECT3DINDEXBUFFER9  m_pIdxBuff;		// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	bool m_bLoadTexture;					// ƒeƒNƒXƒ`ƒƒ‚ð“Ç‚Ýž‚ñ‚¾‚©‚Ç‚¤‚©
+	//å¤‰æ•°
+	LPDIRECT3DTEXTURE9		m_pTexture;		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff;		// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	LPDIRECT3DINDEXBUFFER9  m_pIdxBuff;		// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	bool m_bLoadTexture;					// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’èª­ã¿è¾¼ã‚“ã ã‹ã©ã†ã‹
 
-	D3DXVECTOR3		m_pos;					// ˆÊ’u
-	D3DXVECTOR3		m_rot;					// Œü‚«
-	D3DXMATRIX		m_mtxWorld;				// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX
+	D3DXVECTOR3		m_pos;					// ä½ç½®
+	D3DXVECTOR3		m_rot;					// å‘ã
+	D3DXMATRIX		m_mtxWorld;				// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒžãƒˆãƒªãƒƒã‚¯ã‚¹
 
-	int m_nNumBlockX, m_nNumBlockZ;			// ƒuƒƒbƒN”
-	int m_nNumVertex;						// ‘’¸“_”
-	int m_nNumVertexIndex;					// ‘ƒCƒ“ƒfƒbƒNƒX”
-	int m_nNumPolygon;						// ‘ƒ|ƒŠƒSƒ“”
-	float m_fSizeBlockX, m_fSizeBlockZ;		// ƒuƒƒbƒNƒTƒCƒY
+	int m_nNumBlockX, m_nNumBlockZ;			// ãƒ–ãƒ­ãƒƒã‚¯æ•°
+	int m_nNumVertex;						// ç·é ‚ç‚¹æ•°
+	int m_nNumVertexIndex;					// ç·ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹æ•°
+	int m_nNumPolygon;						// ç·ãƒãƒªã‚´ãƒ³æ•°
+	float m_fSizeBlockX, m_fSizeBlockZ;		// ãƒ–ãƒ­ãƒƒã‚¯ã‚µã‚¤ã‚º
 
 	D3DXVECTOR3 m_size;
 	bool m_bUseYnotZ;

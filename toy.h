@@ -1,9 +1,9 @@
-//============================================
+ï»¿//============================================
 //
-// ƒ^ƒCƒgƒ‹:	 –¢—ˆ‘n‘¢“Wƒ`[ƒ€204
-// ƒvƒƒOƒ‰ƒ€–¼: playerX.h
-// ì¬ŽÒ:		 HAL“Œ‹žƒQ[ƒ€Šw‰È@—«“ìG
-// ì¬“ú:       2016/11/15
+// ã‚¿ã‚¤ãƒˆãƒ«:	 æœªæ¥å‰µé€ å±•ãƒãƒ¼ãƒ 204
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å: playerX.h
+// ä½œæˆè€…:		 HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
+// ä½œæˆæ—¥:       2016/11/15
 //
 //============================================
 
@@ -11,16 +11,16 @@
 #define _TOY_H_
 
 //============================================
-//ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+//ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //============================================
 #include "sceneX.h"
 
 //============================================
-//ƒ}ƒNƒ’è‹`
+//ãƒžã‚¯ãƒ­å®šç¾©
 //============================================
 
 //============================================
-//\‘¢‘Ì’è‹`
+//æ§‹é€ ä½“å®šç¾©
 //============================================
 
 class CToy : public CSceneX
@@ -53,10 +53,10 @@ public:
 
 	static int m_nNumber;
 private:
-	static LPDIRECT3DTEXTURE9	m_pTexture		[MAX_TOYTYPE];		// ƒeƒNƒXƒ`ƒƒ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	static LPD3DXMESH			m_pD3DXMesh		[MAX_TOYTYPE];		// ƒƒbƒVƒ…î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	static LPD3DXBUFFER			m_pD3DXBuffMat	[MAX_TOYTYPE];		// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	static DWORD				m_nNumMat		[MAX_TOYTYPE];		// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ì”
+	static LPDIRECT3DTEXTURE9	m_pTexture		[MAX_TOYTYPE];		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	static LPD3DXMESH			m_pD3DXMesh		[MAX_TOYTYPE];		// ãƒ¡ãƒƒã‚·ãƒ¥æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	static LPD3DXBUFFER			m_pD3DXBuffMat	[MAX_TOYTYPE];		// ãƒžãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	static DWORD				m_nNumMat		[MAX_TOYTYPE];		// ãƒžãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã®æ•°
 	bool m_bPicked;
 	bool m_bZebra;
 	bool m_bBack;
