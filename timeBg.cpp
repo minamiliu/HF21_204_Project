@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
 * タイトル:		ゴリラ
 * プログラム名:	timeBg.cpp
 * 作成者:		小林玲雄
@@ -18,8 +18,8 @@
 /*******************************************************************************
 * マクロ定義
 *******************************************************************************/
-#define TIMEBG_TEX_NAME1	"data/TEXTURE/ステージ用/stageBg.png"
-#define TIMEBG_TEX_NAME2	"data/TEXTURE/ステージ用/stageBg2.png"
+#define TIMEBG_TEX_NAME1	"data/TEXTURE/Stage/stageBg.png"
+#define TIMEBG_TEX_NAME2	"data/TEXTURE/Stage/stageBg2.png"
 #define ANIM_PAT_X (4)
 #define ANIM_PAT_Y (1)
 #define ANIM_CANGE_FRAME (20)

@@ -23,7 +23,7 @@
 //============================================
 // マクロ定義
 //============================================
-//#define TEXTURE_BG "data/TEXTURE/サバンナタイトル用/背景/titleBg.png"
+//#define TEXTURE_BG "data/TEXTURE/Savannah/bg/titleBg.png"
 
 #define LOGO_ROTATE (100)
 //============================================

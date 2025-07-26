@@ -1,4 +1,4 @@
-﻿//============================================
+//============================================
 //
 // タイトル:	 未来創造展チーム204
 // プログラム名: result.cpp
@@ -24,7 +24,7 @@
 #define TEXTURE_RANK_C "data/TEXTURE/rankC.png"
 #define TEXTURE_RANK_A "data/TEXTURE/rankA.png"
 #define TEXTURE_RANK_B "data/TEXTURE/rankB.png"
-#define TEXTURE_RANK_S "data/TEXTURE/rankSサイズ調整.png"
+#define TEXTURE_RANK_S "data/TEXTURE/rankS.png"
 #define TRASHGAME_SCORE_RANK_S (3000)
 #define TRASHGAME_SCORE_RANK_A (2000)
 #define TRASHGAME_SCORE_RANK_B (1000)

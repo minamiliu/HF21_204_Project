@@ -1,4 +1,4 @@
-﻿//============================================
+//============================================
 //
 // タイトル:	 未来創造展チーム204
 // プログラム名: player2D.cpp
@@ -23,7 +23,7 @@
 //============================================
 // マクロ定義
 //============================================
-#define TEXTURE_BG "data/TEXTURE/effectBG.png"
+#define TEXTURE_BG "data/TEXTURE/effectBG.jpg"
 
 #define TEXTURE_MOM			"data/TEXTURE/player000.png"
 
@@ -33,8 +33,8 @@
 #define TEXTURE_ZEBRA		"data/TEXTURE/zebra.png"
 #define TEXTURE_ZEBRAMOM	"data/TEXTURE/zebraMom.png"
 
-#define TEXTURE_GORILLA		"data/TEXTURE/ゴリラ.png"
-#define TEXTURE_GORILLAMOM	"data/TEXTURE/ゴリラ(立ち絵).png"
+#define TEXTURE_GORILLA		"data/TEXTURE/gorilla.png"
+#define TEXTURE_GORILLAMOM	"data/TEXTURE/gorillaMom.png"
 
 #define	TEX_PATTERN_DIVIDE_X		(8)												// アニメーションパターンのテクスチャ内での分割数(Ｘ方向)
 #define	TEX_PATTERN_DIVIDE_Y		(1)												// アニメーションパターンのテクスチャ内での分割数(Ｙ方向)

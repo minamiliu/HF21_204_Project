@@ -18,7 +18,7 @@
 /*******************************************************************************
 * マクロ定義
 *******************************************************************************/
-#define ZEBRA_TEX_NAME	"data/TEXTURE/サバンナタイトル用/シマウマ/zebra.png"
+#define ZEBRA_TEX_NAME	"data/TEXTURE/Savannah/zebra/zebra.png"
 #define ANIM_PAT_X (7)
 #define ANIM_PAT_Y (1)
 #define ANIM_CANGE_FRAME (8)

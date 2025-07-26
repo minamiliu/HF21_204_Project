@@ -1,4 +1,4 @@
-﻿//============================================
+//============================================
 //
 // タイトル:	 HF
 // プログラム名: trash.cpp
@@ -25,9 +25,9 @@
 //============================================
 // マクロ定義
 //============================================
-#define TEXTURE_TRASH "data/TEXTURE/ペットボトル.png"
+#define TEXTURE_TRASH  "data/TEXTURE/bottle.png"
 #define TEXTURE_BANANA "data/TEXTURE/banana.png"
-#define TEXTURE_PAPER "data/TEXTURE/paper.png"
+#define TEXTURE_PAPER  "data/TEXTURE/paper.png"
 
 #define GRAVITY_POINT (0.98f)
 #define WEIGHT_COEFFICIENT_LIGHT (0.5f)

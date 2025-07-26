@@ -18,7 +18,7 @@
 /*******************************************************************************
 * マクロ定義
 *******************************************************************************/
-#define STAGEBG_TEX_NAME	"data/TEXTURE/ステージ用/草原2.png"
+#define STAGEBG_TEX_NAME	"data/TEXTURE/Stage/grassland2.png"
 #define ANIM_PAT_X (4)
 #define ANIM_PAT_Y (1)
 #define ANIM_CANGE_FRAME (20)

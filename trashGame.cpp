@@ -1,4 +1,4 @@
-﻿//============================================
+//============================================
 //
 // タイトル:	 未来創造展チーム204
 // プログラム名: trashGame.cpp
@@ -37,8 +37,8 @@
 //============================================
 #define TEXTURENAME "data/TEXTURE/player000.png"
 #define TEXTURE_POINT "data/TEXTURE/redPoint.png"
-#define TEXTURE_TRASH "data/TEXTURE/ペットボトル.png"
-#define TEXTURE_TRASHBOX "data/TEXTURE/ゴミ箱(灰色).png"
+#define TEXTURE_TRASH "data/TEXTURE/bottle.png"
+#define TEXTURE_TRASHBOX "data/TEXTURE/TrashBoxGray.png"
 #define TEXTURE_GORILLA "data/TEXTURE/throwingGorilla.png"
 #define TEXTURE_BGPOLYGON "data/TEXTURE/rendering003-16.png"
 #define TEXTURE_PLAYER "data/TEXTURE/throwingMother.png"

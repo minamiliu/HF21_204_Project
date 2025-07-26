@@ -37,12 +37,12 @@ LPDIRECT3DTEXTURE9 CTitleObj::m_pTexture[MAX_TITLE_OBJ] = {};
 
 char *CTitleObj::g_TitleObjTex[MAX_TITLE_OBJ] = 
 {
-	{"data/TEXTURE/サバンナタイトル用/背景/titleBg.png"},
-	{"data/TEXTURE/サバンナタイトル用/ロゴ/logo.png"},
-	{"data/TEXTURE/サバンナタイトル用/ゴリラ/gori.png"},
-	{"data/TEXTURE/サバンナタイトル用/シマウマ/zebra.png"},
-	{"data/TEXTURE/サバンナタイトル用/ライオン/lion.png"},
-	{"data/TEXTURE/サバンナタイトル用/スタート/start.png"}
+	{"data/TEXTURE/Savannah/bg/titleBg.png"},
+	{"data/TEXTURE/Savannah/logo/logo.png"},
+	{"data/TEXTURE/Savannah/gorilla/gori.png"},
+	{"data/TEXTURE/Savannah/zebra/zebra.png"},
+	{"data/TEXTURE/Savannah/lion/lion.png"},
+	{"data/TEXTURE/Savannah/start/start.png"}
 };
 
 bool CTitleObj::bScl = false;

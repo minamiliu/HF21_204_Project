@@ -18,7 +18,7 @@
 /*******************************************************************************
 * マクロ定義
 *******************************************************************************/
-#define LION_TEX_NAME	"data/TEXTURE/サバンナタイトル用/ライオン/lion.png"
+#define LION_TEX_NAME	"data/TEXTURE/Savannah/lion/lion.png"
 #define ANIM_PAT_X (2)
 #define ANIM_PAT_Y (1)
 #define ANIM_CANGE_FRAME (20)

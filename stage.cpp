@@ -1,4 +1,4 @@
-﻿//============================================
+//============================================
 //
 // タイトル:	 未来創造展チーム204
 // プログラム名: title.cpp
@@ -25,19 +25,19 @@
 //============================================
 // マクロ定義
 //============================================
-#define TEXTURE_BG "data/TEXTURE/ステージ用/bg.jpg"
-#define TEXTURE_START "data/TEXTURE/ステージ用/start.png"
-#define TEXTURE_GOAL "data/TEXTURE/ステージ用/goal.png"
-#define TEXTURE_MASU "data/TEXTURE/ステージ用/masu.png"
+#define TEXTURE_BG "data/TEXTURE/Stage/bg.jpg"
+#define TEXTURE_START "data/TEXTURE/Stage/start.png"
+#define TEXTURE_GOAL "data/TEXTURE/Stage/goal.png"
+#define TEXTURE_MASU "data/TEXTURE/Stage/masu.png"
 
-#define TEXTURE_GORIRA_MASU "data/TEXTURE/ステージ用/gorira.png"
-#define TEXTURE_ZEBRA_MASU "data/TEXTURE/ステージ用/zebra.png"
-#define TEXTURE_LION_MASU "data/TEXTURE/ステージ用/lion.png"
+#define TEXTURE_GORIRA_MASU "data/TEXTURE/Stage/gorilla.png"
+#define TEXTURE_ZEBRA_MASU "data/TEXTURE/Stage/zebra.png"
+#define TEXTURE_LION_MASU "data/TEXTURE/Stage/lion.png"
 
-#define TEXTURE_GOMIBOX "data/TEXTURE/ゴミ箱(灰色).png"
-#define TEXTURE_GOMI "data/TEXTURE/ゴミ.png"
-#define TEXTURE_ROAD1 "data/TEXTURE/ステージ用/道1.png"
-#define TEXTURE_ROAD2 "data/TEXTURE/ステージ用/道2.png"
+#define TEXTURE_GOMIBOX "data/TEXTURE/TrashBoxGray.png"
+#define TEXTURE_GOMI "data/TEXTURE/Trash.png"
+#define TEXTURE_ROAD1 "data/TEXTURE/Stage/Road1.png"
+#define TEXTURE_ROAD2 "data/TEXTURE/Stage/Road2.png"
 #define MASU_ROTATE	(0.8)
 #define ROAD_ROTATE1	(55)
 #define ROAD_ROTATE2	(55)

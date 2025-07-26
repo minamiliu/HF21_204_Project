@@ -1,4 +1,4 @@
-﻿//============================================
+//============================================
 //
 // タイトル:	 未来創造展チーム204
 // プログラム名: lionGame.cpp
@@ -41,7 +41,7 @@
 //============================================
 // マクロ定義
 //============================================
-#define TEXTURE_MLT		"data/TEXTURE/かける.png"
+#define TEXTURE_MLT		"data/TEXTURE/multply.png"
 
 #define TIME_POS	D3DXVECTOR3(SCREEN_WIDTH/2, 100.0f, 0.0f)
 #define TIME_SIZE	D3DXVECTOR3( 140, 70.0f, 0.0f)
